@@ -5,11 +5,10 @@
 # Open Burning Suite
 
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
-[![Avalonia UI](https://img.shields.io/badge/Avalonia_UI-11.3-7B2BFC?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyTDIgMTlIMjJMMTIgMloiLz48L3N2Zz4=)](https://avaloniaui.net/)
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)]()
 
-[📖 Documentation](https://svengdk.github.io/OpenBurningSuite/)
+<img src="/Screenshots/Home.png" width="75%">
 
 </div>
 
@@ -44,7 +43,12 @@ See the [full documentation](https://svengdk.github.io/OpenBurningSuite/) for de
 
 ## Supported Media
 
-**CD:** CD-R/RW (74, 80, 90, 99 min) · **DVD:** DVD±R/RW, DVD-R DL, DVD+R DL, DVD-RAM · **HD DVD:** HD DVD-R/RW/RAM (SL/DL) · **Blu-ray:** BD-R/RE (25–128 GB, BDXL) · **UHD Blu-ray:** UHD BD-66, UHD BD-100 · **M-DISC:** DVD, BD-R (SL/DL/XL)
+- **CD:** CD-R/RW (74, 80, 90, 99 min)
+- **DVD:** DVD±R/RW, DVD-R DL, DVD+R DL, DVD-RAM
+- **HD DVD:** HD DVD-R/RW/RAM (SL/DL)
+- **Blu-ray:** BD-R/RE (25–128 GB, BDXL)
+- **UHD Blu-ray:** UHD BD-66, UHD BD-100
+- **M-DISC:** DVD, BD-R (SL/DL/XL)
 
 See [Supported Formats](https://svengdk.github.io/OpenBurningSuite/supported-formats) for the complete reference.
 
