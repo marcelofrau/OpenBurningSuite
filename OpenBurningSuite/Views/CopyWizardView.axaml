@@ -1,0 +1,190 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:OpenBurningSuite.Views"
+             x:Class="OpenBurningSuite.Views.CopyWizardView">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,24" Spacing="20">
+
+            <!-- Page header -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="💿  Copy Disc Wizard"
+                           Classes="PageTitle" Foreground="#5BC0FF"/>
+                <TextBlock Text="Copy a disc to an image file — guided step by step."
+                           Classes="PageSubtitle" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- Step indicators -->
+            <Border Classes="Card">
+                <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+                    <TextBlock x:Name="TxtCopyStep1Ind" Text="① Source Drive" Foreground="#5BC0FF" FontWeight="Bold"/>
+                    <TextBlock Text="→" Foreground="#5A7A9A"/>
+                    <TextBlock x:Name="TxtCopyStep2Ind" Text="② Output Settings" Foreground="#5A7A9A"/>
+                    <TextBlock Text="→" Foreground="#5A7A9A"/>
+                    <TextBlock x:Name="TxtCopyStep3Ind" Text="③ Copy" Foreground="#5A7A9A"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ============================================================ -->
+            <!-- Step 1: Source Drive Selection                                -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="PnlCopyStep1" Spacing="12">
+                <TextBlock Text="Select Source Drive" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Choose the optical drive containing the disc you want to copy:"
+                                   Foreground="#8EAFC8" TextWrapping="Wrap"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <ComboBox x:Name="CmbCopyDrive" PlaceholderText="Select drive..."
+                                      ToolTip.Tip="Select the drive containing the disc to copy"/>
+                            <Button x:Name="BtnCopyRefreshDrives" Grid.Column="1" Content="🔄 Refresh"
+                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnCopyRefreshDrivesClick"/>
+                        </Grid>
+
+                        <!-- Drive info -->
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock x:Name="TxtCopyDriveInfo" Text="No drive selected"
+                                           Foreground="#8EAFC8" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="TxtCopyMediaInfo" Text=""
+                                           Foreground="#5A7A9A" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Detected Content (auto-populated from disc analysis) -->
+                        <Border x:Name="PnlCopyDetectedContent" Classes="InfoCard" Padding="12" IsVisible="False">
+                            <StackPanel Spacing="4">
+                                <TextBlock x:Name="TxtCopyDetectedContent" Text="—" Foreground="#E8F0FE"
+                                           FontSize="14" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="TxtCopyDetectedPreset" Text=""
+                                           Foreground="#5A7A9A" FontSize="11" FontStyle="Italic"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Gaming preset -->
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock Text="Gaming Preset:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                                       Margin="0,0,8,0"/>
+                            <ComboBox x:Name="CmbCopyGamingPreset" Grid.Column="1"
+                                      PlaceholderText="None (standard copy)"
+                                      ToolTip.Tip="Optional: select a gaming system preset for optimized read settings"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Step 2: Output Settings                                      -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="PnlCopyStep2" Spacing="12" IsVisible="False">
+                <TextBlock Text="Output Settings" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                            <TextBlock Text="Format:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                                       Margin="0,0,8,0"/>
+                            <ComboBox x:Name="CmbCopyFormat" Grid.Column="1"
+                                      ToolTip.Tip="Output image format"/>
+
+                            <TextBlock Text="Output:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                                       Grid.Row="1" Margin="0,8,8,0"/>
+                            <TextBox x:Name="TxtCopyOutputPath" Grid.Row="1" Grid.Column="1"
+                                     Watermark="Output file path..." Margin="0,8,0,0"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content="📂" Classes="ActionBtn"
+                                    Margin="8,8,0,0" Click="OnCopyBrowseOutputClick"/>
+
+                            <TextBlock Text="Speed:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                                       Grid.Row="2" Margin="0,8,8,0"/>
+                            <ComboBox x:Name="CmbCopySpeed" Grid.Row="2" Grid.Column="1"
+                                      Margin="0,8,0,0" ToolTip.Tip="Read speed"/>
+                        </Grid>
+
+                        <!-- Options -->
+                        <StackPanel Spacing="6" Margin="0,8,0,0">
+                            <CheckBox x:Name="ChkCopyVerify" Content="Verify after copy"
+                                      Foreground="#E8F0FE"
+                                      ToolTip.Tip="Verify the copied image against the disc after copying"/>
+                            <CheckBox x:Name="ChkCopyRetry" Content="Retry on errors (3 retries)"
+                                      IsChecked="True" Foreground="#E8F0FE"
+                                      ToolTip.Tip="Automatically retry reading sectors that fail on first attempt"/>
+                            <CheckBox x:Name="ChkCopyDecryptPs3" Content="Decrypt PS3 disc (requires IRD file)"
+                                      Foreground="#E8F0FE"
+                                      ToolTip.Tip="Decrypt PS3 game disc during copy using an IRD key file"/>
+                        </StackPanel>
+
+                        <!-- IRD file path (for PS3 decryption) -->
+                        <Grid x:Name="PnlCopyIrd" ColumnDefinitions="Auto,*,Auto" IsVisible="False">
+                            <TextBlock Text="IRD File:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                                       Margin="0,0,8,0"/>
+                            <TextBox x:Name="TxtCopyIrdPath" Grid.Column="1"
+                                     Watermark="Path to .ird file..."/>
+                            <Button Grid.Column="2" Content="📂" Classes="ActionBtn"
+                                    Margin="8,0,0,0" Click="OnCopyBrowseIrdClick"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Step 3: Execute                                              -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="PnlCopyStep3" Spacing="12" IsVisible="False">
+                <TextBlock Text="Copying Disc..." Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <ProgressBar x:Name="PrgCopyExec" Classes="BurnProgress" Value="0"/>
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <TextBlock x:Name="TxtCopyExecStatus" Text="Preparing..."
+                                       Foreground="#8EAFC8" FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtCopyExecETA" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="1" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtCopyExecSpeed" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="2" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtCopyExecPercent" Text="0%"
+                                       Foreground="#E8F0FE" FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Grid.Column="3" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBox x:Name="TxtCopyExecLog" Classes="LogBox" Height="200"/>
+                        <!-- Disc Visualization -->
+                        <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
+                                Padding="8" IsVisible="False" Margin="0,8,0,0">
+                            <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Navigation Buttons                                           -->
+            <!-- ============================================================ -->
+            <Border Classes="InfoCard" Margin="0,8,0,0">
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Button x:Name="BtnCopyBack" Content="← Back"
+                            Classes="ActionBtn" Click="OnCopyBackClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Go back to the previous step"/>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                        <Button x:Name="BtnCopyCancel" Content="Cancel"
+                                Classes="ActionBtn" Click="OnCopyCancelClick"
+                                IsVisible="False"
+                                ToolTip.Tip="Cancel the current operation"/>
+                        <Button x:Name="BtnCopyNext" Content="Next →"
+                                Classes="ActionBtn" Click="OnCopyNextClick"
+                                ToolTip.Tip="Proceed to the next step"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

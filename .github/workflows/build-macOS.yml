@@ -1,0 +1,170 @@
+name: Build macOS
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-macos-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true
+  APP_VERSION: '1.0.0'
+
+jobs:
+  build-macos:
+    name: macOS ${{ matrix.arch }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x64, arm64]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: ${{ runner.os }}-nuget-
+
+      - name: Publish
+        run: dotnet publish OpenBurningSuite -c Release -r osx-${{ matrix.arch }} --self-contained -p:UseAppHost=true -o publish
+
+      - name: Create ZIP (Portable)
+        run: |
+          cd publish
+          zip -9 -r ../osx-${{ matrix.arch }}.zip .
+
+      - name: Generate macOS icon
+        run: |
+          ICONSET="AppIcon.iconset"
+          mkdir -p "$ICONSET"
+          sips -z 16 16     OpenBurningSuite/icon.png --out "$ICONSET/icon_16x16.png"      > /dev/null
+          sips -z 32 32     OpenBurningSuite/icon.png --out "$ICONSET/icon_16x16@2x.png"   > /dev/null
+          sips -z 32 32     OpenBurningSuite/icon.png --out "$ICONSET/icon_32x32.png"      > /dev/null
+          sips -z 64 64     OpenBurningSuite/icon.png --out "$ICONSET/icon_32x32@2x.png"   > /dev/null
+          sips -z 128 128   OpenBurningSuite/icon.png --out "$ICONSET/icon_128x128.png"    > /dev/null
+          sips -z 256 256   OpenBurningSuite/icon.png --out "$ICONSET/icon_128x128@2x.png" > /dev/null
+          sips -z 256 256   OpenBurningSuite/icon.png --out "$ICONSET/icon_256x256.png"    > /dev/null
+          sips -z 512 512   OpenBurningSuite/icon.png --out "$ICONSET/icon_256x256@2x.png" > /dev/null
+          sips -z 512 512   OpenBurningSuite/icon.png --out "$ICONSET/icon_512x512.png"    > /dev/null
+          sips -z 1024 1024 OpenBurningSuite/icon.png --out "$ICONSET/icon_512x512@2x.png" > /dev/null
+          iconutil -c icns "$ICONSET" -o AppIcon.icns
+          rm -rf "$ICONSET"
+
+      - name: Create .app Bundle
+        run: |
+          APP="OpenBurningSuite.app"
+          mkdir -p "$APP/Contents/MacOS"
+          mkdir -p "$APP/Contents/Resources"
+
+          cp -r publish/* "$APP/Contents/MacOS/"
+          chmod +x "$APP/Contents/MacOS/OpenBurningSuite"
+          
+          cp AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
+
+          # Info.plist with TCC usage descriptions for DiskArbitration and removable media access.
+          cat > "$APP/Contents/Info.plist" << 'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>CFBundleName</key>
+            <string>Open Burning Suite</string>
+            <key>CFBundleDisplayName</key>
+            <string>Open Burning Suite</string>
+            <key>CFBundleIdentifier</key>
+            <string>com.svengdk.openburningsuite</string>
+            <key>CFBundleInfoDictionaryVersion</key>
+            <string>6.0</string>
+            <key>CFBundleVersion</key>
+            <string>${{ env.APP_VERSION }}</string>
+            <key>CFBundleShortVersionString</key>
+            <string>${{ env.APP_VERSION }}</string>
+            <key>CFBundleExecutable</key>
+            <string>OpenBurningSuite</string>
+            <key>CFBundleIconFile</key>
+            <string>AppIcon</string>
+            <key>CFBundlePackageType</key>
+            <string>APPL</string>
+            <key>LSMinimumSystemVersion</key>
+            <string>10.15</string>
+            <key>NSHighResolutionCapable</key>
+            <true/>
+            <key>NSSupportsAutomaticGraphicsSwitching</key>
+            <true/>
+            <key>LSApplicationCategoryType</key>
+            <string>public.app-category.utilities</string>
+            <key>NSSystemAdministrationUsageDescription</key>
+            <string>Open Burning Suite requires elevated privileges to access optical disc drives for burning, reading, verifying, and erasing discs via SCSI/MMC commands.</string>
+            <key>NSRemovableVolumesUsageDescription</key>
+            <string>Open Burning Suite needs access to removable volumes to detect, read, burn, and erase optical discs.</string>
+          </dict>
+          </plist>
+          PLIST
+
+      - name: Create PKG Installer
+        run: |
+          mkdir -p pkg-root/Applications
+          cp -r OpenBurningSuite.app pkg-root/Applications/
+
+          pkgbuild \
+            --root pkg-root \
+            --identifier com.svengdk.openburningsuite \
+            --version ${{ env.APP_VERSION }} \
+            --install-location / \
+            osx-${{ matrix.arch }}-Installer.pkg
+
+      - name: Create DMG
+        run: |
+          mkdir -p dmg-stage
+          cp -r OpenBurningSuite.app dmg-stage/
+          ln -s /Applications dmg-stage/Applications
+
+          hdiutil create -volname "Open Burning Suite" \
+            -srcfolder dmg-stage \
+            -ov -format UDBZ \
+            osx-${{ matrix.arch }}.dmg
+
+      - name: Upload ZIP (Portable)
+        uses: actions/upload-artifact@v5
+        with:
+          name: osx-${{ matrix.arch }}-zip
+          path: osx-${{ matrix.arch }}.zip
+          if-no-files-found: error
+
+      - name: Upload PKG Installer
+        uses: actions/upload-artifact@v5
+        with:
+          name: osx-${{ matrix.arch }}-pkg
+          path: osx-${{ matrix.arch }}-Installer.pkg
+          if-no-files-found: error
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v5
+        with:
+          name: osx-${{ matrix.arch }}-dmg
+          path: osx-${{ matrix.arch }}.dmg
+          if-no-files-found: error
+
+      - name: Upload .app Bundle
+        uses: actions/upload-artifact@v5
+        with:
+          name: osx-${{ matrix.arch }}-app
+          path: OpenBurningSuite.app/
+          if-no-files-found: error

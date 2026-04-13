@@ -1,0 +1,147 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="OpenBurningSuite.Views.BlankWizardView">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,24" Spacing="20">
+
+            <!-- Page header -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="🧹  Blank / Erase Disc Wizard"
+                           Classes="PageTitle" Foreground="#5BC0FF"/>
+                <TextBlock Text="Erase rewritable discs or format blank BD-R/DVD+RW media — guided step by step."
+                           Classes="PageSubtitle" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- Step indicators -->
+            <Border Classes="Card">
+                <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+                    <TextBlock x:Name="TxtBlankStep1Ind" Text="① Select Drive" Foreground="#5BC0FF" FontWeight="Bold"/>
+                    <TextBlock Text="→" Foreground="#5A7A9A"/>
+                    <TextBlock x:Name="TxtBlankStep2Ind" Text="② Options" Foreground="#5A7A9A"/>
+                    <TextBlock Text="→" Foreground="#5A7A9A"/>
+                    <TextBlock x:Name="TxtBlankStep3Ind" Text="③ Erase" Foreground="#5A7A9A"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ============================================================ -->
+            <!-- Step 1: Drive Selection                                      -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="PnlBlankStep1" Spacing="12">
+                <TextBlock Text="Select Drive" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Choose the optical drive containing the rewritable disc:"
+                                   Foreground="#8EAFC8" TextWrapping="Wrap"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <ComboBox x:Name="CmbBlankDrive" PlaceholderText="Select drive..."
+                                      SelectionChanged="OnBlankDriveSelChanged"
+                                      ToolTip.Tip="Select the drive with the disc to erase"/>
+                            <Button x:Name="BtnBlankRefresh" Grid.Column="1" Content="🔄 Refresh"
+                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnBlankRefreshClick"/>
+                        </Grid>
+
+                        <!-- Drive & media info -->
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock x:Name="TxtBlankDriveInfo" Text="No drive selected"
+                                           Foreground="#8EAFC8" TextWrapping="Wrap"/>
+                                <TextBlock x:Name="TxtBlankMediaInfo" Text=""
+                                           Foreground="#5A7A9A" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Compatibility warnings -->
+                        <TextBlock x:Name="TxtBlankWarning" Text=""
+                                   Foreground="#FFB74D" FontSize="12" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Step 2: Erase Options                                        -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="PnlBlankStep2" Spacing="12" IsVisible="False">
+                <TextBlock Text="Erase Options" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Select how you want to erase the disc:"
+                                   Foreground="#8EAFC8" TextWrapping="Wrap"/>
+
+                        <RadioButton x:Name="RdoQuickBlank" Content="Quick Erase (fast — erases TOC/PMA only)"
+                                     IsChecked="True" Foreground="#E8F0FE" GroupName="BlankMode"
+                                     ToolTip.Tip="Erases the table of contents only — much faster but data remains on disc"/>
+                        <RadioButton x:Name="RdoFullBlank" Content="Full Erase (slow — erases entire disc surface)"
+                                     Foreground="#E8F0FE" GroupName="BlankMode"
+                                     ToolTip.Tip="Writes zeros to the entire disc — very slow but completely wipes all data"/>
+
+                        <Border Classes="InfoCard" Padding="12" Margin="0,8,0,0">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="ℹ Quick vs Full Erase" Foreground="#5BC0FF" FontWeight="Bold" FontSize="12"/>
+                                <TextBlock Text="Quick erase takes seconds and makes the disc writable again, but old data remains on disc (not readable without special tools). Full erase overwrites all sectors with zeros — this can take 15-60+ minutes depending on disc type and speed."
+                                           Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="Compatible media types: CD-RW, DVD-RW, DVD+RW, DVD-RAM, BD-RE, HD DVD-RW"
+                                   Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                        <TextBlock Text="BD-R and DVD+R/DVD-R are write-once media and can be formatted but not erased."
+                                   Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Step 3: Execute                                              -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="PnlBlankStep3" Spacing="12" IsVisible="False">
+                <TextBlock Text="Erasing Disc..." Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <ProgressBar x:Name="PrgBlankExec" Classes="BurnProgress" Value="0"
+                                     IsIndeterminate="True"/>
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <TextBlock x:Name="TxtBlankExecStatus" Text="Erasing..."
+                                       Foreground="#8EAFC8" FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtBlankExecETA" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="1" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtBlankExecPercent" Text=""
+                                       Foreground="#E8F0FE" FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Grid.Column="2" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBox x:Name="TxtBlankExecLog" Classes="LogBox" Height="160"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Navigation Buttons                                           -->
+            <!-- ============================================================ -->
+            <Border Classes="InfoCard" Margin="0,8,0,0">
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Button x:Name="BtnBlankBack" Content="← Back"
+                            Classes="ActionBtn" Click="OnBlankBackClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Go back to the previous step"/>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                        <Button x:Name="BtnBlankCancel" Content="Cancel"
+                                Classes="ActionBtn" Click="OnBlankCancelClick"
+                                IsVisible="False"
+                                ToolTip.Tip="Cancel the erase operation"/>
+                        <Button x:Name="BtnBlankNext" Content="Next →"
+                                Classes="ActionBtn" Click="OnBlankNextClick"
+                                ToolTip.Tip="Proceed to the next step"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

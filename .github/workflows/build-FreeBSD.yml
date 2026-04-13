@@ -1,0 +1,192 @@
+name: Build FreeBSD
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-freebsd-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true
+  APP_VERSION: '1.0.0'
+
+jobs:
+  build-freebsd:
+    name: FreeBSD ${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x64, arm64]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: ${{ runner.os }}-nuget-
+
+      - name: Patch Program.cs for X11
+        run: |
+          sed -i 's/\.UsePlatformDetect()/.UseX11()/' OpenBurningSuite/Program.cs
+          echo "Patched Program.cs:"
+          grep -n 'UseX11\|UsePlatformDetect' OpenBurningSuite/Program.cs
+
+      - name: Publish
+        run: dotnet publish OpenBurningSuite -c Release -r linux-${{ matrix.arch }} --self-contained -o publish
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y imagemagick libarchive-tools zstd xz-utils
+
+      - name: Resize application icon
+        run: |
+          # Source icon.png may be larger; resize to 512x512 to match hicolor directory
+          convert OpenBurningSuite/icon.png -resize 512x512 icon-512.png
+
+      - name: Create ZIP (Portable)
+        run: |
+          cd publish
+          zip -9 -r ../freebsd-${{ matrix.arch }}.zip .
+
+      - name: Create PKG installer
+        run: |
+          PKG_DIR="pkg-stage"
+          PREFIX="/usr/local"
+          INSTALL_DIR="${PREFIX}/lib/openburningsuite"
+
+          mkdir -p "${PKG_DIR}${INSTALL_DIR}"
+          mkdir -p "${PKG_DIR}${PREFIX}/bin"
+          mkdir -p "${PKG_DIR}${PREFIX}/share/applications"
+          mkdir -p "${PKG_DIR}${PREFIX}/share/icons/hicolor/512x512/apps"
+          mkdir -p "${PKG_DIR}${PREFIX}/share/licenses/openburningsuite"
+
+          cp -r publish/* "${PKG_DIR}${INSTALL_DIR}/"
+          chmod +x "${PKG_DIR}${INSTALL_DIR}/OpenBurningSuite"
+
+          cp LICENSE "${PKG_DIR}${PREFIX}/share/licenses/openburningsuite/LICENSE"
+
+          cp icon-512.png "${PKG_DIR}${PREFIX}/share/icons/hicolor/512x512/apps/openburningsuite.png"
+
+          cat > "${PKG_DIR}${PREFIX}/bin/openburningsuite" << 'LAUNCHER'
+          #!/bin/sh
+          exec /usr/local/lib/openburningsuite/OpenBurningSuite "$@"
+          LAUNCHER
+          chmod +x "${PKG_DIR}${PREFIX}/bin/openburningsuite"
+
+          cat > "${PKG_DIR}${PREFIX}/share/applications/openburningsuite.desktop" << 'DESKTOP'
+          [Desktop Entry]
+          Name=Open Burning Suite
+          Comment=Cross-platform optical disc burning and reading suite
+          Exec=/usr/local/bin/openburningsuite
+          Icon=openburningsuite
+          Terminal=false
+          Type=Application
+          Categories=Utility;DiscBurning;
+          DESKTOP
+
+          # Create +MANIFEST for FreeBSD pkg
+          cat > "${PKG_DIR}/+MANIFEST" << EOF
+          name: openburningsuite
+          version: "${{ env.APP_VERSION }}"
+          origin: sysutils/openburningsuite
+          comment: "Cross-platform optical disc burning and reading suite"
+          maintainer: "SvenGDK"
+          www: "https://github.com/SvenGDK/OpenBurningSuite"
+          prefix: "${PREFIX}"
+          desc: "Open Burning Suite is a cross-platform optical disc burning and reading suite."
+          categories: ["sysutils"]
+          licenselogic: "single"
+          licenses: ["BSD2CLAUSE"]
+          deps: {}
+          EOF
+
+          # Create post-install script for SCSI device access
+          cat > "${PKG_DIR}/+POST_INSTALL" << 'POSTINSTALL'
+          #!/bin/sh
+          echo ""
+          echo "==> Open Burning Suite post-install notes:"
+          echo "    For optical drive access, ensure your user is in the 'operator' group:"
+          echo "      pw groupmod operator -m YOUR_USERNAME"
+          echo ""
+          echo "    Add the following to /etc/devfs.rules if not already present:"
+          echo "      [localrules=10]"
+          echo "      add path 'cd*' mode 0660 group operator"
+          echo "      add path 'pass*' mode 0660 group operator"
+          echo "      add path 'xpt*' mode 0660 group operator"
+          echo "      add path 'da*' mode 0660 group operator"
+          echo ""
+          echo "    Then enable the rules in /etc/rc.conf:"
+          echo "      devfs_system_ruleset=\"localrules\""
+          echo "      service devfs restart"
+          echo ""
+          echo "    Note: USB optical drives appear as /dev/cd* and /dev/pass*."
+          echo "    The 'da*' rule covers USB mass storage devices that may"
+          echo "    expose optical drives through the da(4) driver."
+          echo ""
+          POSTINSTALL
+          chmod +x "${PKG_DIR}/+POST_INSTALL"
+
+          # Generate plist from staged files
+          (cd "${PKG_DIR}" && find . -type f ! -name '+MANIFEST' ! -name '+POST_INSTALL' | sed 's|^\./||' | sort) > "${PKG_DIR}/plist"
+
+          # Build the .pkg using tar-based format
+
+          # Create the UCL manifest
+          cat > /tmp/pkg-manifest.ucl << EOF
+          name = "openburningsuite";
+          version = "${{ env.APP_VERSION }}";
+          origin = "sysutils/openburningsuite";
+          comment = "Cross-platform optical disc burning and reading suite";
+          maintainer = "SvenGDK";
+          www = "https://github.com/SvenGDK/OpenBurningSuite";
+          prefix = "${PREFIX}";
+          desc = "Open Burning Suite is a cross-platform optical disc burning and reading suite.";
+          licenselogic = "single";
+          licenses = ["BSD2CLAUSE"];
+          EOF
+
+          # Create the pkg as a txz archive (FreeBSD pkg format)
+          # Files must be directly in the archive alongside manifests, not wrapped in a sub-archive
+          mkdir -p pkg-build
+          cp /tmp/pkg-manifest.ucl pkg-build/+COMPACT_MANIFEST
+          cp /tmp/pkg-manifest.ucl pkg-build/+MANIFEST
+          cp "${PKG_DIR}/+POST_INSTALL" pkg-build/+POST_INSTALL
+          cp -a "${PKG_DIR}"/usr pkg-build/
+          cp -a "${PKG_DIR}"/etc pkg-build/ 2>/dev/null || true
+          cd pkg-build
+          TAR_CONTENTS="+COMPACT_MANIFEST +MANIFEST +POST_INSTALL usr"
+          [ -d etc ] && TAR_CONTENTS="$TAR_CONTENTS etc"
+          tar cf - $TAR_CONTENTS | xz -9e > ../freebsd-${{ matrix.arch }}-Installer.pkg
+          cd ..
+
+      - name: Upload ZIP (Portable)
+        uses: actions/upload-artifact@v5
+        with:
+          name: freebsd-${{ matrix.arch }}-zip
+          path: freebsd-${{ matrix.arch }}.zip
+          if-no-files-found: error
+
+      - name: Upload PKG Installer
+        uses: actions/upload-artifact@v5
+        with:
+          name: freebsd-${{ matrix.arch }}-pkg
+          path: freebsd-${{ matrix.arch }}-Installer.pkg
+          if-no-files-found: error

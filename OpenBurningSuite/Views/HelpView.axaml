@@ -1,0 +1,756 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="OpenBurningSuite.Views.HelpView"
+             Background="#0C1622">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <!-- Table of Contents sidebar -->
+        <Border Grid.Column="0" Background="#0A1520"
+                BorderBrush="#1E3450" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="10,16,10,16" Spacing="2">
+                    <TextBlock Text="📖 CONTENTS"
+                               Foreground="#5A7A9A" FontSize="10"
+                               FontWeight="Bold" Margin="8,0,0,10"/>
+
+                    <Button x:Name="TocOverview" Content="Overview"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionOverview"/>
+                    <Button x:Name="TocGettingStarted" Content="Getting Started"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionGettingStarted"/>
+
+                    <TextBlock Text="FEATURES"
+                               Foreground="#5A7A9A" FontSize="10"
+                               FontWeight="Bold" Margin="8,12,0,6"/>
+
+                    <Button x:Name="TocDiscover" Content="🔍 Discover Drives"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscover"/>
+                    <Button x:Name="TocCopyDisc" Content="💿 Copy Disc"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyDisc"/>
+                    <Button x:Name="TocBuildImage" Content="🏗 Build Image"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBuildImage"/>
+                    <Button x:Name="TocBurnWrite" Content="🔥 Burn / Write"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBurnWrite"/>
+                    <Button x:Name="TocVerify" Content="✅ Verify"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionVerify"/>
+                    <Button x:Name="TocAdvanced" Content="⚙&#xFE0F; Advanced"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionAdvanced"/>
+                    <Button x:Name="TocEncryption" Content="🔒 Encryption"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionEncryption"/>
+
+                    <TextBlock Text="WIZARDS"
+                               Foreground="#5A7A9A" FontSize="10"
+                               FontWeight="Bold" Margin="8,12,0,6"/>
+
+                    <Button x:Name="TocAudioWizard" Content="🎵 Audio Wizard"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionAudioWizard"/>
+                    <Button x:Name="TocVideoWizard" Content="🎬 Video Wizard"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionVideoWizard"/>
+                    <Button x:Name="TocDataWizard" Content="📁 Data Wizard"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDataWizard"/>
+                    <Button x:Name="TocGameWizard" Content="🎮 Game Wizard"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionGameWizard"/>
+                    <Button x:Name="TocCopyWizard" Content="💿 Copy Wizard"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyWizard"/>
+                    <Button x:Name="TocBlankWizard" Content="🧹 Blank Wizard"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBlankWizard"/>
+
+                    <TextBlock Text="REFERENCE"
+                               Foreground="#5A7A9A" FontSize="10"
+                               FontWeight="Bold" Margin="8,12,0,6"/>
+
+                    <Button x:Name="TocDiscTypes" Content="📀 Disc Types"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscTypes"/>
+                    <Button x:Name="TocFileSystems" Content="📂 File Systems"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionFileSystems"/>
+                    <Button x:Name="TocImageFormats" Content="💾 Image Formats"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionImageFormats"/>
+                    <Button x:Name="TocGlossary" Content="📘 Glossary"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionGlossary"/>
+                    <Button x:Name="TocTroubleshooting" Content="🔧 Troubleshooting"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionTroubleshooting"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Main content area -->
+        <ScrollViewer x:Name="ContentScroller" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="28,24,28,40" Spacing="24">
+
+                <!-- Page header -->
+                <StackPanel Spacing="4">
+                    <TextBlock Text="📖  Help &amp; Documentation"
+                               Classes="PageTitle" Foreground="#5BC0FF"/>
+                    <TextBlock Text="Everything you need to know about Open Burning Suite — from quick start guides to advanced technical details."
+                               Classes="PageSubtitle" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <!-- ============================================================ -->
+                <!-- OVERVIEW                                                      -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionOverview" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Overview" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#E8F0FE" LineHeight="22">
+                            <Run Text="Open Burning Suite"/><Run Text=" is a professional, cross-platform application for optical disc authoring, burning, reading, and verification. It runs on "/>
+                            <Run Text="Windows, Linux, and macOS" FontWeight="SemiBold"/>
+                            <Run Text=" and supports a wide range of optical media — from CDs to Blu-ray BDXL and HD DVD."/>
+                        </TextBlock>
+
+                        <TextBlock Text="What can you do with Open Burning Suite?" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="• Discover optical drives and inspect their capabilities and inserted media&#x0a;• Copy (rip) optical discs to image files in many formats&#x0a;• Build disc images from files and folders (data, audio, video, gaming)&#x0a;• Burn disc images to CD, DVD, HD DVD, or Blu-ray media&#x0a;• Verify disc integrity with checksums and sector-by-sector comparison&#x0a;• Erase, blank, and format rewritable media&#x0a;• Create audio CDs with CD-TEXT, video DVDs, Blu-ray discs, VCDs, SVCDs, and XSVCDs&#x0a;• Create gaming disc images with system-specific presets&#x0a;• Create bootable discs with El Torito support&#x0a;• Encrypt and decrypt disc images with AES-256 password protection (.obse format)"/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="🔒 Elevation (Admin / Root) Note" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="12"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" FontSize="11" LineHeight="18"
+                                           Text="Many optical disc operations require direct hardware access. On Windows, run the application as Administrator. On Linux and macOS, run with root privileges (sudo). The status bar at the bottom shows whether the application is running with elevated privileges. Without elevation, some features (burning, blanking, direct reading) may not work."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- GETTING STARTED                                               -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionGettingStarted" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Getting Started" Classes="SectionHeader" FontSize="18"/>
+
+                        <TextBlock Text="The Main Window" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="When you launch Open Burning Suite, you see the Home screen. On the left is the sidebar navigation with all available views. At the top-right corner you can find Home, Settings, and Help buttons. The status bar at the bottom shows context messages and your elevation status."/>
+
+                        <TextBlock Text="Navigation" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Use the sidebar to switch between views:&#x0a;&#x0a;  • Home — Quick Start tiles and feature overview&#x0a;  • Discover — Scan drives and probe media&#x0a;  • Copy Disc — Read/rip discs to image files&#x0a;  • Build Image — Create disc images from files&#x0a;  • Burn / Write — Write images to optical media&#x0a;  • Verify — Check disc or image integrity&#x0a;  • Advanced — Blank, erase, format discs&#x0a;&#x0a;Under Quick Start in the sidebar you also find guided wizards for Audio, Video, Data, Game, Copy Disc, and Blank Disc operations."/>
+
+                        <TextBlock Text="General Workflow" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="A typical workflow follows these steps:&#x0a;&#x0a;  1. Discover — Ensure your drive is detected and check media status&#x0a;  2. Build (optional) — Create a disc image from files if you don't have one&#x0a;  3. Burn — Write the image to disc&#x0a;  4. Verify — Confirm the burn completed correctly&#x0a;&#x0a;Or use one of the Quick Start wizards which guide you through the entire process step by step."/>
+
+                        <TextBlock Text="Tooltips" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Almost every button, checkbox, and dropdown in the application has a tooltip. Hover your mouse over any control to see a brief explanation of what it does."/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- DISCOVER DRIVES &amp; MEDIA                                   -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionDiscover" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔍 Discover Drives &amp; Media" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Discover view scans your system for optical drives and inspects inserted media. This is usually the first thing to check before performing any disc operation."/>
+
+                        <TextBlock Text="Optical Drives Table" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Click Refresh Drives to scan for connected optical drives. The table shows:&#x0a;&#x0a;  • Device Path — The system device path (e.g. /dev/sr0 on Linux, \\.\CdRom0 on Windows)&#x0a;  • Drive Letter — Windows drive letter (e.g. D:)&#x0a;  • Model — The manufacturer and model name of the drive&#x0a;  • Type — Drive category (CD-ROM, DVD-RW, BD-RE, etc.)&#x0a;  • Status — Whether a disc is loaded or the tray is empty"/>
+
+                        <TextBlock Text="Media Information" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Select a drive from the dropdown, then click Probe Media to read details about the inserted disc:&#x0a;&#x0a;  • Media Type — The specific disc format (CD-R, DVD+R DL, BD-RE, etc.)&#x0a;  • Disc State — Empty (blank), Appendable (multi-session with space), or Closed (finalized)&#x0a;  • Volume Label — The name stored on the disc&#x0a;  • Capacity — Total storage capacity of the media&#x0a;  • Used / Free — How much space is used and how much remains&#x0a;  • File System — Detected file system (ISO 9660, UDF, Joliet, HFS+)&#x0a;  • Sessions — Number of sessions on the disc (multi-session discs have more than one)&#x0a;  • Tracks — Number of data and audio tracks"/>
+
+                        <TextBlock Text="Drive Capabilities" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Shows what the selected drive can read and write: CD, DVD, HD DVD, and Blu-ray. Also lists all supported write speeds."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="Drive discovery uses native platform APIs: SCSI Generic (SG_IO) on Linux, IOCTL_SCSI_PASS_THROUGH_DIRECT on Windows, and IOKit SCSITaskLib on macOS. Media probing sends MMC READ DISC INFORMATION and READ TRACK INFORMATION SCSI commands to retrieve disc metadata. All sense data buffers are 252 bytes per the SPC-5 specification."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- COPY DISC                                                     -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionCopyDisc" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💿 Copy Disc to Image" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Copy Disc view reads an optical disc and saves it as an image file on your computer. This is useful for creating backups, archiving discs, or preparing images for later burning."/>
+
+                        <TextBlock Text="Source &amp; Output" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Drive — Select which optical drive contains the disc to copy&#x0a;  • Output Format — Choose the image file format: ISO (standard), BIN/CUE (raw with cue sheet), BIN/CUE/SBI (raw with LibCrypt subchannel-Q data for PS1), MDF/MDS, NRG (Nero), IMG (raw), CDI (DiscJuggler), CCD/IMG/SUB (CloneCD with subchannel), TOC/BIN, VCD, SVCD, XSVCD, or XISO (Xbox)&#x0a;  • Output Path — Where to save the image file (you can also drag and drop a file path)"/>
+
+                        <TextBlock Text="Copy Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Copy Speed — Speed at which to read the disc. Lower speeds (e.g. 4x, 8x) improve accuracy on damaged or scratched discs at the cost of longer read times. Maximum speed is fastest but may produce errors on imperfect media.&#x0a;&#x0a;  • Error Recovery — Controls what happens when a sector cannot be read:&#x0a;      – Yes (skip and retry): Retry failed sectors a number of times, then skip&#x0a;      – No (ignore errors): Read continues without retrying&#x0a;      – Abort on error: Stop the entire read if any error occurs&#x0a;&#x0a;  • Retry Count — Number of retry attempts for each failed sector (0–20). More retries can recover data from marginal sectors but increase read time.&#x0a;&#x0a;  • Sector Size — Size of each sector in bytes:&#x0a;      – 2048 bytes: Standard data sector size (suitable for most data discs)&#x0a;      – 2352 bytes: Raw sector size (includes all error correction, sync patterns, and headers — required for audio CDs and accurate disc images)&#x0a;&#x0a;  • Subchannel Mode — Controls extraction of subchannel data alongside main sectors:&#x0a;      – None: No subchannel extraction (fastest, sufficient for most data discs)&#x0a;      – Raw: Extract raw subchannel data (96 bytes per sector)&#x0a;      – Other modes may be available depending on the disc type&#x0a;      Subchannel data is essential for copy-protected discs and many gaming disc formats.&#x0a;&#x0a;  • Audio Paranoia Mode — Extra error correction for audio CDs. Reads each sector multiple times and cross-references results to produce bit-perfect audio copies. Recommended for scratched or damaged audio CDs.&#x0a;&#x0a;  • Jitter Correction — Corrects jitter (timing drift) during audio reading. Enabled by default. Helps ensure sample-accurate audio rips.&#x0a;&#x0a;  • Read all sectors (including bad) — Forces the reader to attempt every sector on the disc, even those flagged as bad. Useful for forensic or archival purposes."/>
+
+                        <TextBlock Text="Gaming System Presets" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Pre-configured settings for various gaming consoles. Selecting a preset automatically configures the sector size, subchannel mode, and error recovery to match the requirements of that system. Supported systems include PlayStation 1–5, PSP (UMD), Sega Saturn, Dreamcast, Mega CD, Xbox, Xbox 360, Xbox One/Series, GameCube, Wii, Wii U, Neo Geo CD, 3DO, Philips CD-i, PC Engine CD, Atari Jaguar CD, and Amiga CD32/CDTV."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="Raw sector reads use the MMC READ CD command (opcode 0xBE) with expected sector type and subchannel selector fields. Standard reads use READ(10) at 2048 bytes/sector. Audio sectors are read with Audio Paranoia mode using multiple overlapping reads to detect and correct C1/C2 errors. Jitter correction aligns audio samples across consecutive reads to eliminate inter-read offset drift."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- BUILD IMAGE                                                   -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionBuildImage" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🏗 Build Disc Image" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Build Image view creates disc images from files and folders on your computer. You can create data discs, audio CDs, bootable discs, and more."/>
+
+                        <TextBlock Text="Disc &amp; Filesystem Settings" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Disc Type — Target disc type (CD, DVD, Blu-ray, etc.). Determines the capacity indicator.&#x0a;  • File System — The file system format for the image:&#x0a;      – ISO 9660: The universal standard. Compatible with virtually all operating systems and devices.&#x0a;      – Joliet: Extension of ISO 9660 adding long filenames (up to 64 chars) and Unicode support.&#x0a;      – UDF: Modern file system supporting large files (&gt;4 GB), required for DVD-Video, Blu-ray, and large data discs.&#x0a;      – Rock Ridge: Extension adding POSIX metadata (permissions, symlinks, long names) — mainly for Linux/Unix.&#x0a;      – HFS+: Apple's file system for macOS compatibility.&#x0a;  • Volume Label — A name that appears when the disc is mounted (e.g. in File Explorer or Finder).&#x0a;  • Capacity — Shows the target capacity based on the selected disc type."/>
+
+                        <TextBlock Text="Source &amp; Output" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Source Folder — The folder containing files to add to the disc image. You can also drag and drop.&#x0a;  • Output Image — Path where the .iso (or other format) file will be saved.&#x0a;  • Publisher — Publisher name stored in the disc metadata (optional).&#x0a;  • Preparer — Data preparer identifier in the disc metadata (optional).&#x0a;  • Application — Application identifier in the disc metadata (optional)."/>
+
+                        <TextBlock Text="Advanced Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Joliet long filenames — Allow filenames longer than 64 characters using Joliet (may reduce compatibility with older systems).&#x0a;  • Rock Ridge extensions — Add POSIX metadata (permissions, symbolic links, long names) for Linux/Unix compatibility.&#x0a;  • Deep directory nesting — Allow directory trees deeper than 8 levels (relaxes the ISO 9660 limit).&#x0a;  • Allow lowercase filenames — Permits lowercase characters in ISO 9660 filenames (non-standard but widely supported).&#x0a;  • Allow special characters — Allows special characters beyond the ISO 9660 d-character set in filenames.&#x0a;  • Pad disc to capacity — Fills unused space with zeros, which some older readers require.&#x0a;  • Sort files — Sort files alphabetically within each directory.&#x0a;  • Charset — Character encoding for filenames: UTF-8 (recommended), ISO-8859-1 (Western European), or ASCII."/>
+
+                        <TextBlock Text="Boot Image (El Torito)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Create bootable optical discs using the El Torito standard:&#x0a;&#x0a;  • Create bootable disc — Enable the El Torito boot catalog on the disc.&#x0a;  • Boot image file — Path to the boot image (e.g. isolinux.bin, GRUB image).&#x0a;  • Emulation Mode:&#x0a;      – No Emulation: For modern bootloaders (ISOLINUX, GRUB). Most common.&#x0a;      – Floppy (1.2 / 1.44 / 2.88 MB): Emulates a floppy disk for legacy BIOS compatibility.&#x0a;      – Hard Disk: Emulates a hard disk boot device.&#x0a;  • Platform: x86 (BIOS), PowerPC, Mac, or EFI (UEFI).&#x0a;  • Load Segment — Memory address to load the boot image (hex, 0 = default 0x07C0).&#x0a;  • Sector Count — Number of 512-byte virtual sectors to load (0 = auto-detect).&#x0a;  • Patch boot info table — Required by ISOLINUX and GRUB. Patches the boot image with LBA and size.&#x0a;  • EFI dual-boot image — Optional second boot image for UEFI, enabling dual BIOS+UEFI boot."/>
+
+                        <TextBlock Text="CD-XA &amp; CD-i Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • CD-ROM XA mode — Marks the disc as CD-ROM XA (Mode 2 sectors). Required for VCD/SVCD discs and CD-i. Injects the CD-XA001 marker into the Primary Volume Descriptor.&#x0a;  • Include CD-i application stub — Adds a minimal CD-i application module for VCD playback on Philips CD-i players (Green Book standard). Only applicable for VCD builds."/>
+
+                        <TextBlock Text="Audio CD Builder" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Build audio CDs with optional CD-TEXT metadata embedded in the subchannel:&#x0a;&#x0a;  • Album Title, Artist, Songwriter, Composer, Arranger — CD-TEXT fields visible on compatible players.&#x0a;  • Genre, Disc Message — Additional CD-TEXT metadata.&#x0a;  • MCN/UPC — 13-digit Media Catalog Number (UPC/EAN barcode).&#x0a;  • Track list — Add audio tracks (WAV files) with per-track title and artist.&#x0a;&#x0a;CD-TEXT data is stored in the disc's Q-subchannel and is displayed by car stereos, CD players, and software that supports it."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="ISO 9660 images are built by writing the System Area (32 KB), Primary Volume Descriptor (PVD), optional supplementary descriptors (Joliet SVD, El Torito boot catalog), path tables, and directory records followed by file data extents. UDF images follow the ECMA-167 / OSTA UDF specification. El Torito boot catalogs reference Initial/Default Entry boot images. Audio CD images consist of 2352-byte raw PCM sectors at 44100 Hz, 16-bit stereo. CD-TEXT packs are written as 18-byte R-W subchannel packs per Red Book Annex J."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- BURN / WRITE                                                  -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionBurnWrite" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn / Write Disc" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Burn view writes disc images to optical media, or builds and burns directly (on-the-fly). It supports all common media types from CD-R to BDXL."/>
+
+                        <TextBlock Text="Source Mode" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Choose how to provide the data to burn:&#x0a;&#x0a;  • Image File — Burn a pre-existing disc image file (.iso, .bin, .nrg, .mdf, .cdi, .ccd, .img). Browse or drag and drop the file. Non-native formats (NRG, MDF/MDS, CDI, CCD, IMG) are automatically converted to BIN/CUE for burning.&#x0a;  • Build on the fly — Select files and folders to build and burn directly to disc without creating a separate image file first. You can specify a source folder, add individual files/folders, set a volume label, and choose the file system."/>
+
+                        <TextBlock Text="Target Drive &amp; Write Settings" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Drive — Select the burner drive to write to.&#x0a;  • Write Speed — Speed of the burn. Slower speeds (e.g. 4x, 8x) produce more reliable burns with fewer errors, especially on low-quality media. Maximum uses the highest speed the drive and media support.&#x0a;  • Write Mode:&#x0a;      – DAO (Disc-At-Once): Writes the entire disc in one pass without gaps. Best for audio CDs, gaming discs, and single-session data. The laser never turns off during writing.&#x0a;      – TAO (Track-At-Once): Writes one track at a time, with 2-second gaps between tracks. Allows multi-session. Suitable for data discs.&#x0a;      – SAO (Session-At-Once): Writes one complete session at a time.&#x0a;  • Copies — Number of disc copies to burn (1–99). The application prompts you to insert new media between each copy."/>
+
+                        <TextBlock Text="Burn Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Eject after burn — Automatically opens the disc tray when the burn completes, so you can remove the disc or insert a new one.&#x0a;&#x0a;  • Verify after burn — Reads the entire disc back after burning and compares it to the source image. Strongly recommended for important data.&#x0a;&#x0a;  • Simulate / Test write — Performs a full burn simulation (laser on, but at test power) without actually writing data. Use this to check if your drive, media, and settings work before committing to a real burn.&#x0a;&#x0a;  • Buffer underrun protection — Prevents buffer underrun errors by pausing and resuming the laser when the data buffer runs low. Supported by nearly all modern drives (BURN-Proof, SafeBurn, etc.). Keep this enabled unless you have a specific reason not to.&#x0a;&#x0a;  • Close / Finalize disc — Closes the disc session, making it readable in standalone players and non-writing drives. Required for DVD-Video, Blu-ray, and audio CDs to play in consumer devices. Disabling this leaves the disc appendable for multi-session.&#x0a;&#x0a;  • Overburn — Write beyond the official rated capacity of the disc. Risky — the outer edge of the disc is less reliable. Only use if you know your media can handle it. The overburn limit (in MB) controls how far past the rated capacity to write."/>
+
+                        <TextBlock Text="Multi-Session" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Controls whether the disc can have data added later:&#x0a;&#x0a;  • Close (Single Session) — Writes one session and finalizes the disc. No more data can be added.&#x0a;  • Start (Multi-session) — Starts a new multi-session disc. Additional sessions can be appended later.&#x0a;  • Continue (Append session) — Adds a new session to an existing multi-session disc.&#x0a;&#x0a;Multi-session is only supported on CD-R, CD-RW, DVD-R, DVD+R, and some BD-R media. Each session has overhead (~13 MB on CD, ~30 MB on DVD), so total usable capacity decreases with each session."/>
+
+                        <TextBlock Text="Advanced Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Force Media Type — Override automatic media type detection. Useful if the drive misidentifies media.&#x0a;  • BD-R Mode — Blu-ray Disc Recordable writing mode:&#x0a;      – SRM (Sequential Recording Mode): Standard sequential writing.&#x0a;      – SRM+POW: Sequential with Pseudo-Overwrite support.&#x0a;      – RRM (Random Recording Mode): Allows random-access writing (BD-RE-like behavior on BD-R).&#x0a;  • DVD Layer Break — Layer break position (in sectors) for dual-layer DVD. Set to 0 for automatic placement. Incorrect layer break position can cause playback issues on DVD players."/>
+
+                        <TextBlock Text="Gaming Patches &amp; Special Formats" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • LibCrypt protection (PS1) — Applies LibCrypt subchannel patching for PlayStation 1 games using an .sbi file. The SBI file contains the protected sector information.&#x0a;  • Dreamcast GDI/CDI patching — Applies patches specific to Sega Dreamcast disc images in GDI or CDI format.&#x0a;  • Region-free patching — Removes region lock restrictions from the disc image.&#x0a;  • Boot sector patching — Patches the boot sector for compatibility with modified console firmware.&#x0a;  • ESR patch (PS2 DVD-R) — Injects a DVD-Video UDF structure into a PS2 ISO image so that the MechaCon controller treats the disc as a DVD-Video, bypassing the PS2 authentication check on DVD-R media.&#x0a;  • Master Disc patch (PS2) — Writes the 'PlayStation Master Disc' identifier into sectors 12-13 for use with MechaPwn DEX PS2 consoles. Supports NTSC-J, NTSC-U, PAL, and WORLD region settings.&#x0a;  • PSX 80 Minute patch (PS1/PS2 CD-R) — Appends 27,000 dummy sectors (2352 bytes each) to a raw BIN image for compatibility with 80-minute CD-R media on PlayStation consoles.&#x0a;  • PSX Undither patch (PS1) — Scans a raw PS1 BIN image for GPU dithering patterns and patches them out, improving visual quality on modern displays.&#x0a;&#x0a;⚠&#xFE0F; Gaming patches should only be used with legally owned software."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="Burning uses the MMC WRITE(12) command for DVD/Blu-ray media (32-bit transfer length for reduced command overhead) and WRITE(10) for standard audio/data CDs (16-bit transfer length). DAO mode uses the SET WRITE PARAMETERS mode page to configure the drive before issuing WRITE commands. Buffer underrun protection is enabled via the BURN-Free bit in the write parameters mode page. The disc visualization shows the current LBA (Logical Block Address) mapped to a physical spiral position on the disc in real time."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- VERIFY                                                        -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionVerify" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="✅ Verify / Check" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Verify view checks disc integrity, compares a disc to an image file, or validates image checksums. Verification is essential to ensure your burned discs are error-free."/>
+
+                        <TextBlock Text="Verification Modes" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Verify Disc — Reads every sector on the disc and computes a checksum. Reports total, good, and bad sectors. Use this to check the general health of a disc.&#x0a;&#x0a;  • Compare Disc to Image — Reads the disc and compares it sector-by-sector against an image file. Detects any differences between what was burned and the original image.&#x0a;&#x0a;  • Check Image Integrity — Computes a checksum of an image file without needing a disc. Useful to verify downloaded images match their published checksums."/>
+
+                        <TextBlock Text="Verification Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Checksum Type — The hash algorithm to use:&#x0a;      – SHA-256: Strong, widely used. Recommended for general use.&#x0a;      – SHA-1: Legacy but still common.&#x0a;      – MD5: Fast but cryptographically weak. Fine for data integrity checks.&#x0a;      – SHA-512: Strongest option. Slightly slower.&#x0a;      – CRC32: Very fast but only a 32-bit check. Good for quick sanity checks.&#x0a;&#x0a;  • Sector-by-sector comparison — Compares every sector individually (thorough but slower). Recommended.&#x0a;  • Verify subchannel data — Also checks subchannel data stored alongside main sectors.&#x0a;  • Audio track verification — When enabled, reads and verifies audio track data from the disc alongside data tracks. Essential for complete verification of mixed-mode CDs (e.g. PS1 games with audio tracks). When disabled, only data tracks are compared."/>
+
+                        <TextBlock Text="Results" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="After verification completes, the Results panel shows:&#x0a;  • Total Sectors scanned&#x0a;  • Good Sectors (passed)&#x0a;  • Bad Sectors (errors or mismatches)&#x0a;  • Checksum value (can be copied to clipboard)&#x0a;  • Overall result (Pass ✅ or Fail ❌)&#x0a;&#x0a;The disc visualization shows a real-time map of the verification progress on a virtual disc spiral."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="For raw BIN/CUE images, disc verification uses READ CD (raw 2352-byte sectors) instead of READ(10). Each sector is individually classified by its sync pattern: sectors with the CD sync pattern are data (2048 bytes of user data extracted), sectors without sync are audio. When Audio Track Verification is enabled, audio sectors are hashed at the full 2352 bytes per sector. Both the disc side and image side use the exact same per-sector classification logic, ensuring consistent checksums regardless of CUE layout (single-file or multi-file) or pregap placement. On mixed-mode CDs, the 150-frame pregap between data and audio tracks is correctly handled: data ranges exclude the pregap (which contains audio-format sectors), and audio ranges include it when Audio Track Verification is enabled. If a sector read fails with the initial expected sector type, the engine retries with CD-DA type to recover pregap sectors near track boundaries. The disc visualization maps LBA positions to physical radius on the disc spiral (inner hub to outer edge)."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- ADVANCED                                                      -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionAdvanced" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="⚙&#xFE0F; Advanced Utilities" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Advanced view provides direct drive operations: ejecting/loading the tray, blanking rewritable discs, and formatting media."/>
+
+                        <TextBlock Text="Eject / Load Tray" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Eject Tray — Opens the disc tray so you can insert or remove a disc.&#x0a;  • Load Tray — Closes the disc tray (on drives with motorized trays)."/>
+
+                        <TextBlock Text="Blank / Erase Rewritable Disc" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Erases CD-RW, DVD±RW, or BD-RE media so it can be rewritten:&#x0a;&#x0a;  • Quick Blank — Only erases the Table of Contents (TOC) and lead-in area. Very fast (a few seconds), but the old data remains physically on the disc and may be recoverable with specialized tools.&#x0a;&#x0a;  • Full Blank — Overwrites the entire disc surface with zeros. Takes much longer (10–30 minutes for CD-RW, longer for DVD/BD) but ensures no old data remains.&#x0a;&#x0a;You must blank a rewritable disc before writing new data to it (unless the drive supports automatic overwrite, as with DVD+RW and BD-RE)."/>
+
+                        <TextBlock Text="Format Disc" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Formats DVD+RW, DVD-RAM, BD-R, BD-RE, or HD DVD-RW media. Some media types require formatting before first use:&#x0a;&#x0a;  • Quick Format — Prepares the disc for use without full surface certification. Fast.&#x0a;  • Full Format — Performs surface certification across the entire disc. Slower but ensures disc integrity. Recommended for archival use and BD-R media.&#x0a;&#x0a;Note: DVD+RW media must be formatted before first use. BD-RE and DVD-RAM benefit from formatting but can often be used directly."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="Blanking sends the MMC BLANK command (opcode 0xA1) with type 0x00 (full) or 0x01 (minimal/quick). Formatting uses the FORMAT UNIT command (opcode 0x04) with appropriate format descriptors for each media type. Tray operations use START STOP UNIT (opcode 0x1B) with the LoEj and Start bits."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- DISC IMAGE ENCRYPTION                                         -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionEncryption" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔒 Disc Image Encryption" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Open Burning Suite includes a built-in disc image encryption feature to protect sensitive backups. You can encrypt any disc image file with a password and decrypt it later for burning or verification."/>
+
+                        <TextBlock Text="Encryption" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="To encrypt a disc image, select the image file and provide a strong password. The encrypted image is saved with the .obse extension (Open Burning Suite Encrypted). The original file is not modified."/>
+
+                        <TextBlock Text="Decryption" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="When you select an .obse file for burning or verification, you will be prompted to enter the decryption password. The image is decrypted transparently before the operation begins."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="Encryption uses AES-256-CBC with PBKDF2 (RFC 8018) key derivation from the password. The file header contains the magic bytes 'OBSE', format version, KDF salt, initialization vector, HMAC-SHA256 integrity tag, and the original file size. The HMAC verifies the encrypted payload has not been tampered with before decryption begins."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- AUDIO WIZARD                                                  -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionAudioWizard" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎵 Audio &amp; Music Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Audio Wizard guides you step-by-step through creating audio CDs, copying music files to disc, or ripping audio CDs. It is designed for users who want a simple, guided experience."/>
+
+                        <TextBlock Text="Step 1 — Choose Task" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Create Audio CD — Build and burn a Red Book audio CD from WAV, FLAC, or MP3 files. The resulting disc will play in any standard CD player.&#x0a;  • Rip Audio CD — Extract audio tracks from an audio CD to individual WAV files, or save a raw BIN/CUE audio image.&#x0a;  • Copy Music to Disc — Burn audio files as data files (MP3, FLAC, etc.) to a disc for playback in devices that support those formats."/>
+
+                        <TextBlock Text="Step 2 — Configure" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Depending on the task selected, you configure track lists, CD-TEXT metadata (album, artist, per-track titles), output format and quality settings, drive selection, and write speed."/>
+
+                        <TextBlock Text="Step 3 — Summary" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Review all settings before execution. The wizard shows a summary of tracks, total duration, target media, and all configured options."/>
+
+                        <TextBlock Text="Step 4 — Execute" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The operation runs with a progress bar and log output. You can cancel at any time."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Audio CD Format" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="Red Book audio CDs store uncompressed PCM audio at 44,100 Hz sample rate, 16-bit depth, stereo (2 channels). Each audio sector is 2,352 bytes and holds 1/75th of a second of audio. A standard 74-minute CD holds approximately 333,000 audio sectors. CD-TEXT data is encoded in R-W subchannel packs (18 bytes each) per Red Book Annex J / MMC-3. WAV files are converted; FLAC and MP3 files are decoded to PCM before burning."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- VIDEO WIZARD                                                  -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionVideoWizard" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎬 Video Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Video Wizard guides you through creating video discs that play in standalone players: DVD-Video, Blu-ray, BDAV, 3D Blu-ray, VCD, SVCD, and XSVCD."/>
+
+                        <TextBlock Text="Supported Formats" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • DVD-Video — Standard DVD format with VIDEO_TS folder structure. Plays in DVD players worldwide. Requires MPEG-2 video and AC3/DTS/MPEG audio.&#x0a;  • Blu-ray — Full Blu-ray (BDMV) with BDMV folder structure. Supports H.264/AVC, H.265/HEVC, and MPEG-2 video.&#x0a;  • BDAV — Blu-ray Audio/Video recording format, simpler than BDMV.&#x0a;  • 3D Blu-ray — Stereoscopic 3D Blu-ray with SSIF (Stereoscopic Interleaved File Format) support.&#x0a;  • VCD (Video CD) — Standard-definition video on CD media using MPEG-1 video. Widely supported in Asia.&#x0a;  • SVCD (Super Video CD) — Higher quality than VCD using MPEG-2 video on CD media.&#x0a;  • XSVCD (eXtended Super Video CD) — Extended parameters: higher bitrate (up to 3500 kbps) and resolution (up to 720×576) on CD media."/>
+
+                        <TextBlock Text="Workflow" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  1. Choose the target format (DVD, Blu-ray, VCD, etc.)&#x0a;  2. Select the source video folder (containing VIDEO_TS, BDMV, or video files)&#x0a;  3. Configure settings (disc label, region, target drive, write speed)&#x0a;  4. Review the summary&#x0a;  5. Execute the build and burn"/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="DVD-Video authoring generates navigation packs (NV_PCK) containing PCI and DSI packets for chapter navigation. Each NV_PCK is exactly 2,048 bytes: 14-byte pack header + 24-byte system header + 979-byte PCI PES + 1,017-byte DSI PES. DSI contains VOBU_SRI with forward/backward search entries for trick-play. BD 3D SSIF interleaving uses 192 allocation units per extent (AU = 6,144 bytes, extent ≈ 1.2 MB) for smooth stereoscopic playback. VCD/SVCD/XSVCD builds inject the CD-XA001 marker and follow the White Book specification."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- DATA WIZARD                                                   -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionDataWizard" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📁 Data Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Data Wizard guides you through creating data discs from files and folders. It simplifies the process of selecting files, choosing a file system, and burning to disc."/>
+
+                        <TextBlock Text="Tasks" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Build Data Image — Create a disc image (.iso) from a folder of files. The image can be saved and burned later.&#x0a;  • Build &amp; Burn to Disc — Create and burn a data disc in one step without saving an intermediate image file.&#x0a;  • Burn Existing Image — Select a pre-existing disc image file (.iso, .bin, etc.) and burn it directly to a disc."/>
+
+                        <TextBlock Text="Configuration" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Source folder selection&#x0a;  • Disc type (CD, DVD, Blu-ray)&#x0a;  • File system (ISO 9660, Joliet, UDF)&#x0a;  • Volume label&#x0a;  • Write speed and drive selection"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- GAME WIZARD                                                   -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionGameWizard" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎮 Game Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Game Wizard helps you create game discs from image files or folders, with system-specific presets for optimal compatibility."/>
+
+                        <TextBlock Text="Source Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Burn from Image File — Use a pre-existing game disc image (ISO, BIN/CUE, CDI, GDI, etc.)&#x0a;  • Build from Folder — Create a game disc from extracted game files"/>
+
+                        <TextBlock Text="Gaming System Presets" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The wizard includes presets for many gaming systems, automatically configuring write mode, sector size, subchannel handling, and other parameters:&#x0a;&#x0a;  • Sony: PlayStation 1, PS2, PS3, PS4/5, PSP (UMD)&#x0a;  • Sega: Saturn, Dreamcast, Mega CD / Sega CD&#x0a;  • Microsoft: Xbox, Xbox 360, Xbox One/Series&#x0a;  • Nintendo: GameCube, Wii, Wii U&#x0a;  • NEC: PC Engine CD / TurboGrafx-CD&#x0a;  • SNK: Neo Geo CD&#x0a;  • Panasonic: 3DO Interactive Multiplayer&#x0a;  • Philips: CD-i&#x0a;  • Atari: Jaguar CD&#x0a;  • Commodore: Amiga CD32, CDTV"/>
+
+                        <TextBlock Text="Gaming Patches" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • LibCrypt patching (PS1) — Fixes copy protection for PS1 games using SBI files&#x0a;  • Dreamcast GDI patching — Applies format-specific patches for Dreamcast images&#x0a;  • Region-free patching — Removes regional lockout&#x0a;  • Boot sector patching — Patches boot sectors for compatibility with modified firmware&#x0a;  • ESR patch (PS2 DVD-R) — Injects DVD-Video structure for MechaCon bypass on PS2&#x0a;  • Master Disc patch (PS2) — Writes Master Disc identifier for MechaPwn DEX consoles&#x0a;  • PSX 80 Minute patch — Adds dummy sectors for 80-minute CD-R compatibility&#x0a;  • PSX Undither patch (PS1) — Removes GPU dithering from PS1 game images"/>
+
+                        <TextBlock Text="PS3 Decryption" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="When a PS3 game image is selected, the wizard offers to decrypt it before burning. Three key sources are supported:&#x0a;&#x0a;  • IRD File (.ird) — An ISO Rebuild Data file containing the disc key&#x0a;  • Disc Key File (.dkey) — A raw disc key file&#x0a;  • Hex Key — The 16-byte disc key entered directly as 32 hex characters"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- COPY DISC WIZARD                                              -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionCopyWizard" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💿 Copy Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Copy Disc Wizard guides you step-by-step through copying an optical disc to an image file. It simplifies drive selection, output configuration, and the read process."/>
+
+                        <TextBlock Text="Step 1 — Select Source Drive" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Choose the optical drive containing the disc you want to copy. The wizard displays drive details and media information. You can optionally select a gaming system preset to automatically configure optimal read settings for that platform."/>
+
+                        <TextBlock Text="Step 2 — Output Settings" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Configure the output format (ISO, BIN/CUE, etc.), file path, and read speed. Additional options include:&#x0a;&#x0a;  • Verify after copy — Re-read the disc and compare against the saved image&#x0a;  • Retry on errors — Automatically retry reading failed sectors (3 retries)&#x0a;  • Decrypt PS3 disc — Decrypt PS3 game discs during copy using an IRD file (.ird)"/>
+
+                        <TextBlock Text="Step 3 — Copy" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The disc is read sector-by-sector with a progress bar showing completion percentage, current read speed, and a real-time disc visualization. You can cancel the operation at any time."/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- BLANK DISC WIZARD                                             -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionBlankWizard" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🧹 Blank / Erase Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The Blank Disc Wizard guides you step-by-step through erasing rewritable discs or formatting blank media."/>
+
+                        <TextBlock Text="Step 1 — Select Drive" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Choose the optical drive containing the rewritable disc. The wizard displays drive and media details and warns you if the media is not compatible with erasing (e.g. write-once media like DVD-R or BD-R)."/>
+
+                        <TextBlock Text="Step 2 — Erase Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Select the erase method:&#x0a;&#x0a;  • Quick Erase — Erases the TOC/PMA only. Very fast (seconds), but old data remains on disc and may be recoverable.&#x0a;  • Full Erase — Writes zeros to the entire disc surface. Much slower (15–60+ minutes) but completely wipes all data.&#x0a;&#x0a;Compatible media: CD-RW, DVD-RW, DVD+RW, DVD-RAM, BD-RE, HD DVD-RW."/>
+
+                        <TextBlock Text="Step 3 — Erase" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The erase operation runs with a progress indicator and log output. Quick erases complete in seconds; full erases may take considerably longer. You can cancel the operation at any time."/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- DISC TYPES REFERENCE                                          -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionDiscTypes" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📀 Disc Types Reference" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="A comprehensive guide to all optical disc formats supported by Open Burning Suite."/>
+
+                        <TextBlock Text="CD (Compact Disc)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • CD-ROM — Read-only, factory-pressed CDs. Capacity: 650–700 MB (74–80 min audio).&#x0a;  • CD-R (Recordable) — Write-once. Can be burned once and read many times. Most compatible.&#x0a;  • CD-RW (Rewritable) — Can be erased and re-recorded approximately 1,000 times. Slightly less compatible with older CD players.&#x0a;  • Mini CD — Smaller 8 cm diameter disc. Capacity: ~185 MB.&#x0a;&#x0a;CDs use a 780 nm infrared laser. Data is stored in a single spiral track from the inside outward. Standard sector size is 2,048 bytes (Mode 1 data) or 2,352 bytes (audio/raw)."/>
+
+                        <TextBlock Text="DVD (Digital Versatile Disc)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • DVD-ROM — Read-only, factory-pressed.&#x0a;  • DVD-R — Write-once, minus format. Capacity: 4.7 GB (single layer), 8.5 GB (dual layer DL).&#x0a;  • DVD+R — Write-once, plus format. Same capacities as DVD-R. Slightly better error handling.&#x0a;  • DVD-RW — Rewritable, minus format. Can be erased and re-recorded ~1,000 times.&#x0a;  • DVD+RW — Rewritable, plus format. Can be overwritten without blanking first.&#x0a;  • DVD-RAM — Random-access rewritable. Very durable (~100,000 rewrites). Used in some camcorders and PVRs.&#x0a;&#x0a;DVDs use a 650 nm red laser. Dual-layer discs have two recording layers accessed by changing the laser focus."/>
+
+                        <TextBlock Text="HD DVD (High Definition DVD)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • HD DVD-ROM — Read-only. Capacity: 15 GB (SL), 30 GB (DL).&#x0a;  • HD DVD-R — Write-once. Same capacities.&#x0a;  • HD DVD-RW — Rewritable.&#x0a;  • HD DVD-RAM — Random-access rewritable (4.7 GB).&#x0a;&#x0a;HD DVD used a 405 nm blue-violet laser (same as Blu-ray) but lost the format war to Blu-ray in 2008. Some older drives still support it."/>
+
+                        <TextBlock Text="Blu-ray Disc (BD)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • BD-ROM — Read-only, factory-pressed. Capacity: 25 GB (SL), 50 GB (DL), 100 GB (TL BDXL), 128 GB (QL BDXL).&#x0a;  • BD-R (Recordable) — Write-once. Available in SL, DL, TL (BDXL), and QL (BDXL).&#x0a;  • BD-RE (Rewritable) — Can be erased and re-recorded. Available in SL, DL, TL (BDXL), and QL (BDXL).&#x0a;&#x0a;Blu-ray uses a 405 nm blue-violet laser with a tighter track pitch (0.32 µm) than DVD, enabling much higher data density. BD-R supports Sequential Recording Mode (SRM) and Random Recording Mode (RRM)."/>
+
+                        <TextBlock Text="UHD Blu-ray (Ultra HD Blu-ray)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • UHD BD-66 — Dual-layer. Capacity: 66 GB.&#x0a;  • UHD BD-100 — Triple-layer. Capacity: 100 GB.&#x0a;&#x0a;UHD Blu-ray uses higher density pits and tighter tracks than standard Blu-ray. Video content requires HEVC (H.265) Main10 Profile with mandatory HDR10, BT.2020 wide color gamut, and up to 100 Mbps video bitrate. Uses the same 405 nm blue-violet laser as standard Blu-ray."/>
+
+                        <TextBlock Text="M-DISC (Millennial Disc)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="A special archival format that etches data into a rock-like layer instead of organic dye. Available in DVD (4.7 GB) and Blu-ray (25 GB, 50 GB, 100 GB) variants. Rated for 1,000+ years of data retention under normal storage conditions. Requires an M-DISC compatible burner drive."/>
+
+                        <Border Classes="InfoCard" Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="💡 Technical Detail — Disc Profiles" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
+                                           Text="Each media type is identified by a profile number in the MMC GET CONFIGURATION command. Examples: BD-RE = 0x0043, BD-RE DL = 0x0046, BD-RE TL BDXL = 0x004B, BD-RE QL BDXL = 0x004D, BD-R SRM = 0x0041, BD-R RRM = 0x0042, BD-R DL = 0x0045, BD-R TL BDXL = 0x004A, BD-R QL BDXL = 0x004C. All BD-RE variants support overwriting without blanking."/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- FILE SYSTEMS REFERENCE                                        -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionFileSystems" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📂 File Systems Reference" Classes="SectionHeader" FontSize="18"/>
+
+                        <TextBlock Text="ISO 9660" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The universal standard for CD-ROMs and data discs. Defined by ECMA-119 / ISO 9660.&#x0a;&#x0a;Limitations of base ISO 9660 Level 1:&#x0a;  • Filenames: 8.3 format (8 character name + 3 character extension), uppercase only&#x0a;  • Directory depth: Maximum 8 levels&#x0a;  • File size: Maximum 4 GB (limited by 32-bit sector addressing)&#x0a;&#x0a;ISO 9660 Level 2 allows longer filenames (up to 31 characters) and deeper directories. Level 3 adds multi-extent files (files split across non-contiguous regions)."/>
+
+                        <TextBlock Text="Joliet" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="A Microsoft extension to ISO 9660 that adds:&#x0a;  • Unicode filenames (UCS-2 encoding)&#x0a;  • Long filenames up to 64 characters (or more with the 'Joliet long filenames' option)&#x0a;  • Mixed case filenames&#x0a;&#x0a;Joliet is stored as a Supplementary Volume Descriptor alongside the standard ISO 9660 PVD, so the disc remains readable on systems that don't support Joliet."/>
+
+                        <TextBlock Text="UDF (Universal Disc Format)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="A modern, feature-rich file system defined by ECMA-167 and the OSTA UDF specification.&#x0a;&#x0a;  • No 4 GB file size limit&#x0a;  • Full Unicode support&#x0a;  • Required for DVD-Video, Blu-ray, and large data discs&#x0a;  • Supports file permissions and extended attributes&#x0a;  • Versions: 1.02 (DVD-Video), 1.5 (DVD-RAM), 2.01 (DVD), 2.50 (BD), 2.60 (BD-R/RE, HD DVD, UHD BD)"/>
+
+                        <TextBlock Text="Rock Ridge" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="An extension to ISO 9660 for POSIX/Unix systems:&#x0a;  • Long filenames (up to 255 characters)&#x0a;  • File permissions (owner, group, world)&#x0a;  • Symbolic links&#x0a;  • Deep directory nesting beyond 8 levels&#x0a;  • Device files&#x0a;&#x0a;Commonly used on Linux bootable and installation discs."/>
+
+                        <TextBlock Text="HFS / HFS+" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Apple's file systems for macOS. HFS+ (Mac OS Extended) supports Unicode filenames, file permissions, and resource forks. Used for Mac-bootable discs and hybrid Mac/PC discs."/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- IMAGE FORMATS REFERENCE                                       -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionImageFormats" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💾 Disc Image Formats Reference" Classes="SectionHeader" FontSize="18"/>
+
+                        <TextBlock Text="ISO (.iso)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="The most common and universal disc image format. Contains a sector-by-sector copy of the data area at 2,048 bytes per sector. Does not include subchannel data or audio tracks in raw form. Suitable for data discs, DVD-Video, and Blu-ray. Can be mounted natively on Windows, Linux, and macOS."/>
+
+                        <TextBlock Text="BIN/CUE (.bin + .cue)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="A raw disc image format. The .bin file contains raw sector data (2,352 bytes per sector, including sync, header, ECC, and EDC). The .cue file is a text file describing the disc layout (tracks, sessions, indices, pregaps). Essential for audio CDs, mixed-mode discs, and gaming disc images that need raw sector accuracy."/>
+
+                        <TextBlock Text="BIN/CUE/SBI (.bin + .cue + .sbi)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="BIN/CUE format with an additional SBI (SubChannel Binary Image) file. The SBI file contains only subchannel-Q data for sectors with modified Q-channel CRC — specifically LibCrypt copy protection used on PlayStation 1 games. This is the recommended archival format for PS1 discs as it captures the protection data needed by emulators like DuckStation and Mednafen. Subchannel data is read in raw mode (RW_RAW) and post-processed to extract LibCrypt sectors."/>
+
+                        <TextBlock Text="MDF/MDS (.mdf + .mds)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Alcohol 120% format. MDF contains the raw disc data, MDS contains metadata about the disc structure. Supports subchannel data and multi-session discs."/>
+
+                        <TextBlock Text="NRG (.nrg)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Nero Burning ROM's proprietary format. Contains disc data plus metadata in a chunked format at the end of the file. Supports audio, data, and mixed-mode discs."/>
+
+                        <TextBlock Text="CDI (.cdi)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="DiscJuggler format. Common for Sega Dreamcast game images. Contains raw disc data with metadata trailer."/>
+
+                        <TextBlock Text="CCD/IMG/SUB (.ccd + .img + .sub)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="CloneCD format. CCD is a text file with disc metadata, IMG contains the raw sector data, and SUB contains subchannel data. Excellent for preserving the complete disc structure including copy protection."/>
+
+                        <TextBlock Text="GDI (.gdi)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Sega Dreamcast GD-ROM image format. A text file listing track files with their types and sector sizes. Used specifically for Dreamcast game preservation."/>
+
+                        <TextBlock Text="TOC/BIN (.toc + .bin)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="cdrdao (CD Recording Disc At Once) format. The TOC file describes the disc layout in a cdrdao-specific text format, and BIN contains the raw data."/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- GLOSSARY                                                      -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionGlossary" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📘 Glossary" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" FontSize="11" LineHeight="18" xml:space="preserve"><Bold>Buffer Underrun</Bold> — When the drive's write buffer empties during burning, causing a failed burn. Modern drives have protection (BURN-Proof, SafeBurn) to pause and resume.
+
+<Bold>CD-TEXT</Bold> — Metadata (artist, album, track titles) embedded in the subchannel of audio CDs. Displayed by compatible CD players.
+
+<Bold>CUE Sheet</Bold> — A text file describing the layout of a disc image: tracks, their types, indices, and pregaps.
+
+<Bold>DAO (Disc-At-Once)</Bold> — Writing mode where the entire disc is written in one continuous pass without stopping the laser.
+
+<Bold>Disc State</Bold> — Empty (blank), Appendable (has sessions but can accept more), or Complete/Closed (finalized, no more writing possible).
+
+<Bold>DL (Dual Layer)</Bold> — A disc with two recording layers, roughly doubling capacity (e.g. DVD DL = 8.5 GB, BD DL = 50 GB).
+
+<Bold>El Torito</Bold> — The standard for bootable CD/DVD-ROMs. Defines a boot catalog and boot images that the BIOS/UEFI loads.
+
+<Bold>Finalization</Bold> — Closing the disc so it can be read by any compatible drive or player. A finalized disc cannot have more data appended.
+
+<Bold>ISO 9660</Bold> — The standard file system for CD-ROMs, defined by ECMA-119.
+
+<Bold>Joliet</Bold> — Microsoft's extension to ISO 9660 for Unicode and long filename support.
+
+<Bold>LBA (Logical Block Address)</Bold> — Sequential numbering of sectors on a disc, starting from 0. Used to locate data on the disc.
+
+<Bold>Lead-in / Lead-out</Bold> — Special areas at the beginning and end of each session on a disc. The lead-in contains the TOC.
+
+<Bold>LibCrypt</Bold> — A copy protection used on some PlayStation 1 games, stored in the subchannel data.
+
+<Bold>M-DISC</Bold> — Millennial Disc — archival media rated for 1,000+ years of data retention.
+
+<Bold>MMC (Multi-Media Commands)</Bold> — The SCSI command set used to control optical drives.
+
+<Bold>Multi-session</Bold> — A disc with multiple sessions. Each session has its own lead-in and lead-out, allowing data to be added incrementally.
+
+<Bold>Overburn</Bold> — Writing beyond the official rated capacity of a disc. Risky but sometimes possible.
+
+<Bold>PVD (Primary Volume Descriptor)</Bold> — The main metadata structure in an ISO 9660 file system, located at sector 16.
+
+<Bold>Raw Sector</Bold> — A complete 2,352-byte sector including sync pattern, header, user data, ECC, and EDC.
+
+<Bold>Rock Ridge</Bold> — ISO 9660 extension for POSIX metadata (long names, permissions, symlinks).
+
+<Bold>SBI File</Bold> — SubChannel Binary Image — contains subchannel data for LibCrypt-protected PlayStation 1 games.
+
+<Bold>SCSI</Bold> — Small Computer System Interface — the protocol used to communicate with optical drives.
+
+<Bold>Session</Bold> — A self-contained recording unit on a disc with its own lead-in, program area, and lead-out.
+
+<Bold>Subchannel</Bold> — Additional data channels (P through W) alongside the main data on a CD. Used for timing, CD-TEXT, copy protection, and other metadata.
+
+<Bold>TAO (Track-At-Once)</Bold> — Writing mode where each track is written individually with gaps between them.
+
+<Bold>TOC (Table of Contents)</Bold> — Data in the lead-in area listing all tracks on the disc, their positions and types.
+
+<Bold>Track</Bold> — A contiguous block of data on a disc. A disc can contain multiple tracks (e.g. audio tracks + a data track).
+
+<Bold>UDF (Universal Disc Format)</Bold> — Modern file system for optical media, required for DVD-Video and Blu-ray.
+
+<Bold>VOBU (Video Object Unit)</Bold> — The smallest addressable unit in a DVD-Video stream, typically 0.4–1.0 seconds of video.</TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- TROUBLESHOOTING                                               -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionTroubleshooting" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔧 Troubleshooting" Classes="SectionHeader" FontSize="18"/>
+
+                        <TextBlock Text="No drives detected" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Ensure your optical drive is connected and powered on&#x0a;  • On Windows: Run the application as Administrator&#x0a;  • On Linux: Run with sudo or ensure your user is in the 'cdrom' and 'optical' groups&#x0a;  • On macOS: Run with sudo&#x0a;  • Try clicking Refresh Drives to rescan&#x0a;  • Check if the drive appears in your operating system's device manager"/>
+
+                        <TextBlock Text="Burn fails or produces coasters" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Lower the write speed — high speeds are more prone to errors&#x0a;  • Ensure buffer underrun protection is enabled&#x0a;  • Try different media brands — some drives work better with certain brands&#x0a;  • Close other applications that might interrupt the burn process&#x0a;  • Check that your disc is not damaged or expired (organic dyes degrade over time)&#x0a;  • For rewritable media, try a full blank before writing"/>
+
+                        <TextBlock Text="'Not elevated' warning" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="Many operations require direct hardware access:&#x0a;  • Windows: Right-click the application → Run as Administrator&#x0a;  • Linux: Run with 'sudo' or configure udev rules for your optical drive&#x0a;  • macOS: Run with 'sudo' from Terminal"/>
+
+                        <TextBlock Text="Disc not recognized or wrong media type" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Eject and reinsert the disc&#x0a;  • Click Refresh Drives and Probe Media again&#x0a;  • The disc may be damaged, dirty, or incompatible with your drive&#x0a;  • Try the 'Force Media Type' option in advanced settings if the drive misidentifies the media"/>
+
+                        <TextBlock Text="Audio CD rip has glitches or clicks" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Enable Audio Paranoia Mode for maximum error correction&#x0a;  • Enable Jitter Correction&#x0a;  • Lower the read speed to 4x or 8x&#x0a;  • Increase the retry count to 10 or more&#x0a;  • Clean the disc surface gently from center to edge (never in circular motions)"/>
+
+                        <TextBlock Text="Verification fails after successful burn" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • This may indicate marginal media quality — try a different disc&#x0a;  • Lower the write speed and burn again&#x0a;  • Some drives have slightly different read-back behavior — try verification on a different drive&#x0a;  • Ensure the disc was not removed and reinserted between burning and verification&#x0a;  • For mixed-mode CDs (e.g. PS1 games), ensure you are comparing with the original CUE sheet — the CUE layout is needed for correct pregap and track boundary handling&#x0a;  • Enable Audio Track Verification when verifying mixed-mode discs with audio tracks to include all sectors in the comparison"/>
+
+                        <TextBlock Text="Gaming disc doesn't work on console" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
+                                   Text="  • Ensure you selected the correct gaming system preset&#x0a;  • Use DAO (Disc-At-Once) write mode — TAO adds gaps that break many game formats&#x0a;  • PS1 games with LibCrypt protection need the correct .sbi file&#x0a;  • Dreamcast games in CDI/GDI format need specific patching enabled&#x0a;  • Use low write speeds (4x–8x) for maximum compatibility&#x0a;  • Verify the source image is a correct dump using the Verify view"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Bottom spacer for comfortable scrolling -->
+                <Border Height="20"/>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,129 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="OpenBurningSuite.Views.AdvancedView"
+             Background="#0C1622">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" Spacing="16">
+
+            <!-- Header -->
+            <TextBlock Text="Advanced Utilities" Classes="PageTitle"/>
+            <TextBlock Text="Erase rewritable discs, format media, eject/load tray, and other advanced disc operations."
+                       Classes="PageSubtitle"/>
+
+            <!-- Drive selection (shared) -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Drive" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <ComboBox x:Name="CmbDrive"
+                                  PlaceholderText="Select optical drive..."
+                                  HorizontalAlignment="Stretch"
+                                  ToolTip.Tip="Select the drive to operate on"/>
+                        <Button x:Name="BtnRefreshDrives" Grid.Column="1"
+                                Content="🔄" Classes="ActionBtn"
+                                Margin="6,0,0,0" Click="OnRefreshDrivesClick"
+                                ToolTip.Tip="Refresh the list of available drives"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Eject / Load Tray -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Eject / Load Tray" Classes="SectionHeader"/>
+                    <TextBlock Text="Open or close the disc tray on the selected drive."
+                               Foreground="#5A7A9A" FontSize="11"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                        <Button x:Name="BtnEject"
+                                Content="⏏&#xFE0F; Eject Tray" Classes="ActionBtn"
+                                Click="OnEjectClick"
+                                ToolTip.Tip="Open the disc tray"/>
+                        <Button x:Name="BtnLoadTray"
+                                Content="📥 Load Tray" Classes="ActionBtn"
+                                Click="OnLoadTrayClick"
+                                ToolTip.Tip="Close the disc tray"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Blank / Erase -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Blank / Erase Rewritable Disc" Classes="SectionHeader"/>
+                    <TextBlock Text="Erase CD-RW, DVD±RW, or BD-RE media before writing."
+                               Foreground="#5A7A9A" FontSize="11"/>
+
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                        <Button x:Name="BtnBlankQuick"
+                                Content="⚡&#xFE0F; Quick Blank" Classes="ActionBtn"
+                                Click="OnBlankQuickClick"
+                                ToolTip.Tip="Quick blank only clears TOC — fast but data may be recoverable"/>
+                        <Button x:Name="BtnBlankFull"
+                                Content="🗑  Full Blank" Classes="ActionBtn"
+                                Click="OnBlankFullClick"
+                                ToolTip.Tip="Full blank overwrites entire disc — slower but more thorough"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Format Disc -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Format Disc" Classes="SectionHeader"/>
+                    <TextBlock Text="Format DVD+RW, DVD-RAM, BD-R, BD-RE, or HD DVD-RW media. Required before first use on some media types."
+                               Foreground="#5A7A9A" FontSize="11"/>
+
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                        <Button x:Name="BtnFormatQuick"
+                                Content="⚡&#xFE0F; Quick Format" Classes="ActionBtn"
+                                Click="OnFormatQuickClick"
+                                ToolTip.Tip="Quick format — prepares disc for use without full surface certification"/>
+                        <Button x:Name="BtnFormatFull"
+                                Content="📀 Full Format" Classes="ActionBtn"
+                                Click="OnFormatFullClick"
+                                ToolTip.Tip="Full format with certification — slower but ensures disc integrity"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Progress & Log -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="Progress" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnCancelOp" Grid.Column="1"
+                                Content="⏹  Cancel" Classes="DangerBtn"
+                                IsEnabled="False" Click="OnCancelOpClick"
+                                ToolTip.Tip="Cancel the current operation"/>
+                    </Grid>
+
+                    <ProgressBar x:Name="OperationProgressBar" Classes="BurnProgress" Value="0"/>
+
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock x:Name="TxtOperationStatus" Text="Ready."
+                                   Foreground="#5A7A9A" FontSize="11"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtOperationETA" Grid.Column="1"
+                                   Text="" Foreground="#5A7A9A" FontSize="11"
+                                   VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtOperationPct" Grid.Column="2"
+                                   Text="0%" Foreground="#E8F0FE" FontSize="11"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="Auto,*">
+                        <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
+                        <Button x:Name="BtnClearLog" Grid.Column="1"
+                                Content="🧹 Clear" Classes="ActionBtn"
+                                HorizontalAlignment="Right" Click="OnClearLogClick"
+                                ToolTip.Tip="Clear the log output"/>
+                    </Grid>
+
+                    <TextBox x:Name="TxtLog" Classes="LogBox" Height="180"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

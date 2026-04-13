@@ -1,0 +1,401 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dg="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
+             x:Class="OpenBurningSuite.Views.DiscoverView"
+             Background="#0C1622">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" Spacing="16">
+
+            <!-- Header -->
+            <TextBlock Text="Discover Drives &amp; Media" Classes="PageTitle"/>
+            <TextBlock Text="Scan for optical drives, probe inserted media, and inspect drive capabilities."
+                       Classes="PageSubtitle"/>
+
+            <!-- Drives section -->
+            <Border Classes="Card">
+                <StackPanel Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="Optical Drives" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnRefreshDrives" Grid.Column="1"
+                                Content="🔄  Refresh Drives"
+                                Classes="ActionBtn" Click="OnRefreshDrivesClick"
+                                ToolTip.Tip="Rescan the system for connected optical drives"/>
+                    </Grid>
+
+                    <dg:DataGrid x:Name="DrivesGrid"
+                                 Height="160"
+                                 IsReadOnly="True"
+                                 GridLinesVisibility="Horizontal"
+                                 Background="#152030"
+                                 RowBackground="#152030"
+                                 BorderBrush="#1E3450" BorderThickness="1"
+                                 CornerRadius="4"
+                                 ToolTip.Tip="List of detected optical drives — select one to view capabilities">
+                        <dg:DataGrid.Styles>
+                            <Style Selector="DataGridRow:nth-child(2n)">
+                                <Setter Property="Background" Value="#1E1E36"/>
+                            </Style>
+                        </dg:DataGrid.Styles>
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridTextColumn Header="Device Path"   Binding="{Binding DevicePath}" Width="160"/>
+                            <dg:DataGridTextColumn Header="Drive Letter"  Binding="{Binding DriveLetter}" Width="90"/>
+                            <dg:DataGridTextColumn Header="Model"         Binding="{Binding DriveModel}" Width="*"/>
+                            <dg:DataGridTextColumn Header="Type"          Binding="{Binding DriveType}" Width="140"/>
+                            <dg:DataGridTextColumn Header="Status"        Binding="{Binding Status}" Width="100"/>
+                        </dg:DataGrid.Columns>
+                    </dg:DataGrid>
+
+                    <!-- No drives found message (visible when no optical drives are detected) -->
+                    <Border x:Name="NoDrivesPanel" IsVisible="False"
+                            Background="#1A1A2E" CornerRadius="6" Padding="20"
+                            BorderBrush="#2A3A50" BorderThickness="1">
+                        <StackPanel Spacing="8" HorizontalAlignment="Center">
+                            <TextBlock Text="💿  No optical drives detected"
+                                       Foreground="#8899AA" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Connect an internal or external optical drive, then click Refresh Drives."
+                                       Foreground="#667788" FontSize="12"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center"/>
+                            <TextBlock x:Name="TxtNoDrivesHint"
+                                       Foreground="#556677" FontSize="11"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" IsVisible="False"/>
+                            <Button Content="🔄  Refresh Drives"
+                                    Classes="ActionBtn" Click="OnRefreshDrivesClick"
+                                    HorizontalAlignment="Center" Margin="0,4,0,0"
+                                    ToolTip.Tip="Rescan the system for connected optical drives"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Media probe section -->
+            <Border Classes="Card">
+                <StackPanel Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock Text="Media Information" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox x:Name="CmbDriveSel" Grid.Column="1"
+                                  Width="220" Margin="0,0,8,0"
+                                  PlaceholderText="Select drive..."
+                                  SelectionChanged="OnDriveSelectionChanged"
+                                  ToolTip.Tip="Choose a drive to inspect"/>
+                        <Button x:Name="BtnProbeMedia" Grid.Column="2"
+                                Content="🔬  Probe Media"
+                                Classes="ActionBtn" Click="OnProbeMediaClick"
+                                ToolTip.Tip="Read details about the disc currently in the selected drive"/>
+                    </Grid>
+
+                    <!-- Media info cards -->
+                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" Margin="0,4,0,0">
+
+                        <Border Grid.Column="0" Grid.Row="0" Classes="InfoCard" Margin="0,0,6,6">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="MEDIA TYPE" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtMediaType" Text="—" Foreground="#E8F0FE" FontSize="14"
+                                           ToolTip.Tip="Type of optical media detected (e.g., CD-R, DVD+R, BD-R)"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Grid.Row="0" Classes="InfoCard" Margin="0,0,6,6">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="DISC STATE" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtDiscState" Text="—" Foreground="#E8F0FE" FontSize="14"
+                                           ToolTip.Tip="Disc state: Empty, Appendable, or Closed"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="2" Grid.Row="0" Classes="InfoCard" Margin="0,0,0,6">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="VOLUME LABEL" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtVolumeLabel" Text="—" Foreground="#E8F0FE" FontSize="14"
+                                           ToolTip.Tip="The volume label stored on the disc"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="0" Grid.Row="1" Classes="InfoCard" Margin="0,0,6,0">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="CAPACITY" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtCapacity" Text="—" Foreground="#E8F0FE" FontSize="14"
+                                           ToolTip.Tip="Total capacity of the inserted media"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Grid.Row="1" Classes="InfoCard" Margin="0,0,6,0">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="USED / FREE" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtUsedFree" Text="—" Foreground="#E8F0FE" FontSize="14"
+                                           ToolTip.Tip="Used and free space on the disc"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="2" Grid.Row="1" Classes="InfoCard" Margin="0,0,0,0">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="FILE SYSTEM" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtFileSystem" Text="—" Foreground="#E8F0FE" FontSize="14"
+                                           ToolTip.Tip="Detected file system (ISO 9660, UDF, Joliet, etc.)"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Tracks / Sessions -->
+                    <Grid ColumnDefinitions="*,*">
+                        <Border Grid.Column="0" Classes="InfoCard" Margin="0,0,6,0">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="SESSIONS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtSessions" Text="—" Foreground="#E8F0FE"
+                                           ToolTip.Tip="Number of sessions (multi-session discs have more than 1)"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Classes="InfoCard">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="TRACKS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtTracks" Text="—" Foreground="#E8F0FE"
+                                           ToolTip.Tip="Number of data and audio tracks"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Drive Capabilities -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Drive Capabilities" Classes="SectionHeader"/>
+
+                    <!-- Read / Write capabilities side by side -->
+                    <Grid ColumnDefinitions="*,*" Margin="0,4,0,0">
+                        <!-- Read Capabilities -->
+                        <Border Grid.Column="0" Classes="InfoCard" Padding="10" Margin="0,0,4,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="READ CAPABILITIES" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Margin="0,0,0,0">
+                                    <!-- Column 1 -->
+                                    <CheckBox x:Name="ChkReadCdR" Grid.Row="0" Grid.Column="0" Content="CD-R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadCdRw" Grid.Row="1" Grid.Column="0" Content="CD-RW" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdRom" Grid.Row="2" Grid.Column="0" Content="DVD-ROM" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdR" Grid.Row="3" Grid.Column="0" Content="DVD-R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdRw" Grid.Row="4" Grid.Column="0" Content="DVD-RW" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdPlusR" Grid.Row="5" Grid.Column="0" Content="DVD+R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdPlusRw" Grid.Row="6" Grid.Column="0" Content="DVD+RW" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdRDl" Grid.Row="7" Grid.Column="0" Content="DVD-R DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdRwDl" Grid.Row="8" Grid.Column="0" Content="DVD-RW DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdPlusRDl" Grid.Row="9" Grid.Column="0" Content="DVD+R DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadDvdPlusRwDl" Grid.Row="10" Grid.Column="0" Content="DVD+RW DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+
+                                    <!-- Column 2 -->
+                                    <CheckBox x:Name="ChkReadDvdRam" Grid.Row="0" Grid.Column="1" Content="DVD-RAM" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadHdDvdRom" Grid.Row="1" Grid.Column="1" Content="HD DVD-ROM" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadHdDvdR" Grid.Row="2" Grid.Column="1" Content="HD DVD-R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadHdDvdRw" Grid.Row="3" Grid.Column="1" Content="HD DVD-RW" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadHdDvdRam" Grid.Row="4" Grid.Column="1" Content="HD DVD-RAM" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadHdDvdRDl" Grid.Row="5" Grid.Column="1" Content="HD DVD-R DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadHdDvdRwDl" Grid.Row="6" Grid.Column="1" Content="HD DVD-RW DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadBdRom" Grid.Row="7" Grid.Column="1" Content="BD-ROM" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadBdR" Grid.Row="8" Grid.Column="1" Content="BD-R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadBdRe" Grid.Row="9" Grid.Column="1" Content="BD-RE" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadBdRXl" Grid.Row="10" Grid.Column="1" Content="BD-R XL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkReadBdReXl" Grid.Row="11" Grid.Column="1" Content="BD-RE XL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Write Capabilities -->
+                        <Border Grid.Column="1" Classes="InfoCard" Padding="10" Margin="4,0,0,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="WRITE CAPABILITIES" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Margin="0,0,0,0">
+                                    <!-- Column 1 -->
+                                    <CheckBox x:Name="ChkWriteCdR" Grid.Row="0" Grid.Column="0" Content="CD-R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteCdRw" Grid.Row="1" Grid.Column="0" Content="CD-RW" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteDvdRom" Grid.Row="2" Grid.Column="0" Content="DVD-ROM" IsEnabled="False" FontSize="11" Foreground="#7A8A9A"
+                                              ToolTip.Tip="DVD-ROM is a read-only format and cannot be written"/>
+                                    <CheckBox x:Name="ChkWriteDvdR" Grid.Row="3" Grid.Column="0" Content="DVD-R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteDvdRw" Grid.Row="4" Grid.Column="0" Content="DVD-RW" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteDvdPlusR" Grid.Row="5" Grid.Column="0" Content="DVD+R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteDvdPlusRw" Grid.Row="6" Grid.Column="0" Content="DVD+RW" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteDvdRDl" Grid.Row="7" Grid.Column="0" Content="DVD-R DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteDvdRwDl" Grid.Row="8" Grid.Column="0" Content="DVD-RW DL" IsEnabled="False" FontSize="11" Foreground="#7A8A9A"
+                                              ToolTip.Tip="DVD-RW DL has no standard MMC profile — no drives support this format"/>
+                                    <CheckBox x:Name="ChkWriteDvdPlusRDl" Grid.Row="9" Grid.Column="0" Content="DVD+R DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteDvdPlusRwDl" Grid.Row="10" Grid.Column="0" Content="DVD+RW DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+
+                                    <!-- Column 2 -->
+                                    <CheckBox x:Name="ChkWriteDvdRam" Grid.Row="0" Grid.Column="1" Content="DVD-RAM" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteHdDvdRom" Grid.Row="1" Grid.Column="1" Content="HD DVD-ROM" IsEnabled="False" FontSize="11" Foreground="#7A8A9A"
+                                              ToolTip.Tip="HD DVD-ROM is a read-only format and cannot be written"/>
+                                    <CheckBox x:Name="ChkWriteHdDvdR" Grid.Row="2" Grid.Column="1" Content="HD DVD-R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteHdDvdRw" Grid.Row="3" Grid.Column="1" Content="HD DVD-RW" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteHdDvdRam" Grid.Row="4" Grid.Column="1" Content="HD DVD-RAM" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteHdDvdRDl" Grid.Row="5" Grid.Column="1" Content="HD DVD-R DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteHdDvdRwDl" Grid.Row="6" Grid.Column="1" Content="HD DVD-RW DL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteBdRom" Grid.Row="7" Grid.Column="1" Content="BD-ROM" IsEnabled="False" FontSize="11" Foreground="#7A8A9A"
+                                              ToolTip.Tip="BD-ROM is a read-only format and cannot be written"/>
+                                    <CheckBox x:Name="ChkWriteBdR" Grid.Row="8" Grid.Column="1" Content="BD-R" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteBdRe" Grid.Row="9" Grid.Column="1" Content="BD-RE" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteBdRXl" Grid.Row="10" Grid.Column="1" Content="BD-R XL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                    <CheckBox x:Name="ChkWriteBdReXl" Grid.Row="11" Grid.Column="1" Content="BD-RE XL" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Additional capabilities -->
+                    <Grid ColumnDefinitions="*,*" Margin="0,4,0,0">
+                        <Border Grid.Column="0" Classes="InfoCard" Padding="10" Margin="0,0,4,0">
+                            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+                                <CheckBox x:Name="ChkC2Errors" Grid.Row="0" Grid.Column="0" Content="C2 Errors" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"
+                                          ToolTip.Tip="Drive supports C2 error pointers for accurate error reporting"/>
+                                <CheckBox x:Name="ChkCdText" Grid.Row="1" Grid.Column="0" Content="CD Text" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"
+                                          ToolTip.Tip="Drive supports reading/writing CD-Text metadata"/>
+                                <CheckBox x:Name="ChkLayerJumpRec" Grid.Row="2" Grid.Column="0" Content="Layer Jump Rec." IsEnabled="False" FontSize="11" Foreground="#C8D8E8"
+                                          ToolTip.Tip="Drive supports Layer Jump Recording for DVD-R DL"/>
+                                <CheckBox x:Name="ChkLabelflash" Grid.Row="0" Grid.Column="1" Content="Labelflash" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"
+                                          ToolTip.Tip="Drive supports Labelflash disc label printing"/>
+                                <CheckBox x:Name="ChkLightScribe" Grid.Row="1" Grid.Column="1" Content="LightScribe" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"
+                                          ToolTip.Tip="Drive supports LightScribe disc label printing"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Other Capabilities -->
+                        <Border Grid.Column="1" Classes="InfoCard" Padding="10" Margin="4,0,0,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="OTHER CAPABILITIES" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <CheckBox x:Name="ChkBindingNonce" Content="Binding Nonce Generation" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"
+                                          ToolTip.Tip="Drive supports AACS Binding Nonce Generation (Blu-ray content protection)"/>
+                                <CheckBox x:Name="ChkBusEncryption" Content="Bus Encryption Capable" IsEnabled="False" FontSize="11" Foreground="#C8D8E8"
+                                          ToolTip.Tip="Drive supports AACS Bus Encryption for protected Blu-ray content"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Supported Read Speeds:" Foreground="#5A7A9A" FontSize="11"/>
+                        <TextBlock x:Name="TxtReadSpeeds" Text="—"
+                                   Foreground="#E8F0FE" FontSize="11" TextWrapping="Wrap"
+                                   ToolTip.Tip="Read speeds supported by the drive"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Supported Write Speeds:" Foreground="#5A7A9A" FontSize="11"/>
+                        <TextBlock x:Name="TxtWriteSpeeds" Text="—"
+                                   Foreground="#E8F0FE" FontSize="11" TextWrapping="Wrap"
+                                   ToolTip.Tip="Write speeds supported by the drive"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Drive Firmware & Hardware Info -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Drive Firmware &amp; Hardware" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="Auto">
+                        <Border Grid.Column="0" Classes="InfoCard" Padding="10" Margin="0,0,4,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="VENDOR" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtDriveVendor" Text="—" Foreground="#E8F0FE" FontSize="12"
+                                           ToolTip.Tip="Drive manufacturer / vendor ID"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Classes="InfoCard" Padding="10" Margin="4,0,4,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="FIRMWARE" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtDriveFirmware" Text="—" Foreground="#E8F0FE" FontSize="12"
+                                           ToolTip.Tip="Drive firmware revision"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="2" Classes="InfoCard" Padding="10" Margin="4,0,4,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="SERIAL" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtDriveSerial" Text="—" Foreground="#E8F0FE" FontSize="12"
+                                           ToolTip.Tip="Drive serial number"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="3" Classes="InfoCard" Padding="10" Margin="4,0,0,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="BUFFER SIZE" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtBufferSize" Text="—" Foreground="#E8F0FE" FontSize="12"
+                                           ToolTip.Tip="Drive buffer size in KiB"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Content Detection -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="Disc Content Analysis" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnAnalyzeContent" Grid.Column="1"
+                                Content="🔬  Analyze Content"
+                                Classes="ActionBtn" Click="OnAnalyzeContentClick"
+                                ToolTip.Tip="Detect disc content type (gaming system, video disc, audio CD, data disc)"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto">
+                        <Border Grid.Column="0" Classes="InfoCard" Padding="10" Margin="0,0,4,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="CONTENT TYPE" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtContentType" Text="—" Foreground="#E8F0FE" FontSize="12"
+                                           ToolTip.Tip="Detected content type (e.g., Audio CD, Video DVD, PS1 Game, Data)"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Classes="InfoCard" Padding="10" Margin="4,0,4,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="MEDIA ID" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtMediaId" Text="—" Foreground="#E8F0FE" FontSize="12"
+                                           TextWrapping="Wrap"
+                                           ToolTip.Tip="Media manufacturer ID (MID) — identifies the disc brand and type"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="2" Classes="InfoCard" Padding="10" Margin="4,0,0,0">
+                            <StackPanel Spacing="3">
+                                <TextBlock Text="LAYER INFO" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtLayerInfo" Text="—" Foreground="#E8F0FE" FontSize="12"
+                                           TextWrapping="Wrap"
+                                           ToolTip.Tip="Disc layer count and structure information"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Track listing -->
+                    <TextBlock Text="Track Listing:" Foreground="#5A7A9A" FontSize="11" Margin="0,4,0,0"/>
+                    <TextBox x:Name="TxtTrackListing" Classes="LogBox" Height="100"
+                             IsReadOnly="True" FontFamily="Consolas,Menlo,Courier New"
+                             FontSize="11" Text="No track info available — click Analyze Content"/>
+
+                    <!-- Extended content details (shown when available) -->
+                    <Border x:Name="PnlContentDetails" Classes="InfoCard" Padding="10" IsVisible="False">
+                        <StackPanel Spacing="3">
+                            <TextBlock Text="CONTENT DETAILS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                            <TextBlock x:Name="TxtContentDetails" Text="" Foreground="#E8F0FE" FontSize="12"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Log -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="Log" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnClearLog" Grid.Column="1"
+                                Content="🧹 Clear"
+                                Classes="ActionBtn" Click="OnClearLogClick"
+                                ToolTip.Tip="Clear the log output"/>
+                    </Grid>
+                    <TextBox x:Name="TxtLog"
+                             Classes="LogBox"
+                             Height="80"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

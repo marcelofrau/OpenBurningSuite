@@ -1,0 +1,413 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="OpenBurningSuite.Views.BuildView"
+             Background="#0C1622">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" Spacing="16">
+
+            <!-- Header -->
+            <TextBlock Text="Build Disc Image" Classes="PageTitle"/>
+            <TextBlock Text="Create ISO, audio CD, Video DVD, Blu-ray, and gaming disc images from source files."
+                       Classes="PageSubtitle"/>
+
+            <!-- Disc &amp; Filesystem Settings -->
+            <Border Classes="Card">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Disc &amp; Filesystem Settings" Classes="SectionHeader"/>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Disc Type:" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbDiscType" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Select the target disc type (CD, DVD, Blu-ray, etc.)"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4">
+                            <TextBlock Text="File System:" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbFileSystem" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="File system format for the disc image"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,8,8,0">
+                            <TextBlock Text="Volume Label:" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtVolumeLabel" Watermark="DISC_LABEL"
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Volume label that will appear when the disc is mounted"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,8,0,0">
+                            <TextBlock Text="Capacity:" Classes="FieldLabel"/>
+                            <Border Background="#152030" CornerRadius="4" Padding="10,7"
+                                    VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                    MinHeight="32">
+                                <TextBlock x:Name="TxtCapacity" Text="700 MB (CD)"
+                                           Foreground="#1E90FF" FontSize="13"
+                                           VerticalAlignment="Center"
+                                           TextTrimming="None"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Source Folder &amp; Output -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Source &amp; Output" Classes="SectionHeader"/>
+
+                    <Grid ColumnDefinitions="120,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                        <TextBlock Text="Source Folder:" Grid.Row="0" Grid.Column="0"
+                                   Classes="FieldLabel" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <TextBox x:Name="TxtSourceFolder" Grid.Row="0" Grid.Column="1"
+                                 Watermark="Source directory..." Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="Folder containing files to add to the disc image"
+                                 DragDrop.AllowDrop="True" DragDrop.DragOver="OnSourceDragOver" DragDrop.Drop="OnSourceDrop"/>
+                        <Button x:Name="BtnBrowseSource" Grid.Row="0" Grid.Column="2"
+                                Content="Browse…" Classes="ActionBtn" Margin="6,0,0,0"
+                                Click="OnBrowseSourceClick"
+                                ToolTip.Tip="Browse for a source folder"/>
+
+                        <TextBlock Text="💡 Drag and drop a folder or files here" Foreground="#5A7A9A" FontSize="10"
+                                   Margin="120,2,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
+
+                        <TextBlock Text="Output Image:" Grid.Row="2" Grid.Column="0"
+                                   Classes="FieldLabel" VerticalAlignment="Center"
+                                   Margin="0,8,8,0"/>
+                        <TextBox x:Name="TxtOutputPath" Grid.Row="2" Grid.Column="1"
+                                 Margin="0,8,0,0"
+                                 Watermark="Output .iso path..." Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="Path where the disc image file will be saved"
+                                 DragDrop.AllowDrop="True" DragDrop.DragOver="OnFilePathDragOver" DragDrop.Drop="OnFilePathDrop"/>
+                        <Button x:Name="BtnBrowseOutput" Grid.Row="2" Grid.Column="2"
+                                Content="Browse…" Classes="ActionBtn" Margin="6,8,0,0"
+                                Click="OnBrowseOutputClick"
+                                ToolTip.Tip="Choose where to save the output image"/>
+
+                        <TextBlock Text="Publisher:" Grid.Row="3" Grid.Column="0"
+                                   Classes="FieldLabel" VerticalAlignment="Center"
+                                   Margin="0,8,8,0"/>
+                        <TextBox x:Name="TxtPublisher" Grid.Row="3" Grid.Column="1"
+                                 Grid.ColumnSpan="2" Margin="0,8,0,0"
+                                 Watermark="Publisher name (optional)"
+                                 Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="Publisher name stored in the disc metadata"/>
+
+                        <TextBlock Text="Preparer:" Grid.Row="4" Grid.Column="0"
+                                   Classes="FieldLabel" VerticalAlignment="Center"
+                                   Margin="0,8,8,0"/>
+                        <TextBox x:Name="TxtPreparer" Grid.Row="4" Grid.Column="1"
+                                 Grid.ColumnSpan="2" Margin="0,8,0,0"
+                                 Watermark="Data preparer identifier (optional)"
+                                 Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="Data preparer identifier stored in the disc metadata"/>
+
+                        <TextBlock Text="Application:" Grid.Row="5" Grid.Column="0"
+                                   Classes="FieldLabel" VerticalAlignment="Center"
+                                   Margin="0,8,8,0"/>
+                        <TextBox x:Name="TxtApplication" Grid.Row="5" Grid.Column="1"
+                                 Grid.ColumnSpan="2" Margin="0,8,0,0"
+                                 Watermark="Application identifier (optional)"
+                                 Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="Application identifier stored in the disc metadata"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Advanced Options -->
+            <Expander Header="⚙&#xFE0F;  Advanced Options" Classes="SettingsExpander">
+                <Grid ColumnDefinitions="*,*" Margin="0,8,0,0">
+                    <StackPanel Grid.Column="0" Spacing="6">
+                        <CheckBox x:Name="ChkJolietLong"
+                                  Content="Joliet long filenames" Foreground="#E8F0FE" IsChecked="True"
+                                  ToolTip.Tip="Allow filenames longer than 64 characters using the Joliet extension"/>
+                        <CheckBox x:Name="ChkRockRidge"
+                                  Content="Rock Ridge extensions" Foreground="#E8F0FE"
+                                  ToolTip.Tip="Add POSIX metadata (permissions, symlinks, long names) via Rock Ridge extensions"/>
+                        <CheckBox x:Name="ChkDeepDir"
+                                  Content="Deep directory nesting" Foreground="#E8F0FE"
+                                  ToolTip.Tip="Allow directory nesting deeper than 8 levels (ISO 9660 limit relaxation)"/>
+                        <CheckBox x:Name="ChkLowercase"
+                                  Content="Allow lowercase filenames" Foreground="#E8F0FE"
+                                  ToolTip.Tip="Permit lowercase characters in ISO 9660 filenames (non-standard)"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Spacing="6">
+                        <CheckBox x:Name="ChkSpecialChars"
+                                  Content="Allow special characters" Foreground="#E8F0FE"
+                                  ToolTip.Tip="Allow special characters in filenames beyond the ISO 9660 d-character set"/>
+                        <CheckBox x:Name="ChkPad"
+                                  Content="Pad disc to capacity" Foreground="#E8F0FE"
+                                  ToolTip.Tip="Pad the image with zeros to fill the full disc capacity"/>
+                        <CheckBox x:Name="ChkSortFiles"
+                                  Content="Sort files" Foreground="#E8F0FE"
+                                  ToolTip.Tip="Sort files alphabetically within each directory on the disc"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Charset:" Foreground="#8EAFC8"
+                                       FontSize="11" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="CmbCharset" Width="110"
+                                      ToolTip.Tip="Character encoding for filenames on the disc">
+                                <ComboBoxItem Content="UTF-8"/>
+                                <ComboBoxItem Content="ISO-8859-1"/>
+                                <ComboBoxItem Content="ASCII"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Expander>
+
+            <!-- Boot Image (El Torito) -->
+            <Expander Header="💾  Boot Image (El Torito)" Classes="SettingsExpander">
+                <StackPanel Spacing="8" Margin="0,8,0,0">
+                    <CheckBox x:Name="ChkBootable"
+                              Content="Create bootable disc" Foreground="#E8F0FE"
+                              ToolTip.Tip="Enable El Torito boot catalog to make the disc bootable"/>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBox x:Name="TxtBootImage"
+                                 Watermark="Boot image file (e.g. isolinux/isolinux.bin)..."
+                                 Background="#152030" Foreground="#E8F0FE" IsEnabled="False"
+                                 ToolTip.Tip="Path to the El Torito boot image file (e.g. isolinux.bin or GRUB image)"
+                                 DragDrop.AllowDrop="True" DragDrop.DragOver="OnFilePathDragOver" DragDrop.Drop="OnBootImageDrop"/>
+                        <Button x:Name="BtnBrowseBoot" Grid.Column="1"
+                                Content="Browse…" Classes="ActionBtn" Margin="6,0,0,0"
+                                IsEnabled="False" Click="OnBrowseBootClick"
+                                ToolTip.Tip="Browse for an El Torito boot image file"/>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*" Margin="0,4,0,0">
+                        <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Emulation Mode:" Foreground="#8EAFC8" FontSize="11"/>
+                            <ComboBox x:Name="CmbBootEmulation" IsEnabled="False"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="El Torito emulation mode — No Emulation for modern bootloaders, floppy for legacy BIOS">
+                                <ComboBoxItem Content="No Emulation" IsSelected="True"/>
+                                <ComboBoxItem Content="1.2 MB Floppy"/>
+                                <ComboBoxItem Content="1.44 MB Floppy"/>
+                                <ComboBoxItem Content="2.88 MB Floppy"/>
+                                <ComboBoxItem Content="Hard Disk"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="4">
+                            <TextBlock Text="Platform:" Foreground="#8EAFC8" FontSize="11"/>
+                            <ComboBox x:Name="CmbBootPlatform" IsEnabled="False"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="El Torito boot platform identifier (x86 for BIOS, EFI for UEFI boot)">
+                                <ComboBoxItem Content="x86 (BIOS)" IsSelected="True"/>
+                                <ComboBoxItem Content="PowerPC"/>
+                                <ComboBoxItem Content="Mac"/>
+                                <ComboBoxItem Content="EFI (UEFI)"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*" Margin="0,4,0,0">
+                        <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Load Segment (hex, 0=default):" Foreground="#8EAFC8" FontSize="11"/>
+                            <TextBox x:Name="TxtBootLoadSegment" Text="0" IsEnabled="False"
+                                     Background="#152030" Foreground="#E8F0FE" Width="120"
+                                     HorizontalAlignment="Left"
+                                     ToolTip.Tip="El Torito load segment address in hex (0 uses default 0x07C0)"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="4">
+                            <TextBlock Text="Sector Count (0=auto):" Foreground="#8EAFC8" FontSize="11"/>
+                            <TextBox x:Name="TxtBootSectorCount" Text="0" IsEnabled="False"
+                                     Background="#152030" Foreground="#E8F0FE" Width="120"
+                                     HorizontalAlignment="Left"
+                                     ToolTip.Tip="Number of 512-byte virtual sectors to load (0 = auto-detect from file size)"/>
+                        </StackPanel>
+                    </Grid>
+                    <CheckBox x:Name="ChkBootInfoTable" IsEnabled="False"
+                              Content="Patch boot info table (ISOLINUX / GRUB)" Foreground="#E8F0FE"
+                              ToolTip.Tip="Patch the boot image with a boot info table containing LBA and size (required by ISOLINUX/GRUB)"/>
+                    <TextBlock Text="EFI dual-boot image (optional):" Foreground="#8EAFC8"
+                               FontSize="11" Margin="0,4,0,0"/>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBox x:Name="TxtEfiBootImage" IsEnabled="False"
+                                 Watermark="EFI boot image (e.g. efi/boot/bootx64.efi)..."
+                                 Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="Path to the EFI boot image for dual BIOS+UEFI boot support"
+                                 DragDrop.AllowDrop="True" DragDrop.DragOver="OnFilePathDragOver" DragDrop.Drop="OnEfiBootDrop"/>
+                        <Button x:Name="BtnBrowseEfiBoot" Grid.Column="1"
+                                Content="Browse…" Classes="ActionBtn" Margin="6,0,0,0"
+                                IsEnabled="False" Click="OnBrowseEfiBootClick"
+                                ToolTip.Tip="Browse for an EFI boot image file"/>
+                    </Grid>
+                </StackPanel>
+            </Expander>
+
+            <!-- CD-XA / CD-i Options -->
+            <Expander Header="📀  CD-XA &amp; CD-i Options" Classes="SettingsExpander">
+                <StackPanel Spacing="8" Margin="0,8,0,0">
+                    <CheckBox x:Name="ChkCdXaMode"
+                              Content="CD-ROM XA mode (inject CD-XA001 marker in PVD)"
+                              Foreground="#E8F0FE"
+                              ToolTip.Tip="Mark the disc as CD-ROM XA (Mode 2 sectors). Required for VCD/SVCD and CD-i discs."/>
+                    <TextBlock Text="Marks the disc as CD-ROM XA compliant (Mode 2 Form 1/Form 2 sectors). Automatically set for VCD/SVCD builds."
+                               Foreground="#5A7A9A" FontSize="10" TextWrapping="Wrap"/>
+                    <CheckBox x:Name="ChkIncludeCdiApp"
+                              Content="Include CD-i application stub (VCD playback on CD-i players)"
+                              Foreground="#E8F0FE"
+                              ToolTip.Tip="Add a minimal CD-i application module for VCD playback on Philips CD-i players (Green Book)"/>
+                    <TextBlock Text="Adds a CDI directory with a minimal CD-i application module for VCD playback on Philips CD-i players (Green Book). Only applicable for VCD builds."
+                               Foreground="#5A7A9A" FontSize="10" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Expander>
+
+            <!-- Audio CD Builder -->
+            <Expander Header="🎵  Audio CD Builder" Classes="SettingsExpander">
+                <StackPanel Spacing="10" Margin="0,8,0,0">
+                    <Grid ColumnDefinitions="*,*">
+                        <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Album Title (CD-TEXT):" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdTextAlbum" Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="CD-TEXT album title embedded in the disc sub-channel data"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="4">
+                            <TextBlock Text="Artist (CD-TEXT):" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdTextArtist" Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="CD-TEXT performer/artist name embedded in the disc sub-channel data"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Extended CD-TEXT fields -->
+                    <Grid ColumnDefinitions="*,*,*" Margin="0,4,0,0">
+                        <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Songwriter:" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdTextSongwriter" Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="CD-TEXT songwriter name"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Composer:" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdTextComposer" Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="CD-TEXT composer name"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Spacing="4">
+                            <TextBlock Text="Arranger:" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdTextArranger" Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="CD-TEXT arranger name"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*,*" Margin="0,4,0,0">
+                        <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Genre:" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdTextGenre" Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="CD-TEXT genre"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Disc Message:" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdTextMessage" Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="CD-TEXT disc message"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Spacing="4">
+                            <TextBlock Text="MCN/UPC (13 digits):" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtMediaCatalogNumber" Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Media Catalog Number (UPC/EAN barcode, exactly 13 digits)" MaxLength="13"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock Text="Tracks:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                        <Button x:Name="BtnAddTrack" Grid.Column="1"
+                                Content="➕ Add Track" Classes="ActionBtn"
+                                Margin="0,0,6,0" Click="OnAddTrackClick"
+                                ToolTip.Tip="Add audio track files (WAV, MP3, WMA, FLAC, OGG, AIFF)"/>
+                        <Button x:Name="BtnRemoveTrack" Grid.Column="2"
+                                Content="➖ Remove" Classes="ActionBtn"
+                                Click="OnRemoveTrackClick"
+                                ToolTip.Tip="Remove the selected audio track from the list"/>
+                    </Grid>
+
+                    <ListBox x:Name="AudioTrackList"
+                             Height="120"
+                             Background="#152030"
+                             BorderBrush="#1E3450" BorderThickness="1"
+                             CornerRadius="4"
+                             ToolTip.Tip="Audio tracks to include on the CD. Drag and drop audio files here."
+                             DragDrop.AllowDrop="True" DragDrop.DragOver="OnAudioDragOver" DragDrop.Drop="OnAudioDrop"/>
+
+                    <TextBlock x:Name="TxtTotalTime"
+                               Text="Total time: 0:00"
+                               Foreground="#1E90FF" FontSize="12"/>
+                </StackPanel>
+            </Expander>
+
+            <!-- Gaming System Disc Builders -->
+            <Expander Header="🎮  Gaming System Disc Builders" Classes="SettingsExpander">
+                <StackPanel Spacing="8" Margin="0,8,0,0">
+                    <TextBlock Text="Configure the disc structure for a specific gaming platform:"
+                               Foreground="#5A7A9A" FontSize="11"/>
+                    <ComboBox x:Name="CmbGamingSystem"
+                              HorizontalAlignment="Stretch"
+                              PlaceholderText="Select gaming system..."
+                              SelectionChanged="OnGamingSystemChanged"
+                              ToolTip.Tip="Select a gaming system preset to auto-configure disc structure">
+                        <ComboBoxItem Content="(Standard — no gaming preset)"/>
+                        <ComboBoxItem Content="PlayStation 1"/>
+                        <ComboBoxItem Content="PlayStation 2"/>
+                        <ComboBoxItem Content="PlayStation 3"/>
+                        <ComboBoxItem Content="PlayStation 4/5"/>
+                        <ComboBoxItem Content="PSP (UMD)"/>
+                        <ComboBoxItem Content="Sega Mega CD"/>
+                        <ComboBoxItem Content="Sega Saturn"/>
+                        <ComboBoxItem Content="Sega Dreamcast"/>
+                        <ComboBoxItem Content="PC Engine / TurboGrafx-CD"/>
+                        <ComboBoxItem Content="3DO"/>
+                        <ComboBoxItem Content="Neo Geo CD"/>
+                        <ComboBoxItem Content="Xbox"/>
+                        <ComboBoxItem Content="Xbox 360"/>
+                        <ComboBoxItem Content="Xbox One/Series"/>
+                        <ComboBoxItem Content="GameCube"/>
+                        <ComboBoxItem Content="Wii"/>
+                        <ComboBoxItem Content="Wii U"/>
+                        <ComboBoxItem Content="Atari Jaguar CD"/>
+                        <ComboBoxItem Content="Amiga CD32"/>
+                        <ComboBoxItem Content="Amiga CDTV"/>
+                        <ComboBoxItem Content="CD-i (Philips)"/>
+                        <ComboBoxItem Content="VCD"/>
+                        <ComboBoxItem Content="SVCD"/>
+                    </ComboBox>
+                    <Border Background="#152030" CornerRadius="6" Padding="10">
+                        <TextBlock x:Name="TxtGamingDesc"
+                                   Text="No gaming preset selected."
+                                   Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </Expander>
+
+            <!-- Build progress -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock Text="Build" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnBuild" Grid.Column="1"
+                                Content="🏗  Build Image" Classes="PrimaryBtn"
+                                Margin="0,0,8,0" Click="OnBuildClick"
+                                ToolTip.Tip="Start building the disc image"/>
+                        <Button x:Name="BtnCancelBuild" Grid.Column="2"
+                                Content="⏹  Cancel" Classes="DangerBtn"
+                                IsEnabled="False" Click="OnCancelBuildClick"
+                                ToolTip.Tip="Cancel the current build operation"/>
+                    </Grid>
+
+                    <ProgressBar x:Name="BuildProgressBar" Classes="BurnProgress" Value="0"/>
+
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock x:Name="TxtBuildStatus" Text="Ready."
+                                   Foreground="#5A7A9A" FontSize="11" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtBuildETA" Grid.Column="1"
+                                   Text="" Foreground="#5A7A9A" FontSize="11"
+                                   VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtBuildPct" Grid.Column="2"
+                                   Text="0%" Foreground="#E8F0FE" FontSize="11"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="Auto,*">
+                        <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
+                        <Button x:Name="BtnClearLog" Grid.Column="1"
+                                Content="🧹 Clear" Classes="ActionBtn"
+                                HorizontalAlignment="Right" Click="OnClearLogClick"
+                                ToolTip.Tip="Clear the build log output"/>
+                    </Grid>
+
+                    <TextBox x:Name="TxtLog" Classes="LogBox" Height="160"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

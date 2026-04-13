@@ -1,0 +1,1808 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:OpenBurningSuite.Views"
+             x:Class="OpenBurningSuite.Views.VideoWizardView">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,24" Spacing="20">
+
+            <!-- Page header -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="🎬  Video Disc Wizard"
+                           Classes="PageTitle" Foreground="#5BC0FF"/>
+                <TextBlock Text="Create DVD-Video, Blu-ray, BDAV, 3D Blu-ray, VCD, or SVCD discs from video folders and files — guided step by step."
+                           Classes="PageSubtitle" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- Step indicator -->
+            <Border Classes="InfoCard">
+                <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="VStepInd1" Background="#1E90FF" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="1" Foreground="White" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="VStepLbl1" Text="Choose Task"
+                                   Foreground="#E8F0FE" FontSize="12"
+                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="VStepInd2" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="VStepLbl2" Text="Configure"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="VStepInd3" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="VStepLbl3" Text="Summary"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="VStepInd4" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="4" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="VStepLbl4" Text="Execute"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============================================================ -->
+            <!-- STEP 1: Choose Task                                          -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step1Panel" Spacing="16">
+                <TextBlock Text="What would you like to do?" Classes="SectionHeader"/>
+
+                <WrapPanel Orientation="Horizontal">
+                    <!-- Video DVD from Folder -->
+                    <Button x:Name="BtnModeDvd" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeDvd"
+                            ToolTip.Tip="Create and burn a DVD-Video disc from a VIDEO_TS folder">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="📀" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Video DVD from Folder" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create &amp; burn a DVD-Video disc from a VIDEO_TS folder"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Video Blu-ray from Folder -->
+                    <Button x:Name="BtnModeBluray" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeBluray"
+                            ToolTip.Tip="Create and burn a Blu-ray disc from a BDMV folder">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Video Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create &amp; burn a Blu-ray disc from a BDMV folder"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- BDAV (Blu-ray Recording) from Folder -->
+                    <Button x:Name="BtnModeBdav" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeBdav"
+                            ToolTip.Tip="Create and burn a BDAV recording disc from a BDAV folder">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="📹" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="BDAV Recording from Folder" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create &amp; burn a BDAV disc from a BDAV recording folder"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- 3D Blu-ray from Folder -->
+                    <Button x:Name="BtnModeBd3d" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeBd3d"
+                            ToolTip.Tip="Create and burn a 3D Blu-ray disc from a BDMV 3D folder">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="🎥" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="3D Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create &amp; burn a 3D Blu-ray disc from a BDMV 3D folder"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- UHD Blu-ray from Folder -->
+                    <Button x:Name="BtnModeUhdBluray" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeUhdBluray"
+                            ToolTip.Tip="Create and burn a UHD (4K HDR) Blu-ray disc from a BDMV folder">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="🎬" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="UHD Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create &amp; burn a UHD 4K HDR Blu-ray disc from BDMV"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Video CD (VCD) -->
+                    <Button x:Name="BtnModeVcd" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeVcd"
+                            ToolTip.Tip="Create and burn a Video CD from MPEG-1 video files">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Video CD (VCD)" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create &amp; burn a Video CD from MPEG-1 video files"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Super Video CD (SVCD) -->
+                    <Button x:Name="BtnModeSvcd" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeSvcd"
+                            ToolTip.Tip="Create and burn a Super Video CD from MPEG-2 video files">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Super Video CD (SVCD)" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create &amp; burn a Super Video CD from MPEG-2 video files"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- XSVCD (eXtended Super Video CD) -->
+                    <Button x:Name="BtnModeXsvcd" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeXsvcd"
+                            ToolTip.Tip="Create and burn an eXtended Super Video CD with non-standard MPEG-2 parameters">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="XSVCD (eXtended SVCD)" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create &amp; burn XSVCD with extended bitrate &amp; resolution"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+                </WrapPanel>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2A: DVD-Video from Folder                               -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2DvdPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="DVD-Video from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+
+                <!-- Source VIDEO_TS Folder -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="📂 Source VIDEO_TS Folder" Classes="SectionHeader"/>
+                        <TextBlock Text="Select the folder containing VIDEO_TS (with VOB, IFO, and BUP files)."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtDvdSourceFolder"
+                                     Watermark="Path to VIDEO_TS folder..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseDvdSourceClick"
+                                    ToolTip.Tip="Browse for VIDEO_TS folder"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- DVD Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📀 DVD Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Video Standard" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbDvdVideoStandard" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Video standard for the DVD">
+                                    <ComboBoxItem Content="NTSC (720×480, 29.97fps)" IsSelected="True"/>
+                                    <ComboBoxItem Content="PAL (720×576, 25fps)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Aspect Ratio" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbDvdAspectRatio" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Display aspect ratio for the DVD">
+                                    <ComboBoxItem Content="16:9" IsSelected="True"/>
+                                    <ComboBoxItem Content="4:3"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtDvdVolumeLabel" Watermark="DVD_VIDEO"
+                                         MaxLength="32"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,0">
+                                <TextBlock Text="Region" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbDvdRegion" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="DVD region code">
+                                    <ComboBoxItem Content="Region Free" IsSelected="True"/>
+                                    <ComboBoxItem Content="Region 1 (USA, Canada)"/>
+                                    <ComboBoxItem Content="Region 2 (Europe, Japan)"/>
+                                    <ComboBoxItem Content="Region 3 (Southeast Asia)"/>
+                                    <ComboBoxItem Content="Region 4 (Latin America, Oceania)"/>
+                                    <ComboBoxItem Content="Region 5 (Africa, Asia)"/>
+                                    <ComboBoxItem Content="Region 6 (China)"/>
+                                    <ComboBoxItem Content="Region 7 (Reserved)"/>
+                                    <ComboBoxItem Content="Region 8 (Special Venues)"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Output Image Path -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <TextBlock Text="The DVD image (ISO) will be saved to this location."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtDvdOutputPath"
+                                     Watermark="Path to save the DVD image..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseDvdOutputClick"
+                                    ToolTip.Tip="Choose where to save the output DVD image"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Video Preview -->
+                <Border Classes="InfoCard">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎬 Video Preview" Classes="SectionHeader"/>
+
+                        <Border Classes="DropZone">
+                            <ListBox x:Name="LstDvdFiles"
+                                     Background="Transparent"
+                                     MinHeight="100" MaxHeight="260">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="*,Auto,Auto">
+                                            <StackPanel Spacing="1">
+                                                <TextBlock Text="{Binding FileName}"
+                                                           Foreground="#E8F0FE" FontSize="12"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding FilePath}"
+                                                           Foreground="#5A7A9A" FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding SizeText}"
+                                                       Foreground="#8EAFC8" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="8,0"/>
+                                            <Button Grid.Column="2" Content="▶" FontSize="12"
+                                                    Classes="ActionBtn" Padding="6,4"
+                                                    Click="OnPreviewDvdFileClick"
+                                                    Tag="{Binding FilePath}"
+                                                    ToolTip.Tip="Preview this file"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+
+                        <!-- Player Controls -->
+                        <Border Classes="InfoCard">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                                <Button x:Name="BtnDvdPlayPause" Content="▶ Play"
+                                        Classes="ActionBtn" Grid.Column="0"
+                                        Click="OnDvdPlayPauseClick"
+                                        ToolTip.Tip="Play or pause the selected video"/>
+                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="6,0,0,0"
+                                        Click="OnDvdStopClick"
+                                        ToolTip.Tip="Stop playback"/>
+                                <TextBlock x:Name="TxtDvdNowPlaying"
+                                           Text="No file selected"
+                                           Foreground="#5A7A9A" FontSize="11"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" Margin="12,0,0,0"/>
+                                <Slider x:Name="SliderDvdPosition"
+                                        Grid.Column="3" Minimum="0" Maximum="100"
+                                        Margin="12,0" VerticalAlignment="Center"
+                                        IsEnabled="False"
+                                        ToolTip.Tip="Playback position"/>
+                                <TextBlock x:Name="TxtDvdPlaybackTime"
+                                           Text="00:00 / 00:00" Foreground="#8EAFC8"
+                                           FontSize="11" Grid.Column="4"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbDvdDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Select the burner drive"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbDvdSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="6x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="12x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbDvdWriteMode" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write strategy for DVD burning">
+                                    <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
+                                    <ComboBoxItem Content="SAO (Session At Once)"/>
+                                    <ComboBoxItem Content="TAO (Track At Once)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumDvdCopies" Minimum="1" Maximum="99"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkDvdEject" Content="Eject after burn"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc when burning is complete"/>
+                            <CheckBox x:Name="ChkDvdVerify" Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkDvdSimulate" Content="Simulate (test write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
+                            <CheckBox x:Name="ChkDvdBup" Content="Buffer underrun protection"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                            <CheckBox x:Name="ChkDvdBurnDisc"
+                                      Content="Also burn to disc (not just build image)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Uncheck to only create an ISO image without burning"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2B: Video Blu-ray from Folder                           -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2BdPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Video Blu-ray from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+
+                <!-- Source BDMV Folder -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="📂 Source BDMV Folder" Classes="SectionHeader"/>
+                        <TextBlock Text="Select the folder containing BDMV (with STREAM, CLIPINF, and PLAYLIST folders)."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBdSourceFolder"
+                                     Watermark="Path to BDMV folder..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseBdSourceClick"
+                                    ToolTip.Tip="Browse for BDMV folder"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Blu-ray Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💿 Blu-ray Settings" Classes="SectionHeader"/>
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtBdVolumeLabel" Watermark="BLURAY_DISC"
+                                     MaxLength="32"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Output Image Path -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <TextBlock Text="The Blu-ray image (ISO) will be saved to this location."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBdOutputPath"
+                                     Watermark="Path to save the Blu-ray image..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseBdOutputClick"
+                                    ToolTip.Tip="Choose where to save the output Blu-ray image"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Video Preview -->
+                <Border Classes="InfoCard">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎬 Video Preview" Classes="SectionHeader"/>
+
+                        <ListBox x:Name="LstBdFiles"
+                                 Background="Transparent"
+                                 MinHeight="100" MaxHeight="260">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto,Auto">
+                                        <StackPanel Spacing="1">
+                                            <TextBlock Text="{Binding FileName}"
+                                                       Foreground="#E8F0FE" FontSize="12"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding FilePath}"
+                                                       Foreground="#5A7A9A" FontSize="10"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding SizeText}"
+                                                   Foreground="#8EAFC8" FontSize="12"
+                                                   VerticalAlignment="Center" Margin="8,0"/>
+                                        <Button Grid.Column="2" Content="▶" FontSize="12"
+                                                Classes="ActionBtn" Padding="6,4"
+                                                Click="OnPreviewBdFileClick"
+                                                Tag="{Binding FilePath}"
+                                                ToolTip.Tip="Preview this file"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- Player Controls -->
+                        <Border Classes="InfoCard">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                                <Button x:Name="BtnBdPlayPause" Content="▶ Play"
+                                        Classes="ActionBtn" Grid.Column="0"
+                                        Click="OnBdPlayPauseClick"
+                                        ToolTip.Tip="Play or pause the selected video"/>
+                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="6,0,0,0"
+                                        Click="OnBdStopClick"
+                                        ToolTip.Tip="Stop playback"/>
+                                <TextBlock x:Name="TxtBdNowPlaying"
+                                           Text="No file selected"
+                                           Foreground="#5A7A9A" FontSize="11"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" Margin="12,0,0,0"/>
+                                <Slider x:Name="SliderBdPosition"
+                                        Grid.Column="3" Minimum="0" Maximum="100"
+                                        Margin="12,0" VerticalAlignment="Center"
+                                        IsEnabled="False"
+                                        ToolTip.Tip="Playback position"/>
+                                <TextBlock x:Name="TxtBdPlaybackTime"
+                                           Text="00:00 / 00:00" Foreground="#8EAFC8"
+                                           FontSize="11" Grid.Column="4"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBdDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Select the burner drive"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBdSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="6x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="12x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumBdCopies" Minimum="1" Maximum="99"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkBdEject" Content="Eject after burn"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc when burning is complete"/>
+                            <CheckBox x:Name="ChkBdVerify" Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkBdSimulate" Content="Simulate (test write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
+                            <CheckBox x:Name="ChkBdBup" Content="Buffer underrun protection"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                            <CheckBox x:Name="ChkBdBurnDisc"
+                                      Content="Also burn to disc (not just build image)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Uncheck to only create an ISO image without burning"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2E: BDAV (Blu-ray Recording) from Folder               -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2BdavPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="BDAV Recording from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+
+                <!-- Source BDAV Folder -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="📂 Source BDAV Folder" Classes="SectionHeader"/>
+                        <TextBlock Text="Select the folder containing BDAV (with STREAM, CLIPINF, and PLAYLIST folders)."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBdavSourceFolder"
+                                     Watermark="Path to BDAV folder..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseBdavSourceClick"
+                                    ToolTip.Tip="Browse for BDAV folder"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- BDAV Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📹 BDAV Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtBdavVolumeLabel" Watermark="BDAV_DISC"
+                                         MaxLength="32"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Disc Size" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBdavDiscSize" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Target disc capacity for BDAV recording">
+                                    <ComboBoxItem Content="BD-25 (25 GB)" IsSelected="True"/>
+                                    <ComboBoxItem Content="BD-50 (50 GB)"/>
+                                    <ComboBoxItem Content="BD-100 (BDXL 100 GB)"/>
+                                    <ComboBoxItem Content="BD-128 (BDXL 128 GB)"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- BDAV Recording Metadata -->
+                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; BDAV Recording Metadata"
+                          IsExpanded="False">
+                    <StackPanel Spacing="8" Margin="0,12,0,0">
+                        <TextBlock Text="Optional metadata for BDAV recording. Leave defaults for standard recording."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Recording Date" Classes="FieldLabel"/>
+                                <DatePicker x:Name="DpBdavRecordingDate"
+                                            ToolTip.Tip="BDAV recording timestamp date"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,0">
+                                <TextBlock Text="Time Zone Offset (minutes from UTC)" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumBdavTimezoneOffset" Minimum="-720" Maximum="840"
+                                               Value="0" FormatString="0"
+                                               ToolTip.Tip="UTC time zone offset in minutes (-720 to +840)"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+
+                <!-- Output Image Path -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <TextBlock Text="The BDAV image (ISO) will be saved to this location."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBdavOutputPath"
+                                     Watermark="Path to save the BDAV image..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseBdavOutputClick"
+                                    ToolTip.Tip="Choose where to save the output BDAV image"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Video Preview -->
+                <Border Classes="InfoCard">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎬 Video Preview" Classes="SectionHeader"/>
+
+                        <ListBox x:Name="LstBdavFiles"
+                                 Background="Transparent"
+                                 MinHeight="100" MaxHeight="260">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto,Auto">
+                                        <StackPanel Spacing="1">
+                                            <TextBlock Text="{Binding FileName}"
+                                                       Foreground="#E8F0FE" FontSize="12"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding FilePath}"
+                                                       Foreground="#5A7A9A" FontSize="10"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding SizeText}"
+                                                   Foreground="#8EAFC8" FontSize="12"
+                                                   VerticalAlignment="Center" Margin="8,0"/>
+                                        <Button Grid.Column="2" Content="▶" FontSize="12"
+                                                Classes="ActionBtn" Padding="6,4"
+                                                Click="OnPreviewBdavFileClick"
+                                                Tag="{Binding FilePath}"
+                                                ToolTip.Tip="Preview this file"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- Player Controls -->
+                        <Border Classes="InfoCard">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                                <Button x:Name="BtnBdavPlayPause" Content="▶ Play"
+                                        Classes="ActionBtn" Grid.Column="0"
+                                        Click="OnBdavPlayPauseClick"
+                                        ToolTip.Tip="Play or pause the selected video"/>
+                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="6,0,0,0"
+                                        Click="OnBdavStopClick"
+                                        ToolTip.Tip="Stop playback"/>
+                                <TextBlock x:Name="TxtBdavNowPlaying"
+                                           Text="No file selected"
+                                           Foreground="#5A7A9A" FontSize="11"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" Margin="12,0,0,0"/>
+                                <Slider x:Name="SliderBdavPosition"
+                                        Grid.Column="3" Minimum="0" Maximum="100"
+                                        Margin="12,0" VerticalAlignment="Center"
+                                        IsEnabled="False"
+                                        ToolTip.Tip="Playback position"/>
+                                <TextBlock x:Name="TxtBdavPlaybackTime"
+                                           Text="00:00 / 00:00" Foreground="#8EAFC8"
+                                           FontSize="11" Grid.Column="4"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBdavDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Select the burner drive"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBdavSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="6x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="12x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumBdavCopies" Minimum="1" Maximum="99"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkBdavEject" Content="Eject after burn"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc when burning is complete"/>
+                            <CheckBox x:Name="ChkBdavVerify" Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkBdavSimulate" Content="Simulate (test write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
+                            <CheckBox x:Name="ChkBdavBup" Content="Buffer underrun protection"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                            <CheckBox x:Name="ChkBdavBurnDisc"
+                                      Content="Also burn to disc (not just build image)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Uncheck to only create an ISO image without burning"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2F: 3D Blu-ray from Folder                             -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2Bd3dPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="3D Blu-ray from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+
+                <!-- Source BDMV 3D Folder -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="📂 Source BDMV 3D Folder" Classes="SectionHeader"/>
+                        <TextBlock Text="Select the folder containing BDMV with 3D content (STREAM, CLIPINF, PLAYLIST, and SSIF folders)."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBd3dSourceFolder"
+                                     Watermark="Path to BDMV 3D folder..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseBd3dSourceClick"
+                                    ToolTip.Tip="Browse for BDMV 3D folder"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 3D Blu-ray Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎥 3D Blu-ray Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtBd3dVolumeLabel" Watermark="BLURAY3D_DISC"
+                                         MaxLength="32"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Disc Size" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBd3dDiscSize" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Target disc capacity for 3D Blu-ray">
+                                    <ComboBoxItem Content="BD-50 (50 GB)" IsSelected="True"/>
+                                    <ComboBoxItem Content="BD-25 (25 GB)"/>
+                                    <ComboBoxItem Content="BD-100 (BDXL 100 GB)"/>
+                                    <ComboBoxItem Content="BD-128 (BDXL 128 GB)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="3D Mode" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBd3dMode" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Stereoscopic 3D encoding mode per Blu-ray 3D Profile 5.0">
+                                    <ComboBoxItem Content="Frame Packed (MVC, full resolution)" IsSelected="True"/>
+                                    <ComboBoxItem Content="Side by Side (half horizontal)"/>
+                                    <ComboBoxItem Content="Top and Bottom (half vertical)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="3D Depth Offset" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumBd3dDepthOffset" Minimum="-2048" Maximum="2047"
+                                               Value="0" FormatString="0"
+                                               ToolTip.Tip="Convergence distance in 1/10th pixel units. 0 = screen depth. Positive = behind screen, negative = in front."/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Dependent View (right eye) for Frame Packed mode -->
+                <Border x:Name="Bd3dDependentViewCard" Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="👁 Dependent View (Right Eye) — Frame Packed Mode" Classes="SectionHeader"/>
+                        <TextBlock Text="For Frame Packed (MVC) 3D, provide the dependent view (right-eye) video file. For Side by Side / Top and Bottom modes, the 3D content is encoded within the base view."
+                                   Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBd3dDependentViewPath"
+                                     Watermark="Path to right-eye (dependent view) video..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseBd3dDependentViewClick"
+                                    ToolTip.Tip="Browse for dependent view (right-eye) video file"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Output Image Path -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <TextBlock Text="The 3D Blu-ray image (ISO) will be saved to this location."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBd3dOutputPath"
+                                     Watermark="Path to save the 3D Blu-ray image..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseBd3dOutputClick"
+                                    ToolTip.Tip="Choose where to save the output 3D Blu-ray image"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Video Preview -->
+                <Border Classes="InfoCard">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎬 Video Preview" Classes="SectionHeader"/>
+
+                        <ListBox x:Name="LstBd3dFiles"
+                                 Background="Transparent"
+                                 MinHeight="100" MaxHeight="260">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto,Auto">
+                                        <StackPanel Spacing="1">
+                                            <TextBlock Text="{Binding FileName}"
+                                                       Foreground="#E8F0FE" FontSize="12"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding FilePath}"
+                                                       Foreground="#5A7A9A" FontSize="10"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding SizeText}"
+                                                   Foreground="#8EAFC8" FontSize="12"
+                                                   VerticalAlignment="Center" Margin="8,0"/>
+                                        <Button Grid.Column="2" Content="▶" FontSize="12"
+                                                Classes="ActionBtn" Padding="6,4"
+                                                Click="OnPreviewBd3dFileClick"
+                                                Tag="{Binding FilePath}"
+                                                ToolTip.Tip="Preview this file"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <!-- Player Controls -->
+                        <Border Classes="InfoCard">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                                <Button x:Name="BtnBd3dPlayPause" Content="▶ Play"
+                                        Classes="ActionBtn" Grid.Column="0"
+                                        Click="OnBd3dPlayPauseClick"
+                                        ToolTip.Tip="Play or pause the selected video"/>
+                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="6,0,0,0"
+                                        Click="OnBd3dStopClick"
+                                        ToolTip.Tip="Stop playback"/>
+                                <TextBlock x:Name="TxtBd3dNowPlaying"
+                                           Text="No file selected"
+                                           Foreground="#5A7A9A" FontSize="11"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" Margin="12,0,0,0"/>
+                                <Slider x:Name="SliderBd3dPosition"
+                                        Grid.Column="3" Minimum="0" Maximum="100"
+                                        Margin="12,0" VerticalAlignment="Center"
+                                        IsEnabled="False"
+                                        ToolTip.Tip="Playback position"/>
+                                <TextBlock x:Name="TxtBd3dPlaybackTime"
+                                           Text="00:00 / 00:00" Foreground="#8EAFC8"
+                                           FontSize="11" Grid.Column="4"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBd3dDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Select the burner drive"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBd3dSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="6x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="12x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumBd3dCopies" Minimum="1" Maximum="99"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkBd3dEject" Content="Eject after burn"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc when burning is complete"/>
+                            <CheckBox x:Name="ChkBd3dVerify" Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkBd3dSimulate" Content="Simulate (test write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
+                            <CheckBox x:Name="ChkBd3dBup" Content="Buffer underrun protection"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                            <CheckBox x:Name="ChkBd3dBurnDisc"
+                                      Content="Also burn to disc (not just build image)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Uncheck to only create an ISO image without burning"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2C: Video CD (VCD)                                      -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2VcdPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Video CD (VCD) — Add Files &amp; Configure" Classes="SectionHeader"/>
+
+                <!-- Video Files -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📼 Video Files" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtVcdFileCount" Text="(0 files)"
+                                       Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Content="➕ Add Files" Classes="PrimaryBtn"
+                                    Click="OnAddVcdFilesClick"
+                                    ToolTip.Tip="Add MPEG-1 video files"/>
+                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    Click="OnRemoveVcdFileClick"
+                                    ToolTip.Tip="Remove the selected file from the list"/>
+                            <Button Content="⬆" Classes="ActionBtn" Click="OnMoveVcdUpClick"
+                                    ToolTip.Tip="Move selected file up"/>
+                            <Button Content="⬇" Classes="ActionBtn" Click="OnMoveVcdDownClick"
+                                    ToolTip.Tip="Move selected file down"/>
+                        </StackPanel>
+
+                        <Border Classes="DropZone" DragDrop.AllowDrop="True"
+                                DragDrop.DragOver="OnVcdDragOver"
+                                DragDrop.Drop="OnVcdDrop">
+                            <ListBox x:Name="LstVcdFiles"
+                                     Background="Transparent"
+                                     MinHeight="100" MaxHeight="260">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                            <TextBlock Grid.Column="0" Text="{Binding TrackNumber}"
+                                                       Foreground="#5A7A9A" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="0,0,8,0"
+                                                       FontWeight="Bold" Width="24"/>
+                                            <StackPanel Grid.Column="1" Spacing="1">
+                                                <TextBlock Text="{Binding FileName}"
+                                                           Foreground="#E8F0FE" FontSize="12"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding FilePath}"
+                                                           Foreground="#5A7A9A" FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding DurationText}"
+                                                       Foreground="#8EAFC8" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="8,0"/>
+                                            <Button Grid.Column="3" Content="▶" FontSize="12"
+                                                    Classes="ActionBtn" Padding="6,4"
+                                                    Click="OnPreviewVcdFileClick"
+                                                    Tag="{Binding FilePath}"
+                                                    ToolTip.Tip="Preview this file"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+
+                        <!-- Video Player -->
+                        <Border Classes="InfoCard">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                                <Button x:Name="BtnVcdPlayPause" Content="▶ Play"
+                                        Classes="ActionBtn" Grid.Column="0"
+                                        Click="OnVcdPlayPauseClick"
+                                        ToolTip.Tip="Play or pause the selected video"/>
+                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="6,0,0,0"
+                                        Click="OnVcdStopClick"
+                                        ToolTip.Tip="Stop playback"/>
+                                <TextBlock x:Name="TxtVcdNowPlaying"
+                                           Text="No file selected"
+                                           Foreground="#5A7A9A" FontSize="11"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" Margin="12,0,0,0"/>
+                                <Slider x:Name="SliderVcdPosition"
+                                        Grid.Column="3" Minimum="0" Maximum="100"
+                                        Margin="12,0" VerticalAlignment="Center"
+                                        IsEnabled="False"
+                                        ToolTip.Tip="Playback position"/>
+                                <TextBlock x:Name="TxtVcdPlaybackTime"
+                                           Text="00:00 / 00:00" Foreground="#8EAFC8"
+                                           FontSize="11" Grid.Column="4"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- VCD Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📼 VCD Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Video Standard" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbVcdVideoStandard" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Video standard for the VCD">
+                                    <ComboBoxItem Content="NTSC" IsSelected="True"/>
+                                    <ComboBoxItem Content="PAL"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="VCD Version" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbVcdVersion" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="VCD specification version">
+                                    <ComboBoxItem Content="2.0 (with PBC)" IsSelected="True"/>
+                                    <ComboBoxItem Content="1.1 (basic)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,0">
+                                <TextBlock Text="Disc Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtVcdDiscLabel" Watermark="VIDEOCD"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Advanced VCD Options -->
+                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; Advanced VCD Options"
+                          IsExpanded="False">
+                    <StackPanel Spacing="8" Margin="0,12,0,0">
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ChkVcdPbc"
+                                      Content="Playback Control (PBC)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Enable PBC menus and navigation on the VCD"/>
+                            <CheckBox x:Name="ChkVcdScanData"
+                                      Content="Create Scan Data"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Include scan data for fast forward/rewind"/>
+                            <CheckBox x:Name="ChkVcdSearchData"
+                                      Content="Create Search Data"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Include search data for chapter seeking"/>
+                            <CheckBox x:Name="ChkVcdCdi"
+                                      Content="Include CD-i application"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Include a CD-i application for Philips CD-i players"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Expander>
+
+                <!-- Output Image Path -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <TextBlock Text="The VCD image (BIN/CUE) will be saved to this location."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtVcdOutputPath"
+                                     Watermark="Path to save the VCD image..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseVcdOutputClick"
+                                    ToolTip.Tip="Choose where to save the output VCD image"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbVcdDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Select the burner drive"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbVcdSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="10x"/>
+                                    <ComboBoxItem Content="12x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="24x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbVcdWriteMode" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write strategy for VCD burning">
+                                    <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
+                                    <ComboBoxItem Content="SAO (Session At Once)"/>
+                                    <ComboBoxItem Content="TAO (Track At Once)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumVcdCopies" Minimum="1" Maximum="99"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkVcdEject" Content="Eject after burn"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc when burning is complete"/>
+                            <CheckBox x:Name="ChkVcdVerify" Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkVcdSimulate" Content="Simulate (test write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
+                            <CheckBox x:Name="ChkVcdBup" Content="Buffer underrun protection"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                            <CheckBox x:Name="ChkVcdBurnDisc"
+                                      Content="Also burn to disc (not just build image)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Uncheck to only create a BIN/CUE image without burning"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2D: Super Video CD (SVCD)                               -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2SvcdPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Super Video CD (SVCD) — Add Files &amp; Configure" Classes="SectionHeader"/>
+
+                <!-- Video Files -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📼 Video Files" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtSvcdFileCount" Text="(0 files)"
+                                       Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Content="➕ Add Files" Classes="PrimaryBtn"
+                                    Click="OnAddSvcdFilesClick"
+                                    ToolTip.Tip="Add MPEG-2 video files"/>
+                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    Click="OnRemoveSvcdFileClick"
+                                    ToolTip.Tip="Remove the selected file from the list"/>
+                            <Button Content="⬆" Classes="ActionBtn" Click="OnMoveSvcdUpClick"
+                                    ToolTip.Tip="Move selected file up"/>
+                            <Button Content="⬇" Classes="ActionBtn" Click="OnMoveSvcdDownClick"
+                                    ToolTip.Tip="Move selected file down"/>
+                        </StackPanel>
+
+                        <Border Classes="DropZone" DragDrop.AllowDrop="True"
+                                DragDrop.DragOver="OnSvcdDragOver"
+                                DragDrop.Drop="OnSvcdDrop">
+                            <ListBox x:Name="LstSvcdFiles"
+                                     Background="Transparent"
+                                     MinHeight="100" MaxHeight="260">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                            <TextBlock Grid.Column="0" Text="{Binding TrackNumber}"
+                                                       Foreground="#5A7A9A" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="0,0,8,0"
+                                                       FontWeight="Bold" Width="24"/>
+                                            <StackPanel Grid.Column="1" Spacing="1">
+                                                <TextBlock Text="{Binding FileName}"
+                                                           Foreground="#E8F0FE" FontSize="12"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding FilePath}"
+                                                           Foreground="#5A7A9A" FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding DurationText}"
+                                                       Foreground="#8EAFC8" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="8,0"/>
+                                            <Button Grid.Column="3" Content="▶" FontSize="12"
+                                                    Classes="ActionBtn" Padding="6,4"
+                                                    Click="OnPreviewSvcdFileClick"
+                                                    Tag="{Binding FilePath}"
+                                                    ToolTip.Tip="Preview this file"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+
+                        <!-- Video Player -->
+                        <Border Classes="InfoCard">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                                <Button x:Name="BtnSvcdPlayPause" Content="▶ Play"
+                                        Classes="ActionBtn" Grid.Column="0"
+                                        Click="OnSvcdPlayPauseClick"
+                                        ToolTip.Tip="Play or pause the selected video"/>
+                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="6,0,0,0"
+                                        Click="OnSvcdStopClick"
+                                        ToolTip.Tip="Stop playback"/>
+                                <TextBlock x:Name="TxtSvcdNowPlaying"
+                                           Text="No file selected"
+                                           Foreground="#5A7A9A" FontSize="11"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" Margin="12,0,0,0"/>
+                                <Slider x:Name="SliderSvcdPosition"
+                                        Grid.Column="3" Minimum="0" Maximum="100"
+                                        Margin="12,0" VerticalAlignment="Center"
+                                        IsEnabled="False"
+                                        ToolTip.Tip="Playback position"/>
+                                <TextBlock x:Name="TxtSvcdPlaybackTime"
+                                           Text="00:00 / 00:00" Foreground="#8EAFC8"
+                                           FontSize="11" Grid.Column="4"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- SVCD Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📼 SVCD Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Video Standard" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbSvcdVideoStandard" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Video standard for the SVCD">
+                                    <ComboBoxItem Content="NTSC" IsSelected="True"/>
+                                    <ComboBoxItem Content="PAL"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,0">
+                                <TextBlock Text="Disc Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtSvcdDiscLabel" Watermark="SUPERVCD"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Advanced SVCD Options -->
+                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; Advanced SVCD Options"
+                          IsExpanded="False">
+                    <StackPanel Spacing="8" Margin="0,12,0,0">
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ChkSvcdPbc"
+                                      Content="Playback Control (PBC)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Enable PBC menus and navigation on the SVCD"/>
+                            <CheckBox x:Name="ChkSvcdScanData"
+                                      Content="Create Scan Data"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Include scan data for fast forward/rewind"/>
+                            <CheckBox x:Name="ChkSvcdSearchData"
+                                      Content="Create Search Data"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Include search data for chapter seeking"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Expander>
+
+                <!-- Output Image Path -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <TextBlock Text="The SVCD image (BIN/CUE) will be saved to this location."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtSvcdOutputPath"
+                                     Watermark="Path to save the SVCD image..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseSvcdOutputClick"
+                                    ToolTip.Tip="Choose where to save the output SVCD image"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbSvcdDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Select the burner drive"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbSvcdSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="10x"/>
+                                    <ComboBoxItem Content="12x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="24x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbSvcdWriteMode" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write strategy for SVCD burning">
+                                    <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
+                                    <ComboBoxItem Content="SAO (Session At Once)"/>
+                                    <ComboBoxItem Content="TAO (Track At Once)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumSvcdCopies" Minimum="1" Maximum="99"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkSvcdEject" Content="Eject after burn"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc when burning is complete"/>
+                            <CheckBox x:Name="ChkSvcdVerify" Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkSvcdSimulate" Content="Simulate (test write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
+                            <CheckBox x:Name="ChkSvcdBup" Content="Buffer underrun protection"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                            <CheckBox x:Name="ChkSvcdBurnDisc"
+                                      Content="Also burn to disc (not just build image)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Uncheck to only create a BIN/CUE image without burning"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2G: UHD Blu-ray from Folder                            -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2UhdBdPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="UHD Blu-ray (4K HDR) from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+
+                <!-- Source Folder -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📂 Source Folder (BDMV)" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBox x:Name="TxtUhdBdSourceFolder" Watermark="Path to BDMV folder..."
+                                     Width="520"/>
+                            <Button Content="📁 Browse..." Classes="PrimaryBtn"
+                                    Click="OnBrowseUhdBdSourceClick"
+                                    ToolTip.Tip="Select BDMV source folder"/>
+                        </StackPanel>
+
+                        <!-- Files list -->
+                        <ListBox x:Name="LstUhdBdFiles"
+                                 Background="Transparent"
+                                 MinHeight="100" MaxHeight="260">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <StackPanel Grid.Column="0" Spacing="1">
+                                            <TextBlock Text="{Binding FileName}"
+                                                       Foreground="#E8F0FE" FontSize="12"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Text="{Binding FilePath}"
+                                                       Foreground="#5A7A9A" FontSize="10"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding SizeText}"
+                                                   Foreground="#8EAFC8" FontSize="12"
+                                                   VerticalAlignment="Center" Margin="8,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+
+                <!-- UHD BD Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="⚙&#xFE0F; UHD BD Settings" Classes="SectionHeader"/>
+                        <WrapPanel Orientation="Horizontal">
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Volume Label" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBox x:Name="TxtUhdBdVolumeLabel" Watermark="UHD_BLURAY" Width="180"/>
+                            </StackPanel>
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Disc Size" Foreground="#8EAFC8" FontSize="11"/>
+                                <ComboBox x:Name="CmbUhdBdDiscSize" Width="200" SelectedIndex="0">
+                                    <ComboBoxItem Content="UHD BD-66 (66 GB)"/>
+                                    <ComboBoxItem Content="UHD BD-100 (100 GB)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="HDR Mode" Foreground="#8EAFC8" FontSize="11"/>
+                                <ComboBox x:Name="CmbUhdBdHdrMode" Width="200" SelectedIndex="0">
+                                    <ComboBoxItem Content="HDR10"/>
+                                    <ComboBoxItem Content="Dolby Vision"/>
+                                    <ComboBoxItem Content="HDR10+"/>
+                                    <ComboBoxItem Content="HLG"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Output & Burning -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💾 Output &amp; Burning" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBox x:Name="TxtUhdBdOutputPath" Watermark="Output ISO image path..."
+                                     Width="520"/>
+                            <Button Content="📁 Browse..." Classes="PrimaryBtn"
+                                    Click="OnBrowseUhdBdOutputClick"
+                                    ToolTip.Tip="Select output ISO image path"/>
+                        </StackPanel>
+
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ChkUhdBdBurnDisc" Content="🔥 Burn to Disc" Margin="0,0,16,8"
+                                      ToolTip.Tip="Burn the UHD Blu-ray ISO after creation"/>
+                            <CheckBox x:Name="ChkUhdBdEject" Content="⏏&#xFE0F; Eject After" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdVerify" Content="✅ Verify After" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdSimulate" Content="🧪 Simulate" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdBup" Content="🛡 Buffer Underrun Protection"
+                                      Margin="0,0,16,8" IsChecked="True"/>
+                        </WrapPanel>
+
+                        <WrapPanel Orientation="Horizontal">
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Target Drive" Foreground="#8EAFC8" FontSize="11"/>
+                                <ComboBox x:Name="CmbUhdBdDrive" Width="260"/>
+                            </StackPanel>
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Write Speed" Foreground="#8EAFC8" FontSize="11"/>
+                                <ComboBox x:Name="CmbUhdBdSpeed" Width="120" SelectedIndex="0">
+                                    <ComboBoxItem Content="Auto"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="6x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Copies" Foreground="#8EAFC8" FontSize="11"/>
+                                <NumericUpDown x:Name="NumUhdBdCopies" Minimum="1" Maximum="99" Value="1"
+                                               Width="80"/>
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2H: XSVCD (eXtended Super Video CD)                    -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2XsvcdPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="eXtended Super Video CD (XSVCD) — Add Files &amp; Configure" Classes="SectionHeader"/>
+
+                <!-- Video Files -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📼 Video Files" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtXsvcdFileCount" Text="(0 files)"
+                                       Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Content="➕ Add Files" Classes="PrimaryBtn"
+                                    Click="OnAddXsvcdFilesClick"
+                                    ToolTip.Tip="Add MPEG-2 video files"/>
+                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    Click="OnRemoveXsvcdFileClick"
+                                    ToolTip.Tip="Remove the selected file from the list"/>
+                            <Button Content="⬆" Classes="ActionBtn" Click="OnMoveXsvcdUpClick"
+                                    ToolTip.Tip="Move selected file up"/>
+                            <Button Content="⬇" Classes="ActionBtn" Click="OnMoveXsvcdDownClick"
+                                    ToolTip.Tip="Move selected file down"/>
+                        </StackPanel>
+
+                        <Border Classes="DropZone" DragDrop.AllowDrop="True"
+                                DragDrop.DragOver="OnXsvcdDragOver"
+                                DragDrop.Drop="OnXsvcdDrop">
+                            <ListBox x:Name="LstXsvcdFiles"
+                                     Background="Transparent"
+                                     MinHeight="100" MaxHeight="260">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                            <TextBlock Grid.Column="0" Text="{Binding TrackNumber}"
+                                                       Foreground="#5A7A9A" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="0,0,8,0"
+                                                       FontWeight="Bold" Width="24"/>
+                                            <StackPanel Grid.Column="1" Spacing="1">
+                                                <TextBlock Text="{Binding FileName}"
+                                                           Foreground="#E8F0FE" FontSize="12"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding FilePath}"
+                                                           Foreground="#5A7A9A" FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding DurationText}"
+                                                       Foreground="#8EAFC8" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="8,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- XSVCD Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="⚙&#xFE0F; XSVCD Settings" Classes="SectionHeader"/>
+                        <WrapPanel Orientation="Horizontal">
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Video Standard" Foreground="#8EAFC8" FontSize="11"/>
+                                <ComboBox x:Name="CmbXsvcdVideoStandard" Width="120" SelectedIndex="0">
+                                    <ComboBoxItem Content="NTSC"/>
+                                    <ComboBoxItem Content="PAL"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Disc Label" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBox x:Name="TxtXsvcdDiscLabel" Watermark="XSVCD" Width="180"/>
+                            </StackPanel>
+                        </WrapPanel>
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ChkXsvcdPbc" Content="🎮 Playback Control (PBC)"
+                                      Margin="0,0,16,8" IsChecked="True"
+                                      ToolTip.Tip="Enable interactive navigation menus"/>
+                            <CheckBox x:Name="ChkXsvcdScanData" Content="📡 Scan Data"
+                                      Margin="0,0,16,8" IsChecked="True"
+                                      ToolTip.Tip="Include SCANDATA.DAT for fast-forward/rewind support"/>
+                            <CheckBox x:Name="ChkXsvcdSearchData" Content="🔍 Search Data"
+                                      Margin="0,0,16,8" IsChecked="True"
+                                      ToolTip.Tip="Include SEARCH.DAT for chapter/track seeking"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Output & Burning -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💾 Output &amp; Burning" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBox x:Name="TxtXsvcdOutputPath" Watermark="Output image path (.bin)..."
+                                     Width="520"/>
+                            <Button Content="📁 Browse..." Classes="PrimaryBtn"
+                                    Click="OnBrowseXsvcdOutputClick"
+                                    ToolTip.Tip="Select output BIN/CUE image path"/>
+                        </StackPanel>
+
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ChkXsvcdBurnDisc" Content="🔥 Burn to Disc" Margin="0,0,16,8"
+                                      ToolTip.Tip="Burn the XSVCD image after creation"/>
+                            <CheckBox x:Name="ChkXsvcdEject" Content="⏏&#xFE0F; Eject After" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdVerify" Content="✅ Verify After" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdSimulate" Content="🧪 Simulate" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdBup" Content="🛡 Buffer Underrun Protection"
+                                      Margin="0,0,16,8" IsChecked="True"/>
+                        </WrapPanel>
+
+                        <WrapPanel Orientation="Horizontal">
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Target Drive" Foreground="#8EAFC8" FontSize="11"/>
+                                <ComboBox x:Name="CmbXsvcdDrive" Width="260"/>
+                            </StackPanel>
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Write Speed" Foreground="#8EAFC8" FontSize="11"/>
+                                <ComboBox x:Name="CmbXsvcdSpeed" Width="120" SelectedIndex="0">
+                                    <ComboBoxItem Content="Auto"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Write Mode" Foreground="#8EAFC8" FontSize="11"/>
+                                <ComboBox x:Name="CmbXsvcdWriteMode" Width="200" SelectedIndex="0">
+                                    <ComboBoxItem Content="DAO (Disc At Once)"/>
+                                    <ComboBoxItem Content="TAO (Track At Once)"/>
+                                    <ComboBoxItem Content="SAO (Session At Once)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Spacing="4" Margin="0,0,16,8">
+                                <TextBlock Text="Copies" Foreground="#8EAFC8" FontSize="11"/>
+                                <NumericUpDown x:Name="NumXsvcdCopies" Minimum="1" Maximum="99" Value="1"
+                                               Width="80"/>
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 3: Summary                                              -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step3Panel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Summary — Review Before Executing" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel x:Name="VideoSummaryContent" Spacing="8">
+                        <!-- Filled dynamically -->
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 4: Progress                                             -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step4Panel" IsVisible="False" Spacing="16">
+                <TextBlock x:Name="TxtVideoStep4Title" Text="Executing..." Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <ProgressBar x:Name="PrgVideoExec" Classes="BurnProgress" Value="0"/>
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <TextBlock x:Name="TxtVideoExecStatus" Text="Preparing..."
+                                       Foreground="#8EAFC8" FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtVideoExecETA" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="1" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtVideoExecSpeed" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="2" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtVideoExecPercent" Text="0%"
+                                       Foreground="#E8F0FE" FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Grid.Column="3" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBox x:Name="TxtVideoExecLog" Classes="LogBox" Height="200"/>
+                        <!-- Disc Visualization -->
+                        <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
+                                Padding="8" IsVisible="False" Margin="0,8,0,0">
+                            <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Navigation Buttons                                           -->
+            <!-- ============================================================ -->
+            <Border Classes="InfoCard" Margin="0,8,0,0">
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Button x:Name="BtnVideoBack" Content="← Back"
+                            Classes="ActionBtn" Click="OnVideoBackClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Go back to the previous step"/>
+                    <Button x:Name="BtnVideoNext" Content="Next →"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnVideoNextClick" IsVisible="False"
+                            ToolTip.Tip="Proceed to the next step"/>
+                    <Button x:Name="BtnVideoExecute" Content="🔥 Start"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnVideoExecuteClick" IsVisible="False"
+                            ToolTip.Tip="Start the operation"/>
+                    <Button x:Name="BtnVideoCancel" Content="⏹ Cancel"
+                            Classes="DangerBtn" Grid.Column="3"
+                            Margin="8,0,0,0" Click="OnVideoCancelClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Cancel the current operation"/>
+                    <Button x:Name="BtnVideoFinish" Content="✅ Done — Return Home"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnVideoFinishClick" IsVisible="False"
+                            ToolTip.Tip="Operation complete — return to the home screen"/>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

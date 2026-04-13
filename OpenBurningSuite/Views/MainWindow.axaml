@@ -1,0 +1,360 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:OpenBurningSuite.Views"
+        x:Class="OpenBurningSuite.Views.MainWindow"
+        Title="Open Burning Suite"
+        Width="1280" Height="820"
+        MinWidth="1280" MinHeight="820"
+        Background="#0C1622"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Title bar -->
+        <Border Grid.Row="0" Background="#0A1520" Padding="16,10"
+                BorderBrush="#1E3450" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Image Source="avares://OpenBurningSuite/icon.png" Width="32" Height="32" VerticalAlignment="Center"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Open Burning Suite"
+                                   FontSize="18" FontWeight="Bold"
+                                   Foreground="#5BC0FF"/>
+                        <TextBlock Text="Professional Disc Authoring &amp; Burning"
+                                   FontSize="10" Foreground="#5A7A9A" Margin="0,-1,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Quick action buttons in title bar -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6"
+                            VerticalAlignment="Center">
+                    <Button x:Name="BtnHomeNav" Content="🏠" FontSize="16"
+                            Classes="NavBtn" Click="OnHomeClick"
+                            ToolTip.Tip="Return to the Home screen"/>
+                    <Button x:Name="BtnSettingsNav" FontSize="16"
+                            Classes="NavBtn" Click="OnSettingsClick"
+                            ToolTip.Tip="Application settings and preferences"
+                            MinWidth="40" MinHeight="32">
+                        <TextBlock Text="⚙&#xFE0F;" FontSize="16"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button x:Name="BtnHelpNav" Content="❓" FontSize="16"
+                            Classes="NavBtn" Click="OnHelpClick"
+                            ToolTip.Tip="Help and documentation"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main layout: sidebar + content -->
+        <Grid Grid.Row="1" ColumnDefinitions="220,*">
+
+            <!-- Sidebar -->
+            <Border Grid.Column="0" Background="#0A1520"
+                    BorderBrush="#1E3450" BorderThickness="0,0,1,0">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Margin="10,16,10,0" Spacing="2">
+                        <TextBlock Text="MAIN"
+                                   Foreground="#5A7A9A" FontSize="10"
+                                   FontWeight="Bold" Margin="8,0,0,6"/>
+
+                        <Button x:Name="BtnHome" Content="🏠  Home"
+                                Classes="NavBtn" Click="OnHomeClick"
+                                ToolTip.Tip="Home screen — quick access to all features"/>
+                        <Button x:Name="BtnDiscover" Content="🔍  Discover"
+                                Classes="NavBtn" Click="OnDiscoverClick"
+                                ToolTip.Tip="Scan for optical drives and probe inserted media"/>
+                        <Button x:Name="BtnRead" Content="💿  Copy Disc"
+                                Classes="NavBtn" Click="OnReadClick"
+                                ToolTip.Tip="Copy optical discs to image files (ISO, BIN/CUE, MDF, etc.)"/>
+                        <Button x:Name="BtnBuild" Content="🏗  Build Image"
+                                Classes="NavBtn" Click="OnBuildClick"
+                                ToolTip.Tip="Create disc images from files (data, audio, video, gaming)"/>
+                        <Button x:Name="BtnWrite" Content="🔥  Burn / Write"
+                                Classes="NavBtn" Click="OnWriteClick"
+                                ToolTip.Tip="Burn disc images to CD, DVD, HD DVD, or Blu-ray"/>
+                        <Button x:Name="BtnVerify" Content="✅  Verify"
+                                Classes="NavBtn" Click="OnVerifyClick"
+                                ToolTip.Tip="Verify disc integrity or compare disc to image"/>
+                        <Button x:Name="BtnAdvanced"
+                                Classes="NavBtn" Click="OnAdvancedClick"
+                                ToolTip.Tip="Advanced disc utilities — blank/erase rewritable media">
+                            <TextBlock Text="⚙&#xFE0F;  Advanced" FontSize="13"/>
+                        </Button>
+
+                        <TextBlock Text="QUICK START"
+                                   Foreground="#5A7A9A" FontSize="10"
+                                   FontWeight="Bold" Margin="8,16,0,6"/>
+
+                        <Button x:Name="BtnAudioWizard" Content="🎵  Audio &amp; Music Wizard"
+                                Classes="NavBtn" Click="OnAudioWizardClick"
+                                ToolTip.Tip="Guided wizard to create audio CDs, copy music to disc, or rip audio CDs"/>
+
+                        <Button x:Name="BtnVideoWizard" Content="🎬  Video Disc Wizard"
+                                Classes="NavBtn" Click="OnVideoWizardClick"
+                                ToolTip.Tip="Guided wizard to create DVD-Video, Blu-ray, VCD, or SVCD discs"/>
+
+                        <Button x:Name="BtnDataWizard" Content="📁  Data Disc Wizard"
+                                Classes="NavBtn" Click="OnDataWizardClick"
+                                ToolTip.Tip="Guided wizard to create and burn data discs from files and folders"/>
+
+                        <Button x:Name="BtnGameWizard" Content="🎮  Game Disc Wizard"
+                                Classes="NavBtn" Click="OnGameWizardClick"
+                                ToolTip.Tip="Guided wizard to create and burn game discs from image files or folders"/>
+                        <Button x:Name="BtnCopyWizard" Content="💿  Copy Disc Wizard"
+                                Classes="NavBtn" Click="OnCopyWizardClick"
+                                ToolTip.Tip="Guided wizard to copy a disc to an image file"/>
+                        <Button x:Name="BtnBlankWizard" Content="🧹  Blank Disc Wizard"
+                                Classes="NavBtn" Click="OnBlankWizardClick"
+                                ToolTip.Tip="Guided wizard to erase rewritable discs"/>
+
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <!-- Content panel (views swap here) -->
+            <Grid Grid.Column="1" Background="#0C1622">
+
+                <!-- HOME SCREEN -->
+                <ScrollViewer x:Name="HomeScreen" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="28,24" Spacing="24">
+
+                        <!-- Welcome header -->
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Welcome to Open Burning Suite"
+                                       FontSize="26" FontWeight="Bold" Foreground="#5BC0FF"/>
+                            <TextBlock Text="Professional disc authoring, burning, reading, and verification."
+                                       FontSize="13" Foreground="#5A7A9A" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <!-- Quick Start Category Tiles -->
+                        <TextBlock Text="QUICK START" Foreground="#5A7A9A" FontSize="11"
+                                   FontWeight="Bold" Margin="0,4,0,0"/>
+
+                        <WrapPanel Orientation="Horizontal">
+                            <!-- Burn Data -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnWriteClick"
+                                    ToolTip.Tip="Burn a disc image file to CD, DVD, or Blu-ray media">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="🔥" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Burn Image" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Build ISO -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnBuildClick"
+                                    ToolTip.Tip="Create a new disc image from files and folders">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="🏗" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Build Image" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Read Disc -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnReadClick"
+                                    ToolTip.Tip="Copy a disc to an image file for backup or archiving">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="💿" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Copy Disc" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Verify -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnVerifyClick"
+                                    ToolTip.Tip="Verify disc integrity or compare disc to image file">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="✅" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Verify Disc" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Discover Drives -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnDiscoverClick"
+                                    ToolTip.Tip="Scan for optical drives and inspect media">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="🔍" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Discover Drives" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Copy Disc Wizard -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnCopyWizardClick"
+                                    ToolTip.Tip="Guided wizard to copy a disc to an image file">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="📀" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Copy Disc Wizard" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Blank Disc Wizard -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnBlankWizardClick"
+                                    ToolTip.Tip="Guided wizard to erase rewritable discs">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="🧹" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Blank Disc" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+                        </WrapPanel>
+
+                        <!-- Feature Categories -->
+                        <TextBlock Text="FEATURES" Foreground="#5A7A9A" FontSize="11"
+                                   FontWeight="Bold" Margin="0,4,0,0"/>
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+
+                            <!-- Burn & Write -->
+                            <Border Grid.Row="0" Grid.Column="0" Classes="Card" Margin="0,0,8,8">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="🔥" FontSize="18"/>
+                                        <TextBlock Text="Burn &amp; Write" Classes="SectionHeader"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Write ISO, BIN/CUE, NRG, MDF, CDI images to CD-R/RW, DVD±R/RW, HD DVD, and Blu-ray media. Supports DAO, TAO, SAO modes, multi-session, overburn, buffer underrun protection, and M-DISC archival."
+                                               Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                                    <Button Content="Open Burn View →" Classes="ActionBtn"
+                                            Click="OnWriteClick"
+                                            ToolTip.Tip="Navigate to the burn/write view"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Build -->
+                            <Border Grid.Row="0" Grid.Column="1" Classes="Card" Margin="0,0,0,8">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="🏗" FontSize="18"/>
+                                        <TextBlock Text="Build Disc Images" Classes="SectionHeader"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Create data discs (ISO 9660, Joliet, UDF, Rock Ridge, HFS+), audio CDs with CD-TEXT, Video CDs (VCD/SVCD), DVD-Video, Blu-ray, and bootable discs with El Torito."
+                                               Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                                    <Button Content="Open Build View →" Classes="ActionBtn"
+                                            Click="OnBuildClick"
+                                            ToolTip.Tip="Navigate to the build image view"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Read & Dump -->
+                            <Border Grid.Row="1" Grid.Column="0" Classes="Card" Margin="0,0,8,8">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="💿" FontSize="18"/>
+                                        <TextBlock Text="Copy &amp; Dump" Classes="SectionHeader"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Copy discs to ISO, BIN/CUE, MDF/MDS, NRG, CDI, CCD, TOC/BIN formats. Raw 2352-byte sector dumping, subchannel extraction, audio paranoia mode, and gaming system presets."
+                                               Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                                    <Button Content="Open Copy View →" Classes="ActionBtn"
+                                            Click="OnReadClick"
+                                            ToolTip.Tip="Navigate to the copy disc view"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Verify -->
+                            <Border Grid.Row="1" Grid.Column="1" Classes="Card" Margin="0,0,0,8">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="✅" FontSize="18"/>
+                                        <TextBlock Text="Verify &amp; Check" Classes="SectionHeader"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Verify disc integrity with SHA256, SHA1, MD5, SHA512, or CRC32 checksums. Sector-by-sector comparison, subchannel verification, and audio track validation."
+                                               Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                                    <Button Content="Open Verify View →" Classes="ActionBtn"
+                                            Click="OnVerifyClick"
+                                            ToolTip.Tip="Navigate to the verification view"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Gaming -->
+                            <Border Grid.Row="2" Grid.Column="0" Classes="Card" Margin="0,0,8,0">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="🎮" FontSize="18"/>
+                                        <TextBlock Text="Gaming Disc Support" Classes="SectionHeader"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Built-in presets for PlayStation 1-5, Sega Saturn/Dreamcast/Mega CD, Xbox/360, GameCube/Wii, Neo Geo CD, 3DO, PC Engine, Atari Jaguar, Amiga CD32/CDTV, and more."
+                                               Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                                    <Button Content="Open Build View →" Classes="ActionBtn"
+                                            Click="OnBuildClick"
+                                            ToolTip.Tip="Build gaming disc images with system-specific presets"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Advanced -->
+                            <Border Grid.Row="2" Grid.Column="1" Classes="Card" Margin="0,0,0,0">
+                                <StackPanel Spacing="8">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="⚙&#xFE0F;" FontSize="18"/>
+                                        <TextBlock Text="Advanced Functions" Classes="SectionHeader"/>
+                                    </StackPanel>
+                                    <TextBlock Text="Erase rewritable discs (quick/full blank), disc finalization, M-DISC archival, LibCrypt/region-free patching, raw sector I/O, and cross-platform SCSI/MMC access."
+                                               Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                                    <Button Content="Open Advanced View →" Classes="ActionBtn"
+                                            Click="OnAdvancedClick"
+                                            ToolTip.Tip="Access advanced disc functions like blanking and finalization"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Actual views (hidden by default, shown on nav) -->
+                <views:DiscoverView x:Name="ViewDiscover" IsVisible="False"/>
+                <views:ReadView     x:Name="ViewRead"     IsVisible="False"/>
+                <views:BuildView    x:Name="ViewBuild"    IsVisible="False"/>
+                <views:WriteView    x:Name="ViewWrite"    IsVisible="False"/>
+                <views:VerifyView   x:Name="ViewVerify"   IsVisible="False"/>
+                <views:AdvancedView x:Name="ViewAdvanced" IsVisible="False"/>
+                <views:AudioWizardView x:Name="ViewAudioWizard" IsVisible="False"/>
+                <views:VideoWizardView x:Name="ViewVideoWizard" IsVisible="False"/>
+                <views:DataWizardView x:Name="ViewDataWizard" IsVisible="False"/>
+                <views:GameWizardView x:Name="ViewGameWizard" IsVisible="False"/>
+                <views:CopyWizardView x:Name="ViewCopyWizard" IsVisible="False"/>
+                <views:BlankWizardView x:Name="ViewBlankWizard" IsVisible="False"/>
+                <views:HelpView x:Name="ViewHelp" IsVisible="False"/>
+                <views:SettingsView x:Name="ViewSettings" IsVisible="False"/>
+            </Grid>
+        </Grid>
+
+        <!-- Status bar -->
+        <Border Grid.Row="2" Background="#060D18"
+                BorderBrush="#1E3450" BorderThickness="0,1,0,0"
+                Padding="12,6">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock x:Name="TxtStatus"
+                           Text="Ready — select an action to get started."
+                           Foreground="#5A7A9A" FontSize="11"
+                           VerticalAlignment="Center"/>
+                <TextBlock x:Name="TxtElevation"
+                           Grid.Column="1"
+                           Foreground="#5A7A9A" FontSize="11"
+                           VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+
+</Window>

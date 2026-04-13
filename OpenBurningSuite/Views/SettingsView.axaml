@@ -1,0 +1,612 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="OpenBurningSuite.Views.SettingsView"
+             Background="#0C1622">
+
+    <Grid ColumnDefinitions="220,*">
+
+        <!-- Category sidebar -->
+        <Border Grid.Column="0" Background="#0A1520"
+                BorderBrush="#1E3450" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="10,16,10,16" Spacing="2">
+                    <TextBlock Text="⚙&#xFE0F; SETTINGS"
+                               Foreground="#5A7A9A" FontSize="10"
+                               FontWeight="Bold" Margin="8,0,0,10"/>
+
+                    <Button x:Name="TocGeneral" Content="🏠  General"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGeneral"/>
+                    <Button x:Name="TocBurnDefaults" Content="🔥  Burn Defaults"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionBurnDefaults"/>
+                    <Button x:Name="TocReadDefaults" Content="💿  Read / Copy Defaults"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionReadDefaults"/>
+                    <Button x:Name="TocVerification" Content="✅  Verification"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionVerification"/>
+                    <Button x:Name="TocFileSystem" Content="📂  File System Defaults"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionFileSystem"/>
+                    <Button x:Name="TocAudioCd" Content="🎵  Audio CD Defaults"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAudioCd"/>
+                    <Button x:Name="TocIoPerf" Content="⚡&#xFE0F;  I/O &amp; Performance"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionIoPerf"/>
+                    <Button x:Name="TocPostActions" Content="🔔  Post-Operation Actions"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPostActions"/>
+                    <Button x:Name="TocLogging" Content="📋  Logging &amp; Diagnostics"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionLogging"/>
+                    <Button x:Name="TocPaths" Content="📁  Paths &amp; Locations"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPaths"/>
+                    <Button x:Name="TocAdvanced" Content="🔧  Advanced &amp; Safety"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAdvanced"/>
+                    <Button x:Name="TocGaming" Content="🎮  Gaming Disc Defaults"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGaming"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Main settings content area -->
+        <ScrollViewer x:Name="ContentScroller" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="28,24,28,40" Spacing="20">
+
+                <!-- Page header -->
+                <StackPanel Spacing="4">
+                    <TextBlock Text="⚙&#xFE0F;  Application Settings &amp; Preferences"
+                               FontSize="20" FontWeight="SemiBold" Foreground="#E8F0FE"/>
+                    <TextBlock Text="Configure default behavior, performance, paths, and preferences for all operations."
+                               FontSize="12" Foreground="#5A7A9A" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <!-- Save / Reset bar -->
+                <Border Classes="Card">
+                    <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                        <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <TextBlock x:Name="TxtSettingsStatus" Text="" Foreground="#5A7A9A" FontSize="11"/>
+                        </StackPanel>
+                        <Button x:Name="BtnSaveSettings" Grid.Column="1"
+                                Content="💾  Save Settings" Classes="PrimaryBtn"
+                                Click="OnSaveClick"
+                                ToolTip.Tip="Save all settings to disk"/>
+                        <Button x:Name="BtnResetDefaults" Grid.Column="2"
+                                Content="↩  Reset to Defaults" Classes="ActionBtn"
+                                Margin="8,0,0,0" Click="OnResetClick"
+                                ToolTip.Tip="Reset all settings to factory defaults"/>
+                        <Button x:Name="BtnOpenSettingsFile" Grid.Column="3"
+                                Content="📄  Open Settings File" Classes="ActionBtn"
+                                Margin="8,0,0,0" Click="OnOpenSettingsFileClick"
+                                ToolTip.Tip="Open the settings JSON file in the system editor"/>
+                    </Grid>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- GENERAL -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionGeneral" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🏠" FontSize="16"/>
+                            <TextBlock Text="General" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="General application behavior and user interface preferences."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <CheckBox x:Name="ChkConfirmBeforeBurn"
+                                  Content="Show confirmation dialog before starting burn operations"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Display a confirmation prompt before writing to disc"/>
+                        <CheckBox x:Name="ChkConfirmBeforeErase"
+                                  Content="Show confirmation dialog before erasing/blanking a disc"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Display a confirmation prompt before erasing rewritable media"/>
+                        <CheckBox x:Name="ChkMinimizeToTray"
+                                  Content="Minimize to system tray instead of taskbar"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="When minimized, place the app icon in the system tray"/>
+                        <CheckBox x:Name="ChkPreventSleep"
+                                  Content="Prevent system sleep/standby during burn operations"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Keep the system awake while writing to prevent failed burns"/>
+                        <CheckBox x:Name="ChkPreventScreensaver"
+                                  Content="Prevent screensaver during burn operations"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Disable screensaver activation while burning a disc"/>
+                        <CheckBox x:Name="ChkCheckForUpdates"
+                                  Content="Automatically check for updates at startup"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Check for new versions when the application starts"/>
+                        <CheckBox x:Name="ChkRememberWindowPos"
+                                  Content="Remember and restore window position on startup"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Save the current window size and position for next launch"/>
+                        <CheckBox x:Name="ChkShowTooltips"
+                                  Content="Show tooltips on UI controls"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Display helpful tooltips when hovering over controls"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- BURN DEFAULTS -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionBurnDefaults" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🔥" FontSize="16"/>
+                            <TextBlock Text="Default Burn / Write Settings" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Default settings applied when creating a new burn job. Can be overridden per-job."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto" Margin="0,4,0,0">
+                            <TextBlock Text="Write Speed:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="CmbDefaultWriteSpeed" Grid.Column="1"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Default write speed for burning operations"/>
+
+                            <TextBlock Grid.Row="1" Text="Write Mode:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbDefaultWriteMode" Grid.Row="1" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="Default write mode (TAO, SAO/DAO)"/>
+
+                            <TextBlock Grid.Row="2" Text="Multi-Session:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbDefaultMultiSession" Grid.Row="2" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="Default multi-session mode"/>
+                        </Grid>
+
+                        <CheckBox x:Name="ChkDefaultBUP"
+                                  Content="Enable buffer underrun protection"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Prevents buffer underruns that can ruin a disc"/>
+                        <CheckBox x:Name="ChkDefaultVerifyAfterBurn"
+                                  Content="Verify data after burning"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Automatically verify written data matches the source"/>
+                        <CheckBox x:Name="ChkDefaultEjectAfterBurn"
+                                  Content="Eject disc after burn completes"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Automatically eject the disc tray when burning finishes"/>
+                        <CheckBox x:Name="ChkDefaultCloseDisc"
+                                  Content="Close/finalize disc after writing"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Finalize the disc so it can be read in standard drives"/>
+                        <CheckBox x:Name="ChkDefaultOverburn"
+                                  Content="Enable overburning (write beyond rated capacity)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Allow writing more data than the disc's official capacity (risky)"/>
+                        <CheckBox x:Name="ChkDefaultSimulate"
+                                  Content="Simulate burn before writing (test mode)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Perform a simulated burn to test without actually writing"/>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Default Copies:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <NumericUpDown x:Name="NudDefaultCopies" Minimum="1" Maximum="99"
+                                           Value="1" Width="100"
+                                           ToolTip.Tip="Number of copies to burn by default"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- READ / COPY DEFAULTS -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionReadDefaults" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="💿" FontSize="16"/>
+                            <TextBlock Text="Default Read / Copy Settings" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Default settings for disc reading and copying operations."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" Margin="0,4,0,0">
+                            <TextBlock Text="Read Speed:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="CmbDefaultReadSpeed" Grid.Column="1"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Default read speed for copy operations"/>
+
+                            <TextBlock Grid.Row="1" Text="Output Format:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbDefaultOutputFormat" Grid.Row="1" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="Default image format when copying a disc"/>
+
+                            <TextBlock Grid.Row="2" Text="Error Recovery:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbDefaultErrorRecovery" Grid.Row="2" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="How to handle read errors"/>
+
+                            <TextBlock Grid.Row="3" Text="Subchannel Mode:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbDefaultSubchannel" Grid.Row="3" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="Subchannel extraction mode for special disc formats"/>
+
+                            <TextBlock Grid.Row="4" Text="Sector Size:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbDefaultSectorSize" Grid.Row="4" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="Sector size — 2048 for data, 2352 for raw/audio"/>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Read Retry Count:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <NumericUpDown x:Name="NudDefaultReadRetries" Minimum="0" Maximum="100"
+                                           Value="3" Width="100"
+                                           ToolTip.Tip="Number of retries when a sector read fails"/>
+                        </StackPanel>
+
+                        <CheckBox x:Name="ChkDefaultAudioParanoia"
+                                  Content="Enable audio paranoia mode (better accuracy, slower)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Use paranoia-level error correction when ripping audio CDs"/>
+                        <CheckBox x:Name="ChkDefaultJitterCorrection"
+                                  Content="Enable read jitter correction"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Correct jitter errors during audio extraction"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- VERIFICATION -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionVerification" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="✅" FontSize="16"/>
+                            <TextBlock Text="Verification Settings" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Configure default checksum algorithm and automatic verification behavior."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <Grid ColumnDefinitions="180,*" Margin="0,4,0,0">
+                            <TextBlock Text="Checksum Algorithm:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="CmbDefaultChecksum" Grid.Column="1"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Default hash algorithm for disc verification"/>
+                        </Grid>
+
+                        <CheckBox x:Name="ChkAutoVerifyAfterRead"
+                                  Content="Automatically verify disc after read/copy operations"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Run a verification pass after copying a disc to an image"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- FILE SYSTEM DEFAULTS -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionFileSystem" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📂" FontSize="16"/>
+                            <TextBlock Text="File System Defaults" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Default file system settings for building data discs and images."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto" Margin="0,4,0,0">
+                            <TextBlock Text="File System:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="CmbDefaultFileSystem" Grid.Column="1"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Default file system for new data disc projects"/>
+
+                            <TextBlock Grid.Row="1" Text="UDF Revision:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbDefaultUdfRevision" Grid.Row="1" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="Default UDF revision level when using UDF file system"/>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,4,0,0">
+                            <TextBlock Text="Default Volume Label:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBox x:Name="TxtDefaultVolumeLabel"
+                                     Width="300" Watermark="e.g. MY_DISC"
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Default volume label for new disc projects"/>
+                        </StackPanel>
+
+                        <CheckBox x:Name="ChkAllowLongFileNames"
+                                  Content="Allow long file names (Joliet extensions)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Allow file names longer than the ISO 9660 8.3 limit"/>
+                        <CheckBox x:Name="ChkAllowDeepDirs"
+                                  Content="Allow deep directory nesting (beyond 8 levels)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Allow directory structures deeper than the ISO 9660 limit"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- AUDIO CD DEFAULTS -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionAudioCd" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🎵" FontSize="16"/>
+                            <TextBlock Text="Audio CD Defaults" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Default settings for audio CD creation and burning."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Track Gap (seconds):" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <NumericUpDown x:Name="NudAudioTrackGap" Minimum="0" Maximum="10"
+                                           Value="2" Width="100"
+                                           ToolTip.Tip="Silence gap between audio tracks in seconds"/>
+                        </StackPanel>
+
+                        <CheckBox x:Name="ChkAudioNormalization"
+                                  Content="Normalize audio track volume levels"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Equalize volume levels across all tracks"/>
+                        <CheckBox x:Name="ChkCdText"
+                                  Content="Enable CD-TEXT (embed track/album titles)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Write CD-TEXT data with artist and title information"/>
+                        <CheckBox x:Name="ChkGaplessPlayback"
+                                  Content="Gapless playback (no silence between tracks)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Remove gaps between tracks for seamless playback"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- I/O & PERFORMANCE -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionIoPerf" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="⚡&#xFE0F;" FontSize="16"/>
+                            <TextBlock Text="I/O &amp; Performance" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Low-level I/O and SCSI performance tuning. Changing these may affect burn stability."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <Grid ColumnDefinitions="220,*" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,4,0,0">
+                            <TextBlock Text="I/O Buffer Size (KB):" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <NumericUpDown x:Name="NudIoBufferSize" Grid.Column="1"
+                                           Minimum="16" Maximum="4096" Value="64" Width="120"
+                                           ToolTip.Tip="Buffer size in kilobytes for read/write operations"/>
+
+                            <TextBlock Grid.Row="1" Text="Transfer Length (KB):" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <NumericUpDown x:Name="NudTransferLength" Grid.Row="1" Grid.Column="1"
+                                           Minimum="16" Maximum="256" Value="64" Width="120" Margin="0,8,0,0"
+                                           ToolTip.Tip="Number of kilobytes per SCSI I/O command"/>
+
+                            <TextBlock Grid.Row="2" Text="SCSI Write Retries:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <NumericUpDown x:Name="NudScsiWriteRetries" Grid.Row="2" Grid.Column="1"
+                                           Minimum="0" Maximum="100" Value="20" Width="120" Margin="0,8,0,0"
+                                           ToolTip.Tip="Number of write retries for transient SCSI errors"/>
+
+                            <TextBlock Grid.Row="3" Text="SCSI Read Retries:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <NumericUpDown x:Name="NudScsiReadRetries" Grid.Row="3" Grid.Column="1"
+                                           Minimum="0" Maximum="100" Value="20" Width="120" Margin="0,8,0,0"
+                                           ToolTip.Tip="Number of read retries for transient SCSI errors"/>
+                        </Grid>
+
+                        <CheckBox x:Name="ChkDirectIo"
+                                  Content="Enable direct (unbuffered) I/O"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Bypass OS cache for potentially faster I/O on some systems"/>
+                        <CheckBox x:Name="ChkExclusiveDrive"
+                                  Content="Exclusive drive access (prevent other apps from interfering)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Lock the drive exclusively during operations to prevent conflicts"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- POST-OPERATION ACTIONS -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionPostActions" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🔔" FontSize="16"/>
+                            <TextBlock Text="Post-Operation Actions" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Configure what happens after burn, read, or erase operations complete."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <Grid ColumnDefinitions="220,*" RowDefinitions="Auto,Auto,Auto" Margin="0,4,0,0">
+                            <TextBlock Text="After Successful Burn:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="CmbPostBurnAction" Grid.Column="1"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Action to perform after a burn completes successfully"/>
+
+                            <TextBlock Grid.Row="1" Text="After Successful Read:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbPostReadAction" Grid.Row="1" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="Action to perform after a disc copy completes successfully"/>
+
+                            <TextBlock Grid.Row="2" Text="After Successful Erase:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <ComboBox x:Name="CmbPostEraseAction" Grid.Row="2" Grid.Column="1"
+                                      HorizontalAlignment="Stretch" Margin="0,8,0,0"
+                                      ToolTip.Tip="Action to perform after a disc erase completes"/>
+                        </Grid>
+
+                        <CheckBox x:Name="ChkSoundOnComplete"
+                                  Content="Play notification sound when operations complete"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Play an audible sound when an operation finishes"/>
+                        <CheckBox x:Name="ChkSoundOnError"
+                                  Content="Play notification sound on errors"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Play an audible sound when an error occurs"/>
+                        <CheckBox x:Name="ChkNotificationOnComplete"
+                                  Content="Show desktop notification when operations complete"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Display a system notification when an operation finishes"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- LOGGING & DIAGNOSTICS -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionLogging" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📋" FontSize="16"/>
+                            <TextBlock Text="Logging &amp; Diagnostics" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Configure operation logging, verbosity, and log file management."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <CheckBox x:Name="ChkEnableLogging"
+                                  Content="Enable operation logging to file"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Write detailed operation logs to the log directory"/>
+
+                        <Grid ColumnDefinitions="220,*" RowDefinitions="Auto,Auto,Auto" Margin="0,4,0,0">
+                            <TextBlock Text="Log Level:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="CmbLogLevel" Grid.Column="1"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Amount of detail to include in log files"/>
+
+                            <TextBlock Grid.Row="1" Text="Max Log File Size (MB):" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <NumericUpDown x:Name="NudMaxLogSize" Grid.Row="1" Grid.Column="1"
+                                           Minimum="1" Maximum="500" Value="10" Width="120" Margin="0,8,0,0"
+                                           ToolTip.Tip="Maximum size of a single log file before rotation"/>
+
+                            <TextBlock Grid.Row="2" Text="Log Files to Keep:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <NumericUpDown x:Name="NudLogRetention" Grid.Row="2" Grid.Column="1"
+                                           Minimum="1" Maximum="50" Value="5" Width="120" Margin="0,8,0,0"
+                                           ToolTip.Tip="Number of old log files to retain"/>
+                        </Grid>
+
+                        <CheckBox x:Name="ChkLogScsiCommands"
+                                  Content="Include SCSI/MMC command details in log (verbose)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Log raw SCSI commands and responses for debugging"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- PATHS & LOCATIONS -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionPaths" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📁" FontSize="16"/>
+                            <TextBlock Text="Paths &amp; Locations" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Configure default directories for image output, temporary files, and logs."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Default Image Output Directory:" Classes="FieldLabel"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBox x:Name="TxtDefaultImageDir"
+                                         Watermark="Leave empty for system default..."
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="Default directory for saved disc images"/>
+                                <Button x:Name="BtnBrowseImageDir" Grid.Column="1"
+                                        Content="Browse…" Classes="ActionBtn"
+                                        Margin="6,0,0,0" Click="OnBrowseImageDirClick"
+                                        ToolTip.Tip="Browse for a directory"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Temporary File Directory:" Classes="FieldLabel"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBox x:Name="TxtTempDir"
+                                         Watermark="Leave empty for system default..."
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="Directory for temporary build files"/>
+                                <Button x:Name="BtnBrowseTempDir" Grid.Column="1"
+                                        Content="Browse…" Classes="ActionBtn"
+                                        Margin="6,0,0,0" Click="OnBrowseTempDirClick"
+                                        ToolTip.Tip="Browse for a directory"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Log File Directory:" Classes="FieldLabel"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBox x:Name="TxtLogDir"
+                                         Watermark="Leave empty for app data default..."
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="Custom directory for log files"/>
+                                <Button x:Name="BtnBrowseLogDir" Grid.Column="1"
+                                        Content="Browse…" Classes="ActionBtn"
+                                        Margin="6,0,0,0" Click="OnBrowseLogDirClick"
+                                        ToolTip.Tip="Browse for a directory"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- ADVANCED & SAFETY -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionAdvanced" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🔧" FontSize="16"/>
+                            <TextBlock Text="Advanced &amp; Safety" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Advanced options for experienced users. Incorrect settings may cause burn failures."
+                                   Foreground="#FF8C00" FontSize="11"/>
+
+                        <CheckBox x:Name="ChkExpertMode"
+                                  Content="Enable expert mode (show additional low-level options)"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Show advanced options in burn, read, and build views"/>
+                        <CheckBox x:Name="ChkAutoDetectSpeed"
+                                  Content="Automatically detect and suggest optimal write speed"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Analyze media quality and suggest the best write speed"/>
+                        <CheckBox x:Name="ChkMediaCompat"
+                                  Content="Perform media compatibility check before burning"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Verify the media is compatible with the selected operation"/>
+                        <CheckBox x:Name="ChkAutoDetectCaps"
+                                  Content="Automatically detect drive firmware capabilities"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Query drive firmware for supported features"/>
+                        <CheckBox x:Name="ChkAllowSameSourceTarget"
+                                  Content="Allow same drive as source and target (not recommended)"
+                                  Foreground="#FF8C00"
+                                  ToolTip.Tip="WARNING: Using the same drive for source and target can cause data loss"/>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="Default Layer Break Position:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <NumericUpDown x:Name="NudLayerBreak" Minimum="0" Maximum="4000000"
+                                           Value="0" Width="140"
+                                           ToolTip.Tip="Layer break LBA for dual-layer media (0 = automatic)"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ============================================================ -->
+                <!-- GAMING DISC DEFAULTS -->
+                <!-- ============================================================ -->
+                <Border x:Name="SectionGaming" Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🎮" FontSize="16"/>
+                            <TextBlock Text="Gaming Disc Defaults" Classes="SectionHeader"/>
+                        </StackPanel>
+                        <TextBlock Text="Default patching and preset behavior for gaming disc operations."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+
+                        <Grid ColumnDefinitions="220,*" Margin="0,4,0,0">
+                            <TextBlock Text="Default Gaming Preset:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="CmbDefaultGamingPreset" Grid.Column="1"
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Default gaming system preset for game disc wizard"/>
+                        </Grid>
+
+                        <CheckBox x:Name="ChkAutoEsrPatch"
+                                  Content="Automatically apply ESR patch for PS2 DVD images"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Auto-apply ESR patching for PS2 DVD compatibility"/>
+                        <CheckBox x:Name="ChkAutoRegionFree"
+                                  Content="Automatically apply region-free patching"
+                                  Foreground="#E8F0FE"
+                                  ToolTip.Tip="Remove region restrictions from game discs automatically"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Spacer at bottom -->
+                <Border Height="20"/>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

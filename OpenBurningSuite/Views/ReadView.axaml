@@ -1,0 +1,288 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:OpenBurningSuite.Views"
+             x:Class="OpenBurningSuite.Views.ReadView"
+             Background="#0C1622">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" Spacing="16">
+
+            <!-- Header -->
+            <TextBlock Text="Copy Disc to Image" Classes="PageTitle"/>
+            <TextBlock Text="Copy optical discs to image files with full subchannel and gaming system support."
+                       Classes="PageSubtitle"/>
+
+            <!-- Source & Output -->
+            <Border Classes="Card">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Source &amp; Output" Classes="SectionHeader"/>
+
+                    <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                        <TextBlock Text="Drive:" Grid.Row="0" Grid.Column="0"
+                                   Classes="FieldLabel" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                        <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="*,Auto">
+                            <ComboBox x:Name="CmbDrive"
+                                      PlaceholderText="Select optical drive..."
+                                      HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Choose which optical drive to read from"/>
+                            <Button x:Name="BtnRefreshDrives" Grid.Column="1"
+                                    Content="🔄" Classes="ActionBtn"
+                                    Margin="6,0,0,0" Click="OnRefreshDrivesClick"
+                                    ToolTip.Tip="Rescan the system for connected optical drives"/>
+                        </Grid>
+
+                        <TextBlock Text="Output Format:" Grid.Row="1" Grid.Column="0"
+                                   Classes="FieldLabel" VerticalAlignment="Center"
+                                   Margin="0,8,8,0"/>
+                        <ComboBox x:Name="CmbOutputFormat" Grid.Row="1" Grid.Column="1"
+                                  Margin="0,8,0,0" HorizontalAlignment="Stretch"
+                                  ToolTip.Tip="Image file format for the output (ISO, BIN/CUE, NRG, etc.)"/>
+
+                        <TextBlock Text="Output Path:" Grid.Row="2" Grid.Column="0"
+                                   Classes="FieldLabel" VerticalAlignment="Center"
+                                   Margin="0,8,8,0"/>
+                        <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                            <TextBox x:Name="TxtOutputPath"
+                                     Watermark="Output image file path..."
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     DragDrop.AllowDrop="True"
+                                     DragDrop.DragOver="OnOutputPathDragOver"
+                                     DragDrop.Drop="OnOutputPathDrop"
+                                     ToolTip.Tip="Full path for the output image file"/>
+                            <Button x:Name="BtnBrowseOutput" Grid.Column="1"
+                                    Content="Browse…" Classes="ActionBtn"
+                                    Margin="6,0,0,0" Click="OnBrowseOutputClick"
+                                    ToolTip.Tip="Open a file dialog to choose where to save the image"/>
+                        </Grid>
+
+                        <TextBlock Grid.Row="3" Grid.Column="1"
+                                   Text="💡 Drag and drop a file here"
+                                   Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Detected Content Info -->
+            <Border Classes="Card" x:Name="PnlDetectedContent" IsVisible="False">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="🔍  Detected Content" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnDetectContent" Grid.Column="1"
+                                Content="🔎  Detect Disc"
+                                Classes="ActionBtn" Click="OnDetectContentClick"
+                                ToolTip.Tip="Analyze the inserted disc to detect its content type and auto-configure optimal copy settings"/>
+                    </Grid>
+
+                    <Border Background="#0A1520" CornerRadius="6" Padding="12">
+                        <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="4">
+                            <TextBlock Text="Content Type:" Grid.Row="0" Grid.Column="0"
+                                       Foreground="#5A7A9A" FontSize="11"/>
+                            <TextBlock x:Name="TxtDetectedContentType" Grid.Row="0" Grid.Column="1"
+                                       Text="Not detected" Foreground="#E8F0FE" FontSize="11"
+                                       FontWeight="SemiBold"/>
+
+                            <TextBlock Text="Volume Label:" Grid.Row="1" Grid.Column="0"
+                                       Foreground="#5A7A9A" FontSize="11"/>
+                            <TextBlock x:Name="TxtDetectedVolumeLabel" Grid.Row="1" Grid.Column="1"
+                                       Text="" Foreground="#8EAFC8" FontSize="11"/>
+
+                            <TextBlock Text="Media Type:" Grid.Row="2" Grid.Column="0"
+                                       Foreground="#5A7A9A" FontSize="11"/>
+                            <TextBlock x:Name="TxtDetectedMediaType" Grid.Row="2" Grid.Column="1"
+                                       Text="" Foreground="#8EAFC8" FontSize="11"/>
+
+                            <TextBlock Text="Tracks:" Grid.Row="3" Grid.Column="0"
+                                       Foreground="#5A7A9A" FontSize="11"/>
+                            <TextBlock x:Name="TxtDetectedTracks" Grid.Row="3" Grid.Column="1"
+                                       Text="" Foreground="#8EAFC8" FontSize="11"/>
+
+                            <TextBlock Text="Configuration:" Grid.Row="4" Grid.Column="0"
+                                       Foreground="#5A7A9A" FontSize="11"/>
+                            <TextBlock x:Name="TxtDetectedConfig" Grid.Row="4" Grid.Column="1"
+                                       Text="" Foreground="#1E90FF" FontSize="11" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Options -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Copy Options" Classes="SectionHeader"/>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto">
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Copy Speed:" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbReadSpeed" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Speed at which to read the disc (lower speeds can improve accuracy)"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4">
+                            <TextBlock Text="Error Recovery:" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbErrorRecovery" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="How to handle read errors encountered during the rip">
+                                <ComboBoxItem Content="Yes (skip and retry)" Tag="Yes"/>
+                                <ComboBoxItem Content="No (ignore errors)" Tag="No"/>
+                                <ComboBoxItem Content="Abort on error" Tag="Abort"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,8,8,0">
+                            <TextBlock Text="Retry Count:" Classes="FieldLabel"/>
+                            <NumericUpDown x:Name="NumRetries" Minimum="0" Maximum="20" Value="3"
+                                           Background="#152030" Foreground="#E8F0FE"
+                                           ToolTip.Tip="Number of retry attempts for failed sector reads"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,8,0,0">
+                            <TextBlock Text="Sector Size:" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbSectorSize" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Raw sector size in bytes (2048 for data, 2352 for audio/raw)"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" Spacing="4" Margin="0,8,8,0">
+                            <TextBlock Text="Subchannel Mode:" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbSubchannel" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Subchannel data extraction mode (needed for some copy-protected or gaming discs)"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="1" Spacing="8" Margin="0,12,0,0">
+                            <CheckBox x:Name="ChkAudioParanoia"
+                                      Content="Audio Paranoia Mode"
+                                      Foreground="#E8F0FE"
+                                      ToolTip.Tip="Enable extra audio error correction for scratched or damaged audio CDs"/>
+                            <CheckBox x:Name="ChkJitterCorrection"
+                                      Content="Jitter Correction"
+                                      IsChecked="True"
+                                      Foreground="#E8F0FE"
+                                      ToolTip.Tip="Correct jitter errors during audio ripping for bit-perfect copies"/>
+                            <CheckBox x:Name="ChkReadBadSectors"
+                                      Content="Read all sectors (including bad)"
+                                      Foreground="#E8F0FE"
+                                      ToolTip.Tip="Attempt to read every sector even if errors are detected"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Gaming System Presets -->
+            <Expander Header="🎮  Gaming System Presets"
+                      Background="#0E1A2B"
+                      Foreground="#E8F0FE"
+                      BorderBrush="#1E3450" BorderThickness="1"
+                      CornerRadius="8"
+                      Padding="16"
+                      IsExpanded="True"
+                      ToolTip.Tip="Pre-configured settings for various gaming console disc formats">
+                <StackPanel Spacing="8" Margin="0,8,0,0">
+                    <TextBlock Text="Select a preset to automatically configure sector size, subchannel, and error recovery settings:"
+                               Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
+                    <ItemsControl x:Name="PresetsList">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <Border Classes="InfoCard" Padding="10">
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Selected Preset:" Foreground="#5A7A9A" FontSize="11"/>
+                            <TextBlock x:Name="TxtPresetDesc" Text="No preset selected."
+                                       Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Expander>
+
+            <!-- Encryption -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="🔒  Encryption" Classes="SectionHeader"/>
+                    <TextBlock Text="Optionally encrypt the output image to protect sensitive backups."
+                               Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
+                    <CheckBox x:Name="ChkEncryptOutput"
+                              Content="Encrypt output image (AES-256)"
+                              Foreground="#E8F0FE"
+                              ToolTip.Tip="Encrypt the disc image after reading using AES-256-CBC with password protection"/>
+                    <StackPanel x:Name="PnlEncryptPassword" IsVisible="False" Spacing="6" Margin="20,0,0,0">
+                        <TextBlock Text="Password:" Classes="FieldLabel"/>
+                        <TextBox x:Name="TxtEncryptPassword"
+                                 PasswordChar="●"
+                                 Watermark="Enter encryption password..."
+                                 Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="Password for encrypting the disc image (remember this to decrypt later)"/>
+                        <TextBlock Text="Confirm Password:" Classes="FieldLabel"/>
+                        <TextBox x:Name="TxtEncryptPasswordConfirm"
+                                 PasswordChar="●"
+                                 Watermark="Confirm encryption password..."
+                                 Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="Re-enter the password to confirm"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Progress -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock Text="Progress" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnStartRead" Grid.Column="1"
+                                Content="▶  Start Copy"
+                                Classes="PrimaryBtn" Click="OnStartReadClick"
+                                Margin="0,0,8,0"
+                                ToolTip.Tip="Begin reading the disc to the specified output file"/>
+                        <Button x:Name="BtnCancelRead" Grid.Column="2"
+                                Content="⏹  Cancel"
+                                Classes="DangerBtn" Click="OnCancelReadClick"
+                                IsEnabled="False"
+                                ToolTip.Tip="Cancel the current read operation"/>
+                    </Grid>
+
+                    <ProgressBar x:Name="ReadProgress"
+                                 Minimum="0" Maximum="100" Value="0"
+                                 Height="12" CornerRadius="6"
+                                 Foreground="#1E90FF" Background="#152030"/>
+
+                    <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                        <TextBlock x:Name="TxtReadStatus" Text="Ready."
+                                   Foreground="#5A7A9A" FontSize="11"
+                                   VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtReadElapsed" Grid.Column="1"
+                                   Text="" Foreground="#8EAFC8" FontSize="11"
+                                   VerticalAlignment="Center" Margin="0,0,12,0"
+                                   ToolTip.Tip="Elapsed time since the read operation started"/>
+                        <TextBlock x:Name="TxtReadSpeed" Grid.Column="2"
+                                   Text="" Foreground="#1E90FF" FontSize="11"
+                                   VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtReadPct" Grid.Column="3"
+                                   Text="0%" Foreground="#E8F0FE" FontSize="11"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Disc Visualization -->
+                    <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
+                            Padding="8" IsVisible="False"
+                            ToolTip.Tip="Real-time disc reading visualization — shows LBA position on the physical disc spiral">
+                        <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="Log" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnClearLog" Grid.Column="1"
+                                Content="🧹 Clear"
+                                Classes="ActionBtn" Click="OnClearLogClick"
+                                ToolTip.Tip="Clear the log output"/>
+                    </Grid>
+
+                    <TextBox x:Name="TxtLog"
+                             Classes="LogBox"
+                             Height="160"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,691 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:OpenBurningSuite.Views"
+             x:Class="OpenBurningSuite.Views.AudioWizardView">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,24" Spacing="20">
+
+            <!-- Page header -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="🎵  Audio &amp; Music Wizard"
+                           Classes="PageTitle" Foreground="#5BC0FF"/>
+                <TextBlock Text="Create audio CDs, copy music files to disc, or rip audio CDs — guided step by step."
+                           Classes="PageSubtitle" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- Step indicator -->
+            <Border Classes="InfoCard">
+                <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="StepInd1" Background="#1E90FF" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="1" Foreground="White" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="StepLbl1" Text="Choose Task"
+                                   Foreground="#E8F0FE" FontSize="12"
+                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="StepInd2" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="StepLbl2" Text="Configure"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="StepInd3" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="StepLbl3" Text="Summary"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="StepInd4" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="4" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="StepLbl4" Text="Execute"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============================================================ -->
+            <!-- STEP 1: Choose Task                                          -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step1Panel" Spacing="16">
+                <TextBlock Text="What would you like to do?" Classes="SectionHeader"/>
+
+                <WrapPanel Orientation="Horizontal">
+                    <!-- Create Audio CD -->
+                    <Button x:Name="BtnModeCreateAudioCd" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeCreateAudioCd"
+                            ToolTip.Tip="Add audio tracks, set metadata, and burn a Red Book audio CD">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Create Audio CD" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Build &amp; burn a Red Book audio CD from audio files"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Copy Music to Disc -->
+                    <Button x:Name="BtnModeCopyMusic" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeCopyMusic"
+                            ToolTip.Tip="Copy MP3, WMA, FLAC, WAV and other music files to a data disc">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="🎶" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Copy Music to Disc" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Burn music files as data to CD, DVD, or Blu-ray"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Rip Audio CD -->
+                    <Button x:Name="BtnModeRipAudioCd" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeRipAudioCd"
+                            ToolTip.Tip="Extract audio tracks from an Audio CD to WAV files or a raw BIN/CUE image">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="🎧" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Rip Audio CD" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Rip tracks from an audio CD to WAV or BIN/CUE"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+                </WrapPanel>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2A: Create Audio CD                                     -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2CreatePanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Create Audio CD — Add Tracks &amp; Configure" Classes="SectionHeader"/>
+
+                <!-- Audio Tracks -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🎵 Audio Tracks" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtCreateTrackCount" Text="(0 tracks, 00:00 total)"
+                                       Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="BtnAddTracks" Content="➕ Add Tracks"
+                                    Classes="PrimaryBtn" Click="OnAddTracksClick"
+                                    ToolTip.Tip="Add WAV, MP3, WMA, or AIFF audio files"/>
+                            <Button Content="📋 Import Playlist" Classes="ActionBtn"
+                                    Click="OnImportPlaylistCreateClick"
+                                    ToolTip.Tip="Import tracks from a playlist file (M3U, M3U8, PLS, WPL, ASX)"/>
+                            <Button Content="💾 Export Playlist" Classes="ActionBtn"
+                                    Click="OnExportPlaylistCreateClick"
+                                    ToolTip.Tip="Export the current track list to a playlist file"/>
+                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    Click="OnRemoveTrackClick"
+                                    ToolTip.Tip="Remove the selected track from the list"/>
+                            <Button Content="⬆" Classes="ActionBtn" Click="OnMoveTrackUpClick"
+                                    ToolTip.Tip="Move selected track up"/>
+                            <Button Content="⬇" Classes="ActionBtn" Click="OnMoveTrackDownClick"
+                                    ToolTip.Tip="Move selected track down"/>
+                        </StackPanel>
+
+                        <Border Classes="DropZone" DragDrop.AllowDrop="True"
+                                DragDrop.DragOver="OnTrackDragOver"
+                                DragDrop.Drop="OnTrackDrop">
+                            <ListBox x:Name="LstCreateTracks"
+                                     Background="Transparent"
+                                     MinHeight="100" MaxHeight="260">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                            <TextBlock Grid.Column="0" Text="{Binding TrackNumber}"
+                                                       Foreground="#5A7A9A" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="0,0,8,0"
+                                                       FontWeight="Bold" Width="24"/>
+                                            <StackPanel Grid.Column="1" Spacing="1">
+                                                <TextBlock Text="{Binding Title}"
+                                                           Foreground="#E8F0FE" FontSize="12"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding FilePath}"
+                                                           Foreground="#5A7A9A" FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding DurationText}"
+                                                       Foreground="#8EAFC8" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="8,0"/>
+                                            <Button Grid.Column="3" Content="▶" FontSize="12"
+                                                    Classes="ActionBtn" Padding="6,4"
+                                                    Click="OnPreviewTrackClick"
+                                                    Tag="{Binding FilePath}"
+                                                    ToolTip.Tip="Preview this track"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+
+                        <!-- Audio Player -->
+                        <Border Classes="InfoCard">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                                <Button x:Name="BtnPlayPause" Content="▶ Play"
+                                        Classes="ActionBtn" Grid.Column="0"
+                                        Click="OnPlayPauseClick"
+                                        ToolTip.Tip="Play or pause the selected track"/>
+                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="6,0,0,0"
+                                        Click="OnStopClick"
+                                        ToolTip.Tip="Stop playback"/>
+                                <TextBlock x:Name="TxtNowPlaying"
+                                           Text="No track selected"
+                                           Foreground="#5A7A9A" FontSize="11"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" Margin="12,0,0,0"/>
+                                <Slider x:Name="SliderPosition"
+                                        Grid.Column="3" Minimum="0" Maximum="100"
+                                        Margin="12,0" VerticalAlignment="Center"
+                                        IsEnabled="False"
+                                        ToolTip.Tip="Playback position"/>
+                                <TextBlock x:Name="TxtPlaybackTime"
+                                           Text="00:00 / 00:00" Foreground="#8EAFC8"
+                                           FontSize="11" Grid.Column="4"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- CD-TEXT Metadata -->
+                <Expander Classes="SettingsExpander" Header="📝 CD-TEXT Metadata (optional)"
+                          IsExpanded="False">
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                          Margin="0,12,0,0">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                            <TextBlock Text="Album Title" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdAlbum" Watermark="Album title"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                            <TextBlock Text="Artist / Performer" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdArtist" Watermark="Artist or performer"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                            <TextBlock Text="Songwriter" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdSongwriter" Watermark="Songwriter"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                            <TextBlock Text="Composer" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdComposer" Watermark="Composer"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                            <TextBlock Text="Arranger" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdArranger" Watermark="Arranger"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                            <TextBlock Text="Genre" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdGenre" Watermark="Genre"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                            <TextBlock Text="Disc Message" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdMessage" Watermark="Disc message"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                            <TextBlock Text="Media Catalog Number (MCN)" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdMcn" Watermark="13-digit barcode (optional)"
+                                     MaxLength="13"/>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbCreateDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Select the burner drive"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbCreateSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="10x"/>
+                                    <ComboBoxItem Content="12x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="24x"/>
+                                    <ComboBoxItem Content="32x"/>
+                                    <ComboBoxItem Content="40x"/>
+                                    <ComboBoxItem Content="48x"/>
+                                    <ComboBoxItem Content="52x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbCreateWriteMode" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write strategy for audio CDs">
+                                    <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
+                                    <ComboBoxItem Content="SAO (Session At Once)"/>
+                                    <ComboBoxItem Content="TAO (Track At Once)"/>
+                                    <ComboBoxItem Content="RAW96R"/>
+                                    <ComboBoxItem Content="RAW96P"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumCreateCopies" Minimum="1" Maximum="99"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkCreateEject" Content="Eject after burn"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc when burning is complete"/>
+                            <CheckBox x:Name="ChkCreateVerify" Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkCreateSimulate" Content="Simulate (test write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
+                            <CheckBox x:Name="ChkCreateBup" Content="Buffer underrun protection"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                            <CheckBox x:Name="ChkCreateBurnImage"
+                                      Content="Also burn to disc (not just build image)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Uncheck to only create a BIN/CUE image without burning"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Output Image Path -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <TextBlock Text="The audio CD image (BIN/CUE) will be saved to this location."
+                                   Foreground="#5A7A9A" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtCreateOutputPath"
+                                     Watermark="Path to save the audio CD image..."
+                                     Grid.Column="0"/>
+                            <Button Content="📂 Browse" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnBrowseCreateOutputClick"
+                                    ToolTip.Tip="Choose where to save the output BIN/CUE image"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2B: Copy Music to Disc                                  -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2CopyPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Copy Music to Disc — Select Files" Classes="SectionHeader"/>
+
+                <!-- Music Files -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="🎶 Music Files" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtCopyFileCount" Text="(0 files, 0 MB)"
+                                       Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Content="➕ Add Files" Classes="PrimaryBtn"
+                                    Click="OnAddCopyFilesClick"
+                                    ToolTip.Tip="Add music files to copy (MP3, FLAC, WAV, OGG, AIFF, AAC, WMA, M4A)"/>
+                            <Button Content="📁 Add Folder" Classes="ActionBtn"
+                                    Click="OnAddCopyFolderClick"
+                                    ToolTip.Tip="Add all music files from a folder"/>
+                            <Button Content="📋 Import Playlist" Classes="ActionBtn"
+                                    Click="OnImportPlaylistCopyClick"
+                                    ToolTip.Tip="Import files from a playlist file (M3U, M3U8, PLS, WPL, ASX)"/>
+                            <Button Content="💾 Export Playlist" Classes="ActionBtn"
+                                    Click="OnExportPlaylistCopyClick"
+                                    ToolTip.Tip="Export the current file list to a playlist file"/>
+                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    Click="OnRemoveCopyFileClick"
+                                    ToolTip.Tip="Remove the selected file from the list"/>
+                        </StackPanel>
+
+                        <Border Classes="DropZone" DragDrop.AllowDrop="True"
+                                DragDrop.DragOver="OnCopyDragOver"
+                                DragDrop.Drop="OnCopyDrop">
+                            <ListBox x:Name="LstCopyFiles"
+                                     Background="Transparent"
+                                     MinHeight="100" MaxHeight="260">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="*,Auto,Auto">
+                                            <StackPanel Spacing="1">
+                                                <TextBlock Text="{Binding FileName}"
+                                                           Foreground="#E8F0FE" FontSize="12"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding FilePath}"
+                                                           Foreground="#5A7A9A" FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding SizeText}"
+                                                       Foreground="#8EAFC8" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="8,0"/>
+                                            <Button Grid.Column="2" Content="▶" FontSize="12"
+                                                    Classes="ActionBtn" Padding="6,4"
+                                                    Click="OnPreviewCopyFileClick"
+                                                    Tag="{Binding FilePath}"
+                                                    ToolTip.Tip="Preview this file"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+
+                        <!-- Audio Player -->
+                        <Border Classes="InfoCard">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
+                                <Button x:Name="BtnCopyPlayPause" Content="▶ Play"
+                                        Classes="ActionBtn" Grid.Column="0"
+                                        Click="OnCopyPlayPauseClick"/>
+                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="6,0,0,0"
+                                        Click="OnCopyStopClick"/>
+                                <TextBlock x:Name="TxtCopyNowPlaying"
+                                           Text="No file selected"
+                                           Foreground="#5A7A9A" FontSize="11"
+                                           VerticalAlignment="Center"
+                                           Grid.Column="2" Margin="12,0,0,0"/>
+                                <Slider x:Name="SliderCopyPosition"
+                                        Grid.Column="3" Minimum="0" Maximum="100"
+                                        Margin="12,0" VerticalAlignment="Center"
+                                        IsEnabled="False"/>
+                                <TextBlock x:Name="TxtCopyPlaybackTime"
+                                           Text="00:00 / 00:00" Foreground="#8EAFC8"
+                                           FontSize="11" Grid.Column="4"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- Disc Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💿 Disc Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbCopyDrive" HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Disc Type" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbCopyDiscType" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Disc format for the data disc">
+                                    <ComboBoxItem Content="CD" IsSelected="True"/>
+                                    <ComboBoxItem Content="DVD-5"/>
+                                    <ComboBoxItem Content="DVD+R"/>
+                                    <ComboBoxItem Content="DVD-R"/>
+                                    <ComboBoxItem Content="BD-25"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Filesystem" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbCopyFilesystem" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Filesystem for the data disc">
+                                    <ComboBoxItem Content="ISO 9660 + Joliet" IsSelected="True"/>
+                                    <ComboBoxItem Content="ISO 9660"/>
+                                    <ComboBoxItem Content="UDF 1.02"/>
+                                    <ComboBoxItem Content="UDF 2.01"/>
+                                    <ComboBoxItem Content="ISO 9660 + UDF"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbCopySpeed" HorizontalAlignment="Stretch">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="24x"/>
+                                    <ComboBoxItem Content="32x"/>
+                                    <ComboBoxItem Content="48x"/>
+                                    <ComboBoxItem Content="52x"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtCopyVolumeLabel" Watermark="MUSIC_DISC"
+                                         MaxLength="32"/>
+                            </StackPanel>
+                        </Grid>
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkCopyEject" Content="Eject after burn"
+                                      IsChecked="True" Margin="0,0,16,6"/>
+                            <CheckBox x:Name="ChkCopyVerify" Content="Verify after burn"
+                                      Margin="0,0,16,6"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2C: Rip Audio CD                                        -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2RipPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Rip Audio CD — Configure Ripping" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💿 Source Drive" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <ComboBox x:Name="CmbRipDrive" HorizontalAlignment="Stretch"
+                                      Grid.Column="0"
+                                      ToolTip.Tip="Select the drive containing the audio CD"/>
+                            <Button Content="🔄 Refresh" Classes="ActionBtn"
+                                    Grid.Column="1" Margin="8,0,0,0"
+                                    Click="OnRefreshRipDrivesClick"
+                                    ToolTip.Tip="Rescan for optical drives"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎵 Output Settings" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Output Format" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbRipFormat" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Audio format for the ripped tracks">
+                                    <ComboBoxItem Content="WAV (Lossless, CD Quality)" IsSelected="True"/>
+                                    <ComboBoxItem Content="BIN/CUE (Raw Audio Image)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Read Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbRipSpeed" HorizontalAlignment="Stretch">
+                                    <ComboBoxItem Content="Max" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="12x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="24x"/>
+                                    <ComboBoxItem Content="32x"/>
+                                    <ComboBoxItem Content="40x"/>
+                                    <ComboBoxItem Content="48x"/>
+                                    <ComboBoxItem Content="52x"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Output Folder" Classes="FieldLabel"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBox x:Name="TxtRipOutputFolder"
+                                         Watermark="Folder to save ripped tracks..."
+                                         Grid.Column="0"/>
+                                <Button Content="📂 Browse" Classes="ActionBtn"
+                                        Grid.Column="1" Margin="8,0,0,0"
+                                        Click="OnBrowseRipOutputClick"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; Advanced Ripping Options"
+                          IsExpanded="False">
+                    <StackPanel Spacing="8" Margin="0,12,0,0">
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ChkRipParanoia"
+                                      Content="Audio paranoia mode (jitter correction &amp; retries)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Use audio paranoia error correction for maximum accuracy"/>
+                            <CheckBox x:Name="ChkRipJitter"
+                                      Content="Jitter correction"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Correct jitter errors during ripping"/>
+                        </WrapPanel>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+                            <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Error Recovery" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbRipErrorRecovery" HorizontalAlignment="Stretch">
+                                    <ComboBoxItem Content="Yes (Skip &amp; Retry)" IsSelected="True"/>
+                                    <ComboBoxItem Content="No (Ignore Errors)"/>
+                                    <ComboBoxItem Content="Abort on Error"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="4" Margin="0,0,0,0">
+                                <TextBlock Text="Retry Count" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumRipRetries" Minimum="0" Maximum="20"
+                                               Value="3" FormatString="0"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 3: Summary                                              -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step3Panel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Summary — Review Before Executing" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel x:Name="SummaryContent" Spacing="8">
+                        <!-- Filled dynamically -->
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 4: Progress                                             -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step4Panel" IsVisible="False" Spacing="16">
+                <TextBlock x:Name="TxtStep4Title" Text="Executing..." Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <ProgressBar x:Name="PrgExec" Classes="BurnProgress" Value="0"/>
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <TextBlock x:Name="TxtExecStatus" Text="Preparing..."
+                                       Foreground="#8EAFC8" FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtExecETA" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="1" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtExecSpeed" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="2" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtExecPercent" Text="0%"
+                                       Foreground="#E8F0FE" FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Grid.Column="3" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBox x:Name="TxtExecLog" Classes="LogBox" Height="200"/>
+                        <!-- Disc Visualization -->
+                        <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
+                                Padding="8" IsVisible="False" Margin="0,8,0,0">
+                            <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Navigation Buttons                                           -->
+            <!-- ============================================================ -->
+            <Border Classes="InfoCard" Margin="0,8,0,0">
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Button x:Name="BtnBack" Content="← Back"
+                            Classes="ActionBtn" Click="OnBackClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Go back to the previous step"/>
+                    <Button x:Name="BtnNext" Content="Next →"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnNextClick" IsVisible="False"
+                            ToolTip.Tip="Proceed to the next step"/>
+                    <Button x:Name="BtnExecute" Content="🔥 Start"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnExecuteClick" IsVisible="False"
+                            ToolTip.Tip="Start the operation"/>
+                    <Button x:Name="BtnCancel" Content="⏹ Cancel"
+                            Classes="DangerBtn" Grid.Column="3"
+                            Margin="8,0,0,0" Click="OnCancelClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Cancel the current operation"/>
+                    <Button x:Name="BtnFinish" Content="✅ Done — Return Home"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnFinishClick" IsVisible="False"
+                            ToolTip.Tip="Operation complete — return to the home screen"/>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

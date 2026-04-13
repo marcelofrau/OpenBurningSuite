@@ -1,0 +1,562 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:OpenBurningSuite.Views"
+             x:Class="OpenBurningSuite.Views.GameWizardView">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,24" Spacing="20">
+
+            <!-- Page header -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="🎮  Game Disc Wizard"
+                           Classes="PageTitle" Foreground="#5BC0FF"/>
+                <TextBlock Text="Create and burn game discs from image files or from a folder — guided step by step."
+                           Classes="PageSubtitle" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- Step indicator -->
+            <Border Classes="InfoCard">
+                <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="GStepInd1" Background="#1E90FF" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="1" Foreground="White" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="GStepLbl1" Text="Choose Source"
+                                   Foreground="#E8F0FE" FontSize="12"
+                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="GStepInd2" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="GStepLbl2" Text="Configure"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="GStepInd3" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="GStepLbl3" Text="Summary"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="GStepInd4" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="4" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="GStepLbl4" Text="Execute"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============================================================ -->
+            <!-- STEP 1: Choose Source                                        -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="GStep1Panel" Spacing="16">
+                <TextBlock Text="How would you like to create the game disc?" Classes="SectionHeader"/>
+
+                <WrapPanel Orientation="Horizontal">
+                    <!-- Burn from Image File -->
+                    <Button x:Name="BtnModeFromImage" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeFromImage"
+                            ToolTip.Tip="Select a game disc image file (ISO, BIN/CUE, MDF, CDI, etc.) and burn it to disc with optimal gaming settings">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Burn from Image File" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Burn a game disc image to optical media"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Build from Folder -->
+                    <Button x:Name="BtnModeFromFolder" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeFromFolder"
+                            ToolTip.Tip="Build a game disc image from a folder structure and optionally burn it">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="📁" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Build from Folder" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Build a game disc from a folder &amp; burn it"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+                </WrapPanel>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2A: Burn from Image File                                -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="GStep2ImagePanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Burn Game Image — Select Image, System &amp; Drive" Classes="SectionHeader"/>
+
+                <!-- Image Selection -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💿 Game Disc Image" Classes="SectionHeader"/>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox x:Name="TxtGameImagePath"
+                                     Watermark="Game disc image path (.iso, .bin, .cue, .mdf, .cdi, .img)..."
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Path to the game disc image file"
+                                     DragDrop.AllowDrop="True"
+                                     DragDrop.DragOver="OnGameImageDragOver"
+                                     DragDrop.Drop="OnGameImageDrop"/>
+                            <Button Content="Browse…" Classes="ActionBtn" Grid.Column="1"
+                                    Margin="6,0,0,0" Click="OnBrowseGameImageClick"
+                                    ToolTip.Tip="Browse for a game disc image"/>
+                        </Grid>
+
+                        <TextBlock x:Name="TxtGameImageInfo" Text=""
+                                   Foreground="#5A7A9A" FontSize="10"/>
+                        <TextBlock x:Name="TxtGameDetectedSystem" Text=""
+                                   Foreground="#1E90FF" FontSize="11" FontWeight="SemiBold"/>
+                        <TextBlock Text="💡 Drag and drop an image file here. The gaming system will be auto-detected when possible."
+                                   Foreground="#5A7A9A" FontSize="10"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Gaming System Preset -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎮 Gaming System" Classes="SectionHeader"/>
+
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Select Gaming System" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbGameSystem" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Select the gaming system for optimized burn settings"
+                                      SelectionChanged="OnGameSystemChanged"/>
+                        </StackPanel>
+
+                        <TextBlock x:Name="TxtGamePresetDesc" Text=""
+                                   Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+
+                        <!-- Validation Messages -->
+                        <TextBlock x:Name="TxtGameValidation" Text=""
+                                   Foreground="#FF8C00" FontSize="11" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbGameDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Optical disc drive to burn to"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbGameSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed (lower speeds are recommended for game discs)">
+                                    <ComboBoxItem Content="Auto"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x" IsSelected="True"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="Max"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbGameWriteMode" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Disc write mode (DAO recommended for game discs — always finalizes)">
+                                    <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
+                                    <ComboBoxItem Content="SAO (Session At Once)"/>
+                                    <ComboBoxItem Content="TAO (Track At Once)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumGameCopies" Minimum="1" Maximum="100"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkGameEject"
+                                      Content="Eject after burn" IsChecked="True"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc tray when burning is complete"/>
+                            <CheckBox x:Name="ChkGameVerify"
+                                      Content="Verify after burn" IsChecked="True"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkGameSimulate"
+                                      Content="Simulate only (do not write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Perform a simulation burn without writing data"/>
+                            <CheckBox x:Name="ChkGameBup"
+                                      Content="Buffer underrun protection" IsChecked="True"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Protect against buffer underrun errors"/>
+                        </WrapPanel>
+
+                        <!-- Gaming Patches -->
+                        <Expander Header="🎮 Gaming Patches" Margin="0,8,0,0"
+                                  Foreground="#E8F0FE" FontSize="12">
+                            <StackPanel Spacing="6" Margin="0,6,0,0">
+                                <CheckBox x:Name="ChkGameEsr"
+                                          Content="ESR patch (PS2 DVD-R)"
+                                          ToolTip.Tip="Inject DVD-Video UDF structure for PS2 MechaCon bypass on DVD-R media"/>
+                                <CheckBox x:Name="ChkGameMasterDisc"
+                                          Content="Master Disc patch (PS2)"
+                                          ToolTip.Tip="Apply Master Disc patch for MechaPwn DEX PS2 consoles"/>
+                                <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding #ChkGameMasterDisc.IsChecked}">
+                                    <TextBlock Text="Region:" Foreground="#8EAFC8" FontSize="12"
+                                               VerticalAlignment="Center" Margin="24,0,8,0"/>
+                                    <ComboBox x:Name="CmbGameMasterRegion" Grid.Column="1"
+                                              Background="#152030" Foreground="#E8F0FE"
+                                              SelectedIndex="1"
+                                              ToolTip.Tip="Region for Master Disc patch">
+                                        <ComboBoxItem Content="NTSC-J" Tag="NTSC-J"/>
+                                        <ComboBoxItem Content="NTSC-U" Tag="NTSC-U"/>
+                                        <ComboBoxItem Content="PAL" Tag="PAL"/>
+                                        <ComboBoxItem Content="WORLD" Tag="WORLD"/>
+                                    </ComboBox>
+                                </Grid>
+                                <CheckBox x:Name="ChkGamePsx80Min"
+                                          Content="PSX 80 Minute patch (PS1/PS2 CD-R)"
+                                          ToolTip.Tip="Append dummy sectors for 80-minute CD-R compatibility"/>
+                                <CheckBox x:Name="ChkGamePsxUndither"
+                                          Content="PSX Undither patch (PS1)"
+                                          ToolTip.Tip="Remove GPU dithering patterns from PS1 game images"/>
+                                <TextBlock Text="⚠&#xFE0F; Use gaming patches only for legally owned software."
+                                           Foreground="#FF8C00" FontSize="10" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- PS3 Decryption (visible only when PS3 system is selected) -->
+                        <Border x:Name="PnlPs3Decrypt" IsVisible="False"
+                                Background="#1A1520" CornerRadius="6" Padding="12" Margin="0,8,0,0"
+                                BorderBrush="#3A2050" BorderThickness="1">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="🔐 PS3 ISO Decryption" FontSize="13"
+                                           Foreground="#BB86FC" FontWeight="SemiBold"/>
+                                <TextBlock Text="PS3 game ISOs are encrypted by default. Provide an IRD file or disc key to decrypt before burning."
+                                           Foreground="#8EAFC8" FontSize="10" TextWrapping="Wrap"/>
+
+                                <!-- Key source selection -->
+                                <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,4,0,0">
+                                    <RadioButton x:Name="RdoPs3Ird" Content="IRD File"
+                                                 IsChecked="True" Foreground="#E8F0FE"
+                                                 GroupName="Ps3KeySource"
+                                                 IsCheckedChanged="OnPs3KeySourceChanged"/>
+                                    <RadioButton x:Name="RdoPs3DkeyFile" Content=".dkey File"
+                                                 Foreground="#E8F0FE"
+                                                 GroupName="Ps3KeySource"
+                                                 IsCheckedChanged="OnPs3KeySourceChanged"/>
+                                    <RadioButton x:Name="RdoPs3HexKey" Content="Hex Key"
+                                                 Foreground="#E8F0FE"
+                                                 GroupName="Ps3KeySource"
+                                                 IsCheckedChanged="OnPs3KeySourceChanged"/>
+                                </StackPanel>
+
+                                <!-- IRD / dkey file browse -->
+                                <Grid x:Name="PnlPs3FileBrowse" ColumnDefinitions="*,Auto" Margin="0,2,0,0">
+                                    <TextBox x:Name="TxtPs3KeyFilePath" Grid.Column="0"
+                                             Watermark="Select IRD or .dkey file..."
+                                             Foreground="#E8F0FE" FontSize="12"
+                                             IsReadOnly="True"/>
+                                    <Button x:Name="BtnBrowsePs3Key" Content="Browse…"
+                                            Classes="ActionBtn" Grid.Column="1" Margin="6,0,0,0"
+                                            Click="OnBrowsePs3KeyFileClick"
+                                            ToolTip.Tip="Browse for an IRD or disc key file"/>
+                                </Grid>
+
+                                <!-- Hex key input (hidden by default) -->
+                                <TextBox x:Name="TxtPs3HexKey" IsVisible="False"
+                                         Watermark="Enter 32-character hex disc key..."
+                                         Foreground="#E8F0FE" FontSize="12"
+                                         MaxLength="32"
+                                         ToolTip.Tip="Enter the 16-byte disc key as 32 hex characters"/>
+
+                                <!-- Key validation status -->
+                                <TextBlock x:Name="TxtPs3KeyStatus" Text=""
+                                           Foreground="#5A7A9A" FontSize="10" TextWrapping="Wrap"/>
+
+                                <!-- Decrypt checkbox -->
+                                <CheckBox x:Name="ChkPs3DecryptBeforeBurn"
+                                          Content="Decrypt ISO before burning"
+                                          IsChecked="True" Foreground="#E8F0FE"
+                                          ToolTip.Tip="Automatically decrypt the PS3 ISO before burning to disc"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Button Content="🔄 Refresh Drives" Classes="ActionBtn"
+                                Click="OnRefreshGameDrivesClick" Margin="0,4,0,0"
+                                ToolTip.Tip="Re-scan for optical disc drives"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2B: Build from Folder                                   -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="GStep2FolderPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Build Game Disc from Folder — Select Folder &amp; System" Classes="SectionHeader"/>
+
+                <!-- Source Folder -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="📁 Game Folder" Classes="SectionHeader"/>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox x:Name="TxtGameFolderPath"
+                                     Watermark="Path to the game files folder..."
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Root folder containing the game files to burn to disc"/>
+                            <Button Content="Browse…" Classes="ActionBtn" Grid.Column="1"
+                                    Margin="6,0,0,0" Click="OnBrowseGameFolderClick"
+                                    ToolTip.Tip="Browse for a game folder"/>
+                        </Grid>
+
+                        <TextBlock x:Name="TxtGameFolderInfo" Text=""
+                                   Foreground="#5A7A9A" FontSize="10"/>
+                        <TextBlock Text="💡 Select the root folder containing the game files. For PS1, include all .bin/.cue files. For PS2/Xbox, include the full disc structure."
+                                   Foreground="#5A7A9A" FontSize="10" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Gaming System Preset -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🎮 Gaming System" Classes="SectionHeader"/>
+
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Select Gaming System" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbGameFolderSystem" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Select the target gaming system"
+                                      SelectionChanged="OnGameFolderSystemChanged"/>
+                        </StackPanel>
+
+                        <TextBlock x:Name="TxtGameFolderPresetDesc" Text=""
+                                   Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Disc Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="⚙&#xFE0F; Disc Settings" Classes="SectionHeader"/>
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Disc Type" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbGameFolderDiscType" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Target disc type (auto-set from gaming system)">
+                                    <ComboBoxItem Content="CD" IsSelected="True"/>
+                                    <ComboBoxItem Content="DVD-5"/>
+                                    <ComboBoxItem Content="DVD-9"/>
+                                    <ComboBoxItem Content="DVD-R"/>
+                                    <ComboBoxItem Content="DVD+R"/>
+                                    <ComboBoxItem Content="BD-25"/>
+                                    <ComboBoxItem Content="BD-50"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtGameFolderVolumeLabel" Watermark="GAME_DISC"
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="Volume label for the game disc"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="File System" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbGameFolderFileSystem" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="File system format (auto-set from gaming system)">
+                                    <ComboBoxItem Content="ISO 9660" IsSelected="True"/>
+                                    <ComboBoxItem Content="ISO 9660 + Joliet"/>
+                                    <ComboBoxItem Content="ISO 9660 + UDF"/>
+                                    <ComboBoxItem Content="UDF 1.02"/>
+                                    <ComboBoxItem Content="UDF 2.50"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,0">
+                                <TextBlock Text="Folder Size" Classes="FieldLabel"/>
+                                <TextBlock x:Name="TxtGameFolderSize" Text=""
+                                           Foreground="#1E90FF" FontSize="13" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Output &amp; Burn -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💾 Output &amp; Burn" Classes="SectionHeader"/>
+
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Output Image Path (optional)" Classes="FieldLabel"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBox x:Name="TxtGameFolderOutputPath"
+                                         Watermark="Output ISO image path (leave empty for temp file)..."
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="Path for the generated disc image. Leave empty to use a temporary file."/>
+                                <Button Content="Browse…" Classes="ActionBtn" Grid.Column="1"
+                                        Margin="6,0,0,0" Click="OnBrowseGameFolderOutputClick"
+                                        ToolTip.Tip="Choose output file location"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <CheckBox x:Name="ChkGameFolderBurn"
+                                  Content="Burn to disc after building" IsChecked="True"
+                                  Margin="0,4,0,0"
+                                  ToolTip.Tip="Burn the generated image to disc"/>
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbGameFolderDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Optical disc drive to burn to"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbGameFolderSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed (lower speeds recommended)">
+                                    <ComboBoxItem Content="Auto"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x" IsSelected="True"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="Max"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkGameFolderEject"
+                                      Content="Eject after burn" IsChecked="True"
+                                      Margin="0,0,16,6"/>
+                            <CheckBox x:Name="ChkGameFolderVerify"
+                                      Content="Verify after burn" IsChecked="True"
+                                      Margin="0,0,16,6"/>
+                            <CheckBox x:Name="ChkGameFolderSimulate"
+                                      Content="Simulate only"
+                                      Margin="0,0,16,6"/>
+                            <CheckBox x:Name="ChkGameFolderBup"
+                                      Content="Buffer underrun protection" IsChecked="True"
+                                      Margin="0,0,16,6"/>
+                        </WrapPanel>
+
+                        <Button Content="🔄 Refresh Drives" Classes="ActionBtn"
+                                Click="OnRefreshGameDrivesClick" Margin="0,4,0,0"
+                                ToolTip.Tip="Re-scan for optical disc drives"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 3: Summary                                              -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="GStep3Panel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Summary — Review Before Executing" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel x:Name="GameSummaryContent" Spacing="8">
+                        <!-- Filled dynamically -->
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 4: Progress                                             -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="GStep4Panel" IsVisible="False" Spacing="16">
+                <TextBlock x:Name="TxtGameStep4Title" Text="Executing..." Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <ProgressBar x:Name="PrgGameExec" Classes="BurnProgress" Value="0"/>
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <TextBlock x:Name="TxtGameExecStatus" Text="Preparing..."
+                                       Foreground="#8EAFC8" FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtGameExecETA" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="1" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtGameExecSpeed" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="2" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtGameExecPercent" Text="0%"
+                                       Foreground="#E8F0FE" FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Grid.Column="3" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBox x:Name="TxtGameExecLog" Classes="LogBox" Height="200"/>
+                        <!-- Disc Visualization -->
+                        <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
+                                Padding="8" IsVisible="False" Margin="0,8,0,0">
+                            <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Navigation Buttons                                           -->
+            <!-- ============================================================ -->
+            <Border Classes="InfoCard" Margin="0,8,0,0">
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Button x:Name="BtnGameBack" Content="← Back"
+                            Classes="ActionBtn" Click="OnGameBackClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Go back to the previous step"/>
+                    <Button x:Name="BtnGameNext" Content="Next →"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnGameNextClick" IsVisible="False"
+                            ToolTip.Tip="Proceed to the next step"/>
+                    <Button x:Name="BtnGameExecute" Content="🔥 Start"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnGameExecuteClick" IsVisible="False"
+                            ToolTip.Tip="Start the operation"/>
+                    <Button x:Name="BtnGameCancel" Content="⏹ Cancel"
+                            Classes="DangerBtn" Grid.Column="3"
+                            Margin="8,0,0,0" Click="OnGameCancelClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Cancel the current operation"/>
+                    <Button x:Name="BtnGameFinish" Content="✅ Done — Return Home"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnGameFinishClick" IsVisible="False"
+                            ToolTip.Tip="Operation complete — return to step 1"/>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

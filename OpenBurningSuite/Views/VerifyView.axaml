@@ -1,0 +1,209 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:OpenBurningSuite.Views"
+             x:Class="OpenBurningSuite.Views.VerifyView"
+             Background="#0C1622">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" Spacing="16">
+
+            <!-- Header -->
+            <TextBlock Text="Verify / Check" Classes="PageTitle"/>
+            <TextBlock Text="Verify disc integrity, compare a disc to an image file, or check image checksums."
+                       Classes="PageSubtitle"/>
+
+            <!-- Mode & Source -->
+            <Border Classes="Card">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Verification Mode" Classes="SectionHeader"/>
+                    <ComboBox x:Name="CmbVerifyMode" HorizontalAlignment="Stretch"
+                              SelectionChanged="OnVerifyModeChanged"
+                              ToolTip.Tip="Choose verification method">
+                        <ComboBoxItem Content="Verify Disc"/>
+                        <ComboBoxItem Content="Compare Disc to Image"/>
+                        <ComboBoxItem Content="Check Image Integrity"/>
+                    </ComboBox>
+
+                    <!-- Drive selector (shown for disc modes) -->
+                    <StackPanel x:Name="PnlDrive" Spacing="6">
+                        <TextBlock Text="Drive:" Classes="FieldLabel"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <ComboBox x:Name="CmbDrive" HorizontalAlignment="Stretch"
+                                      PlaceholderText="Select optical drive..."
+                                      ToolTip.Tip="Select the drive containing the disc to verify"/>
+                            <Button x:Name="BtnRefreshDrives" Grid.Column="1"
+                                    Content="🔄" Classes="ActionBtn"
+                                    Margin="6,0,0,0" Click="OnRefreshDrivesClick"
+                                    ToolTip.Tip="Refresh the list of available drives"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- Image file selector -->
+                    <StackPanel x:Name="PnlImage" Spacing="6">
+                        <TextBlock Text="Image File:" Classes="FieldLabel"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox x:Name="TxtImagePath"
+                                     Watermark="Path to disc image file..."
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Path to the disc image file to compare or check"
+                                     DragDrop.AllowDrop="True"
+                                     DragDrop.DragOver="OnImageDragOver"
+                                     DragDrop.Drop="OnImageDrop"/>
+                            <Button x:Name="BtnBrowseImage" Grid.Column="1"
+                                    Content="Browse…" Classes="ActionBtn"
+                                    Margin="6,0,0,0" Click="OnBrowseImageClick"
+                                    ToolTip.Tip="Browse for a disc image file"/>
+                        </Grid>
+                        <TextBlock Text="💡 Drag and drop a disc image file here" Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Detected Content -->
+            <Border x:Name="PnlDetectedContent" Classes="Card" IsVisible="False">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="Detected Content" Classes="SectionHeader"/>
+                    <TextBlock x:Name="TxtDetectedContent" Text="—" Foreground="#E8F0FE"
+                               FontSize="14" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="TxtDetectedPreset" Text=""
+                               Foreground="#5A7A9A" FontSize="11" FontStyle="Italic"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Verification Options -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Verification Options" Classes="SectionHeader"/>
+
+                    <Grid ColumnDefinitions="*,*">
+                        <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                            <TextBlock Text="Checksum Type:" Classes="FieldLabel"/>
+                            <ComboBox x:Name="CmbChecksumType" HorizontalAlignment="Stretch"
+                                      ToolTip.Tip="Checksum algorithm — SHA256 is strongest, CRC32 is fastest">
+                                <ComboBoxItem Content="SHA256"/>
+                                <ComboBoxItem Content="SHA1"/>
+                                <ComboBoxItem Content="MD5"/>
+                                <ComboBoxItem Content="SHA512"/>
+                                <ComboBoxItem Content="CRC32"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Spacing="6" Margin="0,20,0,0">
+                            <CheckBox x:Name="ChkSectorBySector"
+                                      Content="Sector-by-sector comparison"
+                                      IsChecked="True" Foreground="#E8F0FE"
+                                      ToolTip.Tip="Compare every sector individually (thorough but slower)"/>
+                            <CheckBox x:Name="ChkVerifySubchannel"
+                                      Content="Verify subchannel data"
+                                      Foreground="#E8F0FE"
+                                      ToolTip.Tip="Also verify subchannel data stored alongside main sectors"/>
+                            <CheckBox x:Name="ChkAudioVerify"
+                                      Content="Audio track verification"
+                                      Foreground="#E8F0FE"
+                                      ToolTip.Tip="Also read and verify audio track data from disc. When disabled, only data tracks are compared. Enable for complete verification of mixed-mode CDs (e.g. PS1 games with audio tracks)."/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Results Panel -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Results" Classes="SectionHeader"/>
+
+                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
+                        <Border Grid.Column="0" Grid.Row="0" Classes="InfoCard" Margin="0,0,6,6"
+                                ToolTip.Tip="Total number of sectors scanned on the disc or image">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="TOTAL SECTORS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtTotalSectors" Text="—" Foreground="#E8F0FE" FontSize="14"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Grid.Row="0" Classes="InfoCard" Margin="0,0,6,6"
+                                ToolTip.Tip="Sectors that passed verification without errors">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="GOOD SECTORS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtGoodSectors" Text="—" Foreground="#1E90FF" FontSize="14"/>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="2" Grid.Row="0" Classes="InfoCard" Margin="0,0,0,6"
+                                ToolTip.Tip="Sectors with read errors or mismatches">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="BAD SECTORS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock x:Name="TxtBadSectors" Text="—" Foreground="#FF6B5E" FontSize="14"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1"
+                                Classes="InfoCard">
+                            <StackPanel Spacing="6">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Text="CHECKSUM RESULT" Foreground="#5A7A9A"
+                                               FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <Button x:Name="BtnCopyChecksum" Grid.Column="1"
+                                            Content="📋 Copy" Classes="ActionBtn"
+                                            Click="OnCopyChecksumClick"
+                                            ToolTip.Tip="Copy the checksum value to clipboard"/>
+                                </Grid>
+                                <TextBlock x:Name="TxtChecksum" Text="—"
+                                           Foreground="#E8F0FE" FontSize="11"
+                                           FontFamily="Cascadia Code,Consolas,monospace"
+                                           TextWrapping="Wrap"/>
+                                <TextBlock x:Name="TxtVerifyResult" Text=""
+                                           FontSize="14" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Progress & Log -->
+            <Border Classes="Card">
+                <StackPanel Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock Text="Progress" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnVerify" Grid.Column="1"
+                                Content="✅  Start Verification" Classes="PrimaryBtn"
+                                Margin="0,0,8,0" Click="OnVerifyClick"
+                                ToolTip.Tip="Start the verification process"/>
+                        <Button x:Name="BtnCancel" Grid.Column="2"
+                                Content="⏹  Cancel" Classes="DangerBtn"
+                                IsEnabled="False" Click="OnCancelClick"
+                                ToolTip.Tip="Cancel the verification"/>
+                    </Grid>
+
+                    <ProgressBar x:Name="VerifyProgressBar" Classes="BurnProgress" Value="0"/>
+
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock x:Name="TxtVerifyStatus" Text="Ready."
+                                   Foreground="#5A7A9A" FontSize="11" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtETA" Grid.Column="1"
+                                   Text="" Foreground="#5A7A9A" FontSize="11"
+                                   VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtVerifyPct" Grid.Column="2"
+                                   Text="0%" Foreground="#E8F0FE" FontSize="11"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Disc Visualization -->
+                    <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
+                            Padding="8" IsVisible="False"
+                            ToolTip.Tip="Real-time disc verification visualization — shows LBA position on the physical disc spiral">
+                        <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
+                    </Border>
+
+                    <Grid ColumnDefinitions="Auto,*">
+                        <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
+                        <Button x:Name="BtnClearLog" Grid.Column="1"
+                                Content="🧹 Clear" Classes="ActionBtn"
+                                HorizontalAlignment="Right" Click="OnClearLogClick"
+                                ToolTip.Tip="Clear the log output"/>
+                    </Grid>
+
+                    <TextBox x:Name="TxtLog" Classes="LogBox" Height="180"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

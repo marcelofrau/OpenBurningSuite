@@ -1,0 +1,197 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="OpenBurningSuite.App"
+             RequestedThemeVariant="Dark">
+
+    <Application.Styles>
+        <FluentTheme />
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
+
+        <!-- ===== Shared Button Styles ===== -->
+
+        <Style Selector="Button.ActionBtn">
+            <Setter Property="Background" Value="#1E2A3A"/>
+            <Setter Property="Foreground" Value="#E8F0FE"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.ActionBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#2A3F55"/>
+        </Style>
+
+        <Style Selector="Button.PrimaryBtn">
+            <Setter Property="Background" Value="#1E90FF"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Padding" Value="14,9"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.PrimaryBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#1A7CE0"/>
+        </Style>
+
+        <Style Selector="Button.DangerBtn">
+            <Setter Property="Background" Value="#E04520"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Padding" Value="14,9"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.DangerBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#C53B1A"/>
+        </Style>
+
+        <Style Selector="Button.PresetBtn">
+            <Setter Property="Background" Value="#152030"/>
+            <Setter Property="Foreground" Value="#E8F0FE"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="Margin" Value="0,0,6,6"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#1E3450"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.PresetBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#1E3450"/>
+        </Style>
+
+        <!-- ===== Shared Card / Section Border Style ===== -->
+
+        <Style Selector="Border.Card">
+            <Setter Property="Background" Value="#0E1A2B"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="BorderBrush" Value="#1E3450"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style Selector="Border.InfoCard">
+            <Setter Property="Background" Value="#152030"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+        </Style>
+
+        <!-- ===== Shared Log TextBox Style ===== -->
+
+        <Style Selector="TextBox.LogBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Background" Value="#060D18"/>
+            <Setter Property="Foreground" Value="#8EAFC8"/>
+            <Setter Property="FontFamily" Value="Cascadia Code,Consolas,monospace"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="AcceptsReturn" Value="True"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <!-- ===== Shared Section Header ===== -->
+
+        <Style Selector="TextBlock.SectionHeader">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#E8F0FE"/>
+        </Style>
+
+        <Style Selector="TextBlock.PageTitle">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#E8F0FE"/>
+        </Style>
+
+        <Style Selector="TextBlock.PageSubtitle">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#5A7A9A"/>
+        </Style>
+
+        <Style Selector="TextBlock.FieldLabel">
+            <Setter Property="Foreground" Value="#8EAFC8"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <!-- ===== Shared Drop Zone Style ===== -->
+
+        <Style Selector="Border.DropZone">
+            <Setter Property="Background" Value="#0A1520"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="BorderBrush" Value="#1E3450"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="MinHeight" Value="60"/>
+        </Style>
+        <Style Selector="Border.DropZone.DragOver">
+            <Setter Property="BorderBrush" Value="#1E90FF"/>
+            <Setter Property="Background" Value="#0E1E35"/>
+        </Style>
+
+        <!-- ===== Navigation button styles ===== -->
+
+        <Style Selector="Button.NavBtn">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E8F0FE"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.NavBtn:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#1E2A3A"/>
+        </Style>
+        <Style Selector="Button.NavBtn.Active /template/ ContentPresenter">
+            <Setter Property="Background" Value="#15253A"/>
+        </Style>
+        <Style Selector="Button.NavBtn.Active">
+            <Setter Property="Foreground" Value="#5BC0FF"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <!-- ===== ProgressBar Style ===== -->
+
+        <Style Selector="ProgressBar.BurnProgress">
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="Maximum" Value="100"/>
+            <Setter Property="Height" Value="14"/>
+            <Setter Property="CornerRadius" Value="7"/>
+            <Setter Property="Foreground" Value="#1E90FF"/>
+            <Setter Property="Background" Value="#152030"/>
+        </Style>
+
+        <!-- ===== Expander Styles ===== -->
+
+        <Style Selector="Expander.SettingsExpander">
+            <Setter Property="Background" Value="#0E1A2B"/>
+            <Setter Property="Foreground" Value="#E8F0FE"/>
+            <Setter Property="BorderBrush" Value="#1E3450"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16"/>
+        </Style>
+
+    </Application.Styles>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="AccentBlue" Color="#1E90FF"/>
+        <SolidColorBrush x:Key="AccentLightBlue" Color="#5BC0FF"/>
+        <SolidColorBrush x:Key="AccentOrange" Color="#FF8C00"/>
+        <SolidColorBrush x:Key="AccentRed" Color="#E04520"/>
+        <SolidColorBrush x:Key="AccentWhite" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="SidebarBg"   Color="#0A1520"/>
+        <SolidColorBrush x:Key="ContentBg"   Color="#0C1622"/>
+        <SolidColorBrush x:Key="StatusBg"    Color="#060D18"/>
+        <SolidColorBrush x:Key="SurfaceBg"   Color="#152030"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#1E3450"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#E8F0FE"/>
+        <SolidColorBrush x:Key="TextMuted"   Color="#5A7A9A"/>
+        <SolidColorBrush x:Key="TextWarning" Color="#FF8C00"/>
+    </Application.Resources>
+</Application>

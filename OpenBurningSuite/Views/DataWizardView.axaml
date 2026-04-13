@@ -1,0 +1,748 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:OpenBurningSuite.Views"
+             x:Class="OpenBurningSuite.Views.DataWizardView">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,24" Spacing="20">
+
+            <!-- Page header -->
+            <StackPanel Spacing="4">
+                <TextBlock Text="📁  Data Disc Wizard"
+                           Classes="PageTitle" Foreground="#5BC0FF"/>
+                <TextBlock Text="Create and burn data discs from files and folders — guided step by step."
+                           Classes="PageSubtitle" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!-- Step indicator -->
+            <Border Classes="InfoCard">
+                <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="DStepInd1" Background="#1E90FF" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="1" Foreground="White" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="DStepLbl1" Text="Choose Task"
+                                   Foreground="#E8F0FE" FontSize="12"
+                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="DStepInd2" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="DStepLbl2" Text="Configure"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="DStepInd3" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="DStepLbl3" Text="Summary"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="DStepInd4" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="4" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="DStepLbl4" Text="Execute"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ============================================================ -->
+            <!-- STEP 1: Choose Task                                          -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step1Panel" Spacing="16">
+                <TextBlock Text="What would you like to do?" Classes="SectionHeader"/>
+
+                <WrapPanel Orientation="Horizontal">
+                    <!-- Build Image from Files -->
+                    <Button x:Name="BtnModeBuildImage" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeBuildImage"
+                            ToolTip.Tip="Select files and folders to create a disc image (ISO) that can be burned later">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="🏗" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Build Data Image" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Create a disc image from files &amp; folders"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Build and Burn -->
+                    <Button x:Name="BtnModeBuildAndBurn" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeBuildAndBurn"
+                            ToolTip.Tip="Select files and folders, build a disc image, and burn it directly to disc">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="🔥" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Build &amp; Burn to Disc" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Build an image from files &amp; burn to disc"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+
+                    <!-- Burn Existing Image -->
+                    <Button x:Name="BtnModeBurnImage" Classes="NavBtn" Margin="0,0,12,12"
+                            Width="260" Height="130"
+                            HorizontalContentAlignment="Center"
+                            Click="OnModeBurnImage"
+                            ToolTip.Tip="Select an existing disc image file and burn it to a disc">
+                        <StackPanel HorizontalAlignment="Center" Spacing="8">
+                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Burn Existing Image" FontSize="15" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                            <TextBlock Text="Burn an existing ISO or disc image to disc"
+                                       FontSize="11" Foreground="#5A7A9A"
+                                       HorizontalAlignment="Center" TextWrapping="Wrap"
+                                       TextAlignment="Center" MaxWidth="220"/>
+                        </StackPanel>
+                    </Button>
+                </WrapPanel>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2A: Build Data Image                                    -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2BuildPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Build Data Image — Add Files &amp; Configure" Classes="SectionHeader"/>
+
+                <!-- Source Files -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📁 Source Files &amp; Folders" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtBuildFileCount" Text="(0 items, 0 B)"
+                                       Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Content="📄 Add Files" Classes="PrimaryBtn"
+                                    Click="OnAddBuildFilesClick"
+                                    ToolTip.Tip="Add individual files to the disc"/>
+                            <Button Content="📁 Add Folder" Classes="ActionBtn"
+                                    Click="OnAddBuildFolderClick"
+                                    ToolTip.Tip="Add an entire folder and its contents"/>
+                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    Click="OnRemoveBuildItemClick"
+                                    ToolTip.Tip="Remove selected item from the list"/>
+                            <Button Content="🗑 Clear All" Classes="DangerBtn"
+                                    Click="OnClearBuildItemsClick"
+                                    ToolTip.Tip="Remove all items from the list"/>
+                        </StackPanel>
+
+                        <Border Classes="DropZone" DragDrop.AllowDrop="True"
+                                DragDrop.DragOver="OnBuildDragOver"
+                                DragDrop.Drop="OnBuildDrop">
+                            <ListBox x:Name="LstBuildFiles"
+                                     Background="Transparent"
+                                     MinHeight="100" MaxHeight="260">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                            <TextBlock Grid.Column="0" Text="{Binding Icon}"
+                                                       FontSize="16" VerticalAlignment="Center"
+                                                       Margin="0,0,8,0"/>
+                                            <StackPanel Grid.Column="1" Spacing="1">
+                                                <TextBlock Text="{Binding Name}"
+                                                           Foreground="#E8F0FE" FontSize="12"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding FullPath}"
+                                                           Foreground="#5A7A9A" FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding SizeText}"
+                                                       Foreground="#8EAFC8" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="8,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+
+                        <TextBlock Text="💡 Drag and drop files or folders here"
+                                   Foreground="#5A7A9A" FontSize="10"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Disc Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="⚙&#xFE0F; Disc Settings" Classes="SectionHeader"/>
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Disc Type" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBuildDiscType" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Target disc type (CD, DVD, Blu-ray, etc.)">
+                                    <ComboBoxItem Content="CD" IsSelected="True"/>
+                                    <ComboBoxItem Content="DVD-5"/>
+                                    <ComboBoxItem Content="DVD-9"/>
+                                    <ComboBoxItem Content="DVD-R"/>
+                                    <ComboBoxItem Content="DVD+R"/>
+                                    <ComboBoxItem Content="DVD-RW"/>
+                                    <ComboBoxItem Content="DVD+RW"/>
+                                    <ComboBoxItem Content="DVD+R DL"/>
+                                    <ComboBoxItem Content="DVD-R DL"/>
+                                    <ComboBoxItem Content="DVD+RW DL"/>
+                                    <ComboBoxItem Content="DVD-RAM"/>
+                                    <ComboBoxItem Content="HD DVD-15"/>
+                                    <ComboBoxItem Content="HD DVD-30"/>
+                                    <ComboBoxItem Content="HD DVD-RAM"/>
+                                    <ComboBoxItem Content="HD DVD-RW"/>
+                                    <ComboBoxItem Content="BD-25"/>
+                                    <ComboBoxItem Content="BD-50"/>
+                                    <ComboBoxItem Content="BD-100"/>
+                                    <ComboBoxItem Content="BD-128"/>
+                                    <ComboBoxItem Content="M-DISC DVD"/>
+                                    <ComboBoxItem Content="M-DISC BD-25"/>
+                                    <ComboBoxItem Content="M-DISC BD-50"/>
+                                    <ComboBoxItem Content="M-DISC BD-100"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="File System" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBuildFileSystem" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="File system format for the disc image">
+                                    <ComboBoxItem Content="ISO 9660"/>
+                                    <ComboBoxItem Content="ISO 9660 + Joliet" IsSelected="True"/>
+                                    <ComboBoxItem Content="ISO 9660 + UDF"/>
+                                    <ComboBoxItem Content="UDF 1.02"/>
+                                    <ComboBoxItem Content="UDF 1.50"/>
+                                    <ComboBoxItem Content="UDF 2.01"/>
+                                    <ComboBoxItem Content="UDF 2.50"/>
+                                    <ComboBoxItem Content="UDF 2.60"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtBuildVolumeLabel" Watermark="DATA_DISC"
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="Volume label visible when the disc is mounted (max 32 chars)"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Total Size / Capacity" Classes="FieldLabel"/>
+                                <TextBlock x:Name="TxtBuildCapacityInfo" Text="0 B / 700 MB (CD)"
+                                           Foreground="#1E90FF" FontSize="13" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Output Path -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="💾 Output Image Path" Classes="SectionHeader"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox x:Name="TxtBuildOutputPath"
+                                     Watermark="Output ISO image path..."
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Path where the disc image file will be saved"/>
+                            <Button Content="Browse…" Classes="ActionBtn" Grid.Column="1"
+                                    Margin="6,0,0,0" Click="OnBrowseBuildOutputClick"
+                                    ToolTip.Tip="Choose output file location"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Advanced Options -->
+                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; Advanced Options (optional)"
+                          IsExpanded="False">
+                    <StackPanel Spacing="8" Margin="0,12,0,0">
+                        <WrapPanel Orientation="Horizontal">
+                            <CheckBox x:Name="ChkBuildJolietLong"
+                                      Content="Joliet long filenames (up to 110 chars)"
+                                      IsChecked="True" Margin="0,0,16,6"
+                                      ToolTip.Tip="Allow filenames longer than 64 characters in Joliet extension"/>
+                            <CheckBox x:Name="ChkBuildRockRidge"
+                                      Content="Rock Ridge extensions (POSIX metadata)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Include POSIX metadata such as file permissions and symbolic links (important for Linux/macOS)"/>
+                            <CheckBox x:Name="ChkBuildDeepDir"
+                                      Content="Allow deep directory nesting (>8 levels)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Allow directory nesting deeper than the ISO 9660 limit of 8 levels"/>
+                            <CheckBox x:Name="ChkBuildLowercase"
+                                      Content="Allow lowercase filenames"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Allow lowercase characters in ISO 9660 filenames"/>
+                            <CheckBox x:Name="ChkBuildSpecialChars"
+                                      Content="Allow special characters"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Allow special characters in filenames"/>
+                            <CheckBox x:Name="ChkBuildSortFiles"
+                                      Content="Sort files alphabetically"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Sort files alphabetically in the image"/>
+                            <CheckBox x:Name="ChkBuildPad"
+                                      Content="Pad image to disc capacity"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Pad the image with zeros to fill the full disc capacity"/>
+                        </WrapPanel>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Publisher" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtBuildPublisher" Watermark="Publisher name"
+                                         Background="#152030" Foreground="#E8F0FE"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Preparer" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtBuildPreparer" Watermark="Data preparer"
+                                         Background="#152030" Foreground="#E8F0FE"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Application" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtBuildApplication" Watermark="Application identifier"
+                                         Background="#152030" Foreground="#E8F0FE"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+
+                <!-- Bootable Disc Options -->
+                <Expander Classes="SettingsExpander" Header="🖥 Bootable Disc (El Torito, optional)"
+                          IsExpanded="False">
+                    <StackPanel Spacing="8" Margin="0,12,0,0">
+                        <CheckBox x:Name="ChkBuildBootable"
+                                  Content="Create bootable disc (El Torito)"
+                                  Margin="0,0,16,6"
+                                  ToolTip.Tip="Add boot records per El Torito specification"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBuildBootImage"
+                                     Watermark="BIOS boot image path..."
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Path to the BIOS boot image file (e.g., isolinux.bin)"/>
+                            <Button Content="Browse…" Classes="ActionBtn" Grid.Column="1"
+                                    Margin="6,0,0,0" Click="OnBrowseBootImageClick"
+                                    ToolTip.Tip="Browse for boot image"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Boot Emulation" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBuildBootEmulation" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="El Torito boot emulation mode">
+                                    <ComboBoxItem Content="No Emulation" IsSelected="True"/>
+                                    <ComboBoxItem Content="1.2 MB Floppy"/>
+                                    <ComboBoxItem Content="1.44 MB Floppy"/>
+                                    <ComboBoxItem Content="2.88 MB Floppy"/>
+                                    <ComboBoxItem Content="Hard Disk"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Boot Platform" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBuildBootPlatform" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="El Torito boot platform identifier">
+                                    <ComboBoxItem Content="x86 (BIOS)" IsSelected="True"/>
+                                    <ComboBoxItem Content="EFI"/>
+                                    <ComboBoxItem Content="PowerPC"/>
+                                    <ComboBoxItem Content="Mac"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                        <CheckBox x:Name="ChkBuildBootInfoTable"
+                                  Content="Patch boot info table (for ISOLINUX/GRUB)"
+                                  Margin="0,0,16,6"
+                                  ToolTip.Tip="Inject the El Torito boot info table used by ISOLINUX/GRUB bootloaders"/>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
+                            <TextBox x:Name="TxtBuildEfiBootImage"
+                                     Watermark="EFI boot image path (optional, for dual-boot)..."
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Optional EFI boot image for BIOS+EFI dual-boot discs"/>
+                            <Button Content="Browse…" Classes="ActionBtn" Grid.Column="1"
+                                    Margin="6,0,0,0" Click="OnBrowseEfiBootImageClick"
+                                    ToolTip.Tip="Browse for EFI boot image"/>
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2B: Build and Burn to Disc                              -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2BuildBurnPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Build &amp; Burn — Add Files, Configure, and Burn" Classes="SectionHeader"/>
+
+                <!-- Source Files (same layout as 2A) -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="📁 Source Files &amp; Folders" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtBBFileCount" Text="(0 items, 0 B)"
+                                       Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Content="📄 Add Files" Classes="PrimaryBtn"
+                                    Click="OnAddBBFilesClick"
+                                    ToolTip.Tip="Add individual files to the disc"/>
+                            <Button Content="📁 Add Folder" Classes="ActionBtn"
+                                    Click="OnAddBBFolderClick"
+                                    ToolTip.Tip="Add an entire folder and its contents"/>
+                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    Click="OnRemoveBBItemClick"
+                                    ToolTip.Tip="Remove selected item"/>
+                            <Button Content="🗑 Clear All" Classes="DangerBtn"
+                                    Click="OnClearBBItemsClick"
+                                    ToolTip.Tip="Remove all items"/>
+                        </StackPanel>
+
+                        <Border Classes="DropZone" DragDrop.AllowDrop="True"
+                                DragDrop.DragOver="OnBBDragOver"
+                                DragDrop.Drop="OnBBDrop">
+                            <ListBox x:Name="LstBBFiles"
+                                     Background="Transparent"
+                                     MinHeight="100" MaxHeight="260">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                            <TextBlock Grid.Column="0" Text="{Binding Icon}"
+                                                       FontSize="16" VerticalAlignment="Center"
+                                                       Margin="0,0,8,0"/>
+                                            <StackPanel Grid.Column="1" Spacing="1">
+                                                <TextBlock Text="{Binding Name}"
+                                                           Foreground="#E8F0FE" FontSize="12"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding FullPath}"
+                                                           Foreground="#5A7A9A" FontSize="10"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding SizeText}"
+                                                       Foreground="#8EAFC8" FontSize="12"
+                                                       VerticalAlignment="Center" Margin="8,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+
+                        <TextBlock Text="💡 Drag and drop files or folders here"
+                                   Foreground="#5A7A9A" FontSize="10"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Disc &amp; Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="⚙&#xFE0F; Disc &amp; Burn Settings" Classes="SectionHeader"/>
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Disc Type" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBBDiscType" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Target disc type">
+                                    <ComboBoxItem Content="CD" IsSelected="True"/>
+                                    <ComboBoxItem Content="DVD-5"/>
+                                    <ComboBoxItem Content="DVD-9"/>
+                                    <ComboBoxItem Content="DVD-R"/>
+                                    <ComboBoxItem Content="DVD+R"/>
+                                    <ComboBoxItem Content="DVD-RW"/>
+                                    <ComboBoxItem Content="DVD+RW"/>
+                                    <ComboBoxItem Content="DVD+R DL"/>
+                                    <ComboBoxItem Content="DVD-R DL"/>
+                                    <ComboBoxItem Content="DVD+RW DL"/>
+                                    <ComboBoxItem Content="DVD-RAM"/>
+                                    <ComboBoxItem Content="HD DVD-15"/>
+                                    <ComboBoxItem Content="HD DVD-30"/>
+                                    <ComboBoxItem Content="HD DVD-RAM"/>
+                                    <ComboBoxItem Content="HD DVD-RW"/>
+                                    <ComboBoxItem Content="BD-25"/>
+                                    <ComboBoxItem Content="BD-50"/>
+                                    <ComboBoxItem Content="BD-100"/>
+                                    <ComboBoxItem Content="BD-128"/>
+                                    <ComboBoxItem Content="M-DISC DVD"/>
+                                    <ComboBoxItem Content="M-DISC BD-25"/>
+                                    <ComboBoxItem Content="M-DISC BD-50"/>
+                                    <ComboBoxItem Content="M-DISC BD-100"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="File System" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBBFileSystem" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="File system format">
+                                    <ComboBoxItem Content="ISO 9660"/>
+                                    <ComboBoxItem Content="ISO 9660 + Joliet" IsSelected="True"/>
+                                    <ComboBoxItem Content="ISO 9660 + UDF"/>
+                                    <ComboBoxItem Content="UDF 1.02"/>
+                                    <ComboBoxItem Content="UDF 2.01"/>
+                                    <ComboBoxItem Content="UDF 2.50"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBox x:Name="TxtBBVolumeLabel" Watermark="DATA_DISC"
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="Volume label visible when the disc is mounted"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Total Size / Capacity" Classes="FieldLabel"/>
+                                <TextBlock x:Name="TxtBBCapacityInfo" Text="0 B / 700 MB (CD)"
+                                           Foreground="#1E90FF" FontSize="13" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBBDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Optical disc drive to burn to"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBBSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="24x"/>
+                                    <ComboBoxItem Content="48x"/>
+                                    <ComboBoxItem Content="Max"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="3" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
+                                <TextBlock Text="Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumBBCopies" Minimum="1" Maximum="100"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkBBEject"
+                                      Content="Eject after burn" IsChecked="True"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc tray when burning is complete"/>
+                            <CheckBox x:Name="ChkBBVerify"
+                                      Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify the disc after burning"/>
+                            <CheckBox x:Name="ChkBBSimulate"
+                                      Content="Simulate only (do not write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Perform a simulation burn without writing data"/>
+                            <CheckBox x:Name="ChkBBBup"
+                                      Content="Buffer underrun protection" IsChecked="True"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Enable buffer underrun protection to prevent errors"/>
+                        </WrapPanel>
+
+                        <Button Content="🔄 Refresh Drives" Classes="ActionBtn"
+                                Click="OnRefreshDrivesClick" Margin="0,4,0,0"
+                                ToolTip.Tip="Re-scan for optical disc drives"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 2C: Burn Existing Image                                 -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step2BurnPanel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Burn Existing Image — Select Image &amp; Drive" Classes="SectionHeader"/>
+
+                <!-- Image Selection -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="💿 Disc Image File" Classes="SectionHeader"/>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox x:Name="TxtBurnImagePath"
+                                     Watermark="Disc image path (.iso, .bin, .nrg, .mdf, .cdi, .img)..."
+                                     Background="#152030" Foreground="#E8F0FE"
+                                     ToolTip.Tip="Path to the disc image file to burn"
+                                     DragDrop.AllowDrop="True"
+                                     DragDrop.DragOver="OnBurnImageDragOver"
+                                     DragDrop.Drop="OnBurnImageDrop"/>
+                            <Button Content="Browse…" Classes="ActionBtn" Grid.Column="1"
+                                    Margin="6,0,0,0" Click="OnBrowseBurnImageClick"
+                                    ToolTip.Tip="Browse for a disc image file"/>
+                        </Grid>
+
+                        <TextBlock x:Name="TxtBurnImageInfo" Text=""
+                                   Foreground="#5A7A9A" FontSize="10"/>
+                        <TextBlock Text="💡 Drag and drop an image file here"
+                                   Foreground="#5A7A9A" FontSize="10"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Burn Settings -->
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
+                            <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBurnDrive" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Optical disc drive to burn to"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBurnSpeed" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Write speed for burning">
+                                    <ComboBoxItem Content="Auto" IsSelected="True"/>
+                                    <ComboBoxItem Content="1x"/>
+                                    <ComboBoxItem Content="2x"/>
+                                    <ComboBoxItem Content="4x"/>
+                                    <ComboBoxItem Content="8x"/>
+                                    <ComboBoxItem Content="16x"/>
+                                    <ComboBoxItem Content="24x"/>
+                                    <ComboBoxItem Content="48x"/>
+                                    <ComboBoxItem Content="Max"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
+                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <ComboBox x:Name="CmbBurnWriteMode" HorizontalAlignment="Stretch"
+                                          ToolTip.Tip="Disc write mode — TAO for multi-session, SAO for session-level, DAO for full disc finalization">
+                                    <ComboBoxItem Content="TAO (Track At Once)" IsSelected="True"/>
+                                    <ComboBoxItem Content="SAO (Session At Once)"/>
+                                    <ComboBoxItem Content="DAO (Disc At Once)"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
+                                <TextBlock Text="Copies" Classes="FieldLabel"/>
+                                <NumericUpDown x:Name="NumBurnCopies" Minimum="1" Maximum="100"
+                                               Value="1" FormatString="0"
+                                               ToolTip.Tip="Number of disc copies to burn"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <CheckBox x:Name="ChkBurnEject"
+                                      Content="Eject after burn" IsChecked="True"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Eject the disc tray when burning is complete"/>
+                            <CheckBox x:Name="ChkBurnVerify"
+                                      Content="Verify after burn"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Verify disc integrity after burning"/>
+                            <CheckBox x:Name="ChkBurnSimulate"
+                                      Content="Simulate only (do not write)"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Perform a simulation burn without writing data"/>
+                            <CheckBox x:Name="ChkBurnBup"
+                                      Content="Buffer underrun protection" IsChecked="True"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Enable buffer underrun protection"/>
+                            <CheckBox x:Name="ChkBurnClose"
+                                      Content="Finalize disc" IsChecked="True"
+                                      Margin="0,0,16,6"
+                                      ToolTip.Tip="Close the disc session after burning (no further writes possible)"/>
+                        </WrapPanel>
+
+                        <Button Content="🔄 Refresh Drives" Classes="ActionBtn"
+                                Click="OnRefreshDrivesClick" Margin="0,4,0,0"
+                                ToolTip.Tip="Re-scan for optical disc drives"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 3: Summary                                              -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step3Panel" IsVisible="False" Spacing="16">
+                <TextBlock Text="Summary — Review Before Executing" Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel x:Name="DataSummaryContent" Spacing="8">
+                        <!-- Filled dynamically -->
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- STEP 4: Progress                                             -->
+            <!-- ============================================================ -->
+            <StackPanel x:Name="Step4Panel" IsVisible="False" Spacing="16">
+                <TextBlock x:Name="TxtDataStep4Title" Text="Executing..." Classes="SectionHeader"/>
+
+                <Border Classes="Card">
+                    <StackPanel Spacing="12">
+                        <ProgressBar x:Name="PrgDataExec" Classes="BurnProgress" Value="0"/>
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto">
+                            <TextBlock x:Name="TxtDataExecStatus" Text="Preparing..."
+                                       Foreground="#8EAFC8" FontSize="12"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock x:Name="TxtDataExecETA" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="1" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtDataExecSpeed" Text=""
+                                       Foreground="#5A7A9A" FontSize="11"
+                                       Grid.Column="2" VerticalAlignment="Center"
+                                       Margin="12,0"/>
+                            <TextBlock x:Name="TxtDataExecPercent" Text="0%"
+                                       Foreground="#E8F0FE" FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Grid.Column="3" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBox x:Name="TxtDataExecLog" Classes="LogBox" Height="200"/>
+                        <!-- Disc Visualization -->
+                        <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
+                                Padding="8" IsVisible="False" Margin="0,8,0,0">
+                            <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- ============================================================ -->
+            <!-- Navigation Buttons                                           -->
+            <!-- ============================================================ -->
+            <Border Classes="InfoCard" Margin="0,8,0,0">
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Button x:Name="BtnDataBack" Content="← Back"
+                            Classes="ActionBtn" Click="OnDataBackClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Go back to the previous step"/>
+                    <Button x:Name="BtnDataNext" Content="Next →"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnDataNextClick" IsVisible="False"
+                            ToolTip.Tip="Proceed to the next step"/>
+                    <Button x:Name="BtnDataExecute" Content="🔥 Start"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnDataExecuteClick" IsVisible="False"
+                            ToolTip.Tip="Start the operation"/>
+                    <Button x:Name="BtnDataCancel" Content="⏹ Cancel"
+                            Classes="DangerBtn" Grid.Column="3"
+                            Margin="8,0,0,0" Click="OnDataCancelClick"
+                            IsVisible="False"
+                            ToolTip.Tip="Cancel the current operation"/>
+                    <Button x:Name="BtnDataFinish" Content="✅ Done — Return Home"
+                            Classes="PrimaryBtn" Grid.Column="2"
+                            Click="OnDataFinishClick" IsVisible="False"
+                            ToolTip.Tip="Operation complete — return to step 1"/>
+                </Grid>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

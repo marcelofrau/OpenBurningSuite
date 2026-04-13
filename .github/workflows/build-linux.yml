@@ -1,0 +1,666 @@
+name: Build Linux
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-linux-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_NOLOGO: true
+  APP_VERSION: '1.0.0'
+
+jobs:
+  build-linux:
+    name: Linux ${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x64, arm64]
+        include:
+          - arch: x64
+            deb_arch: amd64
+            rpm_arch: x86_64
+            apk_arch: x86_64
+            pacman_arch: x86_64
+            appimage_arch: x86_64
+            snap_arch: amd64
+            flatpak_arch: x86_64
+          - arch: arm64
+            deb_arch: arm64
+            rpm_arch: aarch64
+            apk_arch: aarch64
+            pacman_arch: aarch64
+            appimage_arch: aarch64
+            snap_arch: arm64
+            flatpak_arch: aarch64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: ${{ runner.os }}-nuget-
+
+      - name: Publish
+        run: dotnet publish OpenBurningSuite -c Release -r linux-${{ matrix.arch }} --self-contained -o publish
+
+      - name: Install build tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y imagemagick rpm zstd libarchive-tools flatpak flatpak-builder
+
+      - name: Resize application icon
+        run: |
+          # Source icon.png may be larger; resize to 512x512 to match hicolor directory and pass Flatpak validation
+          convert OpenBurningSuite/icon.png -resize 512x512 icon-512.png
+
+      - name: Create ZIP (Portable)
+        run: |
+          cd publish
+          zip -9 -r ../linux-${{ matrix.arch }}.zip .
+
+      - name: Create DEB Installer
+        run: |
+          mkdir -p deb/DEBIAN
+          mkdir -p deb/usr/lib/openburningsuite
+          mkdir -p deb/usr/bin
+          mkdir -p deb/usr/share/applications
+          mkdir -p deb/usr/share/icons/hicolor/512x512/apps
+          mkdir -p deb/etc/udev/rules.d
+
+          cat > deb/DEBIAN/control << 'EOF'
+          Package: openburningsuite
+          Version: ${{ env.APP_VERSION }}
+          Architecture: ${{ matrix.deb_arch }}
+          Maintainer: SvenGDK
+          Homepage: https://github.com/SvenGDK/OpenBurningSuite
+          Depends: libc6, libstdc++6, libgcc-s1, zlib1g, libssl3, libx11-6, libfontconfig1, libice6, libsm6
+          Description: Open Burning Suite
+           Cross-platform optical disc burning and reading suite.
+          Section: utils
+          Priority: optional
+          EOF
+
+          cat > deb/DEBIAN/postinst << 'POSTINST'
+          #!/bin/sh
+          set -e
+          # Grant CAP_SYS_RAWIO for SCSI pass-through (SG_IO) without requiring root
+          if command -v setcap >/dev/null 2>&1; then
+              if ! setcap cap_sys_rawio+ep /usr/lib/openburningsuite/OpenBurningSuite 2>/dev/null; then
+                  echo "Warning: Could not set CAP_SYS_RAWIO capability. You may need to run with sudo for SCSI access." >&2
+              fi
+          else
+              echo "Warning: setcap not found. You may need to run with sudo for SCSI access." >&2
+          fi
+          # Reload udev rules for optical/SCSI device access
+          if command -v udevadm >/dev/null 2>&1; then
+              udevadm control --reload-rules 2>/dev/null || true
+              udevadm trigger 2>/dev/null || true
+          fi
+          POSTINST
+          chmod +x deb/DEBIAN/postinst
+
+          # Udev rules for optical drive and SCSI generic device access
+          cat > deb/etc/udev/rules.d/99-openburningsuite.rules << 'UDEV'
+          # Open Burning Suite - Grant cdrom group access to optical and SCSI generic devices
+          SUBSYSTEM=="block", KERNEL=="sr[0-9]*", MODE="0660", GROUP="cdrom"
+          SUBSYSTEM=="scsi_generic", KERNEL=="sg[0-9]*", MODE="0660", GROUP="cdrom"
+          UDEV
+
+          cp -r publish/* deb/usr/lib/openburningsuite/
+          chmod +x deb/usr/lib/openburningsuite/OpenBurningSuite
+
+          mkdir -p deb/usr/share/doc/openburningsuite
+          cp LICENSE deb/usr/share/doc/openburningsuite/copyright
+
+          cp icon-512.png deb/usr/share/icons/hicolor/512x512/apps/openburningsuite.png
+
+          cat > deb/usr/bin/openburningsuite << 'LAUNCHER'
+          #!/bin/bash
+          exec /usr/lib/openburningsuite/OpenBurningSuite "$@"
+          LAUNCHER
+          chmod +x deb/usr/bin/openburningsuite
+
+          cat > deb/usr/share/applications/openburningsuite.desktop << 'DESKTOP'
+          [Desktop Entry]
+          Name=Open Burning Suite
+          Comment=Cross-platform optical disc burning and reading suite
+          Exec=/usr/bin/openburningsuite
+          Icon=openburningsuite
+          Terminal=false
+          Type=Application
+          Categories=Utility;DiscBurning;
+          DESKTOP
+
+          dpkg-deb --root-owner-group -Zxz -z9 --build deb linux-${{ matrix.arch }}-Installer.deb
+
+      - name: Create RPM Package
+        run: |
+          RPM_ARCH=${{ matrix.rpm_arch }}
+
+          mkdir -p rpm-stage/usr/lib/openburningsuite
+          mkdir -p rpm-stage/usr/bin
+          mkdir -p rpm-stage/usr/share/applications
+          mkdir -p rpm-stage/usr/share/icons/hicolor/512x512/apps
+          mkdir -p rpm-stage/etc/udev/rules.d
+
+          cp -r publish/* rpm-stage/usr/lib/openburningsuite/
+          chmod +x rpm-stage/usr/lib/openburningsuite/OpenBurningSuite
+
+          mkdir -p rpm-stage/usr/share/licenses/openburningsuite
+          cp LICENSE rpm-stage/usr/share/licenses/openburningsuite/LICENSE
+
+          cp icon-512.png rpm-stage/usr/share/icons/hicolor/512x512/apps/openburningsuite.png
+
+          # Udev rules for optical drive and SCSI generic device access
+          cat > rpm-stage/etc/udev/rules.d/99-openburningsuite.rules << 'UDEV'
+          # Open Burning Suite - Grant cdrom group access to optical and SCSI generic devices
+          SUBSYSTEM=="block", KERNEL=="sr[0-9]*", MODE="0660", GROUP="cdrom"
+          SUBSYSTEM=="scsi_generic", KERNEL=="sg[0-9]*", MODE="0660", GROUP="cdrom"
+          UDEV
+
+          cat > rpm-stage/usr/bin/openburningsuite << 'LAUNCHER'
+          #!/bin/bash
+          exec /usr/lib/openburningsuite/OpenBurningSuite "$@"
+          LAUNCHER
+          chmod +x rpm-stage/usr/bin/openburningsuite
+
+          cat > rpm-stage/usr/share/applications/openburningsuite.desktop << 'DESKTOP'
+          [Desktop Entry]
+          Name=Open Burning Suite
+          Comment=Cross-platform optical disc burning and reading suite
+          Exec=/usr/bin/openburningsuite
+          Icon=openburningsuite
+          Terminal=false
+          Type=Application
+          Categories=Utility;DiscBurning;
+          DESKTOP
+
+          mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+
+          cat > rpmbuild/SPECS/openburningsuite.spec << 'SPEC'
+          Name:           openburningsuite
+          Version:        ${{ env.APP_VERSION }}
+          Release:        1
+          Summary:        Open Burning Suite
+          License:        BSD-2-Clause
+          URL:            https://github.com/SvenGDK/OpenBurningSuite
+          AutoReqProv:    no
+          Requires:       glibc, libstdc++, zlib, openssl-libs, fontconfig, libX11, libICE, libSM
+
+          %global __os_install_post %{nil}
+          %define _binary_payload w9.xzdio
+
+          %description
+          Cross-platform optical disc burning and reading suite.
+
+          %install
+          mkdir -p %{buildroot}
+          cp -a ${{ github.workspace }}/rpm-stage/* %{buildroot}/
+
+          %post
+          # Grant CAP_SYS_RAWIO for SCSI pass-through (SG_IO) without requiring root
+          if command -v setcap >/dev/null 2>&1; then
+              if ! setcap cap_sys_rawio+ep /usr/lib/openburningsuite/OpenBurningSuite 2>/dev/null; then
+                  echo "Warning: Could not set CAP_SYS_RAWIO capability. You may need to run with sudo for SCSI access." >&2
+              fi
+          else
+              echo "Warning: setcap not found. You may need to run with sudo for SCSI access." >&2
+          fi
+          # Reload udev rules for optical/SCSI device access
+          if command -v udevadm >/dev/null 2>&1; then
+              udevadm control --reload-rules 2>/dev/null || true
+              udevadm trigger 2>/dev/null || true
+          fi
+
+          %files
+          %license /usr/share/licenses/openburningsuite/LICENSE
+          /usr/lib/openburningsuite/
+          /usr/bin/openburningsuite
+          /usr/share/applications/openburningsuite.desktop
+          /usr/share/icons/hicolor/512x512/apps/openburningsuite.png
+          /etc/udev/rules.d/99-openburningsuite.rules
+          SPEC
+
+          rpmbuild --define "_topdir $(pwd)/rpmbuild" --target ${RPM_ARCH} -bb rpmbuild/SPECS/openburningsuite.spec
+
+          cp rpmbuild/RPMS/${RPM_ARCH}/*.rpm linux-${{ matrix.arch }}.rpm
+
+      - name: Create APK Package (Alpine Linux)
+        run: |
+          APK_ARCH=${{ matrix.apk_arch }}
+
+          mkdir -p apk-data/usr/lib/openburningsuite
+          mkdir -p apk-data/usr/bin
+          mkdir -p apk-data/usr/share/applications
+          mkdir -p apk-data/usr/share/icons/hicolor/512x512/apps
+          mkdir -p apk-data/etc/udev/rules.d
+
+          cp -r publish/* apk-data/usr/lib/openburningsuite/
+          chmod +x apk-data/usr/lib/openburningsuite/OpenBurningSuite
+
+          mkdir -p apk-data/usr/share/licenses/openburningsuite
+          cp LICENSE apk-data/usr/share/licenses/openburningsuite/LICENSE
+
+          cp icon-512.png apk-data/usr/share/icons/hicolor/512x512/apps/openburningsuite.png
+
+          # Udev rules for optical drive and SCSI generic device access
+          # Note: Alpine typically uses the 'cdrom' group for optical device access
+          cat > apk-data/etc/udev/rules.d/99-openburningsuite.rules << 'UDEV'
+          # Open Burning Suite - Grant cdrom group access to optical and SCSI generic devices
+          SUBSYSTEM=="block", KERNEL=="sr[0-9]*", MODE="0660", GROUP="cdrom"
+          SUBSYSTEM=="scsi_generic", KERNEL=="sg[0-9]*", MODE="0660", GROUP="cdrom"
+          UDEV
+
+          cat > apk-data/usr/bin/openburningsuite << 'LAUNCHER'
+          #!/bin/sh
+          exec /usr/lib/openburningsuite/OpenBurningSuite "$@"
+          LAUNCHER
+          chmod +x apk-data/usr/bin/openburningsuite
+
+          cat > apk-data/usr/share/applications/openburningsuite.desktop << 'DESKTOP'
+          [Desktop Entry]
+          Name=Open Burning Suite
+          Comment=Cross-platform optical disc burning and reading suite
+          Exec=/usr/bin/openburningsuite
+          Icon=openburningsuite
+          Terminal=false
+          Type=Application
+          Categories=Utility;DiscBurning;
+          DESKTOP
+
+          INSTALLED_SIZE=$(du -sb apk-data | cut -f1)
+
+          # Post-install script for setcap and udev reload
+          cat > .post-install << 'POSTINSTALL'
+          #!/bin/sh
+          # Grant CAP_SYS_RAWIO for SCSI pass-through (SG_IO) without requiring root
+          if command -v setcap >/dev/null 2>&1; then
+              if ! setcap cap_sys_rawio+ep /usr/lib/openburningsuite/OpenBurningSuite 2>/dev/null; then
+                  echo "Warning: Could not set CAP_SYS_RAWIO capability. You may need to run with sudo for SCSI access." >&2
+              fi
+          else
+              echo "Warning: setcap not found (install libcap). You may need to run with sudo for SCSI access." >&2
+          fi
+          # Reload udev rules for optical/SCSI device access
+          if command -v udevadm >/dev/null 2>&1; then
+              udevadm control --reload-rules 2>/dev/null || true
+              udevadm trigger 2>/dev/null || true
+          fi
+          POSTINSTALL
+          chmod +x .post-install
+
+          cat > .PKGINFO << EOF
+          pkgname = openburningsuite
+          pkgver = ${{ env.APP_VERSION }}-r0
+          pkgdesc = Cross-platform optical disc burning and reading suite
+          url = https://github.com/SvenGDK/OpenBurningSuite
+          builddate = $(date +%s)
+          packager = SvenGDK
+          size = ${INSTALLED_SIZE}
+          arch = ${APK_ARCH}
+          origin = openburningsuite
+          maintainer = SvenGDK
+          license = BSD-2-Clause
+          EOF
+
+          tar -czf control.tar.gz .PKGINFO .post-install
+          (cd apk-data && tar -czf ../data.tar.gz .)
+          cat control.tar.gz data.tar.gz > linux-${{ matrix.arch }}.apk
+
+      - name: Create Pacman Package (Arch Linux)
+        run: |
+          PACMAN_ARCH=${{ matrix.pacman_arch }}
+
+          mkdir -p pacman-pkg/usr/lib/openburningsuite
+          mkdir -p pacman-pkg/usr/bin
+          mkdir -p pacman-pkg/usr/share/applications
+          mkdir -p pacman-pkg/usr/share/icons/hicolor/512x512/apps
+          mkdir -p pacman-pkg/etc/udev/rules.d
+          mkdir -p pacman-pkg/usr/share/libalpm/hooks
+          mkdir -p pacman-pkg/usr/share/libalpm/scripts
+
+          cp -r publish/* pacman-pkg/usr/lib/openburningsuite/
+          chmod +x pacman-pkg/usr/lib/openburningsuite/OpenBurningSuite
+
+          mkdir -p pacman-pkg/usr/share/licenses/openburningsuite
+          cp LICENSE pacman-pkg/usr/share/licenses/openburningsuite/LICENSE
+
+          cp icon-512.png pacman-pkg/usr/share/icons/hicolor/512x512/apps/openburningsuite.png
+
+          # Udev rules for optical drive and SCSI generic device access
+          # Note: Arch Linux uses the 'optical' group (not 'cdrom') for optical device access
+          cat > pacman-pkg/etc/udev/rules.d/99-openburningsuite.rules << 'UDEV'
+          # Open Burning Suite - Grant optical group access to optical and SCSI generic devices
+          SUBSYSTEM=="block", KERNEL=="sr[0-9]*", MODE="0660", GROUP="optical"
+          SUBSYSTEM=="scsi_generic", KERNEL=="sg[0-9]*", MODE="0660", GROUP="optical"
+          UDEV
+
+          # Pacman install hook: set CAP_SYS_RAWIO and reload udev rules after install/upgrade
+          cat > pacman-pkg/usr/share/libalpm/hooks/openburningsuite.hook << 'HOOK'
+          [Trigger]
+          Type = Path
+          Operation = Install
+          Operation = Upgrade
+          Target = usr/lib/openburningsuite/OpenBurningSuite
+
+          [Action]
+          Description = Setting SCSI capabilities for Open Burning Suite...
+          When = PostTransaction
+          Exec = /usr/share/libalpm/scripts/openburningsuite-postinstall.sh
+          HOOK
+
+          cat > pacman-pkg/usr/share/libalpm/scripts/openburningsuite-postinstall.sh << 'POSTINST'
+          #!/bin/bash
+          # Grant CAP_SYS_RAWIO for SCSI pass-through (SG_IO) without requiring root
+          if command -v setcap >/dev/null 2>&1; then
+              if ! setcap cap_sys_rawio+ep /usr/lib/openburningsuite/OpenBurningSuite 2>/dev/null; then
+                  echo "Warning: Could not set CAP_SYS_RAWIO capability. You may need to run with sudo for SCSI access." >&2
+              fi
+          fi
+          # Reload udev rules for optical/SCSI device access
+          if command -v udevadm >/dev/null 2>&1; then
+              udevadm control --reload-rules 2>/dev/null || true
+              udevadm trigger 2>/dev/null || true
+          fi
+          POSTINST
+          chmod +x pacman-pkg/usr/share/libalpm/scripts/openburningsuite-postinstall.sh
+
+          cat > pacman-pkg/usr/bin/openburningsuite << 'LAUNCHER'
+          #!/bin/bash
+          exec /usr/lib/openburningsuite/OpenBurningSuite "$@"
+          LAUNCHER
+          chmod +x pacman-pkg/usr/bin/openburningsuite
+
+          cat > pacman-pkg/usr/share/applications/openburningsuite.desktop << 'DESKTOP'
+          [Desktop Entry]
+          Name=Open Burning Suite
+          Comment=Cross-platform optical disc burning and reading suite
+          Exec=/usr/bin/openburningsuite
+          Icon=openburningsuite
+          Terminal=false
+          Type=Application
+          Categories=Utility;DiscBurning;
+          DESKTOP
+
+          INSTALLED_SIZE=$(du -sb pacman-pkg | cut -f1)
+
+          cat > pacman-pkg/.PKGINFO << EOF
+          pkgname = openburningsuite
+          pkgver = ${{ env.APP_VERSION }}-1
+          pkgdesc = Cross-platform optical disc burning and reading suite
+          url = https://github.com/SvenGDK/OpenBurningSuite
+          builddate = $(date +%s)
+          packager = SvenGDK
+          size = ${INSTALLED_SIZE}
+          arch = ${PACMAN_ARCH}
+          license = BSD-2-Clause
+          depend = icu
+          depend = fontconfig
+          depend = libx11
+          depend = libice
+          depend = libsm
+          EOF
+
+          cd pacman-pkg
+          LANG=C bsdtar -czf .MTREE --format=mtree \
+            --options='!all,use-set,type,uid,gid,mode,time,size,md5,sha256,link' \
+            .PKGINFO usr etc
+          LANG=C bsdtar -cf - .PKGINFO .MTREE usr etc | zstd -c -T0 --ultra -20 > ../linux-${{ matrix.arch }}.pkg.tar.zst
+          cd ..
+
+      - name: Create AppImage
+        run: |
+          curl -fsSL -o appimagetool "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
+          chmod +x appimagetool
+
+          mkdir -p AppDir/usr/lib/openburningsuite
+          mkdir -p AppDir/usr/share/applications
+          mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
+          mkdir -p AppDir/usr/share/licenses/openburningsuite
+
+          cp -r publish/* AppDir/usr/lib/openburningsuite/
+          chmod +x AppDir/usr/lib/openburningsuite/OpenBurningSuite
+
+          cp LICENSE AppDir/usr/share/licenses/openburningsuite/LICENSE
+
+          cp icon-512.png AppDir/usr/share/icons/hicolor/512x512/apps/openburningsuite.png
+          cp icon-512.png AppDir/openburningsuite.png
+
+          cat > AppDir/usr/share/applications/openburningsuite.desktop << 'DESKTOP'
+          [Desktop Entry]
+          Name=Open Burning Suite
+          Comment=Cross-platform optical disc burning and reading suite
+          Exec=OpenBurningSuite
+          Icon=openburningsuite
+          Terminal=false
+          Type=Application
+          Categories=Utility;DiscBurning;
+          DESKTOP
+          cp AppDir/usr/share/applications/openburningsuite.desktop AppDir/
+
+          cat > AppDir/AppRun << 'APPRUN'
+          #!/bin/bash
+          SELF="$(readlink -f "$0")"
+          HERE="${SELF%/*}"
+          exec "${HERE}/usr/lib/openburningsuite/OpenBurningSuite" "$@"
+          APPRUN
+          chmod +x AppDir/AppRun
+
+          ARCH=${{ matrix.appimage_arch }} ./appimagetool --appimage-extract-and-run --comp zstd AppDir linux-${{ matrix.arch }}.AppImage
+
+      - name: Create Snap
+        run: |
+          mkdir -p snap-dir/meta/gui
+          mkdir -p snap-dir/usr/lib/openburningsuite
+          mkdir -p snap-dir/usr/bin
+          mkdir -p snap-dir/usr/share/applications
+          mkdir -p snap-dir/usr/share/icons/hicolor/512x512/apps
+          mkdir -p snap-dir/usr/share/licenses/openburningsuite
+
+          cat > snap-dir/meta/snap.yaml << 'EOF'
+          name: openburningsuite
+          version: '${{ env.APP_VERSION }}'
+          summary: Open Burning Suite
+          description: |
+            Cross-platform optical disc burning and reading suite.
+          license: BSD-2-Clause
+          architectures:
+            - ${{ matrix.snap_arch }}
+          confinement: strict
+          grade: stable
+          base: core22
+          apps:
+            openburningsuite:
+              command: usr/lib/openburningsuite/OpenBurningSuite
+              plugs:
+                - desktop
+                - desktop-legacy
+                - home
+                - network
+                - opengl
+                - removable-media
+                - x11
+                - wayland
+                - optical-drive
+                - raw-usb
+                - block-devices
+                - hardware-observe
+          EOF
+
+          cp -r publish/* snap-dir/usr/lib/openburningsuite/
+          chmod +x snap-dir/usr/lib/openburningsuite/OpenBurningSuite
+
+          cp LICENSE snap-dir/usr/share/licenses/openburningsuite/LICENSE
+
+          cp icon-512.png snap-dir/usr/share/icons/hicolor/512x512/apps/openburningsuite.png
+          cp icon-512.png snap-dir/meta/gui/icon.png
+
+          cat > snap-dir/usr/share/applications/openburningsuite.desktop << 'DESKTOP'
+          [Desktop Entry]
+          Name=Open Burning Suite
+          Comment=Cross-platform optical disc burning and reading suite
+          Exec=openburningsuite
+          Icon=${SNAP}/meta/gui/icon.png
+          Terminal=false
+          Type=Application
+          Categories=Utility;DiscBurning;
+          DESKTOP
+          cp snap-dir/usr/share/applications/openburningsuite.desktop snap-dir/meta/gui/
+
+          snap pack snap-dir --filename=linux-${{ matrix.arch }}.snap --compression=xz
+
+      - name: Create Flatpak
+        run: |
+          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          sudo flatpak install -y --noninteractive flathub org.freedesktop.Platform/${{ matrix.flatpak_arch }}/24.08 org.freedesktop.Sdk/${{ matrix.flatpak_arch }}/24.08
+
+          mkdir -p flatpak-build/files/lib/openburningsuite
+          mkdir -p flatpak-build/files/bin
+          mkdir -p flatpak-build/files/share/applications
+          mkdir -p flatpak-build/files/share/icons/hicolor/512x512/apps
+          mkdir -p flatpak-build/files/share/metainfo
+          mkdir -p flatpak-build/export/share/applications
+          mkdir -p flatpak-build/export/share/icons/hicolor/512x512/apps
+          mkdir -p flatpak-build/export/share/metainfo
+
+          cp -r publish/* flatpak-build/files/lib/openburningsuite/
+          chmod +x flatpak-build/files/lib/openburningsuite/OpenBurningSuite
+
+          cat > flatpak-build/files/bin/openburningsuite << 'LAUNCHER'
+          #!/bin/bash
+          exec /app/lib/openburningsuite/OpenBurningSuite "$@"
+          LAUNCHER
+          chmod +x flatpak-build/files/bin/openburningsuite
+
+          cat > flatpak-build/files/share/applications/io.github.svengdk.OpenBurningSuite.desktop << 'DESKTOP'
+          [Desktop Entry]
+          Name=Open Burning Suite
+          Comment=Cross-platform optical disc burning and reading suite
+          Exec=openburningsuite
+          Icon=io.github.svengdk.OpenBurningSuite
+          Terminal=false
+          Type=Application
+          Categories=Utility;DiscBurning;
+          DESKTOP
+          cp flatpak-build/files/share/applications/io.github.svengdk.OpenBurningSuite.desktop flatpak-build/export/share/applications/
+
+          cat > flatpak-build/files/share/metainfo/io.github.svengdk.OpenBurningSuite.metainfo.xml << 'METAINFO'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <component type="desktop-application">
+            <id>io.github.svengdk.OpenBurningSuite</id>
+            <name>Open Burning Suite</name>
+            <summary>Cross-platform optical disc burning and reading suite</summary>
+            <metadata_license>CC0-1.0</metadata_license>
+            <project_license>BSD-2-Clause</project_license>
+            <description>
+              <p>Open Burning Suite is a cross-platform optical disc burning and reading suite.</p>
+            </description>
+            <url type="homepage">https://github.com/SvenGDK/OpenBurningSuite</url>
+            <launchable type="desktop-id">io.github.svengdk.OpenBurningSuite.desktop</launchable>
+            <provides>
+              <binary>openburningsuite</binary>
+            </provides>
+          </component>
+          METAINFO
+          cp flatpak-build/files/share/metainfo/io.github.svengdk.OpenBurningSuite.metainfo.xml flatpak-build/export/share/metainfo/
+
+          cp icon-512.png flatpak-build/files/share/icons/hicolor/512x512/apps/io.github.svengdk.OpenBurningSuite.png
+          cp icon-512.png flatpak-build/export/share/icons/hicolor/512x512/apps/io.github.svengdk.OpenBurningSuite.png
+
+          mkdir -p flatpak-build/files/share/licenses/io.github.svengdk.OpenBurningSuite
+          cp LICENSE flatpak-build/files/share/licenses/io.github.svengdk.OpenBurningSuite/LICENSE
+
+          cat > flatpak-build/metadata << 'EOF'
+          [Application]
+          name=io.github.svengdk.OpenBurningSuite
+          runtime=org.freedesktop.Platform/${{ matrix.flatpak_arch }}/24.08
+          sdk=org.freedesktop.Sdk/${{ matrix.flatpak_arch }}/24.08
+          command=openburningsuite
+
+          [Context]
+          shared=ipc;network;
+          sockets=x11;wayland;
+          devices=all;
+          filesystems=home;/media:ro;/run/media:ro;
+
+          [Session Bus Policy]
+          org.freedesktop.Notifications=talk
+          EOF
+
+          flatpak build-export flatpak-repo flatpak-build
+          flatpak build-bundle --arch=${{ matrix.flatpak_arch }} flatpak-repo linux-${{ matrix.arch }}.flatpak io.github.svengdk.OpenBurningSuite
+
+      - name: Upload ZIP (Portable)
+        uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}-zip
+          path: linux-${{ matrix.arch }}.zip
+          if-no-files-found: error
+
+      - name: Upload DEB Installer
+        uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}-deb
+          path: linux-${{ matrix.arch }}-Installer.deb
+          if-no-files-found: error
+
+      - name: Upload RPM Package
+        uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}-rpm
+          path: linux-${{ matrix.arch }}.rpm
+          if-no-files-found: error
+
+      - name: Upload APK Package (Alpine Linux)
+        uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}-apk
+          path: linux-${{ matrix.arch }}.apk
+          if-no-files-found: error
+
+      - name: Upload Pacman Package (Arch Linux)
+        uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}-pacman
+          path: linux-${{ matrix.arch }}.pkg.tar.zst
+          if-no-files-found: error
+
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}-appimage
+          path: linux-${{ matrix.arch }}.AppImage
+          if-no-files-found: error
+
+      - name: Upload Snap
+        uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}-snap
+          path: linux-${{ matrix.arch }}.snap
+          if-no-files-found: error
+
+      - name: Upload Flatpak
+        uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}-flatpak
+          path: linux-${{ matrix.arch }}.flatpak
+          if-no-files-found: error
