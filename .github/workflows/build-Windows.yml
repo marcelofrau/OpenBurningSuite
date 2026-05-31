@@ -5,7 +5,7 @@ on:
   workflow_call:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: build-windows-${{ github.ref }}
@@ -112,3 +112,11 @@ jobs:
           name: win-${{ matrix.arch }}-installer
           path: installer/win-${{ matrix.arch }}-Installer.exe
           if-no-files-found: error
+
+      - name: Upload to Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            win-${{ matrix.arch }}.zip
+            installer/win-${{ matrix.arch }}-Installer.exe
