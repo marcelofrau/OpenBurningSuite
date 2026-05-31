@@ -385,6 +385,8 @@ public partial class SettingsView : UserControl
         var exe = TxtChdmanPath.Text?.Trim();
         if (string.IsNullOrEmpty(exe)) exe = "chdman";
 
+        TxtSettingsStatus.Text = "Testing chdman...";
+
         try
         {
             var psi = new ProcessStartInfo
@@ -400,16 +402,20 @@ public partial class SettingsView : UserControl
             var proc = Process.Start(psi);
             if (proc == null)
             {
-                TxtSettingsStatus.Text = "⚠ Failed to start chdman.";
-                await ShowModalMessageAsync("chdman test", "Failed to start chdman executable.");
+                TxtSettingsStatus.Text = "⚠ chdman not found.";
+                await ShowModalMessageAsync("❌ chdman test failed",
+                    $"Could not start chdman.\n\nExecutable: {exe}\n\nMake sure chdman is installed and accessible.");
                 return;
             }
 
             var outTask = proc.StandardOutput.ReadToEndAsync();
             var errTask = proc.StandardError.ReadToEndAsync();
-            var completed = await System.Threading.Tasks.Task.WhenAny(System.Threading.Tasks.Task.WhenAll(outTask, errTask), System.Threading.Tasks.Task.Delay(8000));
+            var completed = await System.Threading.Tasks.Task.WhenAny(
+                System.Threading.Tasks.Task.WhenAll(outTask, errTask),
+                System.Threading.Tasks.Task.Delay(8000));
 
-            if (completed != System.Threading.Tasks.Task.WhenAll(outTask, errTask))
+            var timedOut = completed != System.Threading.Tasks.Task.WhenAll(outTask, errTask);
+            if (timedOut)
             {
                 try { proc.Kill(); } catch { }
                 await System.Threading.Tasks.Task.Delay(200);
@@ -418,30 +424,38 @@ public partial class SettingsView : UserControl
             var output = outTask.IsCompleted ? outTask.Result : string.Empty;
             var error = errTask.IsCompleted ? errTask.Result : string.Empty;
 
-            string dialogTitle = "chdman test";
-            string dialogMsg;
-            if (!string.IsNullOrWhiteSpace(output))
+            if (timedOut)
             {
-                dialogMsg = output.Trim();
-                TxtSettingsStatus.Text = $"✅ chdman: {dialogMsg.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)[0]}";
+                TxtSettingsStatus.Text = "⚠ chdman test timed out.";
+                await ShowModalMessageAsync("❌ chdman test timed out",
+                    $"chdman did not respond within 8 seconds.\n\nExecutable: {exe}\n\nCheck if the executable is valid.");
+            }
+            else if (!string.IsNullOrWhiteSpace(output))
+            {
+                var firstLine = output.Trim().Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)[0];
+                TxtSettingsStatus.Text = $"✅ chdman OK: {firstLine}";
+                await ShowModalMessageAsync("✅ chdman test passed",
+                    $"chdman responded successfully.\n\nExecutable: {exe}\n\nVersion info:\n{output.Trim()}");
             }
             else if (!string.IsNullOrWhiteSpace(error))
             {
-                dialogMsg = error.Trim();
-                TxtSettingsStatus.Text = $"⚠ chdman error: {dialogMsg.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)[0]}";
+                var firstLine = error.Trim().Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)[0];
+                TxtSettingsStatus.Text = $"⚠ chdman error: {firstLine}";
+                await ShowModalMessageAsync("⚠ chdman test warning",
+                    $"chdman produced stderr output (exit code {proc.ExitCode}).\n\nExecutable: {exe}\n\nError:\n{error.Trim()}");
             }
             else
             {
-                dialogMsg = $"chdman executed (exit {proc.ExitCode}).";
-                TxtSettingsStatus.Text = $"ℹ {dialogMsg}";
+                TxtSettingsStatus.Text = $"⚠ chdman ran (exit {proc.ExitCode}) but produced no output.";
+                await ShowModalMessageAsync("⚠ chdman test unclear",
+                    $"chdman executed but produced no output.\n\nExecutable: {exe}\nExit code: {proc.ExitCode}\n\nThis may indicate a compatibility issue.");
             }
-
-            await ShowModalMessageAsync(dialogTitle, dialogMsg);
         }
         catch (Exception ex)
         {
             TxtSettingsStatus.Text = $"⚠ chdman test failed: {ex.Message}";
-            await ShowModalMessageAsync("chdman test failed", ex.ToString());
+            await ShowModalMessageAsync("❌ chdman test failed",
+                $"chdman could not be executed.\n\nExecutable: {TxtChdmanPath.Text?.Trim() ?? "chdman"}\n\nError: {ex.Message}");
         }
     }
 
@@ -475,6 +489,7 @@ public partial class SettingsView : UserControl
             Width = 640,
             Height = 360,
             CanResize = true,
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
             Content = new ScrollViewer
             {
                 Content = new TextBox

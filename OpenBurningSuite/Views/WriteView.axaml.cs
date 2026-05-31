@@ -963,6 +963,7 @@ public partial class WriteView : UserControl
             Width = 700,
             Height = 420,
             CanResize = true,
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
             Content = new ScrollViewer
             {
                 Content = new TextBox
