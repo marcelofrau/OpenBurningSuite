@@ -854,6 +854,9 @@ public class BurnService
             case ".IMG":
                 return await PrepareImgForBurnAsync(job, tempCue, progress, ct);
 
+            case ".CHD":
+                return await ConvertChdToBinCueAsync(job.ImagePath, tempBin, tempCue, progress, ct);
+
             default:
                 return (null, null);
         }
@@ -1176,6 +1179,53 @@ public class BurnService
         progress.Report(new BurnProgress
         {
             LogLine = $"[Info] NRG converted to BIN/CUE: {FormatHelper.FormatBytes(new FileInfo(tempBin).Length)}"
+        });
+
+        return (tempBin, tempCue);
+    }
+
+    /// <summary>
+    /// Extracts a MAME CHD image to BIN/CUE using chdman.
+    /// </summary>
+    private static async Task<(string? BinPath, string? CuePath)> ConvertChdToBinCueAsync(
+        string chdPath,
+        string tempBin,
+        string tempCue,
+        IProgress<BurnProgress> progress,
+        CancellationToken ct)
+    {
+        progress.Report(new BurnProgress
+        {
+            StatusMessage = "Converting CHD image for burning...",
+            LogLine = "[Info] CHD format detected — extracting to BIN/CUE via chdman"
+        });
+
+        if (!File.Exists(chdPath))
+            throw new FileNotFoundException($"CHD file not found: {chdPath}");
+
+        if (!ChdHelper.IsAvailable())
+            throw new InvalidOperationException(
+                "chdman is not installed or not found in PATH. Please install MAME tools (chdman).");
+
+        try
+        {
+            await ChdHelper.ExtractToBinCueAsync(chdPath, tempBin, tempCue, ct);
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"chdman extraction failed: {ex.Message}", ex);
+        }
+
+        if (!File.Exists(tempBin) || !File.Exists(tempCue))
+            throw new InvalidOperationException("chdman did not produce expected BIN/CUE output.");
+
+        progress.Report(new BurnProgress
+        {
+            LogLine = $"[Info] CHD extracted to BIN/CUE: {FormatHelper.FormatBytes(new FileInfo(tempBin).Length)}"
         });
 
         return (tempBin, tempCue);

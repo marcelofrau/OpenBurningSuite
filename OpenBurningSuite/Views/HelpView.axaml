@@ -252,7 +252,7 @@
 
                         <TextBlock Text="Source Mode" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Choose how to provide the data to burn:&#x0a;&#x0a;  • Image File — Burn a pre-existing disc image file (.iso, .bin, .nrg, .mdf, .cdi, .ccd, .img). Browse or drag and drop the file. Non-native formats (NRG, MDF/MDS, CDI, CCD, IMG) are automatically converted to BIN/CUE for burning.&#x0a;  • Build on the fly — Select files and folders to build and burn directly to disc without creating a separate image file first. You can specify a source folder, add individual files/folders, set a volume label, and choose the file system."/>
+                                   Text="Choose how to provide the data to burn:&#x0a;&#x0a;  • Image File — Burn a pre-existing disc image file (.iso, .bin, .chd, .nrg, .mdf, .cdi, .ccd, .img). Browse or drag and drop the file. Non-native formats (NRG, MDF/MDS, CDI, CCD, IMG, CHD) are automatically converted to BIN/CUE for burning (CHD extraction requires chdman).&#x0a;  • Build on the fly — Select files and folders to build and burn directly to disc without creating a separate image file first. You can specify a source folder, add individual files/folders, set a volume label, and choose the file system."/>
 
                         <TextBlock Text="Target Drive &amp; Write Settings" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"

@@ -1080,7 +1080,7 @@ public partial class DataWizardView : UserControl
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
-                new FilePickerFileType("Disc Images") { Patterns = new[] { "*.iso", "*.bin", "*.cue", "*.nrg", "*.mdf", "*.cdi", "*.img", "*.mds", "*.ccd", "*.obse" } },
+                new FilePickerFileType("Disc Images") { Patterns = new[] { "*.iso", "*.bin", "*.cue", "*.chd", "*.nrg", "*.mdf", "*.cdi", "*.img", "*.mds", "*.ccd", "*.obse" } },
                 new FilePickerFileType("All Files") { Patterns = new[] { "*.*" } }
             }
         });

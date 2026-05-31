@@ -335,7 +335,7 @@ public partial class VerifyView : UserControl
             {
                 new FilePickerFileType("Disc Images")
                 {
-                    Patterns = new[] { "*.iso", "*.bin", "*.img", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.cue", "*.toc", "*.obse" }
+                    Patterns = new[] { "*.iso", "*.bin", "*.img", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.cue", "*.toc", "*.obse", "*.chd" }
                 },
                 new FilePickerFileType("All Files") { Patterns = new[] { "*.*" } }
             }

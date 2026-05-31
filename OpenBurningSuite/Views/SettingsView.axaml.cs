@@ -44,7 +44,7 @@ public partial class SettingsView : UserControl
 
         // Output format
         CmbDefaultOutputFormat.ItemsSource = new[]
-            { "ISO", "BIN/CUE", "BIN/CUE/SBI", "MDF/MDS", "NRG", "CDI", "CCD/IMG/SUB", "TOC/BIN", "IMG" };
+            { "ISO", "BIN/CUE", "CHD", "BIN/CUE/SBI", "MDF/MDS", "NRG", "CDI", "CCD/IMG/SUB", "TOC/BIN", "IMG" };
 
         // Error recovery
         CmbDefaultErrorRecovery.ItemsSource = new[]
@@ -185,6 +185,7 @@ public partial class SettingsView : UserControl
         TxtDefaultImageDir.Text             = s.DefaultImageOutputDirectory;
         TxtTempDir.Text                     = s.TempDirectory;
         TxtLogDir.Text                      = s.LogDirectory;
+        TxtChdmanPath.Text                  = s.ChdmanPath;
 
         // Advanced
         ChkExpertMode.IsChecked             = s.ExpertMode;
@@ -280,6 +281,7 @@ public partial class SettingsView : UserControl
             DefaultImageOutputDirectory    = TxtDefaultImageDir.Text ?? string.Empty,
             TempDirectory                  = TxtTempDir.Text ?? string.Empty,
             LogDirectory                   = TxtLogDir.Text ?? string.Empty,
+            ChdmanPath                     = TxtChdmanPath.Text ?? string.Empty,
 
             // Advanced
             ExpertMode                     = ChkExpertMode.IsChecked == true,
@@ -359,6 +361,90 @@ public partial class SettingsView : UserControl
             TxtLogDir.Text = folder;
     }
 
+    private async void OnBrowseChdmanClick(object? sender, RoutedEventArgs e)
+    {
+        var topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel == null) return;
+        var options = new FilePickerOpenOptions
+        {
+            Title = "Select chdman executable",
+            AllowMultiple = false
+        };
+
+        var result = await topLevel.StorageProvider.OpenFilePickerAsync(options);
+        if (result.Count > 0)
+        {
+            var path = result[0].TryGetLocalPath();
+            if (!string.IsNullOrWhiteSpace(path))
+                TxtChdmanPath.Text = path;
+        }
+    }
+
+    private async void OnTestChdmanClick(object? sender, RoutedEventArgs e)
+    {
+        var exe = TxtChdmanPath.Text?.Trim();
+        if (string.IsNullOrEmpty(exe)) exe = "chdman";
+
+        try
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = exe,
+                Arguments = "--version",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            var proc = Process.Start(psi);
+            if (proc == null)
+            {
+                TxtSettingsStatus.Text = "⚠ Failed to start chdman.";
+                await ShowModalMessageAsync("chdman test", "Failed to start chdman executable.");
+                return;
+            }
+
+            var outTask = proc.StandardOutput.ReadToEndAsync();
+            var errTask = proc.StandardError.ReadToEndAsync();
+            var completed = await System.Threading.Tasks.Task.WhenAny(System.Threading.Tasks.Task.WhenAll(outTask, errTask), System.Threading.Tasks.Task.Delay(8000));
+
+            if (completed != System.Threading.Tasks.Task.WhenAll(outTask, errTask))
+            {
+                try { proc.Kill(); } catch { }
+                await System.Threading.Tasks.Task.Delay(200);
+            }
+
+            var output = outTask.IsCompleted ? outTask.Result : string.Empty;
+            var error = errTask.IsCompleted ? errTask.Result : string.Empty;
+
+            string dialogTitle = "chdman test";
+            string dialogMsg;
+            if (!string.IsNullOrWhiteSpace(output))
+            {
+                dialogMsg = output.Trim();
+                TxtSettingsStatus.Text = $"✅ chdman: {dialogMsg.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)[0]}";
+            }
+            else if (!string.IsNullOrWhiteSpace(error))
+            {
+                dialogMsg = error.Trim();
+                TxtSettingsStatus.Text = $"⚠ chdman error: {dialogMsg.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)[0]}";
+            }
+            else
+            {
+                dialogMsg = $"chdman executed (exit {proc.ExitCode}).";
+                TxtSettingsStatus.Text = $"ℹ {dialogMsg}";
+            }
+
+            await ShowModalMessageAsync(dialogTitle, dialogMsg);
+        }
+        catch (Exception ex)
+        {
+            TxtSettingsStatus.Text = $"⚠ chdman test failed: {ex.Message}";
+            await ShowModalMessageAsync("chdman test failed", ex.ToString());
+        }
+    }
+
     // -----------------------------------------------------------------------
     // Helpers
     // -----------------------------------------------------------------------
@@ -378,6 +464,35 @@ public partial class SettingsView : UserControl
         }
 
         return null;
+    }
+
+    private async System.Threading.Tasks.Task ShowModalMessageAsync(string title, string message)
+    {
+        var topLevel = TopLevel.GetTopLevel(this) as Window;
+        var dialog = new Window
+        {
+            Title = title,
+            Width = 640,
+            Height = 360,
+            CanResize = true,
+            Content = new ScrollViewer
+            {
+                Content = new TextBox
+                {
+                    Text = message,
+                    AcceptsReturn = true,
+                    IsReadOnly = true,
+                    TextWrapping = Avalonia.Media.TextWrapping.Wrap
+                }
+            }
+        };
+
+        try
+        {
+            if (topLevel != null)
+                await dialog.ShowDialog<object?>(topLevel);
+        }
+        catch { /* ignore dialog failures */ }
     }
 
     private static void SetComboBoxValue(ComboBox comboBox, string value)

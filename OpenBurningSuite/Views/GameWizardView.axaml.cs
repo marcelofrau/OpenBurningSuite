@@ -1047,7 +1047,7 @@ public partial class GameWizardView : UserControl
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
-                new FilePickerFileType("Disc Images") { Patterns = new[] { "*.iso", "*.bin", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.img", "*.cue", "*.ccd", "*.obse" } },
+                new FilePickerFileType("Disc Images") { Patterns = new[] { "*.iso", "*.bin", "*.chd", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.img", "*.cue", "*.ccd", "*.obse" } },
                 new FilePickerFileType("All Files") { Patterns = new[] { "*.*" } }
             }
         });

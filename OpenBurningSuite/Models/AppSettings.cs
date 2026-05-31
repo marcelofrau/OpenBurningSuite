@@ -220,6 +220,9 @@ public class AppSettings
     /// <summary>Custom log file directory (empty = default app data).</summary>
     public string LogDirectory { get; set; } = string.Empty;
 
+    /// <summary>Path to chdman executable (optional). If set, overrides automatic detection.</summary>
+    public string ChdmanPath { get; set; } = string.Empty;
+
     // -----------------------------------------------------------------------
     // Advanced / Safety
     // -----------------------------------------------------------------------
