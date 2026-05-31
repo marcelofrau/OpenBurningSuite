@@ -4,6 +4,10 @@
 
 # Open Burning Suite
 
+> **Fork** by [marcelofrau](https://github.com/marcelofrau) — adding native **CHD (MAME Compressed Hunks of Data)** support for burning retro gaming discs directly from `.chd` files.
+>
+> [Upstream →](https://github.com/SvenGDK/OpenBurningSuite) | [Issue #1 — CHD Support](https://github.com/SvenGDK/OpenBurningSuite/issues/1)
+
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)]()
