@@ -27,7 +27,7 @@ Under the hood, Open Burning Suite talks directly to your optical drive using na
 | | Feature | Highlights |
 |:--:|:--------|:-----------|
 | 🔥 | **Burn** | CD-R/RW, DVD±R/RW, DVD-RAM, HD DVD, BD-R/RE, BDXL, M-DISC · TAO/SAO/DAO/RAW write modes · Build on the fly · Multi-copy · Simulation · Overburn · CUE sheets |
-| 💿 | **Read** | ISO, BIN/CUE, CCD/IMG/SUB, TOC/BIN, NRG, MDF/MDS, IMG, CDI output · Raw 2352-byte sectors · Subchannel extraction · Audio paranoia · Gaming presets |
+| 💿 | **Read** | ISO, BIN/CUE, CHD, CCD/IMG/SUB, TOC/BIN, NRG, MDF/MDS, IMG, CDI output · Raw 2352-byte sectors · Subchannel extraction · Audio paranoia · Gaming presets |
 | 🏗 | **Build** | ISO 9660, Joliet, UDF, Rock Ridge, HFS+ filesystems · El Torito bootable discs · VCD/SVCD/XSVCD |
 | 🎵 | **Audio** | Create audio CDs with CD-TEXT · Rip audio CDs to WAV or BIN/CUE · Copy music files to disc · Import M3U, PLS, WPL, ASX playlists |
 | 🎬 | **Video** | DVD-Video authoring (VIDEO_TS) · Blu-ray BDMV · BDAV recording format · Blu-ray 3D (MVC/SBS/TAB) · FFmpeg-based transcoding |

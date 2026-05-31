@@ -79,7 +79,7 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeFromImage"
-                            ToolTip.Tip="Select a game disc image file (ISO, BIN/CUE, MDF, CDI, etc.) and burn it to disc with optimal gaming settings">
+                            ToolTip.Tip="Select a game disc image file (ISO, BIN/CUE, CHD, MDF, CDI, etc.) and burn it to disc with optimal gaming settings">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
                             <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
                             <TextBlock Text="Burn from Image File" FontSize="15" FontWeight="SemiBold"

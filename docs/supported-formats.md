@@ -98,6 +98,7 @@ M-DISC uses an inorganic recording layer (stone-like) instead of organic dye, pr
 |:-------|:-------------|:----:|:-----:|:-----:|:------------|
 | ISO 9660 | `.iso` | ✅ | ✅ | ✅ | Standard disc image |
 | BIN/CUE | `.bin` + `.cue` | ✅ | ✅ | ✅ | Raw sector image + CUE sheet |
+| CHD | `.chd` | ✅ | — | — | MAME CHD (Compressed Hunks of Data) — supported for reading/extraction via chdman; extracted to BIN/CUE for burning |
 | CCD/IMG/SUB | `.ccd` + `.img` + `.sub` | ✅ | ✅ | — | CloneCD disc image (CCD v2/v3) |
 | TOC/BIN | `.toc` + `.bin` | ✅ | ✅ | — | cdrdao-style TOC + raw image |
 | NRG | `.nrg` | ✅ | ✅ | — | Nero disc image |

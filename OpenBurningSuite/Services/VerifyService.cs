@@ -237,6 +237,7 @@ public class VerifyService
         CancellationToken ct)
     {
         const int sectorSize = 2048;
+        await Task.CompletedTask;
         const int sectorsPerRead = 32;
         using var hasher = CreateHasher(job.ChecksumType);
         long goodSectors = 0;
@@ -1132,6 +1133,7 @@ public class VerifyService
         IProgress<VerifyProgress> progress, CancellationToken ct,
         int pctStart, int pctEnd)
     {
+        await Task.CompletedTask;
         const int sectorSize = 2048;
         const int sectorsPerRead = 32;
         using var hasher = CreateHasher(hashType);
