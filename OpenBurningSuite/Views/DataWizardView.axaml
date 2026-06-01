@@ -573,7 +573,7 @@
 
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBox x:Name="TxtBurnImagePath"
-                                     Watermark="Disc image path (.iso, .bin, .nrg, .mdf, .cdi, .img)..."
+                                     Watermark="Disc image path (.iso, .bin, .chd, .nrg, .mdf, .cdi, .img)..."
                                      Background="#152030" Foreground="#E8F0FE"
                                      ToolTip.Tip="Path to the disc image file to burn"
                                      DragDrop.AllowDrop="True"

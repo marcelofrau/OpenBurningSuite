@@ -500,7 +500,7 @@
                                         ToolTip.Tip="Browse for a directory"/>
                             </Grid>
                         </StackPanel>
-
+ 
                         <StackPanel Spacing="8">
                             <TextBlock Text="Temporary File Directory:" Classes="FieldLabel"/>
                             <Grid ColumnDefinitions="*,Auto">
@@ -514,7 +514,7 @@
                                         ToolTip.Tip="Browse for a directory"/>
                             </Grid>
                         </StackPanel>
-
+ 
                         <StackPanel Spacing="8">
                             <TextBlock Text="Log File Directory:" Classes="FieldLabel"/>
                             <Grid ColumnDefinitions="*,Auto">
@@ -528,6 +528,24 @@
                                         ToolTip.Tip="Browse for a directory"/>
                             </Grid>
                         </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Path to chdman executable:" Classes="FieldLabel"/>
+                                                    <Grid ColumnDefinitions="*,Auto,Auto">
+                                <TextBox x:Name="TxtChdmanPath"
+                                         Watermark="Optional — leave empty to auto-detect"
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="Full path to chdman executable (overrides detection)"/>
+                                <Button x:Name="BtnBrowseChdman" Grid.Column="1"
+                                        Content="Browse…" Classes="ActionBtn"
+                                        Margin="6,0,0,0" Click="OnBrowseChdmanClick"
+                                        ToolTip.Tip="Browse for the chdman executable"/>
+                                                        <Button x:Name="BtnTestChdman" Grid.Column="2"
+                                                                Content="Test chdman" Classes="ActionBtn"
+                                                                Margin="6,0,0,0" Click="OnTestChdmanClick"
+                                                                ToolTip.Tip="Run chdman --version to verify detection"/>
+                                                    </Grid>
+                                                </StackPanel>
                     </StackPanel>
                 </Border>
 

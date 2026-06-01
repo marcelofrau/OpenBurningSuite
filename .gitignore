@@ -2,3 +2,5 @@ bin/
 obj/
 .vs/
 AGENTS.md
+run.ps1
+run.sh

@@ -35,9 +35,9 @@
                     <StackPanel x:Name="PnlImageFile" Spacing="8">
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBox x:Name="TxtImagePath"
-                                     Watermark="Image file path (.iso, .bin, .nrg, .mdf, .cdi, .img)..."
+                                     Watermark="Image file path (.iso, .bin, .chd, .nrg, .mdf, .cdi, .img)..."
                                      Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="Path to the disc image file (.iso, .bin, .nrg, .mdf, .cdi, .img)"
+                                     ToolTip.Tip="Path to the disc image file (.iso, .bin, .chd, .nrg, .mdf, .cdi, .img)"
                                      DragDrop.AllowDrop="True"
                                      DragDrop.DragOver="OnImageDragOver"
                                      DragDrop.Drop="OnImageDrop"/>

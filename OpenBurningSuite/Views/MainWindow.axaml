@@ -236,7 +236,7 @@
                                         <TextBlock Text="🔥" FontSize="18"/>
                                         <TextBlock Text="Burn &amp; Write" Classes="SectionHeader"/>
                                     </StackPanel>
-                                    <TextBlock Text="Write ISO, BIN/CUE, NRG, MDF, CDI images to CD-R/RW, DVD±R/RW, HD DVD, and Blu-ray media. Supports DAO, TAO, SAO modes, multi-session, overburn, buffer underrun protection, and M-DISC archival."
+                                    <TextBlock Text="Write ISO, BIN/CUE, CHD, NRG, MDF, CDI images to CD-R/RW, DVD±R/RW, HD DVD, and Blu-ray media. Supports DAO, TAO, SAO modes, multi-session, overburn, buffer underrun protection, and M-DISC archival."
                                                Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
                                     <Button Content="Open Burn View →" Classes="ActionBtn"
                                             Click="OnWriteClick"

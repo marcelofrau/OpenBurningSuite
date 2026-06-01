@@ -299,7 +299,7 @@ public partial class WriteView : UserControl
             {
                 new FilePickerFileType("Disc Images")
                 {
-                    Patterns = new[] { "*.iso", "*.bin", "*.cue", "*.toc", "*.img", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.ccd", "*.obse" }
+                    Patterns = new[] { "*.iso", "*.bin", "*.cue", "*.toc", "*.img", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.ccd", "*.obse", "*.chd" }
                 },
                 new FilePickerFileType("All Files") { Patterns = new[] { "*.*" } }
             }
@@ -850,6 +850,13 @@ public partial class WriteView : UserControl
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
             DiscViz.UpdateVisualization();
+            // Show modal dialog with error details so the user understands what happened
+            try
+            {
+                var dlgMsg = ex.ToString();
+                _ = ShowModalMessageAsync(isOnTheFly ? "Build & Burn Failed" : "Burn Failed", dlgMsg);
+            }
+            catch { /* best effort */ }
         }
         finally
         {
@@ -945,6 +952,36 @@ public partial class WriteView : UserControl
         // Disable source controls while burning
         RdoImageFile.IsEnabled = !running;
         RdoBuildOnTheFly.IsEnabled = !running;
+    }
+
+    private async System.Threading.Tasks.Task ShowModalMessageAsync(string title, string message)
+    {
+        var topLevel = TopLevel.GetTopLevel(this) as Window;
+        var dialog = new Window
+        {
+            Title = title,
+            Width = 700,
+            Height = 420,
+            CanResize = true,
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            Content = new ScrollViewer
+            {
+                Content = new TextBox
+                {
+                    Text = message,
+                    AcceptsReturn = true,
+                    IsReadOnly = true,
+                    TextWrapping = Avalonia.Media.TextWrapping.Wrap
+                }
+            }
+        };
+
+        try
+        {
+            if (topLevel != null)
+                await dialog.ShowDialog<object?>(topLevel);
+        }
+        catch { /* ignore dialog failures */ }
     }
 
     private void OnImageDragOver(object? sender, DragEventArgs e) =>
