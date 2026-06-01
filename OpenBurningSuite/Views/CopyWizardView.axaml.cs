@@ -500,7 +500,7 @@ public partial class CopyWizardView : UserControl
     private void AppendLogCore(string message)
     {
         var existing = TxtCopyExecLog.Text ?? string.Empty;
-        TxtCopyExecLog.Text = existing + $"[{DateTime.Now:HH:mm:ss}] {message}\n";
+        TxtCopyExecLog.Text = existing + $"[{DateTime.Now:HH:mm:ss.fff}] {message}\n";
         var text = TxtCopyExecLog.Text;
         if (text != null && text.Length > 30_000)
         {

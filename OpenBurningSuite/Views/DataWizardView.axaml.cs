@@ -1348,9 +1348,10 @@ public partial class DataWizardView : UserControl
 
     private void AppendLogCore(string line)
     {
+        var timestampedLine = $"[{DateTime.Now:HH:mm:ss.fff}] {line}";
         TxtDataExecLog.Text = string.IsNullOrEmpty(TxtDataExecLog.Text)
-            ? line
-            : TxtDataExecLog.Text + Environment.NewLine + line;
+            ? timestampedLine
+            : TxtDataExecLog.Text + Environment.NewLine + timestampedLine;
 
         // Trim log to prevent unbounded memory growth (keep last ~20 KB)
         var text = TxtDataExecLog.Text;

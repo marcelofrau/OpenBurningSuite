@@ -554,8 +554,12 @@ public sealed class BurnEngine
             }
         }
 
-        // Perform OPC (Optimal Power Calibration) — not supported on overwritable media
-        if (!job.SimulateOnly && !isOverwritable)
+        // Perform OPC (Optimal Power Calibration) — not supported on overwritable media.
+        // OPC runs even in simulation mode so the drive calibrates laser power and
+        // strategy for the specific media. The Simu bit on WRITE commands then uses
+        // the calibrated laser at reduced power. Without OPC, the laser may not fire
+        // at all during simulation, defeating the purpose.
+        if (!isOverwritable)
         {
             drive.PerformOpc();
             progress.Report(new BurnProgress
@@ -652,7 +656,7 @@ public sealed class BurnEngine
         // WRITE at LBA 0 with "Invalid address for write" (ASC 0x21, ASCQ 0x02)
         // unless the pregap data is written first.
         // -----------------------------------------------------------------
-        if (saoModeActive && !job.SimulateOnly)
+        if (saoModeActive)
         {
             // LBA -150 in unsigned 32-bit representation (two's complement: 0xFFFFFF6A)
             uint pregapStartLba = unchecked((uint)(-SaoPregapSectors));
@@ -675,7 +679,8 @@ public sealed class BurnEngine
                 var dataLen = toWrite * sectorSize;
 
                 var result = WriteSectorsWithRetry(drive, pregapLba, pregapBuffer,
-                    sectorSize, toWrite, dataLen, useDvdBdMode: false);
+                    sectorSize, toWrite, dataLen, useDvdBdMode: false,
+                    simulate: job.SimulateOnly);
                 if (!result.Success)
                 {
                     // Log drive diagnostics on pregap write failure
@@ -826,7 +831,7 @@ public sealed class BurnEngine
         // — the drive auto-allocates space on each WRITE. For CD SAO/DAO,
         // SEND CUE SHEET serves the equivalent role (already handled above).
         // -----------------------------------------------------------------
-        if (dvdDaoModeActive && !job.SimulateOnly)
+        if (dvdDaoModeActive)
         {
             var reserveOk = drive.ReserveTrack(totalSectors);
             if (reserveOk)
@@ -908,61 +913,61 @@ public sealed class BurnEngine
 
             var sectorsToWrite = bytesRead / sectorSize;
 
-            if (!job.SimulateOnly)
+            // Write sectors to disc with retry for transient SCSI errors.
+            // In simulation mode, the Simu bit is set in the WRITE CDB so the drive
+            // performs all mechanical operations without actually burning data.
+            // Transient "Not Ready" errors (e.g. ASC=0x04 "long write in progress"),
+            // transport errors (IOCTL/semaphore timeouts), and medium/hardware errors
+            // are retried with appropriate recovery (TUR draining, drive readiness waits).
+            // Use WRITE(12) for DVD/BD media (32-bit transfer length, reduced command overhead)
+            // Use WRITE(10) for CD media (standard 16-bit transfer length)
+            var result = WriteSectorsWithRetry(drive, currentLba, buffer,
+                sectorSize, sectorsToWrite, bytesRead, useDvdBdMode: isDvdOrBd,
+                simulate: job.SimulateOnly);
+            if (!result.Success)
             {
-                // Write sectors to disc with retry for transient SCSI errors.
-                // Transient "Not Ready" errors (e.g. ASC=0x04 "long write in progress"),
-                // transport errors (IOCTL/semaphore timeouts), and medium/hardware errors
-                // are retried with appropriate recovery (TUR draining, drive readiness waits).
-                // Use WRITE(12) for DVD/BD media (32-bit transfer length, reduced command overhead)
-                // Use WRITE(10) for CD media (standard 16-bit transfer length)
-                var result = WriteSectorsWithRetry(drive, currentLba, buffer,
-                    sectorSize, sectorsToWrite, bytesRead, useDvdBdMode: isDvdOrBd);
-                if (!result.Success)
+                // Log detailed diagnostics before throwing — REQUEST SENSE and
+                // MECHANISM STATUS help diagnose the root cause (bad media, failing
+                // laser, USB bridge issues, etc.) matching ImgBurn/cdrecord behavior.
+                try
                 {
-                    // Log detailed diagnostics before throwing — REQUEST SENSE and
-                    // MECHANISM STATUS help diagnose the root cause (bad media, failing
-                    // laser, USB bridge issues, etc.) matching ImgBurn/cdrecord behavior.
-                    try
+                    var (sk, a, aq) = drive.RequestSense();
+                    if (sk != 0x00)
                     {
-                        var (sk, a, aq) = drive.RequestSense();
-                        if (sk != 0x00)
+                        var senseDesc = new ScsiResult
                         {
-                            var senseDesc = new ScsiResult
-                            {
-                                Status = 0x02,
-                                SenseData = BuildFixedSenseData(sk, a, aq)
-                            }.ErrorDescription;
-                            progress.Report(new BurnProgress
-                            {
-                                LogLine = $"[Error] Drive sense after write failure: {senseDesc}"
-                            });
-                        }
-                    }
-                    catch { /* drive may be unresponsive */ }
-
-                    try
-                    {
-                        var mechStatus = drive.GetMechanismStatus();
-                        if (mechStatus != null)
+                            Status = 0x02,
+                            SenseData = BuildFixedSenseData(sk, a, aq)
+                        }.ErrorDescription;
+                        progress.Report(new BurnProgress
                         {
-                            var stateDesc = mechStatus.MechanismState switch
-                            {
-                                0 => "Idle", 1 => "Playing", 2 => "Scanning",
-                                3 => "Host Active", _ => $"Unknown({mechStatus.MechanismState})"
-                            };
-                            progress.Report(new BurnProgress
-                            {
-                                LogLine = $"[Error] Drive mechanism: State={stateDesc}, " +
-                                          $"Fault={mechStatus.Fault}, DoorOpen={mechStatus.DoorOpen}"
-                            });
-                        }
+                            LogLine = $"[Error] Drive sense after write failure: {senseDesc}"
+                        });
                     }
-                    catch { /* drive may be unresponsive */ }
-
-                    throw new InvalidOperationException(
-                        $"Write failed at LBA {currentLba}: {result.ErrorDescription}");
                 }
+                catch { /* drive may be unresponsive */ }
+
+                try
+                {
+                    var mechStatus = drive.GetMechanismStatus();
+                    if (mechStatus != null)
+                    {
+                        var stateDesc = mechStatus.MechanismState switch
+                        {
+                            0 => "Idle", 1 => "Playing", 2 => "Scanning",
+                            3 => "Host Active", _ => $"Unknown({mechStatus.MechanismState})"
+                        };
+                        progress.Report(new BurnProgress
+                        {
+                            LogLine = $"[Error] Drive mechanism: State={stateDesc}, " +
+                                      $"Fault={mechStatus.Fault}, DoorOpen={mechStatus.DoorOpen}"
+                        });
+                    }
+                }
+                catch { /* drive may be unresponsive */ }
+
+                throw new InvalidOperationException(
+                    $"Write failed at LBA {currentLba}: {result.ErrorDescription}");
             }
 
             currentLba += (uint)sectorsToWrite;
@@ -970,7 +975,7 @@ public sealed class BurnEngine
             writeCount++;
 
             // Periodic buffer capacity check (every 256 writes ≈ every 8 MB)
-            if (!job.SimulateOnly && writeCount % 256 == 0)
+            if (writeCount % 256 == 0)
             {
                 var bc = drive.ReadBufferCapacity();
                 if (bc.HasValue && bc.Value.TotalLength > 0)
@@ -1021,8 +1026,12 @@ public sealed class BurnEngine
             });
         }
 
-        // Synchronize cache (flush write buffer)
-        if (!job.SimulateOnly)
+        // Synchronize cache (flush write buffer).
+        // In simulation mode, the drive may still buffer WRITE commands internally
+        // for timing purposes. SYNCHRONIZE CACHE ensures the drive finishes
+        // processing all simulated write commands before we proceed to cleanup.
+        // Some drives also update write pointer information (NWA) on sync even
+        // in simulation mode, which is needed for subsequent track/session handling.
         {
             progress.Report(new BurnProgress
             {
@@ -1932,13 +1941,13 @@ public sealed class BurnEngine
     /// </summary>
     private static ScsiResult WriteSectorsWithRetry(
         OpticalDrive drive, uint lba, byte[] data, int sectorSize, int sectorCount,
-        int dataLength, bool useDvdBdMode)
+        int dataLength, bool useDvdBdMode, bool simulate = false)
     {
         ScsiResult? result = null;
 
         for (int retry = 0; retry <= WriteRetryMax; retry++)
         {
-            result = drive.WriteSectors(lba, data, sectorSize, sectorCount, dataLength, useDvdBdMode);
+            result = drive.WriteSectors(lba, data, sectorSize, sectorCount, dataLength, useDvdBdMode, simulate);
             if (result.Success)
                 return result;
 

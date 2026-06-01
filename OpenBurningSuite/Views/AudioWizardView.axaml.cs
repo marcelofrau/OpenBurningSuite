@@ -1822,9 +1822,10 @@ public partial class AudioWizardView : UserControl
 
     private void AppendLogCore(string line)
     {
+        var timestampedLine = $"[{DateTime.Now:HH:mm:ss.fff}] {line}";
         TxtExecLog.Text = string.IsNullOrEmpty(TxtExecLog.Text)
-            ? line
-            : TxtExecLog.Text + Environment.NewLine + line;
+            ? timestampedLine
+            : TxtExecLog.Text + Environment.NewLine + timestampedLine;
 
         // Trim log to prevent unbounded memory growth (keep last ~20 KB)
         var text = TxtExecLog.Text;

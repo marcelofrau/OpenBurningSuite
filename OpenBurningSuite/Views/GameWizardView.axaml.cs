@@ -1370,9 +1370,10 @@ public partial class GameWizardView : UserControl
 
     private void AppendLogCore(string line)
     {
+        var timestampedLine = $"[{DateTime.Now:HH:mm:ss.fff}] {line}";
         TxtGameExecLog.Text = string.IsNullOrEmpty(TxtGameExecLog.Text)
-            ? line
-            : TxtGameExecLog.Text + Environment.NewLine + line;
+            ? timestampedLine
+            : TxtGameExecLog.Text + Environment.NewLine + timestampedLine;
 
         // Trim log to prevent unbounded memory growth (keep last ~20 KB)
         var text = TxtGameExecLog.Text;

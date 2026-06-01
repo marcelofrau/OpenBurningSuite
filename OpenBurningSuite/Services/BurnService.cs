@@ -56,7 +56,7 @@ public class BurnService
                 // BurnEngine natively handles ISO (2048-byte sectors) and BIN/CUE
                 // (raw 2352-byte sectors). All other formats must be converted first.
                 var ext = Path.GetExtension(job.ImagePath).ToUpperInvariant();
-                if (ext is ".MDS" or ".MDF" or ".CDI" or ".CCD" or ".NRG")
+                if (ext is ".MDS" or ".MDF" or ".CDI" or ".CCD" or ".NRG" or ".CHD")
                 {
                     (tempBinPath, tempCuePath) = await ConvertToBurnableFormatAsync(
                         job, ext, progress, cancellationToken);
@@ -855,7 +855,7 @@ public class BurnService
                 return await PrepareImgForBurnAsync(job, tempCue, progress, ct);
 
             case ".CHD":
-                return await ConvertChdToBinCueAsync(job.ImagePath, tempBin, tempCue, progress, ct);
+                return await ConvertChdForBurnAsync(job.ImagePath, tempBin, tempCue, progress, ct);
 
             default:
                 return (null, null);
@@ -1187,19 +1187,13 @@ public class BurnService
     /// <summary>
     /// Extracts a MAME CHD image to BIN/CUE using chdman.
     /// </summary>
-    private static async Task<(string? BinPath, string? CuePath)> ConvertChdToBinCueAsync(
+    private static async Task<(string? BinPath, string? CuePath)> ConvertChdForBurnAsync(
         string chdPath,
         string tempBin,
         string tempCue,
         IProgress<BurnProgress> progress,
         CancellationToken ct)
     {
-        progress.Report(new BurnProgress
-        {
-            StatusMessage = "Converting CHD image for burning...",
-            LogLine = "[Info] CHD format detected — extracting to BIN/CUE via chdman"
-        });
-
         if (!File.Exists(chdPath))
             throw new FileNotFoundException($"CHD file not found: {chdPath}");
 
@@ -1207,9 +1201,71 @@ public class BurnService
             throw new InvalidOperationException(
                 "chdman is not installed or not found in PATH. Please install MAME tools (chdman).");
 
+        var chdVer = ChdHelper.GetVersionString();
+        var chdVersion = ChdHelper.GetVersion();
+        var chdVerMsg = chdVer != null ? chdVer : "(unknown version)";
+
+        // Detect disc type first so we can report it in the status message
+        var discType = await ChdHelper.GetDiscTypeAsync(chdPath, ct);
+        var discTypeName = discType switch
+        {
+            ChdDiscType.Cd => "CD",
+            ChdDiscType.Dvd => "DVD",
+            ChdDiscType.Hdd => "HDD",
+            ChdDiscType.Laserdisc => "Laserdisc",
+            ChdDiscType.Raw => "raw data",
+            _ => "unknown"
+        };
+
+        var (outputCmd, outputExt) = discType switch
+        {
+            ChdDiscType.Cd => ("extractcd", ".bin"),
+            ChdDiscType.Dvd => ("extractdvd", ".iso"),
+            _ => throw new NotSupportedException(
+                $"CHD disc type '{discType}' is not supported for burning (only CD and DVD are supported).")
+        };
+
+        if (discType == ChdDiscType.Unknown)
+            throw new InvalidOperationException(
+                $"Could not determine the disc type of CHD file: {chdPath}");
+
+        progress.Report(new BurnProgress
+        {
+            StatusMessage = "Converting CHD image for burning...",
+            LogLine = $"[Info] CHD format detected ({discTypeName}) — extracting via chdman v{chdVerMsg} (minimum tested: v{ChdHelper.MinimumVersion})"
+        });
+
+        if (chdVersion != null && chdVersion < ChdHelper.MinimumVersion)
+        {
+            progress.Report(new BurnProgress
+            {
+                LogLine = $"[Warning] chdman v{chdVerMsg} is older than minimum tested v{ChdHelper.MinimumVersion}. " +
+                    "Update MAME tools if issues occur."
+            });
+        }
+
+        // Wrap progress to report CHD extraction progress via BurnProgress
+        var chdProgress = new Progress<int>(pct =>
+        {
+            progress.Report(new BurnProgress
+            {
+                PercentComplete = pct,
+                StatusMessage = $"Extracting CHD... {pct}%"
+            });
+        });
+
         try
         {
-            await ChdHelper.ExtractToBinCueAsync(chdPath, tempBin, tempCue, ct);
+            if (discType == ChdDiscType.Cd)
+            {
+                await ChdHelper.ExtractAsync(chdPath, tempBin, tempCue,
+                    ChdDiscType.Cd, chdProgress, ct);
+            }
+            else
+            {
+                await ChdHelper.ExtractAsync(chdPath, tempBin, null,
+                    ChdDiscType.Dvd, chdProgress, ct);
+            }
         }
         catch (OperationCanceledException)
         {
@@ -1217,18 +1273,31 @@ public class BurnService
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException($"chdman extraction failed: {ex.Message}", ex);
+            throw new InvalidOperationException($"chdman {outputCmd} failed: {ex.Message}", ex);
         }
 
-        if (!File.Exists(tempBin) || !File.Exists(tempCue))
-            throw new InvalidOperationException("chdman did not produce expected BIN/CUE output.");
-
-        progress.Report(new BurnProgress
+        if (discType == ChdDiscType.Cd)
         {
-            LogLine = $"[Info] CHD extracted to BIN/CUE: {FormatHelper.FormatBytes(new FileInfo(tempBin).Length)}"
-        });
+            if (!File.Exists(tempBin) || !File.Exists(tempCue))
+                throw new InvalidOperationException("chdman did not produce expected BIN/CUE output.");
 
-        return (tempBin, tempCue);
+            progress.Report(new BurnProgress
+            {
+                LogLine = $"[Info] CHD extracted to BIN/CUE: {FormatHelper.FormatBytes(new FileInfo(tempBin).Length)}"
+            });
+        }
+        else
+        {
+            if (!File.Exists(tempBin))
+                throw new InvalidOperationException($"chdman did not produce expected ISO output at: {tempBin}");
+
+            progress.Report(new BurnProgress
+            {
+                LogLine = $"[Info] CHD extracted to ISO: {FormatHelper.FormatBytes(new FileInfo(tempBin).Length)}"
+            });
+        }
+
+        return (tempBin, discType == ChdDiscType.Cd ? tempCue : null);
     }
 
     /// <summary>
