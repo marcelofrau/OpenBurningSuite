@@ -664,7 +664,7 @@ public partial class DiscoverView : UserControl
     private void LogCore(string message)
     {
         var existing = TxtLog.Text ?? string.Empty;
-        TxtLog.Text = existing + $"[{DateTime.Now:HH:mm:ss}] {message}\n";
+        TxtLog.Text = existing + $"[{DateTime.Now:HH:mm:ss.fff}] {message}\n";
         var text = TxtLog.Text ?? string.Empty;
         if (text.Length > 30_000)
         {

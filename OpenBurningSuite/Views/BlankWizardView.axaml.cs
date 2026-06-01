@@ -234,7 +234,7 @@ public partial class BlankWizardView : UserControl
     private void AppendLogCore(string message)
     {
         var existing = TxtBlankExecLog.Text ?? string.Empty;
-        TxtBlankExecLog.Text = existing + $"[{DateTime.Now:HH:mm:ss}] {message}\n";
+        TxtBlankExecLog.Text = existing + $"[{DateTime.Now:HH:mm:ss.fff}] {message}\n";
         var text = TxtBlankExecLog.Text;
         if (text != null && text.Length > 30_000)
         {

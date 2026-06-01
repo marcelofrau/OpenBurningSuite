@@ -368,7 +368,7 @@ public partial class AdvancedView : UserControl
 
     private void LogCore(string msg)
     {
-        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss}] {msg}\n";
+        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n";
         var text = TxtLog.Text;
         if (text != null && text.Length > 30_000)
         {

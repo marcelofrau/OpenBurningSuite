@@ -152,10 +152,20 @@ public partial class WriteView : UserControl
                 {
                     _drives = t.IsCompletedSuccessfully ? t.Result : new List<DiscDrive>();
                 }
+                var writableOnly = _drives.Where(d => d.CanWrite).ToList();
+                var filteredOut = _drives.Count - writableOnly.Count;
+                if (filteredOut > 0)
+                    Log($"[Info] {filteredOut} drive(s) filtered out (read-only or virtual).");
+                _drives = writableOnly;
+
                 CmbDrive.Items.Clear();
                 foreach (var d in _drives) CmbDrive.Items.Add(d.DisplayName);
                 if (_drives.Count > 0) CmbDrive.SelectedIndex = 0;
-                else CmbDrive.Items.Add("No drives found");
+                else
+                {
+                    CmbDrive.Items.Add("No writable drives found");
+                    Log("⚠ No writable optical drives detected. Virtual drives are not supported for burning.");
+                }
             });
         });
     }
@@ -1188,7 +1198,7 @@ public partial class WriteView : UserControl
 
     private void LogCore(string msg)
     {
-        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss}] {msg}\n";
+        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n";
         var text = TxtLog.Text;
         if (text != null && text.Length > 30_000)
         {

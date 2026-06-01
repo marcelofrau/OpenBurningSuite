@@ -659,7 +659,7 @@ public partial class ReadView : UserControl
 
     private void LogCore(string msg)
     {
-        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss}] {msg}\n";
+        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n";
         var text = TxtLog.Text;
         // Trim log to prevent unbounded memory growth (keep last ~20 KB)
         if (text != null && text.Length > 30_000)

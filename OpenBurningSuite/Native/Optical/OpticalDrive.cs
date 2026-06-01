@@ -895,7 +895,7 @@ public sealed class OpticalDrive : IDisposable
     /// remains the standard for CD burning where sector counts per command are small.
     /// </param>
     public ScsiResult WriteSectors(uint lba, byte[] data, int sectorSize, int sectorCount,
-        int dataLength = -1, bool useDvdBdMode = false)
+        int dataLength = -1, bool useDvdBdMode = false, bool simulate = false)
     {
         if (useDvdBdMode)
         {
@@ -931,6 +931,15 @@ public sealed class OpticalDrive : IDisposable
         var cdb = useDvdBdMode
             ? MmcCommands.BuildWrite12(lba, (uint)sectorCount)
             : MmcCommands.BuildWrite10(lba, (ushort)sectorCount);
+
+        // Set the Simu bit (byte 1, bit 1) when simulating — the drive performs all
+        // mechanical operations (spindle, tracking, laser calibration) but with the
+        // laser at a non-recording power level. No data is actually written to the
+        // disc, but the drive validates the entire burn pipeline (timing, wobble,
+        // ATIP/LPP detection, OPC, buffer management) as if a real burn were in
+        // progress. This is how Nero/ImgBurn simulation works at the SCSI level.
+        if (simulate)
+            cdb[1] |= 0x02;
 
         var cmd = new ScsiCommand(cdb, ScsiDataDirection.Out, writeData)
         {
