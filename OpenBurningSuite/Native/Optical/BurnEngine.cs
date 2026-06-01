@@ -656,7 +656,7 @@ public sealed class BurnEngine
         // WRITE at LBA 0 with "Invalid address for write" (ASC 0x21, ASCQ 0x02)
         // unless the pregap data is written first.
         // -----------------------------------------------------------------
-        if (saoModeActive)
+        if (saoModeActive && !job.SimulateOnly)
         {
             // LBA -150 in unsigned 32-bit representation (two's complement: 0xFFFFFF6A)
             uint pregapStartLba = unchecked((uint)(-SaoPregapSectors));
@@ -679,8 +679,7 @@ public sealed class BurnEngine
                 var dataLen = toWrite * sectorSize;
 
                 var result = WriteSectorsWithRetry(drive, pregapLba, pregapBuffer,
-                    sectorSize, toWrite, dataLen, useDvdBdMode: false,
-                    simulate: job.SimulateOnly);
+                    sectorSize, toWrite, dataLen, useDvdBdMode: false);
                 if (!result.Success)
                 {
                     // Log drive diagnostics on pregap write failure
@@ -831,7 +830,7 @@ public sealed class BurnEngine
         // — the drive auto-allocates space on each WRITE. For CD SAO/DAO,
         // SEND CUE SHEET serves the equivalent role (already handled above).
         // -----------------------------------------------------------------
-        if (dvdDaoModeActive)
+        if (dvdDaoModeActive && !job.SimulateOnly)
         {
             var reserveOk = drive.ReserveTrack(totalSectors);
             if (reserveOk)
@@ -913,17 +912,16 @@ public sealed class BurnEngine
 
             var sectorsToWrite = bytesRead / sectorSize;
 
-            // Write sectors to disc with retry for transient SCSI errors.
-            // In simulation mode, the Simu bit is set in the WRITE CDB so the drive
-            // performs all mechanical operations without actually burning data.
-            // Transient "Not Ready" errors (e.g. ASC=0x04 "long write in progress"),
-            // transport errors (IOCTL/semaphore timeouts), and medium/hardware errors
-            // are retried with appropriate recovery (TUR draining, drive readiness waits).
-            // Use WRITE(12) for DVD/BD media (32-bit transfer length, reduced command overhead)
-            // Use WRITE(10) for CD media (standard 16-bit transfer length)
-            var result = WriteSectorsWithRetry(drive, currentLba, buffer,
-                sectorSize, sectorsToWrite, bytesRead, useDvdBdMode: isDvdOrBd,
-                simulate: job.SimulateOnly);
+            if (!job.SimulateOnly)
+            {
+                // Write sectors to disc with retry for transient SCSI errors.
+                // Transient "Not Ready" errors (e.g. ASC=0x04 "long write in progress"),
+                // transport errors (IOCTL/semaphore timeouts), and medium/hardware errors
+                // are retried with appropriate recovery (TUR draining, drive readiness waits).
+                // Use WRITE(12) for DVD/BD media (32-bit transfer length, reduced command overhead)
+                // Use WRITE(10) for CD media (standard 16-bit transfer length)
+                var result = WriteSectorsWithRetry(drive, currentLba, buffer,
+                    sectorSize, sectorsToWrite, bytesRead, useDvdBdMode: isDvdOrBd);
             if (!result.Success)
             {
                 // Log detailed diagnostics before throwing — REQUEST SENSE and
@@ -969,13 +967,14 @@ public sealed class BurnEngine
                 throw new InvalidOperationException(
                     $"Write failed at LBA {currentLba}: {result.ErrorDescription}");
             }
+        }
 
             currentLba += (uint)sectorsToWrite;
             bytesWritten += actualDataBytes;
             writeCount++;
 
             // Periodic buffer capacity check (every 256 writes ≈ every 8 MB)
-            if (writeCount % 256 == 0)
+            if (!job.SimulateOnly && writeCount % 256 == 0)
             {
                 var bc = drive.ReadBufferCapacity();
                 if (bc.HasValue && bc.Value.TotalLength > 0)
@@ -1026,12 +1025,8 @@ public sealed class BurnEngine
             });
         }
 
-        // Synchronize cache (flush write buffer).
-        // In simulation mode, the drive may still buffer WRITE commands internally
-        // for timing purposes. SYNCHRONIZE CACHE ensures the drive finishes
-        // processing all simulated write commands before we proceed to cleanup.
-        // Some drives also update write pointer information (NWA) on sync even
-        // in simulation mode, which is needed for subsequent track/session handling.
+        // Synchronize cache (flush write buffer)
+        if (!job.SimulateOnly)
         {
             progress.Report(new BurnProgress
             {
