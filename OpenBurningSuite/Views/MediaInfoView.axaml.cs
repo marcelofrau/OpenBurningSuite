@@ -278,16 +278,25 @@ public partial class MediaInfoView : UserControl
         TxtFileSystem.Text = !string.IsNullOrEmpty(info.FileSystem) ? info.FileSystem : "—";
 
         // Speeds
-        TxtReadSpeeds.Text = info.SupportedReadSpeeds.Count > 0
-            ? string.Join("; ", info.SupportedReadSpeeds) : "—";
+        string profile = info.CurrentProfile;
+        TxtReadSpeeds.Text = Helpers.FormatHelper.FormatSpeedsToX(info.SupportedReadSpeeds, profile);
+        TxtWriteSpeeds.Text = Helpers.FormatHelper.FormatSpeedsToX(info.SupportedWriteSpeeds, profile);
 
         bool hasCurrentRead = !string.IsNullOrEmpty(info.CurrentReadSpeed);
         PnlCurrentReadSpeed.IsVisible = hasCurrentRead;
         if (hasCurrentRead)
-            TxtCurrentReadSpeed.Text = info.CurrentReadSpeed;
-
-        TxtWriteSpeeds.Text = info.SupportedWriteSpeeds.Count > 0
-            ? string.Join("; ", info.SupportedWriteSpeeds) : "—";
+        {
+            var parts = info.CurrentReadSpeed.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var formattedParts = new List<string>();
+            foreach (var part in parts)
+            {
+                if (uint.TryParse(part.Replace(" KB/s", ""), out var curRead))
+                    formattedParts.Add(Helpers.FormatHelper.SpeedKBpsToX(curRead, profile));
+                else
+                    formattedParts.Add(part);
+            }
+            TxtCurrentReadSpeed.Text = string.Join("; ", formattedParts);
+        }
 
         // ── ATIP (CD) ──
         PnlAtip.IsVisible = info.HasCdInfo;

@@ -1467,4 +1467,71 @@ public static class FormatHelper
             return "ISO 9660";
         return "ISO 9660 + Joliet";
     }
+
+    // ----- Speed formatting helpers (KB/s → X) -----
+
+    private static double GetBaseSpeedKBps(string mediaProfile)
+    {
+        if (string.IsNullOrEmpty(mediaProfile))
+            return 150;
+        string profile = mediaProfile.ToUpperInvariant();
+        if (profile.Contains("BD") || profile.Contains("BLU-RAY") || profile.Contains("BDR") || profile.Contains("BD-RE"))
+            return 4496;
+        if (profile.Contains("DVD") || profile.Contains("HD DVD"))
+            return 1385;
+        return 150;
+    }
+
+    /// <summary>
+    /// Converts a speed in KB/s to X notation (e.g., "12x", "20x") based on media type.
+    /// </summary>
+    public static string SpeedKBpsToX(uint kbPerSec, string mediaProfile)
+    {
+        double baseSpeed = GetBaseSpeedKBps(mediaProfile);
+        if (baseSpeed <= 0) return $"{kbPerSec} KB/s";
+        double x = kbPerSec / baseSpeed;
+        return $"{x:F0}x";
+    }
+
+    /// <summary>
+    /// Converts a list of speed strings (e.g., ["4234 KB/s", "8468 KB/s"]) to X notation.
+    /// Items already in X format are returned as-is.
+    /// </summary>
+    public static string FormatSpeedsToX(IReadOnlyList<string> speedStrings, string mediaProfile)
+    {
+        if (speedStrings == null || speedStrings.Count == 0)
+            return "—";
+
+        var formatted = new List<string>();
+        foreach (var s in speedStrings)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                continue;
+
+            // Already in X format
+            if (s.Trim().EndsWith("x", StringComparison.OrdinalIgnoreCase))
+            {
+                formatted.Add(s.Trim());
+                continue;
+            }
+
+            // Parse "NNNN KB/s" format
+            string trimmed = s.Trim();
+            int spaceIdx = trimmed.IndexOf(' ');
+            if (spaceIdx > 0 && uint.TryParse(trimmed[..spaceIdx], out var kbVal))
+            {
+                formatted.Add(SpeedKBpsToX(kbVal, mediaProfile));
+            }
+            else
+            {
+                // Try to parse as plain number
+                if (uint.TryParse(trimmed, out var plainVal))
+                    formatted.Add(SpeedKBpsToX(plainVal, mediaProfile));
+                else
+                    formatted.Add(trimmed); // fallback: return as-is
+            }
+        }
+
+        return formatted.Count > 0 ? string.Join("; ", formatted) : "—";
+    }
 }

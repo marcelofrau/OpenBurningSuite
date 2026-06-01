@@ -395,9 +395,30 @@ public static class MediaInfoService
                 result.DriveModel = discDrive.DriveModel;
                 result.SerialNumber = discDrive.SerialNumber;
                 result.BufferSizeKiB = discDrive.BufferSizeKiB;
-                result.SupportedWriteSpeeds = new List<string>(discDrive.SupportedWriteSpeeds);
-                result.SupportedReadSpeeds = new List<string>(discDrive.SupportedReadSpeeds);
             }
+
+            // ── Query read/write speeds dynamically (media-specific) ──
+            try
+            {
+                var dynReadSpeeds = optDrive.GetSupportedReadSpeeds();
+                if (dynReadSpeeds.Count > 0)
+                    result.SupportedReadSpeeds = dynReadSpeeds.Select(s => $"{s} KB/s").ToList();
+            }
+            catch { /* fallback — keep pre-discovered speeds below */ }
+
+            try
+            {
+                var dynWriteSpeeds = optDrive.GetSupportedWriteSpeeds();
+                if (dynWriteSpeeds.Count > 0)
+                    result.SupportedWriteSpeeds = dynWriteSpeeds.Select(s => $"{s} KB/s").ToList();
+            }
+            catch { /* fallback — keep pre-discovered speeds below */ }
+
+            // Fallback: use pre-discovered speeds if dynamic query returned nothing
+            if (result.SupportedReadSpeeds.Count == 0 && discDrive?.SupportedReadSpeeds.Count > 0)
+                result.SupportedReadSpeeds = new List<string>(discDrive.SupportedReadSpeeds);
+            if (result.SupportedWriteSpeeds.Count == 0 && discDrive?.SupportedWriteSpeeds.Count > 0)
+                result.SupportedWriteSpeeds = new List<string>(discDrive.SupportedWriteSpeeds);
         }
         catch
         {
