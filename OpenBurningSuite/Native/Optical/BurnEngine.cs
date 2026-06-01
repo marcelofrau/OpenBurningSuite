@@ -870,6 +870,17 @@ public sealed class BurnEngine
         var buffer = new byte[SectorsPerWrite * sectorSize];
         int writeCount = 0;
 
+        // Pre-compute realistic write speed for simulation timing.
+        // Uses the user-selected speed when available, or sensible defaults.
+        var simulationSpeedBps = job.SimulateOnly
+            ? writeSpeedKBs > 0 && writeSpeedKBs != 0xFFFF
+                ? writeSpeedKBs * 1024L
+                : isBd ? (long)(4 * FormatHelper.BdBaseSpeedKBs * 1024)
+                : isHdDvd ? (long)(4 * FormatHelper.HdDvdBaseSpeedKBs * 1024)
+                : isDvdOrBd ? (long)(8 * FormatHelper.DvdBaseSpeedKBs * 1024)
+                : (long)(24 * FormatHelper.CdBaseSpeedKBs * 1024)
+            : 0;
+
         while (fileBytesRead < totalBytes)
         {
             // Check cancellation explicitly before each iteration to produce a single,
@@ -968,6 +979,17 @@ public sealed class BurnEngine
                     $"Write failed at LBA {currentLba}: {result.ErrorDescription}");
             }
         }
+
+            // In simulation mode, add a realistic delay based on the selected write
+            // speed so progress timing mirrors a real burn. This tests buffer management
+            // and data pipeline throughput without wasting media. The delay is capped at
+            // 100ms per chunk to keep the UI responsive.
+            if (simulationSpeedBps > 0)
+            {
+                var delayMs = (int)(bytesRead * 1000 / simulationSpeedBps);
+                if (delayMs > 0)
+                    await Task.Delay(Math.Min(delayMs, 100), ct);
+            }
 
             currentLba += (uint)sectorsToWrite;
             bytesWritten += actualDataBytes;
