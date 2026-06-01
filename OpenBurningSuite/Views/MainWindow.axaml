@@ -63,6 +63,9 @@
                         <Button x:Name="BtnDiscover" Content="🔍  Discover"
                                 Classes="NavBtn" Click="OnDiscoverClick"
                                 ToolTip.Tip="Scan for optical drives and probe inserted media"/>
+                        <Button x:Name="BtnMediaInfo" Content="📊  Media Info"
+                                Classes="NavBtn" Click="OnMediaInfoClick"
+                                ToolTip.Tip="Detailed disc media information — manufacturer, physical format, speeds, structure"/>
                         <Button x:Name="BtnRead" Content="💿  Copy Disc"
                                 Classes="NavBtn" Click="OnReadClick"
                                 ToolTip.Tip="Copy optical discs to image files (ISO, BIN/CUE, MDF, etc.)"/>
@@ -196,6 +199,19 @@
                                 </StackPanel>
                             </Button>
 
+                            <!-- Media Info -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnMediaInfoClick"
+                                    ToolTip.Tip="Detailed disc media info — like ImgBurn">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="📊" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Media Info" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+
                             <!-- Copy Disc Wizard -->
                             <Button Classes="NavBtn" Margin="0,0,10,10"
                                     Width="190" Height="100"
@@ -324,6 +340,7 @@
 
                 <!-- Actual views (hidden by default, shown on nav) -->
                 <views:DiscoverView x:Name="ViewDiscover" IsVisible="False"/>
+                <views:MediaInfoView x:Name="ViewMediaInfo" IsVisible="False"/>
                 <views:ReadView     x:Name="ViewRead"     IsVisible="False"/>
                 <views:BuildView    x:Name="ViewBuild"    IsVisible="False"/>
                 <views:WriteView    x:Name="ViewWrite"    IsVisible="False"/>

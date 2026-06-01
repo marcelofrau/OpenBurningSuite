@@ -53,6 +53,7 @@ public partial class App : Application
         AddNavSubmenu(nativeMenu, "Main",
             ("home", "Home"),
             ("discover", "Discover Drives & Media"),
+            ("media", "Media Information"),
             ("read", "Copy Disc to Image"),
             ("build", "Build Disc Image"),
             ("write", "Burn / Write Disc"),

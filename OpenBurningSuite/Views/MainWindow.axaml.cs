@@ -40,6 +40,9 @@ public partial class MainWindow : Window
             case "discover":
                 SetActiveView(BtnDiscover, ViewDiscover, "Discover Drives & Media");
                 break;
+            case "media":
+                SetActiveView(BtnMediaInfo, ViewMediaInfo, "Media Information");
+                break;
             case "read":
                 SetActiveView(BtnRead, ViewRead, "Copy Disc to Image");
                 break;
@@ -100,6 +103,9 @@ public partial class MainWindow : Window
 
     private void OnDiscoverClick(object? sender, RoutedEventArgs e) =>
         SetActiveView(BtnDiscover, ViewDiscover, "Discover Drives & Media");
+
+    private void OnMediaInfoClick(object? sender, RoutedEventArgs e) =>
+        SetActiveView(BtnMediaInfo, ViewMediaInfo, "Media Information");
 
     private void OnReadClick(object? sender, RoutedEventArgs e) =>
         SetActiveView(BtnRead, ViewRead, "Copy Disc to Image");
@@ -182,6 +188,7 @@ public partial class MainWindow : Window
     {
         HomeScreen.IsVisible   = false;
         ViewDiscover.IsVisible = false;
+        ViewMediaInfo.IsVisible = false;
         ViewRead.IsVisible     = false;
         ViewBuild.IsVisible    = false;
         ViewWrite.IsVisible    = false;

@@ -1,0 +1,263 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dg="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls.DataGrid"
+             x:Class="OpenBurningSuite.Views.MediaInfoView"
+             Background="#0C1622">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" Spacing="16">
+
+            <!-- Header -->
+            <TextBlock Text="Media Information" Classes="PageTitle"/>
+            <TextBlock Text="Comprehensive disc media details — matches ImgBurn display format."
+                       Classes="PageSubtitle"/>
+
+            <!-- Drive selector + Status + Profile -->
+            <Border Classes="Card">
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Button x:Name="BtnRefresh" Content="🔄" Classes="ActionBtn"
+                            Margin="0,0,8,0" Click="OnRefreshClick"
+                            ToolTip.Tip="Rescan drives"/>
+                    <ComboBox x:Name="CmbDriveSel" Grid.Column="1"
+                              PlaceholderText="Select drive..."
+                              SelectionChanged="OnDriveSelectionChanged"
+                              ToolTip.Tip="Select a drive to probe"/>
+                    <Border x:Name="BdrMediaStatus" Grid.Column="2"
+                            CornerRadius="4" Padding="8,4" Margin="8,0,0,0"
+                            BorderThickness="1" BorderBrush="#1E3450"
+                            VerticalAlignment="Center"
+                            ToolTip.Tip="Current media status">
+                        <TextBlock x:Name="TxtMediaStatus" Text="Ready"
+                                   FontSize="11" FontWeight="SemiBold"
+                                   Foreground="#5BC0FF"/>
+                    </Border>
+                    <TextBlock x:Name="TxtCurrentProfile" Grid.Column="3"
+                               Text="" Foreground="#E8F0FE" FontSize="13"
+                               FontWeight="SemiBold" VerticalAlignment="Center"
+                               Margin="8,0,0,0"/>
+                </Grid>
+            </Border>
+
+            <!-- ═══ Disc Information ═══ -->
+            <Border Classes="Card">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Disc Information" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                          Margin="0,0,0,0">
+                        <TextBlock Text="Status:" Grid.Column="0" Grid.Row="0" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtStatus" Grid.Column="1" Grid.Row="0" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+
+                        <TextBlock Text="State of Last Session:" Grid.Column="0" Grid.Row="1" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtLastSession" Grid.Column="1" Grid.Row="1" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+
+                        <TextBlock Text="Erasable:" Grid.Column="0" Grid.Row="2" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtErasable" Grid.Column="1" Grid.Row="2" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+
+                        <TextBlock Text="Sessions:" Grid.Column="0" Grid.Row="3" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4" IsVisible="False"/>
+                        <TextBlock x:Name="TxtSessions" Grid.Column="1" Grid.Row="3" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4" IsVisible="False"/>
+
+                        <TextBlock Text="Sectors:" Grid.Column="0" Grid.Row="4" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtSectors" Grid.Column="1" Grid.Row="4" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+
+                        <TextBlock Text="Size:" Grid.Column="0" Grid.Row="5" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtSize" Grid.Column="1" Grid.Row="5" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+
+                        <TextBlock Text="Time:" Grid.Column="0" Grid.Row="6" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtTime" Grid.Column="1" Grid.Row="6" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+
+                        <!-- Free / Blank media fields (hidden when not blank) -->
+                        <TextBlock Text="Free Sectors:" Grid.Column="0" Grid.Row="7" x:Name="LblFreeSectors"
+                                   Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4" IsVisible="False"/>
+                        <TextBlock x:Name="TxtFreeSectors" Grid.Column="1" Grid.Row="7"
+                                   Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4" IsVisible="False"/>
+
+                        <TextBlock Text="Free Space:" Grid.Column="0" Grid.Row="8" x:Name="LblFreeSpace"
+                                   Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4" IsVisible="False"/>
+                        <TextBlock x:Name="TxtFreeSpace" Grid.Column="1" Grid.Row="8"
+                                   Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4" IsVisible="False"/>
+
+                        <TextBlock Text="Free Time:" Grid.Column="0" Grid.Row="9" x:Name="LblFreeTime"
+                                   Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4" IsVisible="False"/>
+                        <TextBlock x:Name="TxtFreeTime" Grid.Column="1" Grid.Row="9"
+                                   Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4" IsVisible="False"/>
+
+                        <TextBlock Text="Next Writable Address:" Grid.Column="0" Grid.Row="10" x:Name="LblNextWritable"
+                                   Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4" IsVisible="False"/>
+                        <TextBlock x:Name="TxtNextWritable" Grid.Column="1" Grid.Row="10"
+                                   Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4" IsVisible="False"/>
+                    </Grid>
+
+                    <!-- MID -->
+                    <Grid x:Name="PnlMid" ColumnDefinitions="Auto,*" IsVisible="False">
+                        <TextBlock Text="MID:" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtMid" Grid.Column="1" Foreground="#E8F0FE" FontSize="12" TextWrapping="Wrap"/>
+                    </Grid>
+
+                    <!-- Volume / Filesystem -->
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+                        <TextBlock Text="Volume Label:" Grid.Column="0" Grid.Row="0" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtVolumeLabel" Grid.Column="1" Grid.Row="0" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="File System:" Grid.Column="0" Grid.Row="1" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtFileSystem" Grid.Column="1" Grid.Row="1" Foreground="#E8F0FE" FontSize="12"/>
+                    </Grid>
+
+                    <!-- Read Speeds -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Supported Read Speeds:" Foreground="#8EAFC8" FontSize="12"/>
+                        <TextBlock x:Name="TxtReadSpeeds" Text="—" Foreground="#E8F0FE" FontSize="12" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <StackPanel x:Name="PnlCurrentReadSpeed" Spacing="4" IsVisible="False">
+                        <TextBlock Text="Current Read Speed:" Foreground="#8EAFC8" FontSize="12"/>
+                        <TextBlock x:Name="TxtCurrentReadSpeed" Text="" Foreground="#E8F0FE" FontSize="12"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Supported Write Speeds:" Foreground="#8EAFC8" FontSize="12"/>
+                        <TextBlock x:Name="TxtWriteSpeeds" Text="—" Foreground="#E8F0FE" FontSize="12" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ ATIP Information (CD) ═══ -->
+            <Border x:Name="PnlAtip" Classes="Card" IsVisible="False">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="ATIP Information" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+                        <TextBlock Text="Disc ID:" Grid.Column="0" Grid.Row="0" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtAtipDiscId" Grid.Column="1" Grid.Row="0" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Manufacturer:" Grid.Column="0" Grid.Row="1" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtAtipMfg" Grid.Column="1" Grid.Row="1" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Start Time of LeadIn:" Grid.Column="0" Grid.Row="2" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtAtipLeadIn" Grid.Column="1" Grid.Row="2" Foreground="#E8F0FE" FontSize="12"/>
+                    </Grid>
+                    <TextBlock Text="Last Possible Start Time of LeadOut:" Foreground="#8EAFC8" FontSize="12"/>
+                    <TextBlock x:Name="TxtAtipLeadOut" Text="" Foreground="#E8F0FE" FontSize="12"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ TOC Information ═══ -->
+            <Border x:Name="PnlToc" Classes="Card" IsVisible="False">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="TOC Information" Classes="SectionHeader"/>
+                    <TextBox x:Name="TxtTocInfo" Classes="LogBox" Height="100"
+                             IsReadOnly="True" FontFamily="Consolas,Menlo,Courier New"
+                             FontSize="11"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Pre-recorded Information ═══ -->
+            <Border x:Name="PnlPreRecorded" Classes="Card" IsVisible="False">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Pre-recorded Information" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="Auto,*">
+                        <TextBlock Text="Manufacturer ID:" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtPreRecordedMfg" Grid.Column="1" Foreground="#E8F0FE" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Recording Management Area Information ═══ -->
+            <Border x:Name="PnlRma" Classes="Card" IsVisible="False">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Recording Management Area Information" Classes="SectionHeader"/>
+                    <TextBlock x:Name="TxtRmaInfo" Text="" Foreground="#E8F0FE" FontSize="12"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Physical Format Information ═══ -->
+            <Border x:Name="PnlPhysicalFormat" Classes="Card" IsVisible="False">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="Physical Format Information" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                        <TextBlock Text="Book Type:" Grid.Column="0" Grid.Row="0" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtBookType" Grid.Column="1" Grid.Row="0" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Part Version:" Grid.Column="0" Grid.Row="1" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtPartVersion" Grid.Column="1" Grid.Row="1" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Disc Size:" Grid.Column="0" Grid.Row="2" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtDiscSize" Grid.Column="1" Grid.Row="2" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Maximum Read Rate:" Grid.Column="0" Grid.Row="3" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtMaxReadRate" Grid.Column="1" Grid.Row="3" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Number of Layers:" Grid.Column="0" Grid.Row="4" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtNumLayers" Grid.Column="1" Grid.Row="4" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Track Path:" Grid.Column="0" Grid.Row="5" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtTrackPath" Grid.Column="1" Grid.Row="5" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Linear Density:" Grid.Column="0" Grid.Row="6" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtLinearDensity" Grid.Column="1" Grid.Row="6" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Track Density:" Grid.Column="0" Grid.Row="7" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtTrackDensity" Grid.Column="1" Grid.Row="7" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="First Physical Sector of Data Area:" Grid.Column="0" Grid.Row="8" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtDataStart" Grid.Column="1" Grid.Row="8" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Last Physical Sector of Data Area:" Grid.Column="0" Grid.Row="9" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtDataEnd" Grid.Column="1" Grid.Row="9" Foreground="#E8F0FE" FontSize="12"/>
+                    </Grid>
+                    <Grid x:Name="PnlLayerBreak" ColumnDefinitions="Auto,*" IsVisible="False">
+                        <TextBlock Text="Last Physical Sector in Layer 0:" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtLayerBreak" Grid.Column="1" Foreground="#E8F0FE" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Manufacturer Information ═══ -->
+            <Border x:Name="PnlManufacturer" Classes="Card" IsVisible="False">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Manufacturer Information" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+                        <TextBlock Text="Manufacturer ID:" Grid.Column="0" Grid.Row="0" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtMfgId" Grid.Column="1" Grid.Row="0" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Manufacturer Name:" Grid.Column="0" Grid.Row="1" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtMfgName" Grid.Column="1" Grid.Row="1" Foreground="#E8F0FE" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Copyright & Protection ═══ -->
+            <Border x:Name="PnlProtection" Classes="Card" IsVisible="False">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Copyright &amp; Protection Information" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                        <TextBlock Text="Copyright Protection System Type:" Grid.Column="0" Grid.Row="0" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtProtectionType" Grid.Column="1" Grid.Row="0" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Region Management:" Grid.Column="0" Grid.Row="1" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtRegionMask" Grid.Column="1" Grid.Row="1" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="BCA (Burst Cutting Area):" Grid.Column="0" Grid.Row="2" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtBca" Grid.Column="1" Grid.Row="2" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="M-DISC:" Grid.Column="0" Grid.Row="3" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtMDisc" Grid.Column="1" Grid.Row="3" Foreground="#E8F0FE" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ═══ Drive Hardware ═══ -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Drive Hardware Information" Classes="SectionHeader"/>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                        <TextBlock Text="Drive Model:" Grid.Column="0" Grid.Row="0" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtDriveModel" Grid.Column="1" Grid.Row="0" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Firmware Revision:" Grid.Column="0" Grid.Row="1" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtFirmware" Grid.Column="1" Grid.Row="1" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Serial Number:" Grid.Column="0" Grid.Row="2" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtSerial" Grid.Column="1" Grid.Row="2" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Buffer Size:" Grid.Column="0" Grid.Row="3" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,4"/>
+                        <TextBlock x:Name="TxtBuffer" Grid.Column="1" Grid.Row="3" Foreground="#E8F0FE" FontSize="12" Margin="0,0,0,4"/>
+                        <TextBlock Text="Vendor ID:" Grid.Column="0" Grid.Row="4" Foreground="#8EAFC8" FontSize="12" Margin="0,0,12,0"/>
+                        <TextBlock x:Name="TxtVendor" Grid.Column="1" Grid.Row="4" Foreground="#E8F0FE" FontSize="12"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Log -->
+            <Border Classes="Card">
+                <StackPanel Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
+                        <Button x:Name="BtnClearLog" Grid.Column="1" Content="🧹 Clear"
+                                Classes="ActionBtn" Click="OnClearLogClick"/>
+                    </Grid>
+                    <TextBox x:Name="TxtLog" Classes="LogBox" Height="80"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
