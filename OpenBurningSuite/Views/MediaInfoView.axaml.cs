@@ -17,62 +17,12 @@ public partial class MediaInfoView : UserControl
 {
     private readonly DiscDiscoveryService _discovery;
     private List<DiscDrive> _drives = new();
-    private readonly Dictionary<string, ushort> _lastProfile = new();
-    private bool _isProbing;
-    private DispatcherTimer? _pollTimer;
 
     public MediaInfoView()
     {
         InitializeComponent();
         _discovery = new DiscDiscoveryService();
         RefreshDrives();
-        StartMediaPolling();
-    }
-
-    private void StartMediaPolling()
-    {
-        _pollTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
-        _pollTimer.Tick += async (_, _) => await PollMediaChanges();
-        _pollTimer.Start();
-    }
-
-    private async Task PollMediaChanges()
-    {
-        if (_isProbing) return;
-        if (_drives.Count == 0) return;
-
-        var idx = CmbDriveSel.SelectedIndex;
-        if (idx < 0 || idx >= _drives.Count) return;
-
-        var drive = _drives[idx];
-        if (string.IsNullOrEmpty(drive.DevicePath)) return;
-
-        ushort currentProfile = 0;
-        try
-        {
-            using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath);
-            for (int i = 0; i < 2; i++)
-                optDrive.TestUnitReady();
-            currentProfile = optDrive.GetCurrentProfile();
-        }
-        catch
-        {
-            return;
-        }
-
-        string key = drive.DevicePath;
-
-        if (!_lastProfile.TryGetValue(key, out var lastProfile))
-        {
-            _lastProfile[key] = currentProfile;
-            return;
-        }
-
-        if (lastProfile != currentProfile)
-        {
-            _lastProfile[key] = currentProfile;
-            await Dispatcher.UIThread.InvokeAsync(() => ProbeMedia(drive));
-        }
     }
 
     private void OnRefreshClick(object? sender, RoutedEventArgs e) => RefreshDrives();
@@ -124,7 +74,6 @@ public partial class MediaInfoView : UserControl
             return;
         }
 
-        _isProbing = true;
         Log($"🔍 Probing media in {drive.DisplayName}...");
         SetMediaStatus("Probing...", "#FF8C00");
         ClearInfo("Probing...");
@@ -153,20 +102,17 @@ public partial class MediaInfoView : UserControl
                         if (profile == 0)
                         {
                             drive.Status = "No Media";
-                            _lastProfile[drive.DevicePath] = 0;
                             return new MediaInfoData();
                         }
                     }
 
                     profile = optDrive.GetCurrentProfile();
-                    _lastProfile[drive.DevicePath] = profile;
                     drive.Status = "Ready";
                     return MediaInfoService.ProbeMedia(optDrive, drive);
                 }
                 catch (Exception ex)
                 {
                     System.Diagnostics.Debug.WriteLine($"ProbeMedia failed: {ex.Message}");
-                    _lastProfile[drive.DevicePath] = 0;
                     return new MediaInfoData();
                 }
             });
@@ -182,10 +128,6 @@ public partial class MediaInfoView : UserControl
         {
             Log($"❌ Probe failed: {ex.Message}");
             ClearInfo("Probe failed");
-        }
-        finally
-        {
-            _isProbing = false;
         }
     }
 
