@@ -3147,6 +3147,80 @@ public sealed class OpticalDrive : IDisposable
     }
 
     /// <summary>
+    /// Reads the manufacturer ID string from the disc using READ DISC STRUCTURE.
+    /// For DVD media, uses format 0x04 (Manufacturer Information).
+    /// For BD media, uses format 0x06 (Media Identifier).
+    /// Returns the manufacturer ID string, or null on failure.
+    /// </summary>
+    public string? ReadManufacturerId(byte formatCode)
+    {
+        try
+        {
+            var (result, data) = ReadDiscStructure(0, 0, formatCode, 2052);
+            if (!result.Success || result.DataTransferred < 8)
+                return null;
+
+            var dataLen = (data[0] << 8) | data[1];
+            if (dataLen < 4) return null;
+
+            int stringLen = Math.Min(dataLen, result.DataTransferred - 4);
+            stringLen = Math.Min(stringLen, data.Length - 4);
+            if (stringLen <= 0) return null;
+
+            return System.Text.Encoding.ASCII.GetString(data, 4, stringLen).TrimEnd('\0', ' ');
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Reads disc information with extended allocation (65534 bytes).
+    /// Returns more detailed information including disc type identification
+    /// and additional status fields compared to ReadDiscInfo().
+    /// </summary>
+    public DiscInfoData? ReadDiscInformationEx()
+    {
+        var cmd = new ScsiCommand(
+            MmcCommands.BuildReadDiscInfo(65534),
+            ScsiDataDirection.In, 65534);
+        var result = _transport.Execute(cmd);
+        if (!result.Success || result.DataTransferred < 34)
+            return null;
+
+        var data = cmd.DataBuffer;
+        var freeSectors = 0u;
+        var nextWritable = 0u;
+        byte sessionsMsb = 0;
+        byte tracksMsb = 0;
+
+        if (result.DataTransferred >= 38)
+        {
+            freeSectors = MmcCommands.ReadBE32(data, 16);
+            nextWritable = MmcCommands.ReadBE32(data, 12);
+            sessionsMsb = data[33];
+            tracksMsb = data[34];
+        }
+
+        return new DiscInfoData
+        {
+            DiscStatus = (byte)(data[2] & 0x03),
+            LastSessionState = (byte)((data[2] >> 2) & 0x03),
+            Erasable = (data[2] & 0x10) != 0,
+            NumberOfFirstTrack = data[3],
+            NumberOfSessionsLsb = data[4],
+            FirstTrackInLastSessionLsb = data[5],
+            LastTrackInLastSessionLsb = data[6],
+            DiscType = data[8],
+            FreeSectors = freeSectors,
+            NextWritableAddress = nextWritable,
+            NumberOfSessionsMsb = sessionsMsb,
+            NumberOfTracksMsb = tracksMsb,
+        };
+    }
+
+    /// <summary>
     /// Sends OPC table data to the drive for optimized laser power calibration.
     /// The OPC table contains speed/power pairs that the drive uses to optimize
     /// write quality for the specific media inserted. This is typically used for

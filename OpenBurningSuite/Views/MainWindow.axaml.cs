@@ -98,6 +98,9 @@ public partial class MainWindow : Window
         TxtStatus.Text = "Ready — select an action to get started.";
     }
 
+    private void OnDiscInfoClick(object? sender, RoutedEventArgs e) =>
+        SetActiveView(BtnDiscInfo, ViewDiscInfo, "Disc Information");
+
     private void OnDiscoverClick(object? sender, RoutedEventArgs e) =>
         SetActiveView(BtnDiscover, ViewDiscover, "Discover Drives & Media");
 
@@ -181,6 +184,7 @@ public partial class MainWindow : Window
     private void HideAllViews()
     {
         HomeScreen.IsVisible   = false;
+        ViewDiscInfo.IsVisible = false;
         ViewDiscover.IsVisible = false;
         ViewRead.IsVisible     = false;
         ViewBuild.IsVisible    = false;
