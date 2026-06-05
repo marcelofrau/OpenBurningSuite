@@ -45,26 +45,127 @@ public class DiscInfoService
                     result.MediaType = mDiscType;
             }
 
+            try
+            {
+                // Raw hex dump of READ DISC INFO (34-byte allocation)
+                var rawDiscInfoCmd = new ScsiCommand(
+                    MmcCommands.BuildReadDiscInfo(34),
+                    ScsiDataDirection.In, 34);
+                var rawDiscInfoResult = drive.ExecuteRaw(rawDiscInfoCmd);
+                string hex = rawDiscInfoResult.Success
+                    ? BitConverter.ToString(rawDiscInfoCmd.DataBuffer, 0,
+                        Math.Min(rawDiscInfoResult.DataTransferred, 34))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"RAW READ DISC INFO (34): Success={rawDiscInfoResult.Success}" +
+                    $" dt={rawDiscInfoResult.DataTransferred} [{hex}]");
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW READ DISC INFO exception: {ex.Message}");
+            }
+
+            try
+            {
+                // Raw hex dump of READ DISC STRUCTURE format 0x04 (Manufacturer / MID)
+                // Try mediaType=0 (common) first, then mediaType=1 (DVD-RW/-R)
+                for (byte mt = 0; mt <= 1; mt++)
+                {
+                    var (scsiRes, midData) = drive.ReadDiscStructure(mt, 0,
+                        MmcCommands.DiscStructureFormatManufacturer, 256);
+                    string midHex = scsiRes.Success
+                        ? BitConverter.ToString(midData, 0, Math.Min(scsiRes.DataTransferred, 32))
+                        : "(SCSI failed)";
+                    result.DebugLog.Add($"RAW MANUFACTURER ID (mt={mt}): Success={scsiRes.Success}" +
+                        $" dt={scsiRes.DataTransferred} [{midHex}]");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW MANUFACTURER ID exception: {ex.Message}");
+            }
+
+            try
+            {
+                // Raw hex dump of READ DISC STRUCTURE format 0x0D (RMA)
+                var rmaCmd = new ScsiCommand(
+                    MmcCommands.BuildReadDiscStructure(0, 0,
+                        MmcCommands.DiscStructureFormatRma, 2052),
+                    ScsiDataDirection.In, 2052) { TimeoutMs = 10_000 };
+                var rmaResult = drive.ExecuteRaw(rmaCmd);
+                string rmaHex = rmaResult.Success
+                    ? BitConverter.ToString(rmaCmd.DataBuffer, 0,
+                        Math.Min(rmaResult.DataTransferred, 64))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"RAW RMA (0x0D): Success={rmaResult.Success}" +
+                    $" dt={rmaResult.DataTransferred} [{rmaHex}]");
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW RMA exception: {ex.Message}");
+            }
+
+            try
+            {
+                // Raw hex dump of READ TRACK INFO for track 1
+                var rawTrk1Cmd = new ScsiCommand(
+                    MmcCommands.BuildReadTrackInfo(1),
+                    ScsiDataDirection.In, 48);
+                var rawTrk1Result = drive.ExecuteRaw(rawTrk1Cmd);
+                string trk1Hex = rawTrk1Result.Success
+                    ? BitConverter.ToString(rawTrk1Cmd.DataBuffer, 0,
+                        Math.Min(rawTrk1Result.DataTransferred, 48))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"RAW READ TRACK INFO (1): Success={rawTrk1Result.Success}" +
+                    $" dt={rawTrk1Result.DataTransferred} [{trk1Hex}]");
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW READ TRACK INFO (1) exception: {ex.Message}");
+            }
+
             var discInfo = drive.ReadDiscInformationEx();
             if (discInfo != null)
             {
-                result.DebugLog.Add($"ReadDiscInformationEx: OK, DiscStatus={discInfo.DiscStatus}" +
+                result.DebugLog.Add($"ReadDiscInformationEx: OK," +
+                    $" DiscStatus={discInfo.DiscStatus}" +
                     $" LastSessionState={discInfo.LastSessionState} Sessions={discInfo.NumberOfSessions}" +
                     $" FreeSectors={discInfo.FreeSectors} NWA={discInfo.NextWritableAddress}");
-                result.DiscStatus = discInfo.DiscStatusString;
-                result.LastSessionState = discInfo.LastSessionState switch
+            }
+            else
+            {
+                result.DebugLog.Add("ReadDiscInformationEx: returned NULL");
+            }
+
+            // Fallback: ReadTrackInfo(0xFF) for FreeSectors/NWA if ReadDiscInfo
+            // didn't return them (some drives don't report extended fields for DVD/BD).
+            if (result.FreeSectors == 0 && (OpticalDrive.IsProfileDvd(profile) || profile >= 0x0040))
+            {
+                try
                 {
-                    0 => "Empty",
-                    1 => "Incomplete",
-                    3 => "Complete",
-                    _ => "Other"
-                };
-                result.IsErasable = discInfo.Erasable;
-                result.Sessions = discInfo.NumberOfSessions;
-                result.FreeSectors = discInfo.FreeSectors;
-                result.NextWritableAddress = discInfo.NextWritableAddress;
-                result.FreeBytes = discInfo.FreeSectors * 2048L;
-                result.FreeTimeFormatted = SectorsToMsf(discInfo.FreeSectors);
+                    var ti = drive.ReadTrackInfo(0xFF);
+                    if (ti != null)
+                    {
+                        result.DebugLog.Add($"ReadTrackInfo(0xFF) parsed: FreeBlocks={ti.FreeBlocks}" +
+                            $" NWA={ti.NextWritableAddress} NwaValid={ti.NwaValid}" +
+                            $" TrackSize={ti.TrackSize} LRA={ti.LastRecordedAddress}");
+                        if (result.FreeSectors == 0 && ti.FreeBlocks > 0)
+                        {
+                            result.FreeSectors = ti.FreeBlocks;
+                            result.FreeBytes = ti.FreeBlocks * 2048L;
+                            result.FreeTimeFormatted = SectorsToMsf(ti.FreeBlocks);
+                        }
+                        if (result.NextWritableAddress == 0 && ti.NwaValid)
+                            result.NextWritableAddress = ti.NextWritableAddress;
+                    }
+                    else
+                    {
+                        result.DebugLog.Add("ReadTrackInfo(0xFF) parsed: returned NULL");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result.DebugLog.Add($"ReadTrackInfo(0xFF) exception: {ex.Message}");
+                }
             }
             else
             {
