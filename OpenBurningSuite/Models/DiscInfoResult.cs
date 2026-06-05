@@ -43,6 +43,10 @@ public class DiscInfoResult
     public Native.Optical.TocData? Toc { get; set; }
     public List<Native.Optical.TrackInfoData> TrackInfos { get; set; } = new();
 
+    /// <summary>Data modes from READ HEADER command (keyed by track number).
+    /// Needed because ReadTrackInfo may return DataMode=0 for pressed CD-ROMs.</summary>
+    public Dictionary<ushort, byte> TrackDataModes { get; set; } = new();
+
     // --- Totals (computed from TOC LeadOut) ---
     public long TotalSectors { get; set; }
     public long DiscSizeBytes { get; set; }

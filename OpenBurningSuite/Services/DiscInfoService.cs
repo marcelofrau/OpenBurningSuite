@@ -90,6 +90,39 @@ public class DiscInfoService
                     }
                     catch { }
                 }
+
+                // Fix up DataMode for pressed CD-ROMs where ReadTrackInfo returns 0.
+                if (profile is >= 0x0008 and <= 0x000B && result.TrackInfos.Count > 0)
+                {
+                    // Method 1: READ HEADER (44h) on the track's start LBA
+                    foreach (var ti in result.TrackInfos.Where(t => t.TrackNumber <= 0x99 && t.DataMode == 0))
+                    {
+                        try
+                        {
+                            var header = drive.ReadHeader(ti.TrackStartAddress);
+                            if (header != null && (header.DataMode == 1 || header.DataMode == 2))
+                                result.TrackDataModes[ti.TrackNumber] = header.DataMode;
+                        }
+                        catch { }
+                    }
+
+                    // Method 2: Full TOC disc type (PSec of A0h entry, bit 4 = Mode 2 / XA)
+                    if (result.TrackDataModes.Count == 0)
+                    {
+                        try
+                        {
+                            var fullToc = drive.ReadFullToc();
+                            var a0 = fullToc?.FirstOrDefault(e => e.Point == 0xA0);
+                            if (a0 != null && (a0.PSec & 0x10) != 0)
+                            {
+                                foreach (var entry in toc.Entries.Where(e =>
+                                    e.TrackNumber <= 0x99 && e.IsData))
+                                    result.TrackDataModes[entry.TrackNumber] = 2;
+                            }
+                        }
+                        catch { }
+                    }
+                }
             }
 
             try

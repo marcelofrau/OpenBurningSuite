@@ -276,13 +276,30 @@ public partial class DiscInfoView : UserControl
                 }
                 else
                 {
+                    // Use READ HEADER DataMode first, then TrackInfo DataMode, then fallback
+                    byte dataMode = 0;
+                    if (r.TrackDataModes.TryGetValue(entry.TrackNumber, out var dm))
+                        dataMode = dm;
+                    else
+                        dataMode = r.TrackInfos.FirstOrDefault(ti => ti.TrackNumber == entry.TrackNumber)?.DataMode ?? 0;
+
                     string mode = entry.IsData
-                        ? ((entry.Control & 0x0F) switch
+                        ? (dataMode switch
                         {
-                            0x04 => "Mode 1",
-                            0x05 => "Mode 2, Form 1",
-                            0x06 => "Mode 2, Form 2",
-                            _ => $"Data (Control=0x{entry.Control:X})"
+                            1 => "Mode 1",
+                            2 => "Mode 2, Form 1",
+                            _ => (entry.Adr switch
+                            {
+                                1 => "Mode 1",
+                                4 => "Mode 2, Form 1",
+                                _ => ((entry.Control & 0x0F) switch
+                                {
+                                    0x04 => "Mode 1",
+                                    0x05 => "Mode 2, Form 1",
+                                    0x06 => "Mode 2, Form 2",
+                                    _ => $"Data (Control=0x{entry.Control:X})"
+                                })
+                            })
                         })
                         : ((entry.Control & 0x01) switch
                         {
@@ -434,6 +451,14 @@ public partial class DiscInfoView : UserControl
         TxtLog.CaretIndex = TxtLog.Text?.Length ?? 0;
     }
 
+    private static readonly (int X, double Kbps)[] CdDaStandardSpeeds =
+    {
+        (1, 176.4), (2, 352.8), (4, 705.6), (8, 1411.2),
+        (10, 1764), (12, 2116.8), (16, 2822.4), (20, 3528),
+        (24, 4233.6), (32, 5644.8), (40, 7056), (48, 8467.2),
+        (52, 9172.8)
+    };
+
     private static readonly (int X, int Kbps)[] CdStandardSpeeds =
     {
         (1, 150), (2, 300), (4, 600), (8, 1200), (10, 1500), (12, 1800),
@@ -461,6 +486,25 @@ public partial class DiscInfoView : UserControl
         var match = System.Text.RegularExpressions.Regex.Match(speed, @"(\d+)\s*KB/s");
         if (!match.Success || !double.TryParse(match.Groups[1].Value, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var kb))
             return speed;
+
+        // CD drives report speeds using CD-DA reference (176.4 KB/s = 1x),
+        // not CD-ROM data (150 KB/s = 1x). The SCSI GET PERFORMANCE command
+        // returns physical data rate, matching the CD-DA base.
+        if (mediaType.Contains("CD"))
+        {
+            var cdBest = CdDaStandardSpeeds[0];
+            var cdBestDiff = Math.Abs(kb - cdBest.Kbps);
+            foreach (var s in CdDaStandardSpeeds)
+            {
+                var diff = Math.Abs(kb - s.Kbps);
+                if (diff < cdBestDiff)
+                {
+                    cdBestDiff = diff;
+                    cdBest = s;
+                }
+            }
+            return $"{cdBest.X}x ({speed})";
+        }
 
         var table = mediaType switch
         {
