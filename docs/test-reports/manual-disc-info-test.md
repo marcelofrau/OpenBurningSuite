@@ -16,6 +16,7 @@
 | PlayStation 1 - Gran Turismo (pressed) | CD-ROM | ⚠️ Almost OK | Mode 2 / Mode 1 mismatch between TOC and track type — open issue |
 | Verbatim CD-R 52x | CD-R | ✅ OK |    |
 | Xbox 1 - Midtown Madness 3 (pressed) | DVD-ROM | ✅ OK |    |
+| PlayStation 2 - Katamari Damacy JP (pressed) | DVD-ROM | ✅ OK |    |
 
 ## Open Issues
 
