@@ -149,6 +149,7 @@ public static class MmcCommands
     public const byte DiscStructureFormatRamCartridge  = 0x09; // DVD-RAM Medium Status (Cartridge)
     public const byte DiscStructureFormatSpareArea     = 0x0A; // DVD-RAM Spare Area Information
     public const byte DiscStructureFormatRamRecording  = 0x0C; // DVD-RAM Recording Type Information
+    public const byte DiscStructureFormatRma           = 0x0D; // RMA Information (DVD-R/-RW Recording Management Area)
     public const byte DiscStructureFormatPreRecordedLi = 0x0E; // Pre-recorded Information in Lead-in
     public const byte DiscStructureFormatUniqueDiscId  = 0x0F; // DVD-R/-RW Unique Disc Identifier
     public const byte DiscStructureFormatDcb           = 0x30; // Disc Control Block (DCB)

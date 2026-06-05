@@ -1,0 +1,35 @@
+schema: spec-driven
+
+context: |
+  Tech stack: .NET 8, Avalonia UI 11.3.12, C#
+  Project: Open Burning Suite — GUI para gravação/leitura de discos ópticos
+  Domain: Optical media imaging, burning, and verification
+
+  Formats detected by extension (FormatHelper.GetImageType() switch):
+    BIN/CUE, ISO, CHD, NRG, CCD (CloneCD), MDS (Media Descriptor),
+    GDI (Dreamcast), WBFS (Wii), WIA/RAW (internal), C2D (WinOnCD),
+    PDI (InstantCopy), CDI (DiscJuggler), B5T/B6T (BlindWrite),
+    LDA/LDC (PlayStation PSP/ISO), E01 (EnCase/FTK), AFF (AFF),
+    DMG (Apple), UIF (MagicISO), DAA (PowerISO), HFS (HFS),
+    WIM (Windows Imaging), VHD (Virtual Hard Disk), VMDK (VMware)
+
+  Parsers are static classes (no interface/abstract), one per format.
+  BIN/CUE is the universal intermediate format.
+  External tools: ffmpeg (VideoTranscoder.cs), chdman (ChdHelper.cs)
+
+  Architecture:
+    - MVVM with Avalonia UI
+    - Views in Views/, ViewModels in ViewModels/, Services in Services/
+    - Models in Models/, Helpers in Helpers/
+    - AppSettings.cs for persistent settings
+
+rules:
+  proposal:
+    - Reference relevant files with path:line_number notation
+    - Include affected files list
+  specs:
+    - Use Given/When/Then for behavioral specs
+    - Organize specs by domain (burning, reading, verification, chd, ui)
+  design:
+    - Note external tool dependencies (ffmpeg, chdman)
+    - Consider cross-platform (Windows/Linux) differences

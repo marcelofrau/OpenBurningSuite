@@ -1,0 +1,120 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="OpenBurningSuite.Views.DiscInfoView"
+             Background="#0C1622">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24" Spacing="16">
+
+            <!-- Header -->
+            <TextBlock Text="Disc Information" Classes="PageTitle"/>
+            <TextBlock Text="Detailed disc and drive information — MID, manufacturer, ATIP, physical format, and speeds."
+                       Classes="PageSubtitle"/>
+
+            <!-- Drive selector -->
+            <Border Classes="Card">
+                <StackPanel Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock Text="Drive Selection" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox x:Name="CmbDriveSel" Grid.Column="1"
+                                  Width="260" Margin="0,0,8,0"
+                                  PlaceholderText="Select drive..."
+                                  SelectionChanged="OnDriveSelectionChanged"
+                                  ToolTip.Tip="Choose an optical drive to inspect"/>
+                        <Button x:Name="BtnRefresh" Grid.Column="2"
+                                Content="&#x1F504;  Refresh"
+                                Classes="ActionBtn" Click="OnRefreshClick"
+                                ToolTip.Tip="Rescan drives and refresh disc information"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Loading indicator -->
+            <Border x:Name="PnlLoading" IsVisible="False" Classes="Card" Padding="16">
+                <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+                    <TextBlock Text="&#x23F3;" FontSize="20" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="TxtLoading" Text="Reading disc information..."
+                               Foreground="#E8F0FE" FontSize="13" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- No Media message -->
+            <Border x:Name="PnlNoMedia" Classes="Card" Padding="24">
+                <StackPanel HorizontalAlignment="Center" Spacing="8">
+                    <TextBlock Text="&#x1F4BF;" FontSize="32" HorizontalAlignment="Center"/>
+                    <TextBlock Text="No Media Detected"
+                               Foreground="#8899AA" FontSize="16" FontWeight="SemiBold"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="Insert a disc into the selected drive, then click Refresh."
+                               Foreground="#667788" FontSize="12"
+                               HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Disc Info text display -->
+            <Border x:Name="PnlInfoDisplay" IsVisible="False" Classes="Card">
+                <StackPanel Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <TextBlock Text="Disc Information" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
+                        <Button x:Name="BtnSaveDiscInfo" Grid.Column="1"
+                                Content="&#x1F4BE;  Save"
+                                Classes="ActionBtn" Click="OnSaveDiscInfoClick"
+                                Margin="0,0,6,0"
+                                ToolTip.Tip="Save disc information to file"/>
+                        <Button x:Name="BtnCopyInfo" Grid.Column="2"
+                                Content="&#x1F4CB;  Copy"
+                                Classes="ActionBtn" Click="OnCopyInfoClick"
+                                ToolTip.Tip="Copy all displayed information to clipboard"/>
+                    </Grid>
+                    <TextBox x:Name="TxtDiscInfo"
+                             Classes="LogBox"
+                             Height="380"
+                             FontFamily="Consolas,Menlo,Courier New"
+                             FontSize="12"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Log (collapsible) -->
+            <Expander x:Name="ExpLog" IsExpanded="False"
+                      Background="#0C1622"
+                      Foreground="#E8F0FE"
+                      BorderBrush="#1E3450" BorderThickness="1"
+                      CornerRadius="6" Padding="0"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Stretch">
+                <Expander.Header>
+                    <Border Background="Transparent" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="&#x1F4DD;" FontSize="14"/>
+                            <TextBlock Text="Log" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="#E8F0FE"/>
+                        </StackPanel>
+                    </Border>
+                </Expander.Header>
+                <Border Background="#0C1622" Padding="12,8,12,12" HorizontalAlignment="Stretch">
+                    <StackPanel Spacing="8" HorizontalAlignment="Stretch">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <TextBlock Text="Operation Log" Classes="SectionHeader"
+                                       VerticalAlignment="Center"/>
+                            <Button x:Name="BtnSaveLog" Grid.Column="1"
+                                    Content="&#x1F4BE;  Save"
+                                    Classes="ActionBtn" Click="OnSaveLogClick"
+                                    Margin="0,0,6,0"
+                                    ToolTip.Tip="Save log to file"/>
+                            <Button x:Name="BtnClearLog" Grid.Column="2"
+                                    Content="&#x1F9F9;  Clear"
+                                    Classes="ActionBtn" Click="OnClearLogClick"
+                                    ToolTip.Tip="Clear the log output"/>
+                        </Grid>
+                        <TextBox x:Name="TxtLog"
+                                 Classes="LogBox"
+                                 HorizontalAlignment="Stretch"
+                                 Height="300"/>
+                    </StackPanel>
+                </Border>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -34,6 +34,7 @@ public class DiscDrive
 
     // --- Hardware info ---
     public string VendorId { get; set; } = string.Empty;
+    public string BusType { get; set; } = string.Empty;
     public string FirmwareRevision { get; set; } = string.Empty;
     public string SerialNumber { get; set; } = string.Empty;
     public string VendorSpecificInfo { get; set; } = string.Empty;
