@@ -29,7 +29,7 @@ public partial class MainWindow : Window
                 {
                 }
 
-                BtnElevationStatus.ToolTip = new ToolTip { Content = "Elevated (Admin)" };
+                ToolTip.SetTip(ImgElevation, "Elevated (Admin)");
             }
             else
             {
@@ -42,7 +42,7 @@ public partial class MainWindow : Window
                 {
                 }
 
-                BtnElevationStatus.ToolTip = new ToolTip { Content = "Not elevated" };
+                ToolTip.SetTip(ImgElevation, "Not elevated");
             }
 
         // Start on home screen — no nav button active
