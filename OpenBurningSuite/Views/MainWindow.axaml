@@ -434,10 +434,11 @@
                            Text="Ready — select an action to get started."
                            Foreground="#5A7A9A" FontSize="11"
                            VerticalAlignment="Center"/>
-                <TextBlock x:Name="TxtElevation"
-                           Grid.Column="1"
-                           Foreground="#5A7A9A" FontSize="11"
-                           VerticalAlignment="Center"/>
+                <Button x:Name="BtnElevationStatus" Grid.Column="1" Classes="NavBtn" MinWidth="40" MinHeight="24" ToolTip.Tip="Not elevated">
+                    <Image x:Name="ImgElevation" Width="16" Height="16"
+                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-admin-16.png"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
             </Grid>
         </Border>
     </Grid>
