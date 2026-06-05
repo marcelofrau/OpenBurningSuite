@@ -5,3 +5,5 @@ AGENTS.md
 run.ps1
 run.sh
 logs/
+publish/
+*.zip

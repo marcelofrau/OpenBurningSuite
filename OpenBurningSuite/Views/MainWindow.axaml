@@ -60,6 +60,9 @@
                         <Button x:Name="BtnHome" Content="🏠  Home"
                                 Classes="NavBtn" Click="OnHomeClick"
                                 ToolTip.Tip="Home screen — quick access to all features"/>
+                        <Button x:Name="BtnDiscInfo" Content="📋  Disc Info"
+                                Classes="NavBtn" Click="OnDiscInfoClick"
+                                ToolTip.Tip="Detailed disc and drive information — MID, ATIP, physical format, speeds"/>
                         <Button x:Name="BtnDiscover" Content="🔍  Discover"
                                 Classes="NavBtn" Click="OnDiscoverClick"
                                 ToolTip.Tip="Scan for optical drives and probe inserted media"/>
@@ -196,6 +199,19 @@
                                 </StackPanel>
                             </Button>
 
+                            <!-- Disc Info -->
+                            <Button Classes="NavBtn" Margin="0,0,10,10"
+                                    Width="190" Height="100"
+                                    HorizontalContentAlignment="Center"
+                                    Click="OnDiscInfoClick"
+                                    ToolTip.Tip="Detailed disc and drive information — MID, ATIP, physical format, speeds">
+                                <StackPanel HorizontalAlignment="Center" Spacing="6">
+                                    <TextBlock Text="📋" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Disc Info" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
+                                </StackPanel>
+                            </Button>
+
                             <!-- Copy Disc Wizard -->
                             <Button Classes="NavBtn" Margin="0,0,10,10"
                                     Width="190" Height="100"
@@ -323,6 +339,7 @@
                 </ScrollViewer>
 
                 <!-- Actual views (hidden by default, shown on nav) -->
+                <views:DiscInfoView x:Name="ViewDiscInfo" IsVisible="False"/>
                 <views:DiscoverView x:Name="ViewDiscover" IsVisible="False"/>
                 <views:ReadView     x:Name="ViewRead"     IsVisible="False"/>
                 <views:BuildView    x:Name="ViewBuild"    IsVisible="False"/>
