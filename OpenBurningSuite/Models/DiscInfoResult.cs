@@ -55,4 +55,7 @@ public class DiscInfoResult
     // --- Extra ---
     public string PreRecordedManufacturerId { get; set; } = string.Empty;
     public string RecordingManagementArea { get; set; } = string.Empty;
+
+    // --- Debug ---
+    public List<string> DebugLog { get; set; } = new();
 }

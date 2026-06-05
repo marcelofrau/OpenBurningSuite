@@ -423,6 +423,14 @@ public partial class DiscInfoView : UserControl
 
         TxtDiscInfo.Text = sb.ToString();
         Log($"Disc info loaded: {r.MediaType} — {r.ManufacturerName}");
+
+        // Dump debug log to the log panel
+        if (r.DebugLog.Count > 0)
+        {
+            Log("--- DEBUG ---");
+            foreach (var msg in r.DebugLog)
+                Log(msg);
+        }
     }
 
     private static void Indent(StringBuilder sb, string line) =>

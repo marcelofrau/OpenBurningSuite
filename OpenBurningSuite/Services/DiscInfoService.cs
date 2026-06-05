@@ -48,6 +48,9 @@ public class DiscInfoService
             var discInfo = drive.ReadDiscInformationEx();
             if (discInfo != null)
             {
+                result.DebugLog.Add($"ReadDiscInformationEx: OK, DiscStatus={discInfo.DiscStatus}" +
+                    $" LastSessionState={discInfo.LastSessionState} Sessions={discInfo.NumberOfSessions}" +
+                    $" FreeSectors={discInfo.FreeSectors} NWA={discInfo.NextWritableAddress}");
                 result.DiscStatus = discInfo.DiscStatusString;
                 result.LastSessionState = discInfo.LastSessionState switch
                 {
@@ -63,6 +66,10 @@ public class DiscInfoService
                 result.FreeBytes = discInfo.FreeSectors * 2048L;
                 result.FreeTimeFormatted = SectorsToMsf(discInfo.FreeSectors);
             }
+            else
+            {
+                result.DebugLog.Add("ReadDiscInformationEx: returned NULL");
+            }
 
             // Fallback: ReadTrackInfo(0xFF) for FreeSectors/NWA if ReadDiscInfo
             // didn't return them (some drives don't report extended fields for DVD/BD).
@@ -73,6 +80,9 @@ public class DiscInfoService
                     var ti = drive.ReadTrackInfo(0xFF);
                     if (ti != null)
                     {
+                        result.DebugLog.Add($"ReadTrackInfo(0xFF): FreeBlocks={ti.FreeBlocks}" +
+                            $" NWA={ti.NextWritableAddress} NwaValid={ti.NwaValid}" +
+                            $" TrackSize={ti.TrackSize} LRA={ti.LastRecordedAddress}");
                         if (result.FreeSectors == 0 && ti.FreeBlocks > 0)
                         {
                             result.FreeSectors = ti.FreeBlocks;
@@ -82,13 +92,22 @@ public class DiscInfoService
                         if (result.NextWritableAddress == 0 && ti.NwaValid)
                             result.NextWritableAddress = ti.NextWritableAddress;
                     }
+                    else
+                    {
+                        result.DebugLog.Add("ReadTrackInfo(0xFF): returned NULL");
+                    }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    result.DebugLog.Add($"ReadTrackInfo(0xFF) exception: {ex.Message}");
+                }
             }
 
             var toc = drive.ReadToc();
             if (toc != null)
             {
+                result.DebugLog.Add($"ReadToc(): {toc.Entries.Count} entries, " +
+                    $"firstTrack={toc.FirstTrack} lastTrack={toc.LastTrack}");
                 result.Tracks = toc.LastTrack - toc.FirstTrack + 1;
                 result.Toc = toc;
 
@@ -99,6 +118,10 @@ public class DiscInfoService
                     result.TotalSectors = leadOut.StartLba;
                     result.DiscSizeBytes = result.TotalSectors * 2048L;
                     result.TotalTimeFormatted = LbaToMsf((int)result.TotalSectors);
+                }
+                else
+                {
+                    result.DebugLog.Add("ReadToc(): no LeadOut entry found");
                 }
 
                 // Track info for each data/audio track
@@ -113,6 +136,8 @@ public class DiscInfoService
                     catch { }
                 }
 
+                result.DebugLog.Add($"TrackInfos from TOC: {result.TrackInfos.Count} entries");
+
                 // Fallback for DVD-R blank: TOC may have no track entries,
                 // but ReadTrackInfo(1) usually works.
                 if (result.TrackInfos.Count == 0 && OpticalDrive.IsProfileDvd(profile))
@@ -121,9 +146,20 @@ public class DiscInfoService
                     {
                         var ti = drive.ReadTrackInfo(1);
                         if (ti != null)
+                        {
                             result.TrackInfos.Add(ti);
+                            result.DebugLog.Add($"ReadTrackInfo(1): TrackSize={ti.TrackSize}" +
+                                $" LRA={ti.LastRecordedAddress} DataMode={ti.DataMode}");
+                        }
+                        else
+                        {
+                            result.DebugLog.Add("ReadTrackInfo(1): returned NULL");
+                        }
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        result.DebugLog.Add($"ReadTrackInfo(1) exception: {ex.Message}");
+                    }
 
                     // Second fallback: invisible track (0xFF) for DVD-R blank
                     if (result.TrackInfos.Count == 0)
