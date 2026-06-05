@@ -33,6 +33,7 @@ public class DiscInfoResult
 
     // --- Drive ---
     public string Vendor { get; set; } = string.Empty;
+    public string InterfaceType { get; set; } = string.Empty;
     public string DriveModel { get; set; } = string.Empty;
     public string Firmware { get; set; } = string.Empty;
     public string Serial { get; set; } = string.Empty;

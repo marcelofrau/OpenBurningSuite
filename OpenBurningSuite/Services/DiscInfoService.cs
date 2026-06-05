@@ -22,6 +22,7 @@ public class DiscInfoService
             result.Serial = discDrive.SerialNumber;
             result.BufferSizeKiB = discDrive.BufferSizeKiB;
             result.SupportedWriteSpeeds = discDrive.SupportedWriteSpeeds;
+            result.InterfaceType = discDrive.BusType;
         }
         catch
         {
@@ -93,27 +94,8 @@ public class DiscInfoService
 
             try
             {
-                var readSpeeds = new List<string>();
-                var perfCmd = new ScsiCommand(
-                    MmcCommands.BuildGetPerformance(0x03, 0, 0),
-                    ScsiDataDirection.In, 32);
-                var perfResult = drive.ExecuteRaw(perfCmd);
-                if (perfResult.Success && perfResult.DataTransferred >= 12)
-                {
-                    var perfData = perfCmd.DataBuffer;
-                    var numDescriptors = MmcCommands.ReadBE16(perfData, 10);
-                    for (int i = 0; i < numDescriptors && i < 16; i++)
-                    {
-                        int offset = 12 + i * 8;
-                        if (offset + 8 <= perfResult.DataTransferred)
-                        {
-                            uint speedKb = MmcCommands.ReadBE32(perfData, offset + 4);
-                            if (speedKb > 0)
-                                readSpeeds.Add($"{speedKb} KB/s");
-                        }
-                    }
-                }
-                result.SupportedReadSpeeds = readSpeeds;
+                var readSpeedValues = drive.GetSupportedReadSpeeds();
+                result.SupportedReadSpeeds = readSpeedValues.Select(s => $"{s} KB/s").ToList();
             }
             catch
             {
@@ -177,13 +159,13 @@ public class DiscInfoService
             {
                 var mfg = drive.ReadManufacturerId(MmcCommands.DiscStructureFormatManufacturer);
                 if (!string.IsNullOrWhiteSpace(mfg))
-                    return mfg.Trim();
+                    return SanitizeMid(mfg.Trim());
             }
             else if (profile >= 0x0040)
             {
                 var mfg = drive.ReadManufacturerId(MmcCommands.DiscStructureFormatMediaId);
                 if (!string.IsNullOrWhiteSpace(mfg))
-                    return mfg.Trim();
+                    return SanitizeMid(mfg.Trim());
             }
         }
         catch
@@ -191,6 +173,27 @@ public class DiscInfoService
         }
 
         return string.Empty;
+    }
+
+    /// <summary>
+    /// Strips non-printable/non-ASCII characters from a raw MID string.
+    /// DVD-ROM pressed discs return binary lead-in data, not clean ASCII text.
+    /// </summary>
+    private static string SanitizeMid(string raw)
+    {
+        if (string.IsNullOrWhiteSpace(raw))
+            return raw;
+
+        var chars = new System.Collections.Generic.List<char>(raw.Length);
+        foreach (var c in raw)
+        {
+            if (c >= 0x20 && c <= 0x7E)
+                chars.Add(c);
+        }
+
+        var result = new string(chars.ToArray());
+        // If after sanitizing we have very little, return empty
+        return result.Length >= 3 ? result : string.Empty;
     }
 
     private static AtipInfo? ReadAtipInfo(OpticalDrive drive)
@@ -263,9 +266,11 @@ public class DiscInfoService
 
                 var info = new PhysicalFormatInfo
                 {
+                    LayerNumber = layer,
                     BookType = ParseBookType((byte)((data[4] >> 4) & 0x0F)),
                     PartVersion = data[4] & 0x0F,
                     DiscSize = ParseDiscSize((byte)((data[5] >> 4) & 0x0F)),
+                    MaxReadRateMbps = (data[5] & 0x0F) * 1.12,
                     LayerCount = ((data[6] >> 5) & 0x03) + 1,
                     TrackPath = (data[6] & 0x10) != 0 ? "Opposite Track Path (OTP)" : "Parallel Track Path (PTP)",
                     LinearDensity = (data[7] >> 4) switch

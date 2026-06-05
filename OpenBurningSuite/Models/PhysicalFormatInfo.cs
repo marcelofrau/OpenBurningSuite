@@ -5,6 +5,7 @@ namespace OpenBurningSuite.Models;
 
 public class PhysicalFormatInfo
 {
+    public int LayerNumber { get; set; }
     public string BookType { get; set; } = string.Empty;
     public int PartVersion { get; set; }
     public string DiscSize { get; set; } = string.Empty;
@@ -15,4 +16,5 @@ public class PhysicalFormatInfo
     public long FirstPhysicalSector { get; set; }
     public long LastPhysicalSector { get; set; }
     public long LastSectorLayer0 { get; set; }
+    public double MaxReadRateMbps { get; set; }
 }

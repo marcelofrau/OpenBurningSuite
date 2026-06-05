@@ -184,88 +184,95 @@ public partial class DiscInfoView : UserControl
         var readSpeeds = r.SupportedReadSpeeds.Count > 0
             ? string.Join("; ", r.SupportedReadSpeeds.Select(s => FormatSpeedWithX(s, r.MediaType))) : null;
 
-        var writeSpeeds = r.SupportedWriteSpeeds.Count > 0
+        bool isRomMedia = r.MediaType.Contains("ROM");
+
+        var writeSpeeds = (!isRomMedia && r.SupportedWriteSpeeds.Count > 0)
             ? string.Join("; ", r.SupportedWriteSpeeds.OrderBy(x => x).Select(s => FormatSpeedWithX(s, r.MediaType))) : null;
 
         var sb = new StringBuilder();
 
-        // Header: drive model + firmware
+        // Header: drive model + firmware + interface type
+        var interfaceTag = !string.IsNullOrWhiteSpace(r.InterfaceType) ? $" ({r.InterfaceType})" : "";
         if (!string.IsNullOrWhiteSpace(r.DriveModel))
-            sb.AppendLine($"{r.DriveModel} {r.Firmware}");
+            sb.AppendLine($"{r.DriveModel} {r.Firmware}{interfaceTag}");
         else if (!string.IsNullOrWhiteSpace(r.Vendor))
-            sb.AppendLine($"{r.Vendor} {r.Firmware}");
+            sb.AppendLine($"{r.Vendor} {r.Firmware}{interfaceTag}");
 
         sb.AppendLine($"Disc Type: {r.MediaType}");
         sb.AppendLine();
         sb.AppendLine("Disc Information:");
-        sb.AppendLine("-----------------------------------------");
-        sb.AppendLine($"Status: {r.DiscStatus}");
+        Indent(sb, $"Status: {r.DiscStatus}");
 
         if (r.LastSessionState != "Empty")
-            sb.AppendLine($"State of Last Session: {r.LastSessionState}");
+            Indent(sb, $"State of Last Session: {r.LastSessionState}");
 
-        sb.AppendLine($"Erasable: {(r.IsErasable ? "Yes" : "No")}");
+        Indent(sb, $"Erasable: {(r.IsErasable ? "Yes" : "No")}");
 
         if (r.DiscStatus != "Empty")
-            sb.AppendLine($"Finalized: {finalizedStatus}");
+            Indent(sb, $"Finalized: {finalizedStatus}");
 
         if (r.Sessions > 0)
-            sb.AppendLine($"Sessions: {r.Sessions}");
+            Indent(sb, $"Sessions: {r.Sessions}");
 
         // Sectors / Size / Time (for finalized or complete discs)
         if (r.TotalSectors > 0)
         {
-            sb.AppendLine($"Sectors: {r.TotalSectors:N0}");
-            sb.AppendLine($"Size: {r.DiscSizeBytes:N0} bytes");
-            sb.AppendLine($"Time: {r.TotalTimeFormatted}");
+            Indent(sb, $"Sectors: {r.TotalSectors:N0}");
+            Indent(sb, $"Size: {FormatHelper.FormatBytes(r.DiscSizeBytes)} ({r.DiscSizeBytes:N0} bytes)");
+            Indent(sb, $"Time: {r.TotalTimeFormatted}");
         }
 
         if (!string.IsNullOrWhiteSpace(r.Mid))
-            sb.AppendLine($"MID: {r.Mid}{(string.IsNullOrWhiteSpace(r.ManufacturerName) ? "" : $" ({r.ManufacturerName})")}");
+            Indent(sb, $"MID: {r.Mid}{(string.IsNullOrWhiteSpace(r.ManufacturerName) ? "" : $" ({r.ManufacturerName})")}");
 
         if (!string.IsNullOrWhiteSpace(r.ManufacturerName) && r.ManufacturerName != r.Mid)
-            sb.AppendLine($"Manufacturer: {r.ManufacturerName}");
+            Indent(sb, $"Manufacturer: {r.ManufacturerName}");
 
         if (r.FreeBytes > 0)
-            sb.AppendLine($"Free Space: {FormatHelper.FormatBytes(r.FreeBytes)}");
+            Indent(sb, $"Free Space: {FormatHelper.FormatBytes(r.FreeBytes)}");
 
         if (!string.IsNullOrWhiteSpace(r.FreeTimeFormatted) && r.FreeSectors > 0)
-            sb.AppendLine($"Free Time: {r.FreeTimeFormatted}");
+            Indent(sb, $"Free Time: {r.FreeTimeFormatted}");
 
         if (r.NextWritableAddress > 0)
-            sb.AppendLine($"Next Writable Address: {r.NextWritableAddress}");
+            Indent(sb, $"Next Writable Address: {r.NextWritableAddress}");
 
         // ATIP fields merged inline
         if (r.Atip != null)
         {
             if (!string.IsNullOrWhiteSpace(r.Atip.LeadInStart))
-                sb.AppendLine($"Start Time of LeadIn: {r.Atip.LeadInStart}");
+                Indent(sb, $"Start Time of LeadIn: {r.Atip.LeadInStart}");
             if (!string.IsNullOrWhiteSpace(r.Atip.LeadOutLastPossible))
-                sb.AppendLine($"Last Possible Start Time of LeadOut: {r.Atip.LeadOutLastPossible}");
+                Indent(sb, $"Last Possible Start Time of LeadOut: {r.Atip.LeadOutLastPossible}");
         }
 
         if (readSpeeds != null)
-            sb.AppendLine($"Supported Read Speeds: {readSpeeds}");
+            Indent(sb, $"Supported Read Speeds: {readSpeeds}");
 
         if (!string.IsNullOrWhiteSpace(r.CurrentReadSpeed))
-            sb.AppendLine($"Current Read Speed: {r.CurrentReadSpeed}");
+            Indent(sb, $"Current Read Speed: {r.CurrentReadSpeed}");
 
         if (writeSpeeds != null)
-            sb.AppendLine($"Supported Write Speeds: {writeSpeeds}");
+            Indent(sb, $"Supported Write Speeds: {writeSpeeds}");
 
-        // TOC Information
+        // TOC Information (ImgBurn-style)
         if (r.Toc != null && r.Toc.Entries.Count > 0)
         {
             sb.AppendLine();
             sb.AppendLine("TOC Information:");
-            sb.AppendLine("-----------------------------------------");
 
-            foreach (var entry in r.Toc.Entries)
+            var firstTrack = r.Toc.Entries.FirstOrDefault(e => e.TrackNumber <= 0x99);
+            var firstLba = firstTrack?.StartLba ?? 0;
+            Indent(sb, $"Session 1... (LBA: {firstLba})");
+
+            var entries = r.Toc.Entries;
+            for (int i = 0; i < entries.Count; i++)
             {
-                var msf = LbaToMsfStr((int)entry.StartLba);
+                var entry = entries[i];
+
                 if (entry.TrackNumber == 0xAA)
                 {
-                    sb.AppendLine($"LeadOut  (LBA: {entry.StartLba} / {msf})");
+                    Indent(sb, $"-> LeadOut  (LBA: {entry.StartLba})");
                 }
                 else
                 {
@@ -284,7 +291,26 @@ public partial class DiscInfoView : UserControl
                             _ => "Audio"
                         });
 
-                    sb.AppendLine($"Track {entry.TrackNumber:D2}  ({mode}, LBA: {entry.StartLba} / {msf})");
+                    // Compute end LBA: next entry's LBA - 1, or LeadOut LBA - 1 for last track
+                    uint endLba = 0;
+                    for (int j = i + 1; j < entries.Count; j++)
+                    {
+                        if (entries[j].TrackNumber == 0xAA)
+                        {
+                            endLba = entries[j].StartLba - 1;
+                            break;
+                        }
+                        if (entries[j].TrackNumber != entry.TrackNumber)
+                        {
+                            endLba = entries[j].StartLba - 1;
+                            break;
+                        }
+                    }
+
+                    if (endLba > 0)
+                        Indent(sb, $"-> Track {entry.TrackNumber:D2}  ({mode}, LBA: {entry.StartLba} - {endLba})");
+                    else
+                        Indent(sb, $"-> Track {entry.TrackNumber:D2}  ({mode}, LBA: {entry.StartLba})");
                 }
             }
         }
@@ -294,10 +320,10 @@ public partial class DiscInfoView : UserControl
         {
             sb.AppendLine();
             sb.AppendLine("Track Information:");
-            sb.AppendLine("-----------------------------------------");
+            Indent(sb, "Session 1...");
             foreach (var ti in r.TrackInfos)
             {
-                sb.AppendLine($"Track {ti.TrackNumber:D2} (LTSA: {ti.TrackStartAddress}, LTS: {ti.TrackSize}, LRA: {ti.LastRecordedAddress})");
+                Indent(sb, $"-> Track {ti.TrackNumber:D2} (LTSA: {ti.TrackStartAddress}, LTS: {ti.TrackSize}, LRA: {ti.LastRecordedAddress})");
             }
         }
 
@@ -306,26 +332,42 @@ public partial class DiscInfoView : UserControl
         {
             sb.AppendLine();
             sb.AppendLine("Physical Format Information:");
-            sb.AppendLine("-----------------------------------------");
+
+            PhysicalFormatInfo? prev = null;
             foreach (var f in r.PhysicalFormats)
             {
-                sb.AppendLine($"Book Type: {f.BookType}");
-                sb.AppendLine($"Disc Size: {f.DiscSize}");
-                sb.AppendLine($"Layers: {f.LayerCount}");
-                sb.AppendLine($"Track Path: {f.TrackPath}");
-                sb.AppendLine($"Linear Density: {f.LinearDensity}");
-                sb.AppendLine($"Track Density: {f.TrackDensity}");
-                sb.AppendLine($"First Physical Sector: {f.FirstPhysicalSector}");
-                sb.AppendLine($"Last Physical Sector: {f.LastPhysicalSector}");
+                // Skip layers whose data is identical to the previous (e.g. L0 and L1 often match)
+                if (prev != null && f.BookType == prev.BookType
+                    && f.FirstPhysicalSector == prev.FirstPhysicalSector
+                    && f.LastPhysicalSector == prev.LastPhysicalSector
+                    && f.LastSectorLayer0 == prev.LastSectorLayer0
+                    && f.LinearDensity == prev.LinearDensity
+                    && f.TrackDensity == prev.TrackDensity)
+                {
+                    prev = f;
+                    continue;
+                }
+
+                Indent(sb, $"Book Type: {f.BookType}");
+                Indent(sb, $"Part Version: {f.PartVersion}");
+                Indent(sb, $"Disc Size: {f.DiscSize}");
+                if (f.MaxReadRateMbps > 0)
+                    Indent(sb, $"Maximum Read Rate: {f.MaxReadRateMbps:F2} Mbps");
+                Indent(sb, $"Number of Layers: {f.LayerCount}");
+                Indent(sb, $"Track Path: {f.TrackPath}");
+                Indent(sb, $"Linear Density: {f.LinearDensity}");
+                Indent(sb, $"Track Density: {f.TrackDensity}");
+                Indent(sb, $"First Physical Sector of Data Area: {f.FirstPhysicalSector:N0}");
+                Indent(sb, $"Last Physical Sector of Data Area: {f.LastPhysicalSector:N0}");
                 if (f.LastSectorLayer0 > 0 && f.LayerCount > 1)
-                    sb.AppendLine($"Last Sector of Layer 0: {f.LastSectorLayer0}");
+                    Indent(sb, $"Last Physical Sector in Layer 0: {f.LastSectorLayer0:N0}");
+                prev = f;
             }
         }
 
         // Drive Info
         sb.AppendLine();
-        sb.AppendLine("Drive Info");
-        sb.AppendLine("-----------------------------------------");
+        sb.AppendLine("Drive Info:");
 
         var vendorModel = "";
         if (!string.IsNullOrWhiteSpace(r.Vendor))
@@ -333,7 +375,7 @@ public partial class DiscInfoView : UserControl
         if (!string.IsNullOrWhiteSpace(r.DriveModel))
             vendorModel += (vendorModel.Length > 0 ? "; " : "") + $"Model: {r.DriveModel}";
         if (vendorModel.Length > 0)
-            sb.AppendLine(vendorModel);
+            Indent(sb, vendorModel);
 
         var fwBuffer = "";
         if (!string.IsNullOrWhiteSpace(r.Firmware))
@@ -341,14 +383,17 @@ public partial class DiscInfoView : UserControl
         if (r.BufferSizeKiB > 0)
             fwBuffer += (fwBuffer.Length > 0 ? "; " : "") + $"Buffer Size: {r.BufferSizeKiB} KiB";
         if (fwBuffer.Length > 0)
-            sb.AppendLine(fwBuffer);
+            Indent(sb, fwBuffer);
 
         if (!string.IsNullOrWhiteSpace(r.Serial))
-            sb.AppendLine($"Serial: {r.Serial}");
+            Indent(sb, $"Serial: {r.Serial}");
 
         TxtDiscInfo.Text = sb.ToString();
         Log($"Disc info loaded: {r.MediaType} — {r.ManufacturerName}");
     }
+
+    private static void Indent(StringBuilder sb, string line) =>
+        sb.AppendLine($"  {line}");
 
     private static string LbaToMsfStr(int lba)
     {

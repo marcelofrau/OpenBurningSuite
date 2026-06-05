@@ -199,6 +199,10 @@ public static partial class NativeDeviceDiscovery
                         drive.DriveModel = nativeModel;
                 }
 
+                // Query bus type (USB, SATA, etc.)
+                if (string.IsNullOrEmpty(drive.BusType))
+                    drive.BusType = QueryBusType(di.Name);
+
                 // Determine drive type string from capabilities
                 if (string.IsNullOrEmpty(drive.DriveType) || drive.DriveType == "CD/DVD")
                     drive.DriveType = DetermineWindowsDriveType(drive);
@@ -1043,6 +1047,66 @@ public static partial class NativeDeviceDiscovery
             System.Diagnostics.Debug.WriteLine(
                 $"[NativeDeviceDiscovery] IOCTL_STORAGE_QUERY_PROPERTY failed for {drivePath}: {ex.Message}");
             return null;
+        }
+    }
+
+    /// <summary>
+    /// Queries the storage bus type (USB, SATA, ATAPI, etc.) for a drive letter.
+    /// Uses IOCTL_STORAGE_QUERY_PROPERTY with StorageDeviceDescriptor.
+    /// Bus type is at offset 24 (STORAGE_BUS_TYPE enum).
+    /// Returns empty string on failure.
+    /// </summary>
+    public static string QueryBusType(string drivePath)
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows) || string.IsNullOrWhiteSpace(drivePath))
+            return string.Empty;
+
+        try
+        {
+            var winPath = drivePath;
+            if (drivePath.Length >= 2 && drivePath[1] == ':')
+                winPath = $@"\\.\{drivePath[0]}:";
+
+            using var handle = StorageCreateFile(
+                winPath, 0,
+                1 | 2,
+                IntPtr.Zero, 3,
+                0x80,
+                IntPtr.Zero);
+
+            if (handle.IsInvalid)
+                return string.Empty;
+
+            var query = new byte[12];
+            query[0] = 0; // StorageDeviceProperty
+            query[4] = 0; // PropertyStandardQuery
+
+            var output = new byte[1024];
+            if (!StorageDeviceIoControl(handle, IOCTL_STORAGE_QUERY_PROPERTY,
+                    query, (uint)query.Length,
+                    output, (uint)output.Length,
+                    out var bytesReturned, IntPtr.Zero))
+                return string.Empty;
+
+            if (bytesReturned < 28)
+                return string.Empty;
+
+            return (output[24]) switch
+            {
+                5 => "USB",
+                9 => "SATA",
+                2 => "ATAPI",
+                1 => "SCSI",
+                7 => "iSCSI",
+                8 => "SAS",
+                4 => "IEEE 1394",
+                10 => "NVMe",
+                _ => string.Empty
+            };
+        }
+        catch
+        {
+            return string.Empty;
         }
     }
 }
