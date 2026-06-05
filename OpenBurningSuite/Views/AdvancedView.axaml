@@ -25,8 +25,8 @@
                                 Margin="6,0,0,0" Click="OnRefreshDrivesClick"
                                 ToolTip.Tip="Refresh the list of available drives" MinWidth="32" MinHeight="32">
                             <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-advanced-16.png"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
                     </Grid>
                 </StackPanel>
@@ -74,7 +74,7 @@
                                 ToolTip.Tip="Quick blank only clears TOC — fast but data may be recoverable">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lightning-bolt-3d-16.png"/>
+                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-quick-blank-16.png"/>
                                 <TextBlock Text="Quick Blank" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
@@ -83,7 +83,7 @@
                                 ToolTip.Tip="Full blank overwrites entire disc — slower but more thorough">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-full-blank-16.png"/>
                                 <TextBlock Text="Full Blank" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
@@ -104,7 +104,7 @@
                                 ToolTip.Tip="Quick format — prepares disc for use without full surface certification">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lightning-bolt-3d-16.png"/>
+                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-quick-format-16.png"/>
                                 <TextBlock Text="Quick Format" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
@@ -113,7 +113,7 @@
                                 ToolTip.Tip="Full format with certification — slower but ensures disc integrity">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-full-format-16.png"/>
                                 <TextBlock Text="Full Format" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
