@@ -457,6 +457,48 @@ public partial class GameWizardView : UserControl
         GameSummaryContent.Children.Add(sp);
     }
 
+    private void AddSummaryLine(string iconKey, string label, string value)
+    {
+        var sp = new StackPanel { Orientation = Avalonia.Layout.Orientation.Horizontal, Spacing = 8 };
+
+        if (!string.IsNullOrEmpty(iconKey))
+        {
+            var uri = Helpers.IconHelper.GetUri(iconKey, 16);
+            if (uri != null)
+            {
+                try
+                {
+                    var bitmap = new Avalonia.Media.Imaging.Bitmap(Avalonia.Platform.AssetLoader.Open(new Uri(uri)));
+                    sp.Children.Add(new Image
+                    {
+                        Source = bitmap,
+                        Width = 16,
+                        Height = 16,
+                        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
+                    });
+                }
+                catch { }
+            }
+        }
+
+        sp.Children.Add(new TextBlock
+        {
+            Text = label + ":",
+            Foreground = Avalonia.Media.Brush.Parse("#8EAFC8"),
+            FontSize = 12,
+            FontWeight = Avalonia.Media.FontWeight.SemiBold,
+            Width = 180
+        });
+        sp.Children.Add(new TextBlock
+        {
+            Text = value,
+            Foreground = Avalonia.Media.Brush.Parse("#E8F0FE"),
+            FontSize = 12,
+            TextWrapping = Avalonia.Media.TextWrapping.Wrap
+        });
+        GameSummaryContent.Children.Add(sp);
+    }
+
     // -----------------------------------------------------------------------
     // EXECUTE: Burn from Image File
     // -----------------------------------------------------------------------

@@ -15,7 +15,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        TxtElevation.Text = PlatformHelper.IsElevated ? "✅ Elevated" : "⚠ Not elevated";
+        TxtElevation.Text = PlatformHelper.IsElevated ? "Elevated" : "Not elevated";
 
         // Start on home screen — no nav button active
         BtnHome.Classes.Add("Active");

@@ -24,9 +24,11 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="icon.png" />
+    <None Remove="Assets\Icons\**\*.png" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="icon.png" />
+    <AvaloniaResource Include="Assets\Icons\**\*.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
