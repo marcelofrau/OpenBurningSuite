@@ -3186,7 +3186,7 @@ public sealed class OpticalDrive : IDisposable
             MmcCommands.BuildReadDiscInfo(65534),
             ScsiDataDirection.In, 65534);
         var result = _transport.Execute(cmd);
-        if (!result.Success || result.DataTransferred < 34)
+        if (!result.Success || result.DataTransferred < 12)
             return null;
 
         var data = cmd.DataBuffer;
@@ -3195,13 +3195,17 @@ public sealed class OpticalDrive : IDisposable
         byte sessionsMsb = 0;
         byte tracksMsb = 0;
 
-        if (result.DataTransferred >= 20)
+        int dt = result.DataTransferred;
+
+        // NWA (offset 12) and Free Sectors (offset 16) — DVD/BD/HD-DVD
+        if (dt >= 20)
         {
-            freeSectors = MmcCommands.ReadBE32(data, 16);
             nextWritable = MmcCommands.ReadBE32(data, 12);
+            freeSectors = MmcCommands.ReadBE32(data, 16);
         }
 
-        if (result.DataTransferred >= 36)
+        // MSB extensions (offset 33–35) — only present on large allocations
+        if (dt >= 36)
         {
             sessionsMsb = data[33];
             tracksMsb = data[34];

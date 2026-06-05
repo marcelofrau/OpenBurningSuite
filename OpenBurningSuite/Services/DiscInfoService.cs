@@ -64,6 +64,28 @@ public class DiscInfoService
                 result.FreeTimeFormatted = SectorsToMsf(discInfo.FreeSectors);
             }
 
+            // Fallback: ReadTrackInfo(0xFF) for FreeSectors/NWA if ReadDiscInfo
+            // didn't return them (some drives don't report extended fields for DVD/BD).
+            if (result.FreeSectors == 0 && (OpticalDrive.IsProfileDvd(profile) || profile >= 0x0040))
+            {
+                try
+                {
+                    var ti = drive.ReadTrackInfo(0xFF);
+                    if (ti != null)
+                    {
+                        if (result.FreeSectors == 0 && ti.FreeBlocks > 0)
+                        {
+                            result.FreeSectors = ti.FreeBlocks;
+                            result.FreeBytes = ti.FreeBlocks * 2048L;
+                            result.FreeTimeFormatted = SectorsToMsf(ti.FreeBlocks);
+                        }
+                        if (result.NextWritableAddress == 0 && ti.NwaValid)
+                            result.NextWritableAddress = ti.NextWritableAddress;
+                    }
+                }
+                catch { }
+            }
+
             var toc = drive.ReadToc();
             if (toc != null)
             {
@@ -102,6 +124,27 @@ public class DiscInfoService
                             result.TrackInfos.Add(ti);
                     }
                     catch { }
+
+                    // Second fallback: invisible track (0xFF) for DVD-R blank
+                    if (result.TrackInfos.Count == 0)
+                    {
+                        try
+                        {
+                            var ti = drive.ReadTrackInfo(0xFF);
+                            if (ti != null)
+                            {
+                                // Present as track 1 in the display
+                                result.TrackInfos.Add(new TrackInfoData
+                                {
+                                    TrackNumber = 1,
+                                    TrackStartAddress = ti.TrackStartAddress,
+                                    TrackSize = ti.TrackSize,
+                                    LastRecordedAddress = ti.LastRecordedAddress
+                                });
+                            }
+                        }
+                        catch { }
+                    }
                 }
 
                 // Fix up DataMode for pressed CD-ROMs where ReadTrackInfo returns 0.
