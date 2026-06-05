@@ -387,4 +387,36 @@ public static class MediaManufacturerLookup
 
         return mid;
     }
+
+    public static string LookupDvdBdFullMid(string partialMid)
+    {
+        if (string.IsNullOrWhiteSpace(partialMid))
+            return partialMid ?? string.Empty;
+
+        // Exact match first
+        if (DvdBdManufacturers.ContainsKey(partialMid))
+            return partialMid;
+
+        // Prefix: find key that starts with partialMid OR partialMid starts with key
+        // Prefer longest match (most specific)
+        string bestMatch = partialMid;
+        int bestLength = 0;
+
+        foreach (var kvp in DvdBdManufacturers)
+        {
+            int matchLen = 0;
+            if (kvp.Key.StartsWith(partialMid))
+                matchLen = kvp.Key.Length;
+            else if (partialMid.StartsWith(kvp.Key))
+                matchLen = kvp.Key.Length;
+
+            if (matchLen > bestLength)
+            {
+                bestLength = matchLen;
+                bestMatch = kvp.Key;
+            }
+        }
+
+        return bestMatch;
+    }
 }

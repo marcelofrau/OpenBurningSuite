@@ -86,6 +86,49 @@ public class DiscInfoService
 
             try
             {
+                // Raw hex dump of READ DISC STRUCTURE format 0x05 (DVD+RW ADIP / CMI)
+                // MMC-5: format 0x05 returns ADIP data for DVD+RW/+R media including Disc ID.
+                var (adiRes, adiData) = drive.ReadDiscStructure(0, 0, 0x05, 256);
+                string adiHex = adiRes.Success
+                    ? BitConverter.ToString(adiData, 0, Math.Min(adiRes.DataTransferred, 64))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"RAW ADIP (fmt=0x05): Success={adiRes.Success}" +
+                    $" dt={adiRes.DataTransferred} [{adiHex}]");
+                if (adiRes.Success && adiRes.DataTransferred >= 24)
+                {
+                    string discId = System.Text.Encoding.ASCII.GetString(adiData, 8,
+                        Math.Min(16, adiRes.DataTransferred - 8)).TrimEnd('\0', ' ');
+                    result.DebugLog.Add($"ADIP DiscId (bytes 8-23): '{discId}'");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW ADIP (fmt=0x05) exception: {ex.Message}");
+            }
+
+            try
+            {
+                // Raw hex dump of READ DISC STRUCTURE format 0x11 (DVD+R Media Manufacturer Info)
+                var (fmt11Res, fmt11Data) = drive.ReadDiscStructure(0, 0, 0x11, 256);
+                string fmt11Hex = fmt11Res.Success
+                    ? BitConverter.ToString(fmt11Data, 0, Math.Min(fmt11Res.DataTransferred, 64))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"RAW DVD+R MEDIA MFG (fmt=0x11): Success={fmt11Res.Success}" +
+                    $" dt={fmt11Res.DataTransferred} [{fmt11Hex}]");
+                if (fmt11Res.Success && fmt11Res.DataTransferred >= 29)
+                {
+                    string mfg1926 = System.Text.Encoding.ASCII.GetString(fmt11Data, 19, 8).TrimEnd('\0', ' ');
+                    string type2729 = System.Text.Encoding.ASCII.GetString(fmt11Data, 27, 3).TrimEnd('\0', ' ');
+                    result.DebugLog.Add($"FMT 0x11: bytes 19-26='{mfg1926}' bytes 27-29='{type2729}'");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW DVD+R MEDIA MFG (fmt=0x11) exception: {ex.Message}");
+            }
+
+            try
+            {
                 // Raw hex dump of READ DISC STRUCTURE format 0x0D (RMA)
                 var rmaCmd = new ScsiCommand(
                     MmcCommands.BuildReadDiscStructure(0, 0,
@@ -141,6 +184,168 @@ public class DiscInfoService
             catch (Exception ex)
             {
                 result.DebugLog.Add($"RAW READ TRACK INFO (1) exception: {ex.Message}");
+            }
+
+            try
+            {
+                // Raw hex dump of Physical Format Information (format 0x00) — DiscId at bytes 24-39
+                var (pfRes, pfData) = drive.ReadDiscStructure(0, 0,
+                    MmcCommands.DiscStructureFormatPhysical, 256);
+                string pfHex = pfRes.Success
+                    ? BitConverter.ToString(pfData, 0, Math.Min(pfRes.DataTransferred, 48))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"RAW PHYSICAL FORMAT (fmt=0x00, L0): Success={pfRes.Success}" +
+                    $" dt={pfRes.DataTransferred} [{pfHex}]");
+                if (pfRes.Success && pfRes.DataTransferred >= 40)
+                {
+                    string discId24 = System.Text.Encoding.ASCII.GetString(pfData, 24,
+                        Math.Min(16, pfRes.DataTransferred - 24)).TrimEnd('\0', ' ');
+                    string discId23 = System.Text.Encoding.ASCII.GetString(pfData, 23,
+                        Math.Min(16, pfRes.DataTransferred - 23)).TrimEnd('\0', ' ');
+                    result.DebugLog.Add($"PHYSICAL DiscId (bytes 24-39): '{discId24}'");
+                    result.DebugLog.Add($"PHYSICAL DiscId (bytes 23-38): '{discId23}'");
+                    // Full hex dump of the relevant area
+                    if (pfRes.DataTransferred >= 64)
+                        result.DebugLog.Add($"PHYSICAL hex 0-63: " +
+                            BitConverter.ToString(pfData, 0, 64));
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW PHYSICAL FORMAT exception: {ex.Message}");
+            }
+
+            try
+            {
+                // Try Physical Format with mediaType=2 (DVD+RW specific)
+                for (byte mt = 1; mt <= 3; mt++)
+                {
+                    var (pf2Res, pf2Data) = drive.ReadDiscStructure(2, 0,
+                        MmcCommands.DiscStructureFormatPhysical, 256);
+                    string pf2Hex = pf2Res.Success
+                        ? BitConverter.ToString(pf2Data, 0, Math.Min(pf2Res.DataTransferred, 64))
+                        : "(SCSI failed)";
+                    result.DebugLog.Add($"RAW PHYSICAL FORMAT (fmt=0x00, L0, mt=2): Success={pf2Res.Success}" +
+                        $" dt={pf2Res.DataTransferred} [{pf2Hex}]");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW PHYSICAL FORMAT (mt=2) exception: {ex.Message}");
+            }
+
+            // Try layer 1 Physical Format
+            try
+            {
+                var (pf1Res, pf1Data) = drive.ReadDiscStructure(0, 1,
+                    MmcCommands.DiscStructureFormatPhysical, 256);
+                string pf1Hex = pf1Res.Success
+                    ? BitConverter.ToString(pf1Data, 0, Math.Min(pf1Res.DataTransferred, 64))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"RAW PHYSICAL FORMAT (fmt=0x00, L1): Success={pf1Res.Success}" +
+                    $" dt={pf1Res.DataTransferred} [{pf1Hex}]");
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW PHYSICAL FORMAT (L1) exception: {ex.Message}");
+            }
+
+            // Full binary scan of Physical Format for MID-like ASCII patterns
+            try
+            {
+                // try with full allocation (2052) — some drives return different data
+                var (pfAllRes, pfAllData) = drive.ReadDiscStructure(0, 0,
+                    MmcCommands.DiscStructureFormatPhysical, 2052);
+                if (pfAllRes.Success && pfAllRes.DataTransferred >= 40)
+                {
+                    int dt = pfAllRes.DataTransferred;
+                    // Full hex dump up to 128 bytes
+                    result.DebugLog.Add($"PHYSICAL (2052 alloc) hex 0-127: " +
+                        BitConverter.ToString(pfAllData, 0, Math.Min(dt, 128)));
+                    // Find all printable ASCII runs >= 4 chars
+                    var found = new System.Collections.Generic.List<string>();
+                    var sb = new System.Text.StringBuilder();
+                    for (int i = 4; i < Math.Min(dt, 256); i++)
+                    {
+                        if (pfAllData[i] >= 0x20 && pfAllData[i] <= 0x7E)
+                            sb.Append((char)pfAllData[i]);
+                        else
+                        {
+                            if (sb.Length >= 4)
+                                found.Add(sb.ToString());
+                            sb.Clear();
+                        }
+                    }
+                    if (sb.Length >= 4)
+                        found.Add(sb.ToString());
+                    if (found.Count > 0)
+                        result.DebugLog.Add($"PHYSICAL ASCII runs (>=4): {string.Join(" | ", found.Take(10))}");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"PHYSICAL ASCII scan exception: {ex.Message}");
+            }
+
+            // Try additional READ DISC STRUCTURE formats for MID
+            try
+            {
+                var (fmtListRes, fmtListData) = drive.ReadDiscStructure(0, 0, 0xFF, 256);
+                string flHex = fmtListRes.Success
+                    ? BitConverter.ToString(fmtListData, 0, Math.Min(fmtListRes.DataTransferred, 64))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"FORMAT LIST (fmt=0xFF): Success={fmtListRes.Success}" +
+                    $" dt={fmtListRes.DataTransferred} [{flHex}]");
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"FORMAT LIST exception: {ex.Message}");
+            }
+            try
+            {
+                var (uidRes, uidData) = drive.ReadDiscStructure(0, 0, 0x0F, 256);
+                string uidHex = uidRes.Success
+                    ? BitConverter.ToString(uidData, 0, Math.Min(uidRes.DataTransferred, 64))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"UNIQUE DISC ID (fmt=0x0F): Success={uidRes.Success}" +
+                    $" dt={uidRes.DataTransferred} [{uidHex}]");
+                if (uidRes.Success && uidRes.DataTransferred >= 12)
+                {
+                    string uidStr = System.Text.Encoding.ASCII.GetString(uidData, 4,
+                        Math.Min(20, uidRes.DataTransferred - 4)).TrimEnd('\0', ' ');
+                    result.DebugLog.Add($"UNIQUE DISC ID (bytes 4-23): '{uidStr}'");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"UNIQUE DISC ID exception: {ex.Message}");
+            }
+            try
+            {
+                var (bcaRes, bcaData) = drive.ReadDiscStructure(0, 0, 0x03, 256);
+                string bcaHex = bcaRes.Success
+                    ? BitConverter.ToString(bcaData, 0, Math.Min(bcaRes.DataTransferred, 64))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"BCA (fmt=0x03): Success={bcaRes.Success}" +
+                    $" dt={bcaRes.DataTransferred} [{bcaHex}]");
+                if (bcaRes.Success && bcaRes.DataTransferred >= 20)
+                {
+                    for (int off = 0; off <= Math.Min(bcaRes.DataTransferred - 4, 40); off++)
+                    {
+                        string bcaStr = System.Text.Encoding.ASCII.GetString(bcaData, 4 + off,
+                            Math.Min(16, bcaRes.DataTransferred - 4 - off)).TrimEnd('\0', ' ');
+                        var midCheck = SanitizeMid(bcaStr);
+                        if (midCheck.Length >= 6)
+                        {
+                            result.DebugLog.Add($"BCA MID candidate (off={off}): '{midCheck}'");
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"BCA exception: {ex.Message}");
             }
 
             var discInfo = drive.ReadDiscInformationEx();
@@ -296,7 +501,20 @@ public class DiscInfoService
                     result.SupportedReadSpeeds = discDrive.SupportedReadSpeeds;
             }
 
-            result.Mid = ReadMidFromDisc(drive, profile);
+            result.DebugLog.Add($"PROFILE: 0x{profile:X4} ({result.MediaType})");
+
+            // Log what ReadManufacturerId returns before sanitize (hex to avoid binary in output)
+            var rawMfg = drive.ReadManufacturerId(MmcCommands.DiscStructureFormatManufacturer);
+            string mfgHex = rawMfg != null
+                ? BitConverter.ToString(System.Text.Encoding.ASCII.GetBytes(rawMfg))
+                : "(null)";
+            result.DebugLog.Add($"READ MANUFACTURER ID (fmt=0x04): [{mfgHex}]");
+
+            result.Mid = SanitizeMid(ReadMidFromDisc(drive, profile) ?? string.Empty);
+            string finalMidHex = !string.IsNullOrEmpty(result.Mid)
+                ? BitConverter.ToString(System.Text.Encoding.ASCII.GetBytes(result.Mid))
+                : "(empty)";
+            result.DebugLog.Add($"MID (after sanitize, hex): [{finalMidHex}]");
             result.ManufacturerName = MediaManufacturerLookup.LookupDvdBdManufacturer(result.Mid);
             result.PreRecordedManufacturerId = result.Mid;
 
@@ -320,6 +538,24 @@ public class DiscInfoService
             if (OpticalDrive.IsProfileDvd(profile) || profile >= 0x0040)
             {
                 result.PhysicalFormats = ReadPhysicalFormatInfo(drive);
+
+                // MID fallback: log DiscIds from Physical Format entries
+                for (int i = 0; i < result.PhysicalFormats.Count && i < 4; i++)
+                {
+                    string didHex = !string.IsNullOrEmpty(result.PhysicalFormats[i].DiscId)
+                        ? BitConverter.ToString(System.Text.Encoding.ASCII.GetBytes(result.PhysicalFormats[i].DiscId))
+                        : "(empty)";
+                    result.DebugLog.Add($"PHYSICAL FORMAT[{i}] DiscId (hex): [{didHex}]");
+                }
+
+                if (string.IsNullOrWhiteSpace(result.Mid) && result.PhysicalFormats.Count > 0
+                    && !string.IsNullOrWhiteSpace(result.PhysicalFormats[0].DiscId))
+                {
+                    result.Mid = result.PhysicalFormats[0].DiscId;
+                    result.ManufacturerName = MediaManufacturerLookup.LookupDvdBdManufacturer(result.Mid);
+                    result.PreRecordedManufacturerId = result.Mid;
+                    result.DebugLog.Add($"MID FALLBACK: used DiscId={result.Mid}");
+                }
             }
 
             try
@@ -352,6 +588,81 @@ public class DiscInfoService
         {
             if (OpticalDrive.IsProfileDvd(profile))
             {
+                // DVD+R / DVD+RW / DVD+R DL / DVD+RW DL: MID from ADIP (fmt 0x05) or DiscId.
+                // Format 0x00 Physical Format Info uses DVD-ROM book type on empty media
+                // (bitsetting), so DiscId at bytes 24-39 may be absent/corrupted.
+                bool isDvdPlusR = profile is 0x001A or 0x001B or 0x002A or 0x002B;
+                if (isDvdPlusR)
+                {
+                    // 1) Format 0x11 = DVD+R Media Manufacturer Info (libburn primary method)
+                    var (fmt11Res, fmt11Data) = drive.ReadDiscStructure(0, 0, 0x11, 256);
+                    if (fmt11Res.Success && fmt11Res.DataTransferred >= 29)
+                    {
+                        var manuf = SanitizeMid(System.Text.Encoding.ASCII.GetString(fmt11Data, 19, 8)).Trim();
+                        if (manuf.Length >= 4)
+                        {
+                            string typeCode = System.Text.Encoding.ASCII.GetString(fmt11Data, 27, 3).TrimEnd('\0', ' ');
+                            if (!string.IsNullOrWhiteSpace(typeCode))
+                                manuf = manuf + typeCode;
+                            // Look up full MID in database via prefix match
+                            var fullMid = MediaManufacturerLookup.LookupDvdBdFullMid(manuf);
+                            if (fullMid.Length > manuf.Length)
+                                return fullMid;
+                            // Also try with bytes 31-33 (DL type e.g. "DL1")
+                            if (fmt11Res.DataTransferred >= 34)
+                            {
+                                string dlType = System.Text.Encoding.ASCII.GetString(fmt11Data, 31, 3).TrimEnd('\0', ' ');
+                                if (!string.IsNullOrWhiteSpace(dlType))
+                                {
+                                    string combo = SanitizeMid(manuf + dlType);
+                                    fullMid = MediaManufacturerLookup.LookupDvdBdFullMid(combo);
+                                    if (fullMid.Length > manuf.Length)
+                                        return fullMid;
+                                }
+                            }
+                            return manuf;
+                        }
+                    }
+
+                    // 2) Format 0x00 Physical Format: libburn-style offset 19-26
+                    var (pfRes, pfData) = drive.ReadDiscStructure(0, 0,
+                        MmcCommands.DiscStructureFormatPhysical, 256);
+                    if (pfRes.Success && pfRes.DataTransferred >= 29)
+                    {
+                        var pfManuf = SanitizeMid(System.Text.Encoding.ASCII.GetString(pfData, 19, 8)).Trim();
+                        if (pfManuf.Length >= 4)
+                        {
+                            string pfType = System.Text.Encoding.ASCII.GetString(pfData, 27, 2).TrimEnd('\0', ' ');
+                            if (!string.IsNullOrWhiteSpace(pfType))
+                                pfManuf = pfManuf + pfType;
+                            var fullMid = MediaManufacturerLookup.LookupDvdBdFullMid(pfManuf);
+                            if (fullMid.Length > pfManuf.Length)
+                                return fullMid;
+                            return pfManuf;
+                        }
+                    }
+
+                    // 3) Format 0x05 ADIP (plain ASCII DiscId starting at byte 8)
+                    var adip = ReadMidFromAdip(drive);
+                    if (!string.IsNullOrWhiteSpace(adip))
+                    {
+                        var fullMid = MediaManufacturerLookup.LookupDvdBdFullMid(adip);
+                        if (fullMid.Length > adip.Length)
+                            return fullMid;
+                        return adip;
+                    }
+
+                    // 4) Fallback: DiscId from Physical Format Info (bytes 23-38 heuristic)
+                    var formats = ReadPhysicalFormatInfo(drive);
+                    if (formats.Count > 0 && !string.IsNullOrWhiteSpace(formats[0].DiscId))
+                    {
+                        var fullMid = MediaManufacturerLookup.LookupDvdBdFullMid(formats[0].DiscId);
+                        if (fullMid.Length > formats[0].DiscId.Length)
+                            return fullMid;
+                        return formats[0].DiscId;
+                    }
+                }
+
                 var mfg = drive.ReadManufacturerId(MmcCommands.DiscStructureFormatManufacturer);
                 if (!string.IsNullOrWhiteSpace(mfg))
                     return SanitizeMid(mfg.Trim());
@@ -452,9 +763,30 @@ public class DiscInfoService
         return string.Empty;
     }
 
+    private static string ReadMidFromAdip(OpticalDrive drive)
+    {
+        try
+        {
+            // MMC-5: READ DISC STRUCTURE format 0x05 = DVD+RW ADIP Information.
+            // For DVD+R/RW media, the Disc ID is at bytes 8-23 as plain ASCII.
+            var (result, data) = drive.ReadDiscStructure(0, 0, 0x05, 256);
+            if (!result.Success || result.DataTransferred < 24)
+                return string.Empty;
+
+            string discId = System.Text.Encoding.ASCII.GetString(data, 8,
+                Math.Min(16, result.DataTransferred - 8)).TrimEnd('\0', ' ');
+            return SanitizeMid(discId);
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
+
     /// <summary>
     /// Strips non-printable/non-ASCII characters from a raw MID string.
     /// DVD-ROM pressed discs return binary lead-in data, not clean ASCII text.
+    /// Only allows alphanumeric, space, hyphen, underscore — MID never contains symbols.
     /// </summary>
     private static string SanitizeMid(string raw)
     {
@@ -464,7 +796,8 @@ public class DiscInfoService
         var chars = new System.Collections.Generic.List<char>(raw.Length);
         foreach (var c in raw)
         {
-            if (c >= 0x20 && c <= 0x7E)
+            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+                (c >= '0' && c <= '9') || c == ' ' || c == '-' || c == '_')
                 chars.Add(c);
         }
 
@@ -694,6 +1027,9 @@ public class DiscInfoService
                     FirstPhysicalSector = MmcCommands.ReadBE32(data, 8),
                     LastPhysicalSector = MmcCommands.ReadBE32(data, 12),
                     LastSectorLayer0 = MmcCommands.ReadBE32(data, 16),
+                    DiscId = result.DataTransferred >= 40
+                        ? SanitizeMid(System.Text.Encoding.ASCII.GetString(data, 23, 16))
+                        : string.Empty,
                 };
 
                 formats.Add(info);

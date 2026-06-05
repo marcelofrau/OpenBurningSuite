@@ -3165,6 +3165,7 @@ public sealed class OpticalDrive : IDisposable
 
             int stringLen = Math.Min(dataLen, result.DataTransferred - 4);
             stringLen = Math.Min(stringLen, data.Length - 4);
+            stringLen = Math.Min(stringLen, 32);
             if (stringLen <= 0) return null;
 
             return System.Text.Encoding.ASCII.GetString(data, 4, stringLen).TrimEnd('\0', ' ');

@@ -55,10 +55,15 @@
             <!-- Disc Info text display -->
             <Border x:Name="PnlInfoDisplay" IsVisible="False" Classes="Card">
                 <StackPanel Spacing="8">
-                    <Grid ColumnDefinitions="*,Auto">
+                    <Grid ColumnDefinitions="*,Auto,Auto">
                         <TextBlock Text="Disc Information" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
-                        <Button x:Name="BtnCopyInfo" Grid.Column="1"
+                        <Button x:Name="BtnSaveDiscInfo" Grid.Column="1"
+                                Content="&#x1F4BE;  Save"
+                                Classes="ActionBtn" Click="OnSaveDiscInfoClick"
+                                Margin="0,0,6,0"
+                                ToolTip.Tip="Save disc information to file"/>
+                        <Button x:Name="BtnCopyInfo" Grid.Column="2"
                                 Content="&#x1F4CB;  Copy"
                                 Classes="ActionBtn" Click="OnCopyInfoClick"
                                 ToolTip.Tip="Copy all displayed information to clipboard"/>
@@ -90,10 +95,15 @@
                 </Expander.Header>
                 <Border Background="#0C1622" Padding="12,8,12,12" HorizontalAlignment="Stretch">
                     <StackPanel Spacing="8" HorizontalAlignment="Stretch">
-                        <Grid ColumnDefinitions="*,Auto">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
                             <TextBlock Text="Operation Log" Classes="SectionHeader"
                                        VerticalAlignment="Center"/>
-                            <Button x:Name="BtnClearLog" Grid.Column="1"
+                            <Button x:Name="BtnSaveLog" Grid.Column="1"
+                                    Content="&#x1F4BE;  Save"
+                                    Classes="ActionBtn" Click="OnSaveLogClick"
+                                    Margin="0,0,6,0"
+                                    ToolTip.Tip="Save log to file"/>
+                            <Button x:Name="BtnClearLog" Grid.Column="2"
                                     Content="&#x1F9F9;  Clear"
                                     Classes="ActionBtn" Click="OnClearLogClick"
                                     ToolTip.Tip="Clear the log output"/>

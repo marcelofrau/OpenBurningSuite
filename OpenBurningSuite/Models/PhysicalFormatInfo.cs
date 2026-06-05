@@ -17,4 +17,5 @@ public class PhysicalFormatInfo
     public long LastPhysicalSector { get; set; }
     public long LastSectorLayer0 { get; set; }
     public double MaxReadRateMbps { get; set; }
+    public string DiscId { get; set; } = string.Empty;
 }

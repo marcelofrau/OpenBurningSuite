@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using OpenBurningSuite.Helpers;
 using OpenBurningSuite.Models;
@@ -32,8 +33,84 @@ public partial class DiscInfoView : UserControl
     private void OnClearLogClick(object? sender, RoutedEventArgs e) =>
         TxtLog.Text = string.Empty;
 
+    private async void OnSaveLogClick(object? sender, RoutedEventArgs e)
+    {
+        var text = TxtLog.Text;
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            Log("Nothing to save — log is empty.");
+            return;
+        }
+
+        var top = TopLevel.GetTopLevel(this);
+        if (top == null) return;
+
+        var file = await top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = "Save Log",
+            DefaultExtension = ".txt",
+            SuggestedFileName = $"disc-log-{DateTime.Now:yyyyMMdd-HHmmss}.txt"
+        });
+        if (file == null) return;
+
+        var path = file.TryGetLocalPath();
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            Log("Cannot save to selected location.");
+            return;
+        }
+
+        try
+        {
+            await System.IO.File.WriteAllTextAsync(path, text.Trim());
+            Log($"Log saved to: {path}");
+        }
+        catch (Exception ex)
+        {
+            Log($"Failed to save log: {ex.Message}");
+        }
+    }
+
     private void OnDriveSelectionChanged(object? sender, SelectionChangedEventArgs e) =>
         _ = ProbeSelectedDriveAsync();
+
+    private async void OnSaveDiscInfoClick(object? sender, RoutedEventArgs e)
+    {
+        var text = TxtDiscInfo.Text;
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            Log("Nothing to save — disc info is empty.");
+            return;
+        }
+
+        var top = TopLevel.GetTopLevel(this);
+        if (top == null) return;
+
+        var file = await top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = "Save Disc Info",
+            DefaultExtension = ".txt",
+            SuggestedFileName = $"disc-info-{DateTime.Now:yyyyMMdd-HHmmss}.txt"
+        });
+        if (file == null) return;
+
+        var path = file.TryGetLocalPath();
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            Log("Cannot save to selected location.");
+            return;
+        }
+
+        try
+        {
+            await System.IO.File.WriteAllTextAsync(path, text.Trim());
+            Log($"Disc info saved to: {path}");
+        }
+        catch (Exception ex)
+        {
+            Log($"Failed to save disc info: {ex.Message}");
+        }
+    }
 
     private async void OnCopyInfoClick(object? sender, RoutedEventArgs e)
     {
@@ -203,8 +280,7 @@ public partial class DiscInfoView : UserControl
         sb.AppendLine("Disc Information:");
         Indent(sb, $"Status: {r.DiscStatus}");
 
-        if (r.LastSessionState != "Empty")
-            Indent(sb, $"State of Last Session: {r.LastSessionState}");
+        Indent(sb, $"State of Last Session: {r.LastSessionState}");
 
         Indent(sb, $"Erasable: {(r.IsErasable ? "Yes" : "No")}");
 
@@ -223,7 +299,13 @@ public partial class DiscInfoView : UserControl
         }
 
         if (!string.IsNullOrWhiteSpace(r.Mid))
-            Indent(sb, $"MID: {r.Mid}{(string.IsNullOrWhiteSpace(r.ManufacturerName) ? "" : $" ({r.ManufacturerName})")}");
+        {
+            var mfgName = (!string.IsNullOrWhiteSpace(r.ManufacturerName)
+                && !r.ManufacturerName.Equals(r.Mid, StringComparison.OrdinalIgnoreCase))
+                ? r.ManufacturerName
+                : null;
+            Indent(sb, $"MID: {r.Mid}{(mfgName != null ? $" ({mfgName})" : "")}");
+        }
 
         if (r.FreeSectors > 0)
             Indent(sb, $"Free Sectors: {r.FreeSectors:N0}");
@@ -369,8 +451,11 @@ public partial class DiscInfoView : UserControl
             PhysicalFormatInfo? prev = null;
             foreach (var f in r.PhysicalFormats)
             {
-                // Skip layers whose data is identical to the previous (e.g. L0 and L1 often match)
-                if (prev != null && f.BookType == prev.BookType
+                // Single-layer: skip duplicates (L0 and L1 often match identically).
+                // Multi-layer: show all layers.
+                bool isMultiLayer = f.LayerCount > 1;
+                if (!isMultiLayer && prev != null
+                    && f.BookType == prev.BookType
                     && f.FirstPhysicalSector == prev.FirstPhysicalSector
                     && f.LastPhysicalSector == prev.LastPhysicalSector
                     && f.LastSectorLayer0 == prev.LastSectorLayer0
@@ -381,6 +466,11 @@ public partial class DiscInfoView : UserControl
                     continue;
                 }
 
+                if (isMultiLayer)
+                    Indent(sb, $"--- Layer {f.LayerNumber} ---");
+
+                if (!string.IsNullOrWhiteSpace(f.DiscId))
+                    Indent(sb, $"Disc ID: {f.DiscId}");
                 Indent(sb, $"Book Type: {f.BookType}");
                 Indent(sb, $"Part Version: {f.PartVersion}");
                 Indent(sb, $"Disc Size: {f.DiscSize}");
