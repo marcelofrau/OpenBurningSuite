@@ -10,34 +10,94 @@
                 BorderBrush="#1E3450" BorderThickness="0,0,1,0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="10,16,10,16" Spacing="2">
-                    <TextBlock Text="⚙&#xFE0F; SETTINGS"
+                    <TextBlock Text="SETTINGS"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,0,0,10"/>
 
-                    <Button x:Name="TocGeneral" Content="🏠  General"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGeneral"/>
-                    <Button x:Name="TocBurnDefaults" Content="🔥  Burn Defaults"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionBurnDefaults"/>
-                    <Button x:Name="TocReadDefaults" Content="💿  Read / Copy Defaults"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionReadDefaults"/>
-                    <Button x:Name="TocVerification" Content="✅  Verification"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionVerification"/>
-                    <Button x:Name="TocFileSystem" Content="📂  File System Defaults"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionFileSystem"/>
-                    <Button x:Name="TocAudioCd" Content="🎵  Audio CD Defaults"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAudioCd"/>
-                    <Button x:Name="TocIoPerf" Content="⚡&#xFE0F;  I/O &amp; Performance"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionIoPerf"/>
-                    <Button x:Name="TocPostActions" Content="🔔  Post-Operation Actions"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPostActions"/>
-                    <Button x:Name="TocLogging" Content="📋  Logging &amp; Diagnostics"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionLogging"/>
-                    <Button x:Name="TocPaths" Content="📁  Paths &amp; Locations"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPaths"/>
-                    <Button x:Name="TocAdvanced" Content="🔧  Advanced &amp; Safety"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAdvanced"/>
-                    <Button x:Name="TocGaming" Content="🎮  Gaming Disc Defaults"
-                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGaming"/>
+                    <Button x:Name="TocGeneral" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGeneral">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-home-3d-16.png"/>
+                            <TextBlock Text="General" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocBurnDefaults" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionBurnDefaults">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Defaults" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocReadDefaults" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionReadDefaults">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Read / Copy Defaults" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocVerification" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionVerification">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
+                            <TextBlock Text="Verification" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocFileSystem" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionFileSystem">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="File System Defaults" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocAudioCd" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAudioCd">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
+                            <TextBlock Text="Audio CD Defaults" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocIoPerf" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionIoPerf">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-flash-2d-16.png"/>
+                            <TextBlock Text="I/O &amp; Performance" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocPostActions" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPostActions">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-bell-2d-16.png"/>
+                            <TextBlock Text="Post-Operation Actions" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocLogging" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionLogging">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-file-2d-16.png"/>
+                            <TextBlock Text="Logging &amp; Diagnostics" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocPaths" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPaths">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Paths &amp; Locations" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocAdvanced" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAdvanced">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Advanced &amp; Safety" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocGaming" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGaming">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
+                            <TextBlock Text="Gaming Disc Defaults" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </ScrollViewer>
         </Border>
@@ -48,7 +108,7 @@
 
                 <!-- Page header -->
                 <StackPanel Spacing="4">
-                    <TextBlock Text="⚙&#xFE0F;  Application Settings &amp; Preferences"
+                    <TextBlock Text="Application Settings &amp; Preferences"
                                FontSize="20" FontWeight="SemiBold" Foreground="#E8F0FE"/>
                     <TextBlock Text="Configure default behavior, performance, paths, and preferences for all operations."
                                FontSize="12" Foreground="#5A7A9A" TextWrapping="Wrap"/>
@@ -61,17 +121,35 @@
                             <TextBlock x:Name="TxtSettingsStatus" Text="" Foreground="#5A7A9A" FontSize="11"/>
                         </StackPanel>
                         <Button x:Name="BtnSaveSettings" Grid.Column="1"
-                                Content="💾  Save Settings" Classes="PrimaryBtn"
+                                Classes="PrimaryBtn"
                                 Click="OnSaveClick"
-                                ToolTip.Tip="Save all settings to disk"/>
+                                ToolTip.Tip="Save all settings to disk">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                                <TextBlock Text="Save Settings" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnResetDefaults" Grid.Column="2"
-                                Content="↩  Reset to Defaults" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 Margin="8,0,0,0" Click="OnResetClick"
-                                ToolTip.Tip="Reset all settings to factory defaults"/>
+                                ToolTip.Tip="Reset all settings to factory defaults">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-restore-2d-16.png"/>
+                                <TextBlock Text="Reset to Defaults" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnOpenSettingsFile" Grid.Column="3"
-                                Content="📄  Open Settings File" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 Margin="8,0,0,0" Click="OnOpenSettingsFileClick"
-                                ToolTip.Tip="Open the settings JSON file in the system editor"/>
+                                ToolTip.Tip="Open the settings JSON file in the system editor">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-file-2d-16.png"/>
+                                <TextBlock Text="Open Settings File" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Border>
 
@@ -81,7 +159,8 @@
                 <Border x:Name="SectionGeneral" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="🏠" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-home-3d-16.png"/>
                             <TextBlock Text="General" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="General application behavior and user interface preferences."
@@ -128,7 +207,8 @@
                 <Border x:Name="SectionBurnDefaults" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="🔥" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
                             <TextBlock Text="Default Burn / Write Settings" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Default settings applied when creating a new burn job. Can be overridden per-job."
@@ -191,7 +271,8 @@
                 <Border x:Name="SectionReadDefaults" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="💿" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
                             <TextBlock Text="Default Read / Copy Settings" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Default settings for disc reading and copying operations."
@@ -248,7 +329,8 @@
                 <Border x:Name="SectionVerification" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="✅" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
                             <TextBlock Text="Verification Settings" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Configure default checksum algorithm and automatic verification behavior."
@@ -274,7 +356,8 @@
                 <Border x:Name="SectionFileSystem" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="📂" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
                             <TextBlock Text="File System Defaults" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Default file system settings for building data discs and images."
@@ -317,7 +400,8 @@
                 <Border x:Name="SectionAudioCd" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="🎵" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
                             <TextBlock Text="Audio CD Defaults" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Default settings for audio CD creation and burning."
@@ -351,7 +435,8 @@
                 <Border x:Name="SectionIoPerf" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="⚡&#xFE0F;" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-flash-2d-16.png"/>
                             <TextBlock Text="I/O &amp; Performance" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Low-level I/O and SCSI performance tuning. Changing these may affect burn stability."
@@ -396,7 +481,8 @@
                 <Border x:Name="SectionPostActions" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="🔔" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-bell-2d-16.png"/>
                             <TextBlock Text="Post-Operation Actions" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Configure what happens after burn, read, or erase operations complete."
@@ -440,7 +526,8 @@
                 <Border x:Name="SectionLogging" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="📋" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-file-2d-16.png"/>
                             <TextBlock Text="Logging &amp; Diagnostics" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Configure operation logging, verbosity, and log file management."
@@ -481,7 +568,8 @@
                 <Border x:Name="SectionPaths" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="📁" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
                             <TextBlock Text="Paths &amp; Locations" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Configure default directories for image output, temporary files, and logs."
@@ -555,7 +643,8 @@
                 <Border x:Name="SectionAdvanced" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="🔧" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
                             <TextBlock Text="Advanced &amp; Safety" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Advanced options for experienced users. Incorrect settings may cause burn failures."
@@ -597,7 +686,8 @@
                 <Border x:Name="SectionGaming" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="🎮" FontSize="16"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
                             <TextBlock Text="Gaming Disc Defaults" Classes="SectionHeader"/>
                         </StackPanel>
                         <TextBlock Text="Default patching and preset behavior for gaming disc operations."

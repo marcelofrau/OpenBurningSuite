@@ -19,9 +19,13 @@
                         <TextBlock Text="Optical Drives" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnRefreshDrives" Grid.Column="1"
-                                Content="🔄  Refresh Drives"
                                 Classes="ActionBtn" Click="OnRefreshDrivesClick"
-                                ToolTip.Tip="Rescan the system for connected optical drives"/>
+                                ToolTip.Tip="Rescan the system for connected optical drives">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                <TextBlock Text="Refresh Drives" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <dg:DataGrid x:Name="DrivesGrid"
@@ -52,7 +56,7 @@
                             Background="#1A1A2E" CornerRadius="6" Padding="20"
                             BorderBrush="#2A3A50" BorderThickness="1">
                         <StackPanel Spacing="8" HorizontalAlignment="Center">
-                            <TextBlock Text="💿  No optical drives detected"
+                            <TextBlock Text="No optical drives detected"
                                        Foreground="#8899AA" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center"/>
                             <TextBlock Text="Connect an internal or external optical drive, then click Refresh Drives."
@@ -63,10 +67,14 @@
                                        Foreground="#556677" FontSize="11"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" IsVisible="False"/>
-                            <Button Content="🔄  Refresh Drives"
-                                    Classes="ActionBtn" Click="OnRefreshDrivesClick"
+                            <Button Classes="ActionBtn" Click="OnRefreshDrivesClick"
                                     HorizontalAlignment="Center" Margin="0,4,0,0"
-                                    ToolTip.Tip="Rescan the system for connected optical drives"/>
+                                    ToolTip.Tip="Rescan the system for connected optical drives">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                    <TextBlock Text="Refresh Drives" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -84,9 +92,13 @@
                                   SelectionChanged="OnDriveSelectionChanged"
                                   ToolTip.Tip="Choose a drive to inspect"/>
                         <Button x:Name="BtnProbeMedia" Grid.Column="2"
-                                Content="🔬  Probe Media"
                                 Classes="ActionBtn" Click="OnProbeMediaClick"
-                                ToolTip.Tip="Read details about the disc currently in the selected drive"/>
+                                ToolTip.Tip="Read details about the disc currently in the selected drive">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
+                                <TextBlock Text="Probe Media" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <!-- Media info cards -->
@@ -332,9 +344,13 @@
                         <TextBlock Text="Disc Content Analysis" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnAnalyzeContent" Grid.Column="1"
-                                Content="🔬  Analyze Content"
                                 Classes="ActionBtn" Click="OnAnalyzeContentClick"
-                                ToolTip.Tip="Detect disc content type (gaming system, video disc, audio CD, data disc)"/>
+                                ToolTip.Tip="Detect disc content type (gaming system, video disc, audio CD, data disc)">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
+                                <TextBlock Text="Analyze Content" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto">
@@ -387,9 +403,13 @@
                         <TextBlock Text="Log" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Content="🧹 Clear"
                                 Classes="ActionBtn" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the log output"/>
+                                ToolTip.Tip="Clear the log output">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
                     <TextBox x:Name="TxtLog"
                              Classes="LogBox"

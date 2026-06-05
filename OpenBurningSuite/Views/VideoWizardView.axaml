@@ -8,7 +8,7 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="🎬  Video Disc Wizard"
+                <TextBlock Text="Video Disc Wizard"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
                 <TextBlock Text="Create DVD-Video, Blu-ray, BDAV, 3D Blu-ray, VCD, or SVCD discs from video folders and files — guided step by step."
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
@@ -81,7 +81,8 @@
                             Click="OnModeDvd"
                             ToolTip.Tip="Create and burn a DVD-Video disc from a VIDEO_TS folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="📀" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
                             <TextBlock Text="Video DVD from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a DVD-Video disc from a VIDEO_TS folder"
@@ -98,7 +99,8 @@
                             Click="OnModeBluray"
                             ToolTip.Tip="Create and burn a Blu-ray disc from a BDMV folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
                             <TextBlock Text="Video Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a Blu-ray disc from a BDMV folder"
@@ -115,7 +117,8 @@
                             Click="OnModeBdav"
                             ToolTip.Tip="Create and burn a BDAV recording disc from a BDAV folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="📹" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-editing-3d-50.png"/>
                             <TextBlock Text="BDAV Recording from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a BDAV disc from a BDAV recording folder"
@@ -132,7 +135,8 @@
                             Click="OnModeBd3d"
                             ToolTip.Tip="Create and burn a 3D Blu-ray disc from a BDMV 3D folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="🎥" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-editing-3d-50.png"/>
                             <TextBlock Text="3D Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a 3D Blu-ray disc from a BDMV 3D folder"
@@ -149,7 +153,8 @@
                             Click="OnModeUhdBluray"
                             ToolTip.Tip="Create and burn a UHD (4K HDR) Blu-ray disc from a BDMV folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="🎬" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-editing-3d-50.png"/>
                             <TextBlock Text="UHD Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a UHD 4K HDR Blu-ray disc from BDMV"
@@ -166,7 +171,8 @@
                             Click="OnModeVcd"
                             ToolTip.Tip="Create and burn a Video CD from MPEG-1 video files">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-tape-drive-2d-50.png"/>
                             <TextBlock Text="Video CD (VCD)" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a Video CD from MPEG-1 video files"
@@ -183,7 +189,8 @@
                             Click="OnModeSvcd"
                             ToolTip.Tip="Create and burn a Super Video CD from MPEG-2 video files">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-tape-drive-2d-50.png"/>
                             <TextBlock Text="Super Video CD (SVCD)" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a Super Video CD from MPEG-2 video files"
@@ -200,7 +207,8 @@
                             Click="OnModeXsvcd"
                             ToolTip.Tip="Create and burn an eXtended Super Video CD with non-standard MPEG-2 parameters">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-tape-drive-2d-50.png"/>
                             <TextBlock Text="XSVCD (eXtended SVCD)" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn XSVCD with extended bitrate &amp; resolution"
@@ -221,17 +229,27 @@
                 <!-- Source VIDEO_TS Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="📂 Source VIDEO_TS Folder" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Source VIDEO_TS Folder" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="Select the folder containing VIDEO_TS (with VOB, IFO, and BUP files)."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtDvdSourceFolder"
                                      Watermark="Path to VIDEO_TS folder..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseDvdSourceClick"
-                                    ToolTip.Tip="Browse for VIDEO_TS folder"/>
+                                    ToolTip.Tip="Browse for VIDEO_TS folder">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -239,7 +257,11 @@
                 <!-- DVD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📀 DVD Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="DVD Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Video Standard" Classes="FieldLabel"/>
@@ -284,17 +306,27 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="The DVD image (ISO) will be saved to this location."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtDvdOutputPath"
                                      Watermark="Path to save the DVD image..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseDvdOutputClick"
-                                    ToolTip.Tip="Choose where to save the output DVD image"/>
+                                    ToolTip.Tip="Choose where to save the output DVD image">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -302,7 +334,11 @@
                 <!-- Video Preview -->
                 <Border Classes="InfoCard">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎬 Video Preview" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
+                            <TextBlock Text="Video Preview" Classes="SectionHeader"/>
+                        </StackPanel>
 
                         <Border Classes="DropZone">
                             <ListBox x:Name="LstDvdFiles"
@@ -337,14 +373,26 @@
                         <!-- Player Controls -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnDvdPlayPause" Content="▶ Play"
+                                <Button x:Name="BtnDvdPlayPause"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnDvdPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video"/>
-                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        ToolTip.Tip="Play or pause the selected video">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
+                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnDvdStopClick"
-                                        ToolTip.Tip="Stop playback"/>
+                                        ToolTip.Tip="Stop playback">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                                 <TextBlock x:Name="TxtDvdNowPlaying"
                                            Text="No file selected"
                                            Foreground="#5A7A9A" FontSize="11"
@@ -367,7 +415,11 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Target Drive" Classes="FieldLabel"/>
@@ -435,17 +487,27 @@
                 <!-- Source BDMV Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="📂 Source BDMV Folder" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Source BDMV Folder" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="Select the folder containing BDMV (with STREAM, CLIPINF, and PLAYLIST folders)."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBdSourceFolder"
                                      Watermark="Path to BDMV folder..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBdSourceClick"
-                                    ToolTip.Tip="Browse for BDMV folder"/>
+                                    ToolTip.Tip="Browse for BDMV folder">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -453,7 +515,11 @@
                 <!-- Blu-ray Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💿 Blu-ray Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Blu-ray Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <StackPanel Spacing="4">
                             <TextBlock Text="Volume Label" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtBdVolumeLabel" Watermark="BLURAY_DISC"
@@ -465,17 +531,27 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="The Blu-ray image (ISO) will be saved to this location."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBdOutputPath"
                                      Watermark="Path to save the Blu-ray image..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBdOutputClick"
-                                    ToolTip.Tip="Choose where to save the output Blu-ray image"/>
+                                    ToolTip.Tip="Choose where to save the output Blu-ray image">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -483,7 +559,11 @@
                 <!-- Video Preview -->
                 <Border Classes="InfoCard">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎬 Video Preview" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
+                            <TextBlock Text="Video Preview" Classes="SectionHeader"/>
+                        </StackPanel>
 
                         <ListBox x:Name="LstBdFiles"
                                  Background="Transparent"
@@ -546,7 +626,11 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Target Drive" Classes="FieldLabel"/>
@@ -604,17 +688,27 @@
                 <!-- Source BDAV Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="📂 Source BDAV Folder" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Source BDAV Folder" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="Select the folder containing BDAV (with STREAM, CLIPINF, and PLAYLIST folders)."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBdavSourceFolder"
                                      Watermark="Path to BDAV folder..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBdavSourceClick"
-                                    ToolTip.Tip="Browse for BDAV folder"/>
+                                    ToolTip.Tip="Browse for BDAV folder">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -622,7 +716,11 @@
                 <!-- BDAV Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📹 BDAV Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
+                            <TextBlock Text="BDAV Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Volume Label" Classes="FieldLabel"/>
@@ -644,8 +742,14 @@
                 </Border>
 
                 <!-- BDAV Recording Metadata -->
-                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; BDAV Recording Metadata"
-                          IsExpanded="False">
+                <Expander Classes="SettingsExpander" IsExpanded="False">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="BDAV Recording Metadata"/>
+                        </StackPanel>
+                    </Expander.Header>
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <TextBlock Text="Optional metadata for BDAV recording. Leave defaults for standard recording."
                                    Foreground="#5A7A9A" FontSize="11"/>
@@ -668,17 +772,27 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="The BDAV image (ISO) will be saved to this location."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBdavOutputPath"
                                      Watermark="Path to save the BDAV image..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBdavOutputClick"
-                                    ToolTip.Tip="Choose where to save the output BDAV image"/>
+                                    ToolTip.Tip="Choose where to save the output BDAV image">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -686,7 +800,11 @@
                 <!-- Video Preview -->
                 <Border Classes="InfoCard">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎬 Video Preview" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
+                            <TextBlock Text="Video Preview" Classes="SectionHeader"/>
+                        </StackPanel>
 
                         <ListBox x:Name="LstBdavFiles"
                                  Background="Transparent"
@@ -719,14 +837,26 @@
                         <!-- Player Controls -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnBdavPlayPause" Content="▶ Play"
+                                <Button x:Name="BtnBdavPlayPause"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnBdavPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video"/>
-                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        ToolTip.Tip="Play or pause the selected video">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
+                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnBdavStopClick"
-                                        ToolTip.Tip="Stop playback"/>
+                                        ToolTip.Tip="Stop playback">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                                 <TextBlock x:Name="TxtBdavNowPlaying"
                                            Text="No file selected"
                                            Foreground="#5A7A9A" FontSize="11"
@@ -749,7 +879,11 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Target Drive" Classes="FieldLabel"/>
@@ -807,17 +941,27 @@
                 <!-- Source BDMV 3D Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="📂 Source BDMV 3D Folder" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Source BDMV 3D Folder" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="Select the folder containing BDMV with 3D content (STREAM, CLIPINF, PLAYLIST, and SSIF folders)."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBd3dSourceFolder"
                                      Watermark="Path to BDMV 3D folder..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBd3dSourceClick"
-                                    ToolTip.Tip="Browse for BDMV 3D folder"/>
+                                    ToolTip.Tip="Browse for BDMV 3D folder">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -825,7 +969,11 @@
                 <!-- 3D Blu-ray Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎥 3D Blu-ray Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
+                            <TextBlock Text="3D Blu-ray Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Volume Label" Classes="FieldLabel"/>
@@ -864,17 +1012,27 @@
                 <!-- Dependent View (right eye) for Frame Packed mode -->
                 <Border x:Name="Bd3dDependentViewCard" Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="👁 Dependent View (Right Eye) — Frame Packed Mode" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-view-3d-16.png"/>
+                            <TextBlock Text="Dependent View (Right Eye) — Frame Packed Mode" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="For Frame Packed (MVC) 3D, provide the dependent view (right-eye) video file. For Side by Side / Top and Bottom modes, the 3D content is encoded within the base view."
                                    Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBd3dDependentViewPath"
                                      Watermark="Path to right-eye (dependent view) video..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBd3dDependentViewClick"
-                                    ToolTip.Tip="Browse for dependent view (right-eye) video file"/>
+                                    ToolTip.Tip="Browse for dependent view (right-eye) video file">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -882,17 +1040,27 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="The 3D Blu-ray image (ISO) will be saved to this location."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBd3dOutputPath"
                                      Watermark="Path to save the 3D Blu-ray image..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBd3dOutputClick"
-                                    ToolTip.Tip="Choose where to save the output 3D Blu-ray image"/>
+                                    ToolTip.Tip="Choose where to save the output 3D Blu-ray image">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -900,7 +1068,11 @@
                 <!-- Video Preview -->
                 <Border Classes="InfoCard">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎬 Video Preview" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
+                            <TextBlock Text="Video Preview" Classes="SectionHeader"/>
+                        </StackPanel>
 
                         <ListBox x:Name="LstBd3dFiles"
                                  Background="Transparent"
@@ -933,14 +1105,26 @@
                         <!-- Player Controls -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnBd3dPlayPause" Content="▶ Play"
+                                <Button x:Name="BtnBd3dPlayPause"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnBd3dPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video"/>
-                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        ToolTip.Tip="Play or pause the selected video">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
+                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnBd3dStopClick"
-                                        ToolTip.Tip="Stop playback"/>
+                                        ToolTip.Tip="Stop playback">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                                 <TextBlock x:Name="TxtBd3dNowPlaying"
                                            Text="No file selected"
                                            Foreground="#5A7A9A" FontSize="11"
@@ -963,7 +1147,11 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Target Drive" Classes="FieldLabel"/>
@@ -1022,18 +1210,32 @@
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="📼 Video Files" Classes="SectionHeader"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
+                            <TextBlock Text="Video Files" Classes="SectionHeader"/>
                             <TextBlock x:Name="TxtVcdFileCount" Text="(0 files)"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Content="➕ Add Files" Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnAddVcdFilesClick"
-                                    ToolTip.Tip="Add MPEG-1 video files"/>
-                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    ToolTip.Tip="Add MPEG-1 video files">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
+                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnRemoveVcdFileClick"
-                                    ToolTip.Tip="Remove the selected file from the list"/>
+                                    ToolTip.Tip="Remove the selected file from the list">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
+                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                             <Button Content="⬆" Classes="ActionBtn" Click="OnMoveVcdUpClick"
                                     ToolTip.Tip="Move selected file up"/>
                             <Button Content="⬇" Classes="ActionBtn" Click="OnMoveVcdDownClick"
@@ -1079,14 +1281,26 @@
                         <!-- Video Player -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnVcdPlayPause" Content="▶ Play"
+                                <Button x:Name="BtnVcdPlayPause"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnVcdPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video"/>
-                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        ToolTip.Tip="Play or pause the selected video">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
+                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnVcdStopClick"
-                                        ToolTip.Tip="Stop playback"/>
+                                        ToolTip.Tip="Stop playback">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                                 <TextBlock x:Name="TxtVcdNowPlaying"
                                            Text="No file selected"
                                            Foreground="#5A7A9A" FontSize="11"
@@ -1109,7 +1323,11 @@
                 <!-- VCD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📼 VCD Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
+                            <TextBlock Text="VCD Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
                                 <TextBlock Text="Video Standard" Classes="FieldLabel"/>
@@ -1136,8 +1354,14 @@
                 </Border>
 
                 <!-- Advanced VCD Options -->
-                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; Advanced VCD Options"
-                          IsExpanded="False">
+                <Expander Classes="SettingsExpander" IsExpanded="False">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Advanced VCD Options"/>
+                        </StackPanel>
+                    </Expander.Header>
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <WrapPanel Orientation="Horizontal">
                             <CheckBox x:Name="ChkVcdPbc"
@@ -1163,17 +1387,27 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="The VCD image (BIN/CUE) will be saved to this location."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtVcdOutputPath"
                                      Watermark="Path to save the VCD image..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseVcdOutputClick"
-                                    ToolTip.Tip="Choose where to save the output VCD image"/>
+                                    ToolTip.Tip="Choose where to save the output VCD image">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -1181,7 +1415,11 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Target Drive" Classes="FieldLabel"/>
@@ -1251,18 +1489,32 @@
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="📼 Video Files" Classes="SectionHeader"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
+                            <TextBlock Text="Video Files" Classes="SectionHeader"/>
                             <TextBlock x:Name="TxtSvcdFileCount" Text="(0 files)"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Content="➕ Add Files" Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnAddSvcdFilesClick"
-                                    ToolTip.Tip="Add MPEG-2 video files"/>
-                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    ToolTip.Tip="Add MPEG-2 video files">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
+                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnRemoveSvcdFileClick"
-                                    ToolTip.Tip="Remove the selected file from the list"/>
+                                    ToolTip.Tip="Remove the selected file from the list">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
+                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                             <Button Content="⬆" Classes="ActionBtn" Click="OnMoveSvcdUpClick"
                                     ToolTip.Tip="Move selected file up"/>
                             <Button Content="⬇" Classes="ActionBtn" Click="OnMoveSvcdDownClick"
@@ -1308,14 +1560,26 @@
                         <!-- Video Player -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnSvcdPlayPause" Content="▶ Play"
+                                <Button x:Name="BtnSvcdPlayPause"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnSvcdPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video"/>
-                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        ToolTip.Tip="Play or pause the selected video">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
+                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnSvcdStopClick"
-                                        ToolTip.Tip="Stop playback"/>
+                                        ToolTip.Tip="Stop playback">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                                 <TextBlock x:Name="TxtSvcdNowPlaying"
                                            Text="No file selected"
                                            Foreground="#5A7A9A" FontSize="11"
@@ -1338,7 +1602,11 @@
                 <!-- SVCD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📼 SVCD Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
+                            <TextBlock Text="SVCD Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
                                 <TextBlock Text="Video Standard" Classes="FieldLabel"/>
@@ -1357,8 +1625,14 @@
                 </Border>
 
                 <!-- Advanced SVCD Options -->
-                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; Advanced SVCD Options"
-                          IsExpanded="False">
+                <Expander Classes="SettingsExpander" IsExpanded="False">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Advanced SVCD Options"/>
+                        </StackPanel>
+                    </Expander.Header>
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <WrapPanel Orientation="Horizontal">
                             <CheckBox x:Name="ChkSvcdPbc"
@@ -1380,17 +1654,27 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="The SVCD image (BIN/CUE) will be saved to this location."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtSvcdOutputPath"
                                      Watermark="Path to save the SVCD image..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseSvcdOutputClick"
-                                    ToolTip.Tip="Choose where to save the output SVCD image"/>
+                                    ToolTip.Tip="Choose where to save the output SVCD image">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -1398,7 +1682,11 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Target Drive" Classes="FieldLabel"/>
@@ -1467,13 +1755,23 @@
                 <!-- Source Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📂 Source Folder (BDMV)" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Source Folder (BDMV)" Classes="SectionHeader"/>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <TextBox x:Name="TxtUhdBdSourceFolder" Watermark="Path to BDMV folder..."
                                      Width="520"/>
-                            <Button Content="📁 Browse..." Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnBrowseUhdBdSourceClick"
-                                    ToolTip.Tip="Select BDMV source folder"/>
+                                    ToolTip.Tip="Select BDMV source folder">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse..." VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
 
                         <!-- Files list -->
@@ -1505,7 +1803,11 @@
                 <!-- UHD BD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="⚙&#xFE0F; UHD BD Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="UHD BD Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <WrapPanel Orientation="Horizontal">
                             <StackPanel Spacing="4" Margin="0,0,16,8">
                                 <TextBlock Text="Volume Label" Foreground="#8EAFC8" FontSize="11"/>
@@ -1534,22 +1836,32 @@
                 <!-- Output & Burning -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💾 Output &amp; Burning" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output &amp; Burning" Classes="SectionHeader"/>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <TextBox x:Name="TxtUhdBdOutputPath" Watermark="Output ISO image path..."
                                      Width="520"/>
-                            <Button Content="📁 Browse..." Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnBrowseUhdBdOutputClick"
-                                    ToolTip.Tip="Select output ISO image path"/>
+                                    ToolTip.Tip="Select output ISO image path">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse..." VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
 
                         <WrapPanel Orientation="Horizontal">
-                            <CheckBox x:Name="ChkUhdBdBurnDisc" Content="🔥 Burn to Disc" Margin="0,0,16,8"
+                            <CheckBox x:Name="ChkUhdBdBurnDisc" Content="Burn to Disc" Margin="0,0,16,8"
                                       ToolTip.Tip="Burn the UHD Blu-ray ISO after creation"/>
-                            <CheckBox x:Name="ChkUhdBdEject" Content="⏏&#xFE0F; Eject After" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkUhdBdVerify" Content="✅ Verify After" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkUhdBdSimulate" Content="🧪 Simulate" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkUhdBdBup" Content="🛡 Buffer Underrun Protection"
+                            <CheckBox x:Name="ChkUhdBdEject" Content="Eject After" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdVerify" Content="Verify After" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdSimulate" Content="Simulate" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdBup" Content="Buffer Underrun Protection"
                                       Margin="0,0,16,8" IsChecked="True"/>
                         </WrapPanel>
 
@@ -1588,18 +1900,32 @@
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="📼 Video Files" Classes="SectionHeader"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
+                            <TextBlock Text="Video Files" Classes="SectionHeader"/>
                             <TextBlock x:Name="TxtXsvcdFileCount" Text="(0 files)"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Content="➕ Add Files" Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnAddXsvcdFilesClick"
-                                    ToolTip.Tip="Add MPEG-2 video files"/>
-                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    ToolTip.Tip="Add MPEG-2 video files">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
+                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnRemoveXsvcdFileClick"
-                                    ToolTip.Tip="Remove the selected file from the list"/>
+                                    ToolTip.Tip="Remove the selected file from the list">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
+                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                             <Button Content="⬆" Classes="ActionBtn" Click="OnMoveXsvcdUpClick"
                                     ToolTip.Tip="Move selected file up"/>
                             <Button Content="⬇" Classes="ActionBtn" Click="OnMoveXsvcdDownClick"
@@ -1642,7 +1968,11 @@
                 <!-- XSVCD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="⚙&#xFE0F; XSVCD Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="XSVCD Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <WrapPanel Orientation="Horizontal">
                             <StackPanel Spacing="4" Margin="0,0,16,8">
                                 <TextBlock Text="Video Standard" Foreground="#8EAFC8" FontSize="11"/>
@@ -1657,13 +1987,13 @@
                             </StackPanel>
                         </WrapPanel>
                         <WrapPanel Orientation="Horizontal">
-                            <CheckBox x:Name="ChkXsvcdPbc" Content="🎮 Playback Control (PBC)"
+                            <CheckBox x:Name="ChkXsvcdPbc" Content="Playback Control (PBC)"
                                       Margin="0,0,16,8" IsChecked="True"
                                       ToolTip.Tip="Enable interactive navigation menus"/>
-                            <CheckBox x:Name="ChkXsvcdScanData" Content="📡 Scan Data"
+                            <CheckBox x:Name="ChkXsvcdScanData" Content="Scan Data"
                                       Margin="0,0,16,8" IsChecked="True"
                                       ToolTip.Tip="Include SCANDATA.DAT for fast-forward/rewind support"/>
-                            <CheckBox x:Name="ChkXsvcdSearchData" Content="🔍 Search Data"
+                            <CheckBox x:Name="ChkXsvcdSearchData" Content="Search Data"
                                       Margin="0,0,16,8" IsChecked="True"
                                       ToolTip.Tip="Include SEARCH.DAT for chapter/track seeking"/>
                         </WrapPanel>
@@ -1673,22 +2003,32 @@
                 <!-- Output & Burning -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💾 Output &amp; Burning" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output &amp; Burning" Classes="SectionHeader"/>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <TextBox x:Name="TxtXsvcdOutputPath" Watermark="Output image path (.bin)..."
                                      Width="520"/>
-                            <Button Content="📁 Browse..." Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnBrowseXsvcdOutputClick"
-                                    ToolTip.Tip="Select output BIN/CUE image path"/>
+                                    ToolTip.Tip="Select output BIN/CUE image path">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse..." VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
 
                         <WrapPanel Orientation="Horizontal">
-                            <CheckBox x:Name="ChkXsvcdBurnDisc" Content="🔥 Burn to Disc" Margin="0,0,16,8"
+                            <CheckBox x:Name="ChkXsvcdBurnDisc" Content="Burn to Disc" Margin="0,0,16,8"
                                       ToolTip.Tip="Burn the XSVCD image after creation"/>
-                            <CheckBox x:Name="ChkXsvcdEject" Content="⏏&#xFE0F; Eject After" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkXsvcdVerify" Content="✅ Verify After" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkXsvcdSimulate" Content="🧪 Simulate" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkXsvcdBup" Content="🛡 Buffer Underrun Protection"
+                            <CheckBox x:Name="ChkXsvcdEject" Content="Eject After" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdVerify" Content="Verify After" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdSimulate" Content="Simulate" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdBup" Content="Buffer Underrun Protection"
                                       Margin="0,0,16,8" IsChecked="True"/>
                         </WrapPanel>
 
@@ -1786,19 +2126,37 @@
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnVideoNextClick" IsVisible="False"
                             ToolTip.Tip="Proceed to the next step"/>
-                    <Button x:Name="BtnVideoExecute" Content="🔥 Start"
+                    <Button x:Name="BtnVideoExecute"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnVideoExecuteClick" IsVisible="False"
-                            ToolTip.Tip="Start the operation"/>
-                    <Button x:Name="BtnVideoCancel" Content="⏹ Cancel"
+                            ToolTip.Tip="Start the operation">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Start" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnVideoCancel"
                             Classes="DangerBtn" Grid.Column="3"
                             Margin="8,0,0,0" Click="OnVideoCancelClick"
                             IsVisible="False"
-                            ToolTip.Tip="Cancel the current operation"/>
-                    <Button x:Name="BtnVideoFinish" Content="✅ Done — Return Home"
+                            ToolTip.Tip="Cancel the current operation">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                            <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnVideoFinish"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnVideoFinishClick" IsVisible="False"
-                            ToolTip.Tip="Operation complete — return to the home screen"/>
+                            ToolTip.Tip="Operation complete — return to the home screen">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
+                            <TextBlock Text="Done — Return Home" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Border>
 

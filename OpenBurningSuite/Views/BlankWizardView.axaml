@@ -7,7 +7,7 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="🧹  Blank / Erase Disc Wizard"
+                <TextBlock Text="Blank / Erase Disc Wizard"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
                 <TextBlock Text="Erase rewritable discs or format blank BD-R/DVD+RW media — guided step by step."
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
@@ -38,8 +38,13 @@
                             <ComboBox x:Name="CmbBlankDrive" PlaceholderText="Select drive..."
                                       SelectionChanged="OnBlankDriveSelChanged"
                                       ToolTip.Tip="Select the drive with the disc to erase"/>
-                            <Button x:Name="BtnBlankRefresh" Grid.Column="1" Content="🔄 Refresh"
-                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnBlankRefreshClick"/>
+                            <Button x:Name="BtnBlankRefresh" Grid.Column="1"
+                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnBlankRefreshClick">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                    <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
 
                         <!-- Drive & media info -->

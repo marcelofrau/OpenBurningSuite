@@ -8,7 +8,7 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="🎵  Audio &amp; Music Wizard"
+                <TextBlock Text="Audio &amp; Music Wizard"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
                 <TextBlock Text="Create audio CDs, copy music files to disc, or rip audio CDs — guided step by step."
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
@@ -81,7 +81,8 @@
                             Click="OnModeCreateAudioCd"
                             ToolTip.Tip="Add audio tracks, set metadata, and burn a Red Book audio CD">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
                             <TextBlock Text="Create Audio CD" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Build &amp; burn a Red Book audio CD from audio files"
@@ -98,7 +99,8 @@
                             Click="OnModeCopyMusic"
                             ToolTip.Tip="Copy MP3, WMA, FLAC, WAV and other music files to a data disc">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="🎶" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-music-3d-50.png"/>
                             <TextBlock Text="Copy Music to Disc" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Burn music files as data to CD, DVD, or Blu-ray"
@@ -115,7 +117,8 @@
                             Click="OnModeRipAudioCd"
                             ToolTip.Tip="Extract audio tracks from an Audio CD to WAV files or a raw BIN/CUE image">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="🎧" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-headphones-2d-50.png"/>
                             <TextBlock Text="Rip Audio CD" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Rip tracks from an audio CD to WAV or BIN/CUE"
@@ -137,24 +140,52 @@
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="🎵 Audio Tracks" Classes="SectionHeader"/>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
+                                <TextBlock Text="Audio Tracks" Classes="SectionHeader"/>
+                            </StackPanel>
                             <TextBlock x:Name="TxtCreateTrackCount" Text="(0 tracks, 00:00 total)"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button x:Name="BtnAddTracks" Content="➕ Add Tracks"
+                            <Button x:Name="BtnAddTracks"
                                     Classes="PrimaryBtn" Click="OnAddTracksClick"
-                                    ToolTip.Tip="Add WAV, MP3, WMA, or AIFF audio files"/>
-                            <Button Content="📋 Import Playlist" Classes="ActionBtn"
+                                    ToolTip.Tip="Add WAV, MP3, WMA, or AIFF audio files">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
+                                    <TextBlock Text="Add Tracks" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="ActionBtn"
                                     Click="OnImportPlaylistCreateClick"
-                                    ToolTip.Tip="Import tracks from a playlist file (M3U, M3U8, PLS, WPL, ASX)"/>
-                            <Button Content="💾 Export Playlist" Classes="ActionBtn"
+                                    ToolTip.Tip="Import tracks from a playlist file (M3U, M3U8, PLS, WPL, ASX)">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Import Playlist" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="ActionBtn"
                                     Click="OnExportPlaylistCreateClick"
-                                    ToolTip.Tip="Export the current track list to a playlist file"/>
-                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    ToolTip.Tip="Export the current track list to a playlist file">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                                    <TextBlock Text="Export Playlist" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnRemoveTrackClick"
-                                    ToolTip.Tip="Remove the selected track from the list"/>
+                                    ToolTip.Tip="Remove the selected track from the list">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
+                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                             <Button Content="⬆" Classes="ActionBtn" Click="OnMoveTrackUpClick"
                                     ToolTip.Tip="Move selected track up"/>
                             <Button Content="⬇" Classes="ActionBtn" Click="OnMoveTrackDownClick"
@@ -200,14 +231,26 @@
                         <!-- Audio Player -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnPlayPause" Content="▶ Play"
+                                <Button x:Name="BtnPlayPause"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected track"/>
-                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        ToolTip.Tip="Play or pause the selected track">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
+                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnStopClick"
-                                        ToolTip.Tip="Stop playback"/>
+                                        ToolTip.Tip="Stop playback">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                                 <TextBlock x:Name="TxtNowPlaying"
                                            Text="No track selected"
                                            Foreground="#5A7A9A" FontSize="11"
@@ -228,8 +271,14 @@
                 </Border>
 
                 <!-- CD-TEXT Metadata -->
-                <Expander Classes="SettingsExpander" Header="📝 CD-TEXT Metadata (optional)"
-                          IsExpanded="False">
+                <Expander Classes="SettingsExpander" IsExpanded="False">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="CD-TEXT Metadata (optional)" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Expander.Header>
                     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto"
                           Margin="0,12,0,0">
                         <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
@@ -271,7 +320,11 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Target Drive" Classes="FieldLabel"/>
@@ -339,17 +392,27 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="💾 Output Image" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
+                        </StackPanel>
                         <TextBlock Text="The audio CD image (BIN/CUE) will be saved to this location."
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtCreateOutputPath"
                                      Watermark="Path to save the audio CD image..."
                                      Grid.Column="0"/>
-                            <Button Content="📂 Browse" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseCreateOutputClick"
-                                    ToolTip.Tip="Choose where to save the output BIN/CUE image"/>
+                                    ToolTip.Tip="Choose where to save the output BIN/CUE image">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -365,27 +428,61 @@
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="🎶 Music Files" Classes="SectionHeader"/>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
+                                <TextBlock Text="Music Files" Classes="SectionHeader"/>
+                            </StackPanel>
                             <TextBlock x:Name="TxtCopyFileCount" Text="(0 files, 0 MB)"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Content="➕ Add Files" Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnAddCopyFilesClick"
-                                    ToolTip.Tip="Add music files to copy (MP3, FLAC, WAV, OGG, AIFF, AAC, WMA, M4A)"/>
-                            <Button Content="📁 Add Folder" Classes="ActionBtn"
+                                    ToolTip.Tip="Add music files to copy (MP3, FLAC, WAV, OGG, AIFF, AAC, WMA, M4A)">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
+                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="ActionBtn"
                                     Click="OnAddCopyFolderClick"
-                                    ToolTip.Tip="Add all music files from a folder"/>
-                            <Button Content="📋 Import Playlist" Classes="ActionBtn"
+                                    ToolTip.Tip="Add all music files from a folder">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-folder-16.png"/>
+                                    <TextBlock Text="Add Folder" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="ActionBtn"
                                     Click="OnImportPlaylistCopyClick"
-                                    ToolTip.Tip="Import files from a playlist file (M3U, M3U8, PLS, WPL, ASX)"/>
-                            <Button Content="💾 Export Playlist" Classes="ActionBtn"
+                                    ToolTip.Tip="Import files from a playlist file (M3U, M3U8, PLS, WPL, ASX)">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Import Playlist" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="ActionBtn"
                                     Click="OnExportPlaylistCopyClick"
-                                    ToolTip.Tip="Export the current file list to a playlist file"/>
-                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    ToolTip.Tip="Export the current file list to a playlist file">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                                    <TextBlock Text="Export Playlist" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnRemoveCopyFileClick"
-                                    ToolTip.Tip="Remove the selected file from the list"/>
+                                    ToolTip.Tip="Remove the selected file from the list">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
+                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
 
                         <Border Classes="DropZone" DragDrop.AllowDrop="True"
@@ -423,12 +520,24 @@
                         <!-- Audio Player -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnCopyPlayPause" Content="▶ Play"
+                                <Button x:Name="BtnCopyPlayPause"
                                         Classes="ActionBtn" Grid.Column="0"
-                                        Click="OnCopyPlayPauseClick"/>
-                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        Click="OnCopyPlayPauseClick">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
+                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
-                                        Click="OnCopyStopClick"/>
+                                        Click="OnCopyStopClick">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                                 <TextBlock x:Name="TxtCopyNowPlaying"
                                            Text="No file selected"
                                            Foreground="#5A7A9A" FontSize="11"
@@ -450,7 +559,11 @@
                 <!-- Disc Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💿 Disc Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Disc Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Target Drive" Classes="FieldLabel"/>
@@ -517,22 +630,36 @@
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💿 Source Drive" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Source Drive" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,Auto">
                             <ComboBox x:Name="CmbRipDrive" HorizontalAlignment="Stretch"
                                       Grid.Column="0"
                                       ToolTip.Tip="Select the drive containing the audio CD"/>
-                            <Button Content="🔄 Refresh" Classes="ActionBtn"
+                            <Button Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnRefreshRipDrivesClick"
-                                    ToolTip.Tip="Rescan for optical drives"/>
+                                    ToolTip.Tip="Rescan for optical drives">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                    <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎵 Output Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
+                            <TextBlock Text="Output Settings" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
                                 <TextBlock Text="Output Format" Classes="FieldLabel"/>
@@ -567,16 +694,28 @@
                                 <TextBox x:Name="TxtRipOutputFolder"
                                          Watermark="Folder to save ripped tracks..."
                                          Grid.Column="0"/>
-                                <Button Content="📂 Browse" Classes="ActionBtn"
+                                <Button Classes="ActionBtn"
                                         Grid.Column="1" Margin="8,0,0,0"
-                                        Click="OnBrowseRipOutputClick"/>
+                                        Click="OnBrowseRipOutputClick">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                        <TextBlock Text="Browse" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                         </StackPanel>
                     </StackPanel>
                 </Border>
 
-                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; Advanced Ripping Options"
-                          IsExpanded="False">
+                <Expander Classes="SettingsExpander" IsExpanded="False">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Advanced Ripping Options" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Expander.Header>
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <WrapPanel Orientation="Horizontal">
                             <CheckBox x:Name="ChkRipParanoia"
@@ -661,27 +800,55 @@
             <!-- ============================================================ -->
             <Border Classes="InfoCard" Margin="0,8,0,0">
                 <Grid ColumnDefinitions="Auto,*,Auto,Auto">
-                    <Button x:Name="BtnBack" Content="← Back"
+                    <Button x:Name="BtnBack"
                             Classes="ActionBtn" Click="OnBackClick"
                             IsVisible="False"
-                            ToolTip.Tip="Go back to the previous step"/>
-                    <Button x:Name="BtnNext" Content="Next →"
+                            ToolTip.Tip="Go back to the previous step">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="←" VerticalAlignment="Center"/>
+                            <TextBlock Text="Back" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnNext"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnNextClick" IsVisible="False"
-                            ToolTip.Tip="Proceed to the next step"/>
-                    <Button x:Name="BtnExecute" Content="🔥 Start"
+                            ToolTip.Tip="Proceed to the next step">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="Next" VerticalAlignment="Center"/>
+                            <TextBlock Text="→" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnExecute"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnExecuteClick" IsVisible="False"
-                            ToolTip.Tip="Start the operation"/>
-                    <Button x:Name="BtnCancel" Content="⏹ Cancel"
+                            ToolTip.Tip="Start the operation">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Start" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnCancel"
                             Classes="DangerBtn" Grid.Column="3"
                             Margin="8,0,0,0" Click="OnCancelClick"
                             IsVisible="False"
-                            ToolTip.Tip="Cancel the current operation"/>
-                    <Button x:Name="BtnFinish" Content="✅ Done — Return Home"
+                            ToolTip.Tip="Cancel the current operation">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                            <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnFinish"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnFinishClick" IsVisible="False"
-                            ToolTip.Tip="Operation complete — return to the home screen"/>
+                            ToolTip.Tip="Operation complete — return to the home screen">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
+                            <TextBlock Text="Done — Return Home" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Border>
 

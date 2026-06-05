@@ -46,13 +46,13 @@
                                     Margin="6,0,0,0" Click="OnBrowseImageClick"
                                     ToolTip.Tip="Browse for a disc image file"/>
                         </Grid>
-                        <TextBlock Text="💡 Drag and drop a disc image file here" Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
+                        <TextBlock Text="Drag and drop a disc image file here" Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
                         <TextBlock x:Name="TxtImageInfo" Text="" Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
 
                         <!-- Encrypted image detection -->
                         <StackPanel x:Name="PnlDecryptImage" IsVisible="False" Spacing="6"
                                     Margin="0,4,0,0">
-                            <TextBlock Text="🔒 This image is encrypted (OBS format). Enter the password to decrypt before burning:"
+                            <TextBlock Text="This image is encrypted (OBS format). Enter the password to decrypt before burning:"
                                        Foreground="#FFB347" FontSize="11" TextWrapping="Wrap"/>
                             <TextBox x:Name="TxtDecryptPassword"
                                      PasswordChar="●"
@@ -66,8 +66,12 @@
                                 Background="#1A1520" CornerRadius="6" Padding="12" Margin="0,4,0,0"
                                 BorderBrush="#3A2050" BorderThickness="1">
                             <StackPanel Spacing="8">
-                                <TextBlock Text="🔐 PS3 ISO Decryption" FontSize="13"
-                                           Foreground="#BB86FC" FontWeight="SemiBold"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
+                                    <TextBlock Text="PS3 ISO Decryption" FontSize="13"
+                                               Foreground="#BB86FC" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
                                 <TextBlock x:Name="TxtWritePs3Info" Text=""
                                            Foreground="#FFB347" FontSize="11" TextWrapping="Wrap"/>
 
@@ -147,7 +151,7 @@
                                              MaxHeight="160"
                                              ToolTip.Tip="Files and folders to include on the disc. Drop files here or use the Add buttons."/>
                                     <TextBlock x:Name="TxtOtfFilesHint"
-                                               Text="💡 Drag and drop files or folders here"
+                                                Text="Drag and drop files or folders here"
                                                Foreground="#5A7A9A" FontSize="10"
                                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                                 </StackPanel>
@@ -156,15 +160,33 @@
                                 <Button x:Name="BtnOtfAddFiles" Content="＋ Add Files"
                                         Classes="ActionBtn" Click="OnOtfAddFilesClick"
                                         ToolTip.Tip="Add individual files to the disc"/>
-                                <Button x:Name="BtnOtfAddFolder" Content="📁 Add Folder"
+                                <Button x:Name="BtnOtfAddFolder"
                                         Classes="ActionBtn" Click="OnOtfAddFolderClick"
-                                        ToolTip.Tip="Add a folder and all its contents to the disc"/>
-                                <Button x:Name="BtnOtfRemove" Content="✕ Remove"
+                                        ToolTip.Tip="Add a folder and all its contents to the disc">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-folder-16.png"/>
+                                        <TextBlock Text="Add Folder" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnOtfRemove"
                                         Classes="ActionBtn" Click="OnOtfRemoveClick"
-                                        ToolTip.Tip="Remove the selected item from the list"/>
-                                <Button x:Name="BtnOtfClearAll" Content="🧹 Clear All"
+                                        ToolTip.Tip="Remove the selected item from the list">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
+                                        <TextBlock Text="Remove" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button x:Name="BtnOtfClearAll"
                                         Classes="ActionBtn" Click="OnOtfClearAllClick"
-                                        ToolTip.Tip="Remove all items from the list"/>
+                                        ToolTip.Tip="Remove all items from the list">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Image Width="16" Height="16"
+                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                        <TextBlock Text="Clear All" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
                             </StackPanel>
                         </StackPanel>
 
@@ -195,7 +217,11 @@
             <!-- Detected Content (auto-populated from image analysis) -->
             <Border x:Name="PnlWriteDetectedContent" Classes="Card" IsVisible="False">
                 <StackPanel Spacing="6">
-                    <TextBlock Text="🔍  Detected Content" Classes="SectionHeader"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
+                        <TextBlock Text="Detected Content" Classes="SectionHeader"/>
+                    </StackPanel>
                     <TextBlock x:Name="TxtWriteDetectedContent" Text="—" Foreground="#E8F0FE"
                                FontSize="14" TextWrapping="Wrap"/>
                     <TextBlock x:Name="TxtWriteDetectedPreset" Text=""
@@ -217,9 +243,13 @@
                                           PlaceholderText="Select burner drive..."
                                           ToolTip.Tip="Select the optical drive to burn to"/>
                                 <Button x:Name="BtnRefreshDrives" Grid.Column="1"
-                                        Content="🔄" Classes="ActionBtn"
+                                        Classes="ActionBtn"
                                         Margin="6,0,0,0" Click="OnRefreshDrivesClick"
-                                        ToolTip.Tip="Refresh the list of available drives"/>
+                                        ToolTip.Tip="Refresh the list of available drives">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Button>
                             </Grid>
                         </StackPanel>
                         <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4">
@@ -299,7 +329,14 @@
             </Border>
 
             <!-- Advanced Options -->
-            <Expander Header="⚙&#xFE0F;  Advanced Options" Classes="SettingsExpander">
+            <Expander Classes="SettingsExpander">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                        <TextBlock Text="Advanced Options" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Expander.Header>
                 <StackPanel Spacing="10" Margin="0,8,0,0">
                     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                         <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
@@ -330,7 +367,14 @@
             </Expander>
 
             <!-- Gaming Patches -->
-            <Expander Header="🎮  Gaming Patches &amp; Special Formats" Classes="SettingsExpander">
+            <Expander Classes="SettingsExpander">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
+                        <TextBlock Text="Gaming Patches &amp; Special Formats" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Expander.Header>
                 <StackPanel Spacing="8" Margin="0,8,0,0">
                     <CheckBox x:Name="ChkLibCrypt"
                               Content="Apply LibCrypt protection (PS1 SBI file)"
@@ -391,7 +435,7 @@
                               Content="PSX Undither patch (PS1)"
                               Foreground="#E8F0FE"
                               ToolTip.Tip="Remove GPU dithering patterns from PS1 game images"/>
-                    <TextBlock Text="⚠&#xFE0F; Use gaming patches only for legally owned software."
+                    <TextBlock Text="Use gaming patches only for legally owned software."
                                Foreground="#FF8C00" FontSize="11" TextWrapping="Wrap"/>
                 </StackPanel>
             </Expander>
@@ -403,13 +447,25 @@
                         <TextBlock Text="Burn Progress" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnBurn" Grid.Column="1"
-                                Content="🔥  Burn" Classes="PrimaryBtn"
+                                Classes="PrimaryBtn"
                                 Margin="0,0,8,0" Click="OnBurnClick"
-                                ToolTip.Tip="Start burning the image to disc"/>
+                                ToolTip.Tip="Start burning the image to disc">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                                <TextBlock Text="Burn" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnCancel" Grid.Column="2"
-                                Content="⏹  Cancel" Classes="DangerBtn"
+                                Classes="DangerBtn"
                                 IsEnabled="False" Click="OnCancelClick"
-                                ToolTip.Tip="Cancel the burn operation"/>
+                                ToolTip.Tip="Cancel the burn operation">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <ProgressBar x:Name="BurnProgressBar" Classes="BurnProgress" Value="0"/>
@@ -438,9 +494,15 @@
                     <Grid ColumnDefinitions="Auto,*">
                         <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Content="🧹 Clear" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 HorizontalAlignment="Right" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the log output"/>
+                                ToolTip.Tip="Clear the log output">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <TextBox x:Name="TxtLog" Classes="LogBox" Height="180"/>
