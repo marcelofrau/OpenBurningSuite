@@ -35,6 +35,15 @@ public sealed class DiscInfoData
         2 => "Closed",
         _ => "Other"
     };
+
+    public string LastSessionStateString => LastSessionState switch
+    {
+        0 => "Empty",
+        1 => "Incomplete",
+        2 => "Damaged",
+        3 => "Finalized",
+        _ => "Unknown"
+    };
 }
 
 public sealed class TrackInfoData

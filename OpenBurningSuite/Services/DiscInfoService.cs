@@ -106,6 +106,26 @@ public class DiscInfoService
 
             try
             {
+                // Raw hex dump of READ DISC STRUCTURE format 0x0E (Pre-recorded Lead-in)
+                var preCmd = new ScsiCommand(
+                    MmcCommands.BuildReadDiscStructure(0, 0,
+                        MmcCommands.DiscStructureFormatPreRecordedLi, 256),
+                    ScsiDataDirection.In, 256) { TimeoutMs = 10_000 };
+                var preResult = drive.ExecuteRaw(preCmd);
+                string preHex = preResult.Success
+                    ? BitConverter.ToString(preCmd.DataBuffer, 0,
+                        Math.Min(preResult.DataTransferred, 64))
+                    : "(SCSI failed)";
+                result.DebugLog.Add($"RAW PRERECORDED LI (0x0E): Success={preResult.Success}" +
+                    $" dt={preResult.DataTransferred} [{preHex}]");
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"RAW PRERECORDED LI exception: {ex.Message}");
+            }
+
+            try
+            {
                 // Raw hex dump of READ TRACK INFO for track 1
                 var rawTrk1Cmd = new ScsiCommand(
                     MmcCommands.BuildReadTrackInfo(1),
@@ -126,9 +146,16 @@ public class DiscInfoService
             var discInfo = drive.ReadDiscInformationEx();
             if (discInfo != null)
             {
+                result.DiscStatus = discInfo.DiscStatusString;
+                result.LastSessionState = discInfo.LastSessionStateString;
+                result.IsErasable = discInfo.Erasable;
+                result.Sessions = discInfo.NumberOfSessions;
+                result.FreeSectors = discInfo.FreeSectors;
+                result.NextWritableAddress = discInfo.NextWritableAddress;
                 result.DebugLog.Add($"ReadDiscInformationEx: OK," +
-                    $" DiscStatus={discInfo.DiscStatus}" +
-                    $" LastSessionState={discInfo.LastSessionState} Sessions={discInfo.NumberOfSessions}" +
+                    $" DiscStatus={discInfo.DiscStatus} ({result.DiscStatus})" +
+                    $" LastSessionState={discInfo.LastSessionState} ({result.LastSessionState})" +
+                    $" Sessions={discInfo.NumberOfSessions}" +
                     $" FreeSectors={discInfo.FreeSectors} NWA={discInfo.NextWritableAddress}");
             }
             else
@@ -136,71 +163,41 @@ public class DiscInfoService
                 result.DebugLog.Add("ReadDiscInformationEx: returned NULL");
             }
 
-            // Fallback: ReadTrackInfo(0xFF) for FreeSectors/NWA if ReadDiscInfo
+            // Fallback: ReadTrackInfo for FreeSectors/NWA if ReadDiscInformationEx
             // didn't return them (some drives don't report extended fields for DVD/BD).
             if (result.FreeSectors == 0 && (OpticalDrive.IsProfileDvd(profile) || profile >= 0x0040))
             {
-                try
+                uint[] fallbackTracks = { 0xFF, 1 };
+                foreach (var track in fallbackTracks)
                 {
-                    var ti = drive.ReadTrackInfo(0xFF);
-                    if (ti != null)
+                    try
                     {
-                        result.DebugLog.Add($"ReadTrackInfo(0xFF) parsed: FreeBlocks={ti.FreeBlocks}" +
-                            $" NWA={ti.NextWritableAddress} NwaValid={ti.NwaValid}" +
-                            $" TrackSize={ti.TrackSize} LRA={ti.LastRecordedAddress}");
-                        if (result.FreeSectors == 0 && ti.FreeBlocks > 0)
+                        var ti = drive.ReadTrackInfo(track);
+                        if (ti != null)
                         {
-                            result.FreeSectors = ti.FreeBlocks;
-                            result.FreeBytes = ti.FreeBlocks * 2048L;
-                            result.FreeTimeFormatted = SectorsToMsf(ti.FreeBlocks);
+                            result.DebugLog.Add($"ReadTrackInfo({track}) fallback:" +
+                                $" FreeBlocks={ti.FreeBlocks}" +
+                                $" NWA={ti.NextWritableAddress} NwaValid={ti.NwaValid}" +
+                                $" TrackSize={ti.TrackSize} LRA={ti.LastRecordedAddress}");
+                            if (result.FreeSectors == 0 && ti.FreeBlocks > 0)
+                            {
+                                result.FreeSectors = ti.FreeBlocks;
+                                result.FreeBytes = ti.FreeBlocks * 2048L;
+                                result.FreeTimeFormatted = SectorsToMsf(ti.FreeBlocks);
+                            }
+                            if (result.NextWritableAddress == 0 && ti.NwaValid)
+                                result.NextWritableAddress = ti.NextWritableAddress;
+                            break;
                         }
-                        if (result.NextWritableAddress == 0 && ti.NwaValid)
-                            result.NextWritableAddress = ti.NextWritableAddress;
-                    }
-                    else
-                    {
-                        result.DebugLog.Add("ReadTrackInfo(0xFF) parsed: returned NULL");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    result.DebugLog.Add($"ReadTrackInfo(0xFF) exception: {ex.Message}");
-                }
-            }
-            else
-            {
-                result.DebugLog.Add("ReadDiscInformationEx: returned NULL");
-            }
-
-            // Fallback: ReadTrackInfo(0xFF) for FreeSectors/NWA if ReadDiscInfo
-            // didn't return them (some drives don't report extended fields for DVD/BD).
-            if (result.FreeSectors == 0 && (OpticalDrive.IsProfileDvd(profile) || profile >= 0x0040))
-            {
-                try
-                {
-                    var ti = drive.ReadTrackInfo(0xFF);
-                    if (ti != null)
-                    {
-                        result.DebugLog.Add($"ReadTrackInfo(0xFF): FreeBlocks={ti.FreeBlocks}" +
-                            $" NWA={ti.NextWritableAddress} NwaValid={ti.NwaValid}" +
-                            $" TrackSize={ti.TrackSize} LRA={ti.LastRecordedAddress}");
-                        if (result.FreeSectors == 0 && ti.FreeBlocks > 0)
+                        else
                         {
-                            result.FreeSectors = ti.FreeBlocks;
-                            result.FreeBytes = ti.FreeBlocks * 2048L;
-                            result.FreeTimeFormatted = SectorsToMsf(ti.FreeBlocks);
+                            result.DebugLog.Add($"ReadTrackInfo({track}) fallback: returned NULL");
                         }
-                        if (result.NextWritableAddress == 0 && ti.NwaValid)
-                            result.NextWritableAddress = ti.NextWritableAddress;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        result.DebugLog.Add("ReadTrackInfo(0xFF): returned NULL");
+                        result.DebugLog.Add($"ReadTrackInfo({track}) fallback exception: {ex.Message}");
                     }
-                }
-                catch (Exception ex)
-                {
-                    result.DebugLog.Add($"ReadTrackInfo(0xFF) exception: {ex.Message}");
                 }
             }
 
@@ -238,83 +235,49 @@ public class DiscInfoService
                 }
 
                 result.DebugLog.Add($"TrackInfos from TOC: {result.TrackInfos.Count} entries");
+            }
+            else
+            {
+                result.DebugLog.Add("ReadToc(): returned NULL");
+            }
 
-                // Fallback for DVD-R blank: TOC may have no track entries,
-                // but ReadTrackInfo(1) usually works.
-                if (result.TrackInfos.Count == 0 && OpticalDrive.IsProfileDvd(profile))
+            // Fallback for DVD-R blank/appendable: TOC may be null or have no track entries,
+            // but ReadTrackInfo(1) usually works.
+            if (result.TrackInfos.Count == 0 && OpticalDrive.IsProfileDvd(profile))
+            {
+                PopulateTrackInfoFallback(drive, result);
+            }
+
+            // Fix up DataMode for pressed CD-ROMs where ReadTrackInfo returns 0.
+            if (toc != null && profile is >= 0x0008 and <= 0x000B && result.TrackInfos.Count > 0)
+            {
+                // Method 1: READ HEADER (44h) on the track's start LBA
+                foreach (var ti in result.TrackInfos.Where(t => t.TrackNumber <= 0x99 && t.DataMode == 0))
                 {
                     try
                     {
-                        var ti = drive.ReadTrackInfo(1);
-                        if (ti != null)
-                        {
-                            result.TrackInfos.Add(ti);
-                            result.DebugLog.Add($"ReadTrackInfo(1): TrackSize={ti.TrackSize}" +
-                                $" LRA={ti.LastRecordedAddress} DataMode={ti.DataMode}");
-                        }
-                        else
-                        {
-                            result.DebugLog.Add("ReadTrackInfo(1): returned NULL");
-                        }
+                        var header = drive.ReadHeader(ti.TrackStartAddress);
+                        if (header != null && (header.DataMode == 1 || header.DataMode == 2))
+                            result.TrackDataModes[ti.TrackNumber] = header.DataMode;
                     }
-                    catch (Exception ex)
-                    {
-                        result.DebugLog.Add($"ReadTrackInfo(1) exception: {ex.Message}");
-                    }
-
-                    // Second fallback: invisible track (0xFF) for DVD-R blank
-                    if (result.TrackInfos.Count == 0)
-                    {
-                        try
-                        {
-                            var ti = drive.ReadTrackInfo(0xFF);
-                            if (ti != null)
-                            {
-                                // Present as track 1 in the display
-                                result.TrackInfos.Add(new TrackInfoData
-                                {
-                                    TrackNumber = 1,
-                                    TrackStartAddress = ti.TrackStartAddress,
-                                    TrackSize = ti.TrackSize,
-                                    LastRecordedAddress = ti.LastRecordedAddress
-                                });
-                            }
-                        }
-                        catch { }
-                    }
+                    catch { }
                 }
 
-                // Fix up DataMode for pressed CD-ROMs where ReadTrackInfo returns 0.
-                if (profile is >= 0x0008 and <= 0x000B && result.TrackInfos.Count > 0)
+                // Method 2: Full TOC disc type (PSec of A0h entry, bit 4 = Mode 2 / XA)
+                if (result.TrackDataModes.Count == 0)
                 {
-                    // Method 1: READ HEADER (44h) on the track's start LBA
-                    foreach (var ti in result.TrackInfos.Where(t => t.TrackNumber <= 0x99 && t.DataMode == 0))
+                    try
                     {
-                        try
+                        var fullToc = drive.ReadFullToc();
+                        var a0 = fullToc?.FirstOrDefault(e => e.Point == 0xA0);
+                        if (a0 != null && (a0.PSec & 0x10) != 0)
                         {
-                            var header = drive.ReadHeader(ti.TrackStartAddress);
-                            if (header != null && (header.DataMode == 1 || header.DataMode == 2))
-                                result.TrackDataModes[ti.TrackNumber] = header.DataMode;
+                            foreach (var entry in toc.Entries.Where(e =>
+                                e.TrackNumber <= 0x99 && e.IsData))
+                                result.TrackDataModes[entry.TrackNumber] = 2;
                         }
-                        catch { }
                     }
-
-                    // Method 2: Full TOC disc type (PSec of A0h entry, bit 4 = Mode 2 / XA)
-                    if (result.TrackDataModes.Count == 0)
-                    {
-                        try
-                        {
-                            var fullToc = drive.ReadFullToc();
-                            var a0 = fullToc?.FirstOrDefault(e => e.Point == 0xA0);
-                            if (a0 != null && (a0.PSec & 0x10) != 0)
-                            {
-                                foreach (var entry in toc.Entries.Where(e =>
-                                    e.TrackNumber <= 0x99 && e.IsData))
-                                    result.TrackDataModes[entry.TrackNumber] = 2;
-                            }
-                        }
-                        catch { }
-                    }
+                    catch { }
                 }
             }
 
@@ -339,7 +302,7 @@ public class DiscInfoService
 
             if (OpticalDrive.IsProfileDvd(profile))
             {
-                result.RecordingManagementArea = ReadRmaInfo(drive);
+                result.RecordingManagementArea = ReadRmaInfo(drive, result);
             }
 
             if (profile is >= 0x0008 and <= 0x000B)
@@ -406,6 +369,11 @@ public class DiscInfoService
                             return SanitizeMid(fallback.Trim());
                     }
                 }
+
+                // Fallback: Pre-recorded Information in Lead-in (format 0x0E)
+                var mid = ReadMidFromPreRecordedLi(drive);
+                if (!string.IsNullOrWhiteSpace(mid))
+                    return mid;
             }
             else if (profile >= 0x0040)
             {
@@ -429,6 +397,61 @@ public class DiscInfoService
         return System.Text.Encoding.ASCII.GetString(data, 4, stringLen).TrimEnd('\0', ' ');
     }
 
+    private static string ReadMidFromPreRecordedLi(OpticalDrive drive)
+    {
+        try
+        {
+            var (result, data) = drive.ReadDiscStructure(0, 0,
+                MmcCommands.DiscStructureFormatPreRecordedLi, 256);
+            if (!result.Success || result.DataTransferred < 8)
+                return string.Empty;
+
+            int dt = result.DataTransferred;
+            // DVD-R ADIP data: 8-byte blocks starting at offset 4
+            //   Byte 0: block sequence ID (01, 02, 03...)
+            //   Bytes 1-7: data (7 bytes)
+            // IDs 3+4 concatenated = manufacturer ID (e.g. "MCC 02" + "RG20  ")
+            var midParts = new System.Collections.Generic.List<string>();
+            for (int offset = 4; offset + 8 <= dt; offset += 8)
+            {
+                byte blockId = data[offset];
+                if (blockId >= 3 && blockId <= 4)
+                {
+                    var part = System.Text.Encoding.ASCII.GetString(data, offset + 1, 7)
+                        .TrimEnd('\0', ' ');
+                    if (!string.IsNullOrWhiteSpace(part))
+                        midParts.Add(part);
+                }
+            }
+
+            if (midParts.Count > 0)
+            {
+                var mid = string.Concat(midParts);
+                return !string.IsNullOrWhiteSpace(mid) ? SanitizeMid(mid.Trim()) : string.Empty;
+            }
+
+            // Fallback: scan for ASCII printable run >= 4 chars (any block structure)
+            var sb = new System.Text.StringBuilder();
+            for (int i = 4; i < Math.Min(dt, 200); i++)
+            {
+                if (data[i] >= 0x20 && data[i] <= 0x7E)
+                    sb.Append((char)data[i]);
+                else if (sb.Length >= 4)
+                    break;
+                else
+                    sb.Clear();
+            }
+            var asciiRun = sb.ToString().Trim();
+            if (asciiRun.Length >= 4)
+                return SanitizeMid(asciiRun);
+        }
+        catch
+        {
+        }
+
+        return string.Empty;
+    }
+
     /// <summary>
     /// Strips non-printable/non-ASCII characters from a raw MID string.
     /// DVD-ROM pressed discs return binary lead-in data, not clean ASCII text.
@@ -450,42 +473,110 @@ public class DiscInfoService
         return result.Length >= 3 ? result : string.Empty;
     }
 
-    private static string ReadRmaInfo(OpticalDrive drive)
+    private static void PopulateTrackInfoFallback(OpticalDrive drive, DiscInfoResult result)
     {
-        // READ DISC STRUCTURE format 0x0D (RMA Information).
-        // Returns Recording Management Data including the last recorder's
-        // drive manufacturer, model, and serial number.
-        //
-        // MMC-5 layout (first RMD block at offset 20+):
-        //   0-7   : Drive Manufacturer ID (ASCII)
-        //   8-23  : Model ID (ASCII, space-padded)
-        //   24-31 : Serial Number (ASCII, space-padded)
-        //   32-47 : Date/Time of last recording
+        uint[] fallbackTracks = { 1, 0xFF };
+        foreach (var track in fallbackTracks)
+        {
+            try
+            {
+                var ti = drive.ReadTrackInfo(track);
+                if (ti != null)
+                {
+                    if (track == 0xFF)
+                    {
+                        result.TrackInfos.Add(new TrackInfoData
+                        {
+                            TrackNumber = 1,
+                            TrackStartAddress = ti.TrackStartAddress,
+                            TrackSize = ti.TrackSize,
+                            LastRecordedAddress = ti.LastRecordedAddress
+                        });
+                    }
+                    else
+                    {
+                        result.TrackInfos.Add(ti);
+                    }
+                    result.DebugLog.Add($"ReadTrackInfo({track}) track fallback:" +
+                        $" TrackSize={ti.TrackSize} LRA={ti.LastRecordedAddress}");
+                    return;
+                }
+                else
+                {
+                    result.DebugLog.Add($"ReadTrackInfo({track}) track fallback: returned NULL");
+                }
+            }
+            catch (Exception ex)
+            {
+                result.DebugLog.Add($"ReadTrackInfo({track}) track fallback exception: {ex.Message}");
+            }
+        }
+    }
+
+    private static string ReadRmaInfo(OpticalDrive drive, DiscInfoResult discResult)
+    {
         try
         {
             const int allocationLength = 2052;
-            var (result, data) = drive.ReadDiscStructure(
+            var (scsiResult, data) = drive.ReadDiscStructure(
                 0, 0, MmcCommands.DiscStructureFormatRma, allocationLength);
-            if (!result.Success || result.DataTransferred < 60)
+            if (!scsiResult.Success || scsiResult.DataTransferred < 60)
                 return string.Empty;
 
-            int offset = 20; // skip header (4 len + 4 reserved + 4 update + 4 addr + 4 size)
-            if (offset + 48 > data.Length)
-                return string.Empty;
+            int dt = scsiResult.DataTransferred;
 
-            var mfg  = ExtractAscii(data, offset, 8);
-            var model = ExtractAscii(data, offset + 8, 16);
-            var serial = ExtractAscii(data, offset + 24, 8);
+            // Try multiple RMD block offsets (header sizes vary by drive/firmware)
+            int[] possibleOffsets = { 16, 20, 24, 32, 64, 128, 256 };
+            foreach (int offset in possibleOffsets)
+            {
+                if (offset + 48 > dt)
+                    continue;
 
-            if (string.IsNullOrWhiteSpace(mfg) && string.IsNullOrWhiteSpace(model))
-                return string.Empty;
+                var mfg = ExtractAscii(data, offset, 8);
+                var model = ExtractAscii(data, offset + 8, 16);
+                var serial = ExtractAscii(data, offset + 24, 8);
 
-            var parts = new System.Collections.Generic.List<string>(3);
-            if (!string.IsNullOrWhiteSpace(mfg))   parts.Add(mfg.Trim());
-            if (!string.IsNullOrWhiteSpace(serial)) parts.Add(serial.Trim());
-            if (!string.IsNullOrWhiteSpace(model))  parts.Add(model.Trim());
+                if (!string.IsNullOrWhiteSpace(mfg) && mfg.Trim().Length >= 2)
+                {
+                    var parts = new System.Collections.Generic.List<string>(3);
+                    parts.Add(mfg.Trim());
+                    if (!string.IsNullOrWhiteSpace(serial)) parts.Add(serial.Trim());
+                    if (!string.IsNullOrWhiteSpace(model)) parts.Add(model.Trim());
 
-            return string.Join(" ", parts);
+                    discResult.DebugLog.Add($"RMA parsed at offset {offset}:" +
+                        $" mfg=[{mfg}] model=[{model}] serial=[{serial}]");
+                    return string.Join(" ", parts);
+                }
+            }
+
+            // Dump first 128 bytes + last 128 bytes for debugging
+            string hex128 = BitConverter.ToString(data, 0, Math.Min(128, dt));
+            string hexTail = dt > 128
+                ? BitConverter.ToString(data, dt - 128, 128)
+                : "(buffer <= 128)";
+            discResult.DebugLog.Add($"RMA: no valid RMD block found in {dt} bytes," +
+                $" head=[{hex128}], tail=[{hexTail}]");
+
+            // Last resort: scan entire buffer for printable ASCII runs >= 4 chars
+            var sb = new System.Text.StringBuilder();
+            var asciiHits = new System.Collections.Generic.List<string>();
+            for (int i = 0; i < dt; i++)
+            {
+                if (data[i] >= 0x20 && data[i] <= 0x7E)
+                    sb.Append((char)data[i]);
+                else
+                {
+                    if (sb.Length >= 4)
+                        asciiHits.Add(sb.ToString().Trim());
+                    sb.Clear();
+                }
+            }
+            if (sb.Length >= 4)
+                asciiHits.Add(sb.ToString().Trim());
+            if (asciiHits.Count > 0)
+                discResult.DebugLog.Add($"RMA ASCII runs: [{string.Join("] [", asciiHits)}]");
+
+            return string.Empty;
         }
         catch
         {
