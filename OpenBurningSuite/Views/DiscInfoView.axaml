@@ -23,9 +23,14 @@
                                   SelectionChanged="OnDriveSelectionChanged"
                                   ToolTip.Tip="Choose an optical drive to inspect"/>
                         <Button x:Name="BtnRefresh" Grid.Column="2"
-                                Content="&#x1F504;  Refresh"
                                 Classes="ActionBtn" Click="OnRefreshClick"
-                                ToolTip.Tip="Rescan drives and refresh disc information"/>
+                                ToolTip.Tip="Rescan drives and refresh disc information">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -33,7 +38,8 @@
             <!-- Loading indicator -->
             <Border x:Name="PnlLoading" IsVisible="False" Classes="Card" Padding="16">
                 <StackPanel Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
-                    <TextBlock Text="&#x23F3;" FontSize="20" VerticalAlignment="Center"/>
+                    <Image Width="20" Height="20" VerticalAlignment="Center"
+                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-hourglass-2d-50.png"/>
                     <TextBlock x:Name="TxtLoading" Text="Reading disc information..."
                                Foreground="#E8F0FE" FontSize="13" VerticalAlignment="Center"/>
                 </StackPanel>
@@ -42,7 +48,8 @@
             <!-- No Media message -->
             <Border x:Name="PnlNoMedia" Classes="Card" Padding="24">
                 <StackPanel HorizontalAlignment="Center" Spacing="8">
-                    <TextBlock Text="&#x1F4BF;" FontSize="32" HorizontalAlignment="Center"/>
+                    <Image Width="50" Height="50" HorizontalAlignment="Center"
+                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-empty-box-50.png"/>
                     <TextBlock Text="No Media Detected"
                                Foreground="#8899AA" FontSize="16" FontWeight="SemiBold"
                                HorizontalAlignment="Center"/>
@@ -59,14 +66,24 @@
                         <TextBlock Text="Disc Information" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnSaveDiscInfo" Grid.Column="1"
-                                Content="&#x1F4BE;  Save"
                                 Classes="ActionBtn" Click="OnSaveDiscInfoClick"
                                 Margin="0,0,6,0"
-                                ToolTip.Tip="Save disc information to file"/>
+                                ToolTip.Tip="Save disc information to file">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                                <TextBlock Text="Save" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnCopyInfo" Grid.Column="2"
-                                Content="&#x1F4CB;  Copy"
                                 Classes="ActionBtn" Click="OnCopyInfoClick"
-                                ToolTip.Tip="Copy all displayed information to clipboard"/>
+                                ToolTip.Tip="Copy all displayed information to clipboard">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-clipboard-16.png"/>
+                                <TextBlock Text="Copy" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
                     <TextBox x:Name="TxtDiscInfo"
                              Classes="LogBox"
@@ -87,7 +104,8 @@
                 <Expander.Header>
                     <Border Background="Transparent" HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="&#x1F4DD;" FontSize="14"/>
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-console-3d-16.png"/>
                             <TextBlock Text="Log" FontSize="13" FontWeight="SemiBold"
                                        Foreground="#E8F0FE"/>
                         </StackPanel>
@@ -99,14 +117,24 @@
                             <TextBlock Text="Operation Log" Classes="SectionHeader"
                                        VerticalAlignment="Center"/>
                             <Button x:Name="BtnSaveLog" Grid.Column="1"
-                                    Content="&#x1F4BE;  Save"
                                     Classes="ActionBtn" Click="OnSaveLogClick"
                                     Margin="0,0,6,0"
-                                    ToolTip.Tip="Save log to file"/>
+                                    ToolTip.Tip="Save log to file">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                                    <TextBlock Text="Save" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                             <Button x:Name="BtnClearLog" Grid.Column="2"
-                                    Content="&#x1F9F9;  Clear"
                                     Classes="ActionBtn" Click="OnClearLogClick"
-                                    ToolTip.Tip="Clear the log output"/>
+                                    ToolTip.Tip="Clear the log output">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                    <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
                         <TextBox x:Name="TxtLog"
                                  Classes="LogBox"
