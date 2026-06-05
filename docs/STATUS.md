@@ -102,6 +102,12 @@
 |---|--------|-----------|
 | R1-R3 | Alternativas ao requireAdministrator | baixa |
 
+## Nota: isolamento de ícones por contexto
+Atualmente, botões/sessões diferentes que usam o mesmo stem de ícone (ex: sidebar "Advanced"
+e expansor "Advanced Options" ambos usam `icons8-settings-2d`) compartilham o mesmo PNG.
+Para isolar: criar novo stem, copiar PNG, atualizar referência no AXAML.
+Decisão postergada pra fase de validação.
+
 ## 🐛 Bugs Conhecidos
 - B1: ✅ corrigido (CHD routing)
 
