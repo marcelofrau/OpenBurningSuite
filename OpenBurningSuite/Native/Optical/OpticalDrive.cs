@@ -3195,10 +3195,14 @@ public sealed class OpticalDrive : IDisposable
         byte sessionsMsb = 0;
         byte tracksMsb = 0;
 
-        if (result.DataTransferred >= 38)
+        if (result.DataTransferred >= 20)
         {
             freeSectors = MmcCommands.ReadBE32(data, 16);
             nextWritable = MmcCommands.ReadBE32(data, 12);
+        }
+
+        if (result.DataTransferred >= 36)
+        {
             sessionsMsb = data[33];
             tracksMsb = data[34];
         }

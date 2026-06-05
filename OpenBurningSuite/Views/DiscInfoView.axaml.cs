@@ -225,11 +225,11 @@ public partial class DiscInfoView : UserControl
         if (!string.IsNullOrWhiteSpace(r.Mid))
             Indent(sb, $"MID: {r.Mid}{(string.IsNullOrWhiteSpace(r.ManufacturerName) ? "" : $" ({r.ManufacturerName})")}");
 
-        if (!string.IsNullOrWhiteSpace(r.ManufacturerName) && r.ManufacturerName != r.Mid)
-            Indent(sb, $"Manufacturer: {r.ManufacturerName}");
+        if (r.FreeSectors > 0)
+            Indent(sb, $"Free Sectors: {r.FreeSectors:N0}");
 
         if (r.FreeBytes > 0)
-            Indent(sb, $"Free Space: {FormatHelper.FormatBytes(r.FreeBytes)}");
+            Indent(sb, $"Free Space: {FormatHelper.FormatBytes(r.FreeBytes)} ({r.FreeBytes:N0} bytes)");
 
         if (!string.IsNullOrWhiteSpace(r.FreeTimeFormatted) && r.FreeSectors > 0)
             Indent(sb, $"Free Time: {r.FreeTimeFormatted}");
@@ -254,6 +254,22 @@ public partial class DiscInfoView : UserControl
 
         if (writeSpeeds != null)
             Indent(sb, $"Supported Write Speeds: {writeSpeeds}");
+
+        // Pre-recorded Information (Manufacturer ID from ADIP/lead-in)
+        if (!string.IsNullOrWhiteSpace(r.PreRecordedManufacturerId))
+        {
+            sb.AppendLine();
+            sb.AppendLine("Pre-recorded Information:");
+            Indent(sb, $"Manufacturer ID: {r.PreRecordedManufacturerId}");
+        }
+
+        // Recording Management Area (the drive that last recorded/managed this disc)
+        if (!string.IsNullOrWhiteSpace(r.RecordingManagementArea))
+        {
+            sb.AppendLine();
+            sb.AppendLine("Recording Management Area Information:");
+            Indent(sb, r.RecordingManagementArea);
+        }
 
         // TOC Information (ImgBurn-style)
         if (r.Toc != null && r.Toc.Entries.Count > 0)

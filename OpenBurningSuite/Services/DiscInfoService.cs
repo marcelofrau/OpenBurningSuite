@@ -91,6 +91,19 @@ public class DiscInfoService
                     catch { }
                 }
 
+                // Fallback for DVD-R blank: TOC may have no track entries,
+                // but ReadTrackInfo(1) usually works.
+                if (result.TrackInfos.Count == 0 && OpticalDrive.IsProfileDvd(profile))
+                {
+                    try
+                    {
+                        var ti = drive.ReadTrackInfo(1);
+                        if (ti != null)
+                            result.TrackInfos.Add(ti);
+                    }
+                    catch { }
+                }
+
                 // Fix up DataMode for pressed CD-ROMs where ReadTrackInfo returns 0.
                 if (profile is >= 0x0008 and <= 0x000B && result.TrackInfos.Count > 0)
                 {
@@ -142,6 +155,12 @@ public class DiscInfoService
 
             result.Mid = ReadMidFromDisc(drive, profile);
             result.ManufacturerName = MediaManufacturerLookup.LookupDvdBdManufacturer(result.Mid);
+            result.PreRecordedManufacturerId = result.Mid;
+
+            if (OpticalDrive.IsProfileDvd(profile))
+            {
+                result.RecordingManagementArea = ReadRmaInfo(drive);
+            }
 
             if (profile is >= 0x0008 and <= 0x000B)
             {
@@ -193,6 +212,20 @@ public class DiscInfoService
                 var mfg = drive.ReadManufacturerId(MmcCommands.DiscStructureFormatManufacturer);
                 if (!string.IsNullOrWhiteSpace(mfg))
                     return SanitizeMid(mfg.Trim());
+
+                // Some drives need mediaType=1 (DVD-RW/-R) for format 0x04
+                var (result, data) = drive.ReadDiscStructure(1, 0,
+                    MmcCommands.DiscStructureFormatManufacturer, 2052);
+                if (result.Success && result.DataTransferred >= 8)
+                {
+                    var dataLen = (data[0] << 8) | data[1];
+                    if (dataLen >= 4)
+                    {
+                        var fallback = ReadManufacturerIdFromRaw(data, dataLen, result.DataTransferred);
+                        if (!string.IsNullOrWhiteSpace(fallback))
+                            return SanitizeMid(fallback.Trim());
+                    }
+                }
             }
             else if (profile >= 0x0040)
             {
@@ -206,6 +239,14 @@ public class DiscInfoService
         }
 
         return string.Empty;
+    }
+
+    private static string ReadManufacturerIdFromRaw(byte[] data, int dataLen, int dataTransferred)
+    {
+        int stringLen = Math.Min(dataLen, dataTransferred - 4);
+        stringLen = Math.Min(stringLen, data.Length - 4);
+        if (stringLen <= 0) return string.Empty;
+        return System.Text.Encoding.ASCII.GetString(data, 4, stringLen).TrimEnd('\0', ' ');
     }
 
     /// <summary>
@@ -227,6 +268,63 @@ public class DiscInfoService
         var result = new string(chars.ToArray());
         // If after sanitizing we have very little, return empty
         return result.Length >= 3 ? result : string.Empty;
+    }
+
+    private static string ReadRmaInfo(OpticalDrive drive)
+    {
+        // READ DISC STRUCTURE format 0x0D (RMA Information).
+        // Returns Recording Management Data including the last recorder's
+        // drive manufacturer, model, and serial number.
+        //
+        // MMC-5 layout (first RMD block at offset 20+):
+        //   0-7   : Drive Manufacturer ID (ASCII)
+        //   8-23  : Model ID (ASCII, space-padded)
+        //   24-31 : Serial Number (ASCII, space-padded)
+        //   32-47 : Date/Time of last recording
+        try
+        {
+            const int allocationLength = 2052;
+            var (result, data) = drive.ReadDiscStructure(
+                0, 0, MmcCommands.DiscStructureFormatRma, allocationLength);
+            if (!result.Success || result.DataTransferred < 60)
+                return string.Empty;
+
+            int offset = 20; // skip header (4 len + 4 reserved + 4 update + 4 addr + 4 size)
+            if (offset + 48 > data.Length)
+                return string.Empty;
+
+            var mfg  = ExtractAscii(data, offset, 8);
+            var model = ExtractAscii(data, offset + 8, 16);
+            var serial = ExtractAscii(data, offset + 24, 8);
+
+            if (string.IsNullOrWhiteSpace(mfg) && string.IsNullOrWhiteSpace(model))
+                return string.Empty;
+
+            var parts = new System.Collections.Generic.List<string>(3);
+            if (!string.IsNullOrWhiteSpace(mfg))   parts.Add(mfg.Trim());
+            if (!string.IsNullOrWhiteSpace(serial)) parts.Add(serial.Trim());
+            if (!string.IsNullOrWhiteSpace(model))  parts.Add(model.Trim());
+
+            return string.Join(" ", parts);
+        }
+        catch
+        {
+            return string.Empty;
+        }
+    }
+
+    private static string ExtractAscii(byte[] data, int offset, int length)
+    {
+        var chars = new char[length];
+        int count = 0;
+        int end = Math.Min(offset + length, data.Length);
+        for (int i = offset; i < end; i++)
+        {
+            var b = data[i];
+            if (b >= 0x20 && b <= 0x7E)
+                chars[count++] = (char)b;
+        }
+        return new string(chars, 0, count);
     }
 
     private static AtipInfo? ReadAtipInfo(OpticalDrive drive)
