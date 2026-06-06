@@ -26,12 +26,18 @@ public partial class App : Application
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                var splash = new SplashWindow();
+                splash.Show();
+
                 _mainWindow = new MainWindow();
                 desktop.MainWindow = _mainWindow;
 
                 Helpers.Logger.Info("MainWindow created successfully");
 
                 BuildNativeMenu();
+
+                _mainWindow.Show();
+                splash.Close();
             }
 
             base.OnFrameworkInitializationCompleted();

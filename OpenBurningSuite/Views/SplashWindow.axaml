@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="OpenBurningSuite.Views.SplashWindow"
+        Title="Open Burning Suite"
+        Width="420" Height="280"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
+        CanResize="False"
+        Background="#0A1520"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1">
+
+    <Grid>
+        <Rectangle>
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0.0" Color="#0E1A2B"/>
+                    <GradientStop Offset="0.5" Color="#0C1622"/>
+                    <GradientStop Offset="1.0" Color="#060D18"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Border VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical" Spacing="12" HorizontalAlignment="Center">
+                <Image Width="64" Height="64"
+                       Source="avares://OpenBurningSuite/icon.png"
+                       HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Open Burning Suite"
+                           FontSize="26"
+                           FontWeight="SemiBold"
+                           Foreground="#E8F0FE"
+                           HorizontalAlignment="Center"/>
+
+                <Border Height="1" Background="#1E3450"
+                        Margin="40,4" Opacity="0.6"/>
+
+                <TextBlock x:Name="VersionText"
+                           FontSize="12"
+                           Foreground="#5A7A9A"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -68,6 +68,19 @@ See [Supported Formats](https://svengdk.github.io/OpenBurningSuite/supported-for
 
 ---
 
+## Icons Attribution
+
+This application uses icons from the following sources:
+
+| Source | License | Attribution |
+|:-------|:--------|:------------|
+| [Icons8](https://icons8.com) | Free with attribution | Icons by [Icons8](https://icons8.com) |
+| [FluentUI Emoji](https://github.com/microsoft/fluentui-emoji) — Microsoft | MIT | Emojis by Microsoft FluentUI Emoji |
+| [Twemoji](https://github.com/jdecked/twemoji) — Twitter/X | CC-BY 4.0 | Emoji graphics by [Twemoji](https://github.com/jdecked/twemoji) |
+| [KyleBing/retro-game-console-icons](https://github.com/KyleBing/retro-game-console-icons) | GPL-3.0 | Console icons by [KyleBing](https://github.com/KyleBing/retro-game-console-icons) |
+
+All icons were sourced from the [icons8-personal-set](https://github.com/marcelofrau/icons8-personal-set) collection.
+
 ## License
 
 Distributed under the **BSD 2-Clause License**. See [`LICENSE`](LICENSE) for more information.
