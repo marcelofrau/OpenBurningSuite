@@ -26,9 +26,13 @@
                                       HorizontalAlignment="Stretch"
                                       ToolTip.Tip="Choose which optical drive to read from"/>
                             <Button x:Name="BtnRefreshDrives" Grid.Column="1"
-                                    Content="🔄" Classes="ActionBtn"
+                                    Classes="ActionBtn"
                                     Margin="6,0,0,0" Click="OnRefreshDrivesClick"
-                                    ToolTip.Tip="Rescan the system for connected optical drives"/>
+                                    ToolTip.Tip="Rescan the system for connected optical drives">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Button>
                         </Grid>
 
                         <TextBlock Text="Output Format:" Grid.Row="1" Grid.Column="0"
@@ -56,7 +60,7 @@
                         </Grid>
 
                         <TextBlock Grid.Row="3" Grid.Column="1"
-                                   Text="💡 Drag and drop a file here"
+                                    Text="Drag and drop a file here"
                                    Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
                     </Grid>
                 </StackPanel>
@@ -66,12 +70,21 @@
             <Border Classes="Card" x:Name="PnlDetectedContent" IsVisible="False">
                 <StackPanel Spacing="10">
                     <Grid ColumnDefinitions="*,Auto">
-                        <TextBlock Text="🔍  Detected Content" Classes="SectionHeader"
-                                   VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
+                            <TextBlock Text="Detected Content" Classes="SectionHeader"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
                         <Button x:Name="BtnDetectContent" Grid.Column="1"
-                                Content="🔎  Detect Disc"
                                 Classes="ActionBtn" Click="OnDetectContentClick"
-                                ToolTip.Tip="Analyze the inserted disc to detect its content type and auto-configure optimal copy settings"/>
+                                ToolTip.Tip="Analyze the inserted disc to detect its content type and auto-configure optimal copy settings">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
+                                <TextBlock Text="Detect Disc" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <Border Background="#0A1520" CornerRadius="6" Padding="12">
@@ -168,14 +181,22 @@
             </Border>
 
             <!-- Gaming System Presets -->
-            <Expander Header="🎮  Gaming System Presets"
-                      Background="#0E1A2B"
+            <Expander Background="#0E1A2B"
                       Foreground="#E8F0FE"
                       BorderBrush="#1E3450" BorderThickness="1"
                       CornerRadius="8"
                       Padding="16"
                       IsExpanded="True"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Stretch"
                       ToolTip.Tip="Pre-configured settings for various gaming console disc formats">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
+                        <TextBlock Text="Gaming System Presets" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Expander.Header>
                 <StackPanel Spacing="8" Margin="0,8,0,0">
                     <TextBlock Text="Select a preset to automatically configure sector size, subchannel, and error recovery settings:"
                                Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
@@ -199,7 +220,11 @@
             <!-- Encryption -->
             <Border Classes="Card">
                 <StackPanel Spacing="10">
-                    <TextBlock Text="🔒  Encryption" Classes="SectionHeader"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
+                        <TextBlock Text="Encryption" Classes="SectionHeader"/>
+                    </StackPanel>
                     <TextBlock Text="Optionally encrypt the output image to protect sensitive backups."
                                Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
                     <CheckBox x:Name="ChkEncryptOutput"
@@ -230,15 +255,25 @@
                         <TextBlock Text="Progress" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnStartRead" Grid.Column="1"
-                                Content="▶  Start Copy"
                                 Classes="PrimaryBtn" Click="OnStartReadClick"
                                 Margin="0,0,8,0"
-                                ToolTip.Tip="Begin reading the disc to the specified output file"/>
+                                ToolTip.Tip="Begin reading the disc to the specified output file">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
+                                <TextBlock Text="Start Copy" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnCancelRead" Grid.Column="2"
-                                Content="⏹  Cancel"
                                 Classes="DangerBtn" Click="OnCancelReadClick"
                                 IsEnabled="False"
-                                ToolTip.Tip="Cancel the current read operation"/>
+                                ToolTip.Tip="Cancel the current read operation">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <ProgressBar x:Name="ReadProgress"
@@ -273,9 +308,14 @@
                         <TextBlock Text="Log" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Content="🧹 Clear"
                                 Classes="ActionBtn" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the log output"/>
+                                ToolTip.Tip="Clear the log output">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <TextBox x:Name="TxtLog"

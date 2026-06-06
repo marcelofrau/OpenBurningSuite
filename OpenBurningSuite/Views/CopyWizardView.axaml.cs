@@ -216,12 +216,34 @@ public partial class CopyWizardView : UserControl
         BtnCopyNext.Content = step == 2 ? "Start Copy →" : "Next →";
         BtnCopyNext.IsVisible = step < 3;
 
-        TxtCopyStep1Ind.Foreground = new Avalonia.Media.SolidColorBrush(
-            step >= 1 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
-        TxtCopyStep2Ind.Foreground = new Avalonia.Media.SolidColorBrush(
-            step >= 2 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
-        TxtCopyStep3Ind.Foreground = new Avalonia.Media.SolidColorBrush(
-            step >= 3 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
+        SetStepIndicator(CopyStepInd1, CopyStepLbl1, step >= 1, step == 1);
+        SetStepIndicator(CopyStepInd2, CopyStepLbl2, step >= 2, step == 2);
+        SetStepIndicator(CopyStepInd3, CopyStepLbl3, step >= 3, step == 3);
+    }
+
+    private static void SetStepIndicator(Border indicator, TextBlock label, bool reached, bool current)
+    {
+        indicator.Background = current
+            ? Avalonia.Media.Brush.Parse("#1E90FF")
+            : reached
+                ? Avalonia.Media.Brush.Parse("#2A5A8A")
+                : Avalonia.Media.Brush.Parse("#1E3450");
+
+        var textChild = indicator.Child as TextBlock;
+        if (textChild != null)
+            textChild.Foreground = reached
+                ? Avalonia.Media.Brush.Parse("#FFFFFF")
+                : Avalonia.Media.Brush.Parse("#5A7A9A");
+
+        label.Foreground = current
+            ? Avalonia.Media.Brush.Parse("#E8F0FE")
+            : reached
+                ? Avalonia.Media.Brush.Parse("#E8F0FE")
+                : Avalonia.Media.Brush.Parse("#5A7A9A");
+
+        label.FontWeight = current
+            ? Avalonia.Media.FontWeight.SemiBold
+            : Avalonia.Media.FontWeight.Normal;
     }
 
     private void OnCopyBackClick(object? sender, RoutedEventArgs e)

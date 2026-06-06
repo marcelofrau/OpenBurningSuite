@@ -8,7 +8,7 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="💿  Copy Disc Wizard"
+                <TextBlock Text="Copy Disc Wizard"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
                 <TextBlock Text="Copy a disc to an image file — guided step by step."
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
@@ -17,11 +17,41 @@
             <!-- Step indicators -->
             <Border Classes="Card">
                 <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
-                    <TextBlock x:Name="TxtCopyStep1Ind" Text="① Source Drive" Foreground="#5BC0FF" FontWeight="Bold"/>
-                    <TextBlock Text="→" Foreground="#5A7A9A"/>
-                    <TextBlock x:Name="TxtCopyStep2Ind" Text="② Output Settings" Foreground="#5A7A9A"/>
-                    <TextBlock Text="→" Foreground="#5A7A9A"/>
-                    <TextBlock x:Name="TxtCopyStep3Ind" Text="③ Copy" Foreground="#5A7A9A"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="CopyStepInd1" Background="#1E90FF" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="1" Foreground="White" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="CopyStepLbl1" Text="Source Drive"
+                                   Foreground="#E8F0FE" FontSize="12"
+                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="CopyStepInd2" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="CopyStepLbl2" Text="Output Settings"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="CopyStepInd3" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="CopyStepLbl3" Text="Copy"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
 
@@ -38,8 +68,13 @@
                         <Grid ColumnDefinitions="*,Auto">
                             <ComboBox x:Name="CmbCopyDrive" PlaceholderText="Select drive..."
                                       ToolTip.Tip="Select the drive containing the disc to copy"/>
-                            <Button x:Name="BtnCopyRefreshDrives" Grid.Column="1" Content="🔄 Refresh"
-                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnCopyRefreshDrivesClick"/>
+                            <Button x:Name="BtnCopyRefreshDrives" Grid.Column="1"
+                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnCopyRefreshDrivesClick">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                    <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
 
                         <!-- Drive info -->
@@ -93,8 +128,10 @@
                                        Grid.Row="1" Margin="0,8,8,0"/>
                             <TextBox x:Name="TxtCopyOutputPath" Grid.Row="1" Grid.Column="1"
                                      Watermark="Output file path..." Margin="0,8,0,0"/>
-                            <Button Grid.Row="1" Grid.Column="2" Content="📂" Classes="ActionBtn"
-                                    Margin="8,8,0,0" Click="OnCopyBrowseOutputClick"/>
+                            <Button Grid.Row="1" Grid.Column="2" Classes="ActionBtn"
+                                    Margin="8,8,0,0" Click="OnCopyBrowseOutputClick">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-open-file-folder-16.png"/>
+                            </Button>
 
                             <TextBlock Text="Speed:" Foreground="#8EAFC8" VerticalAlignment="Center"
                                        Grid.Row="2" Margin="0,8,8,0"/>
@@ -121,8 +158,10 @@
                                        Margin="0,0,8,0"/>
                             <TextBox x:Name="TxtCopyIrdPath" Grid.Column="1"
                                      Watermark="Path to .ird file..."/>
-                            <Button Grid.Column="2" Content="📂" Classes="ActionBtn"
-                                    Margin="8,0,0,0" Click="OnCopyBrowseIrdClick"/>
+                            <Button Grid.Column="2" Classes="ActionBtn"
+                                    Margin="8,0,0,0" Click="OnCopyBrowseIrdClick">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-open-file-folder-16.png"/>
+                            </Button>
                         </Grid>
                     </StackPanel>
                 </Border>

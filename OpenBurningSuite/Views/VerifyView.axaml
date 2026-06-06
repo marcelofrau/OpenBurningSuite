@@ -32,9 +32,13 @@
                                       PlaceholderText="Select optical drive..."
                                       ToolTip.Tip="Select the drive containing the disc to verify"/>
                             <Button x:Name="BtnRefreshDrives" Grid.Column="1"
-                                    Content="🔄" Classes="ActionBtn"
+                                    Classes="ActionBtn"
                                     Margin="6,0,0,0" Click="OnRefreshDrivesClick"
-                                    ToolTip.Tip="Refresh the list of available drives"/>
+                                    ToolTip.Tip="Refresh the list of available drives" MinWidth="32" MinHeight="32">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Button>
                         </Grid>
                     </StackPanel>
 
@@ -54,7 +58,7 @@
                                     Margin="6,0,0,0" Click="OnBrowseImageClick"
                                     ToolTip.Tip="Browse for a disc image file"/>
                         </Grid>
-                        <TextBlock Text="💡 Drag and drop a disc image file here" Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
+                        <TextBlock Text="Drag and drop a disc image file here" Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -141,9 +145,14 @@
                                     <TextBlock Text="CHECKSUM RESULT" Foreground="#5A7A9A"
                                                FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
                                     <Button x:Name="BtnCopyChecksum" Grid.Column="1"
-                                            Content="📋 Copy" Classes="ActionBtn"
+                                            Classes="ActionBtn"
                                             Click="OnCopyChecksumClick"
-                                            ToolTip.Tip="Copy the checksum value to clipboard"/>
+                                            ToolTip.Tip="Copy the checksum value to clipboard">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-clipboard-16.png"/>
+                                            <TextBlock Text="Copy" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
                                 </Grid>
                                 <TextBlock x:Name="TxtChecksum" Text="—"
                                            Foreground="#E8F0FE" FontSize="11"
@@ -164,13 +173,23 @@
                         <TextBlock Text="Progress" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnVerify" Grid.Column="1"
-                                Content="✅  Start Verification" Classes="PrimaryBtn"
+                                Classes="PrimaryBtn"
                                 Margin="0,0,8,0" Click="OnVerifyClick"
-                                ToolTip.Tip="Start the verification process"/>
+                                ToolTip.Tip="Start the verification process">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
+                                <TextBlock Text="Start Verification" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnCancel" Grid.Column="2"
-                                Content="⏹  Cancel" Classes="DangerBtn"
+                                Classes="DangerBtn"
                                 IsEnabled="False" Click="OnCancelClick"
-                                ToolTip.Tip="Cancel the verification"/>
+                                ToolTip.Tip="Cancel the verification">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <ProgressBar x:Name="VerifyProgressBar" Classes="BurnProgress" Value="0"/>
@@ -196,9 +215,14 @@
                     <Grid ColumnDefinitions="Auto,*">
                         <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Content="🧹 Clear" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 HorizontalAlignment="Right" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the log output"/>
+                                ToolTip.Tip="Clear the log output">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <TextBox x:Name="TxtLog" Classes="LogBox" Height="180"/>

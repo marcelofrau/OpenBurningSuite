@@ -4,6 +4,8 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using OpenBurningSuite.Helpers;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 
 namespace OpenBurningSuite.Views;
 
@@ -15,7 +17,33 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        TxtElevation.Text = PlatformHelper.IsElevated ? "✅ Elevated" : "⚠ Not elevated";
+        // Set elevation icon and tooltip
+            if (PlatformHelper.IsElevated)
+            {
+                try
+                {
+                    var stream = AssetLoader.Open(new System.Uri("avares://OpenBurningSuite/Assets/Icons/16/icons8-admin-16.png"));
+                    ImgElevation.Source = new Bitmap(stream);
+                }
+                catch
+                {
+                }
+
+                ToolTip.SetTip(ImgElevation, "Elevated (Admin)");
+            }
+            else
+            {
+                try
+                {
+                    var stream = AssetLoader.Open(new System.Uri("avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"));
+                    ImgElevation.Source = new Bitmap(stream);
+                }
+                catch
+                {
+                }
+
+                ToolTip.SetTip(ImgElevation, "Not elevated");
+            }
 
         // Start on home screen — no nav button active
         BtnHome.Classes.Add("Active");

@@ -7,7 +7,7 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="🧹  Blank / Erase Disc Wizard"
+                <TextBlock Text="Blank / Erase Disc Wizard"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
                 <TextBlock Text="Erase rewritable discs or format blank BD-R/DVD+RW media — guided step by step."
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
@@ -16,11 +16,41 @@
             <!-- Step indicators -->
             <Border Classes="Card">
                 <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
-                    <TextBlock x:Name="TxtBlankStep1Ind" Text="① Select Drive" Foreground="#5BC0FF" FontWeight="Bold"/>
-                    <TextBlock Text="→" Foreground="#5A7A9A"/>
-                    <TextBlock x:Name="TxtBlankStep2Ind" Text="② Options" Foreground="#5A7A9A"/>
-                    <TextBlock Text="→" Foreground="#5A7A9A"/>
-                    <TextBlock x:Name="TxtBlankStep3Ind" Text="③ Erase" Foreground="#5A7A9A"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="BlankStepInd1" Background="#1E90FF" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="1" Foreground="White" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="BlankStepLbl1" Text="Select Drive"
+                                   Foreground="#E8F0FE" FontSize="12"
+                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="BlankStepInd2" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="BlankStepLbl2" Text="Options"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="BlankStepInd3" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="BlankStepLbl3" Text="Erase"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
 
@@ -38,8 +68,13 @@
                             <ComboBox x:Name="CmbBlankDrive" PlaceholderText="Select drive..."
                                       SelectionChanged="OnBlankDriveSelChanged"
                                       ToolTip.Tip="Select the drive with the disc to erase"/>
-                            <Button x:Name="BtnBlankRefresh" Grid.Column="1" Content="🔄 Refresh"
-                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnBlankRefreshClick"/>
+                            <Button x:Name="BtnBlankRefresh" Grid.Column="1"
+                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnBlankRefreshClick">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                    <TextBlock Text="Refresh" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </Grid>
 
                         <!-- Drive & media info -->

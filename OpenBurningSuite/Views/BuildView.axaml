@@ -65,7 +65,7 @@
                                 Click="OnBrowseSourceClick"
                                 ToolTip.Tip="Browse for a source folder"/>
 
-                        <TextBlock Text="💡 Drag and drop a folder or files here" Foreground="#5A7A9A" FontSize="10"
+                        <TextBlock Text="Drag and drop a folder or files here" Foreground="#5A7A9A" FontSize="10"
                                    Margin="120,2,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
 
                         <TextBlock Text="Output Image:" Grid.Row="2" Grid.Column="0"
@@ -112,7 +112,14 @@
             </Border>
 
             <!-- Advanced Options -->
-            <Expander Header="⚙&#xFE0F;  Advanced Options" Classes="SettingsExpander">
+            <Expander Classes="SettingsExpander">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                        <TextBlock Text="Advanced Options" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Expander.Header>
                 <Grid ColumnDefinitions="*,*" Margin="0,8,0,0">
                     <StackPanel Grid.Column="0" Spacing="6">
                         <CheckBox x:Name="ChkJolietLong"
@@ -153,7 +160,14 @@
             </Expander>
 
             <!-- Boot Image (El Torito) -->
-            <Expander Header="💾  Boot Image (El Torito)" Classes="SettingsExpander">
+            <Expander Classes="SettingsExpander">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-bootable-16.png"/>
+                        <TextBlock Text="Boot Image (El Torito)" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Expander.Header>
                 <StackPanel Spacing="8" Margin="0,8,0,0">
                     <CheckBox x:Name="ChkBootable"
                               Content="Create bootable disc" Foreground="#E8F0FE"
@@ -230,7 +244,14 @@
             </Expander>
 
             <!-- CD-XA / CD-i Options -->
-            <Expander Header="📀  CD-XA &amp; CD-i Options" Classes="SettingsExpander">
+            <Expander Classes="SettingsExpander">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                        <TextBlock Text="CD-XA &amp; CD-i Options" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Expander.Header>
                 <StackPanel Spacing="8" Margin="0,8,0,0">
                     <CheckBox x:Name="ChkCdXaMode"
                               Content="CD-ROM XA mode (inject CD-XA001 marker in PVD)"
@@ -248,7 +269,14 @@
             </Expander>
 
             <!-- Audio CD Builder -->
-            <Expander Header="🎵  Audio CD Builder" Classes="SettingsExpander">
+            <Expander Classes="SettingsExpander">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
+                        <TextBlock Text="Audio CD Builder" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Expander.Header>
                 <StackPanel Spacing="10" Margin="0,8,0,0">
                     <Grid ColumnDefinitions="*,*">
                         <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
@@ -302,13 +330,25 @@
                     <Grid ColumnDefinitions="*,Auto,Auto">
                         <TextBlock Text="Tracks:" Classes="FieldLabel" VerticalAlignment="Center"/>
                         <Button x:Name="BtnAddTrack" Grid.Column="1"
-                                Content="➕ Add Track" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 Margin="0,0,6,0" Click="OnAddTrackClick"
-                                ToolTip.Tip="Add audio track files (WAV, MP3, WMA, FLAC, OGG, AIFF)"/>
+                                ToolTip.Tip="Add audio track files (WAV, MP3, WMA, FLAC, OGG, AIFF)">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
+                                <TextBlock Text="Add Track" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnRemoveTrack" Grid.Column="2"
-                                Content="➖ Remove" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 Click="OnRemoveTrackClick"
-                                ToolTip.Tip="Remove the selected audio track from the list"/>
+                                ToolTip.Tip="Remove the selected audio track from the list">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-remove-16.png"/>
+                                <TextBlock Text="Remove" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <ListBox x:Name="AudioTrackList"
@@ -326,7 +366,14 @@
             </Expander>
 
             <!-- Gaming System Disc Builders -->
-            <Expander Header="🎮  Gaming System Disc Builders" Classes="SettingsExpander">
+            <Expander Classes="SettingsExpander">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
+                        <TextBlock Text="Gaming System Disc Builders" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Expander.Header>
                 <StackPanel Spacing="8" Margin="0,8,0,0">
                     <TextBlock Text="Configure the disc structure for a specific gaming platform:"
                                Foreground="#5A7A9A" FontSize="11"/>
@@ -375,13 +422,25 @@
                         <TextBlock Text="Build" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnBuild" Grid.Column="1"
-                                Content="🏗  Build Image" Classes="PrimaryBtn"
+                                Classes="PrimaryBtn"
                                 Margin="0,0,8,0" Click="OnBuildClick"
-                                ToolTip.Tip="Start building the disc image"/>
+                                ToolTip.Tip="Start building the disc image">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-create-16.png"/>
+                                <TextBlock Text="Build Image" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                         <Button x:Name="BtnCancelBuild" Grid.Column="2"
-                                Content="⏹  Cancel" Classes="DangerBtn"
+                                Classes="DangerBtn"
                                 IsEnabled="False" Click="OnCancelBuildClick"
-                                ToolTip.Tip="Cancel the current build operation"/>
+                                ToolTip.Tip="Cancel the current build operation">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <ProgressBar x:Name="BuildProgressBar" Classes="BurnProgress" Value="0"/>
@@ -400,9 +459,15 @@
                     <Grid ColumnDefinitions="Auto,*">
                         <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Content="🧹 Clear" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 HorizontalAlignment="Right" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the build log output"/>
+                                ToolTip.Tip="Clear the build log output">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <TextBox x:Name="TxtLog" Classes="LogBox" Height="160"/>

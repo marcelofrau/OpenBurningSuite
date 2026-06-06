@@ -10,7 +10,7 @@
                 BorderBrush="#1E3450" BorderThickness="0,0,1,0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="10,16,10,16" Spacing="2">
-                    <TextBlock Text="📖 CONTENTS"
+                    <TextBlock Text="CONTENTS"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,0,0,10"/>
 
@@ -23,52 +23,142 @@
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,12,0,6"/>
 
-                    <Button x:Name="TocDiscover" Content="🔍 Discover Drives"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscover"/>
-                    <Button x:Name="TocCopyDisc" Content="💿 Copy Disc"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyDisc"/>
-                    <Button x:Name="TocBuildImage" Content="🏗 Build Image"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBuildImage"/>
-                    <Button x:Name="TocBurnWrite" Content="🔥 Burn / Write"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBurnWrite"/>
-                    <Button x:Name="TocVerify" Content="✅ Verify"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionVerify"/>
-                    <Button x:Name="TocAdvanced" Content="⚙&#xFE0F; Advanced"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionAdvanced"/>
-                    <Button x:Name="TocEncryption" Content="🔒 Encryption"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionEncryption"/>
+                    <Button x:Name="TocDiscover" Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscover">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
+                            <TextBlock Text="Discover Drives" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocCopyDisc" Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyDisc">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Copy Disc" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocBuildImage" Classes="NavBtn" Click="OnTocClick" Tag="SectionBuildImage">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-construction-2d-16.png"/>
+                            <TextBlock Text="Build Image" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocBurnWrite" Classes="NavBtn" Click="OnTocClick" Tag="SectionBurnWrite">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn / Write" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocVerify" Classes="NavBtn" Click="OnTocClick" Tag="SectionVerify">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
+                            <TextBlock Text="Verify" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocAdvanced" Classes="NavBtn" Click="OnTocClick" Tag="SectionAdvanced">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Advanced" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocEncryption" Classes="NavBtn" Click="OnTocClick" Tag="SectionEncryption">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
+                            <TextBlock Text="Encryption" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
                     <TextBlock Text="WIZARDS"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,12,0,6"/>
 
-                    <Button x:Name="TocAudioWizard" Content="🎵 Audio Wizard"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionAudioWizard"/>
-                    <Button x:Name="TocVideoWizard" Content="🎬 Video Wizard"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionVideoWizard"/>
-                    <Button x:Name="TocDataWizard" Content="📁 Data Wizard"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDataWizard"/>
-                    <Button x:Name="TocGameWizard" Content="🎮 Game Wizard"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionGameWizard"/>
-                    <Button x:Name="TocCopyWizard" Content="💿 Copy Wizard"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyWizard"/>
-                    <Button x:Name="TocBlankWizard" Content="🧹 Blank Wizard"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBlankWizard"/>
+                    <Button x:Name="TocAudioWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionAudioWizard">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
+                            <TextBlock Text="Audio Wizard" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocVideoWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionVideoWizard">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
+                            <TextBlock Text="Video Wizard" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocDataWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionDataWizard">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Data Wizard" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocGameWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionGameWizard">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
+                            <TextBlock Text="Game Wizard" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocCopyWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyWizard">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Copy Wizard" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocBlankWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionBlankWizard">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                            <TextBlock Text="Blank Wizard" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
 
                     <TextBlock Text="REFERENCE"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,12,0,6"/>
 
-                    <Button x:Name="TocDiscTypes" Content="📀 Disc Types"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscTypes"/>
-                    <Button x:Name="TocFileSystems" Content="📂 File Systems"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionFileSystems"/>
-                    <Button x:Name="TocImageFormats" Content="💾 Image Formats"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionImageFormats"/>
-                    <Button x:Name="TocGlossary" Content="📘 Glossary"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionGlossary"/>
-                    <Button x:Name="TocTroubleshooting" Content="🔧 Troubleshooting"
-                            Classes="NavBtn" Click="OnTocClick" Tag="SectionTroubleshooting"/>
+                    <Button x:Name="TocDiscTypes" Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscTypes">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Disc Types" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocFileSystems" Classes="NavBtn" Click="OnTocClick" Tag="SectionFileSystems">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="File Systems" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocImageFormats" Classes="NavBtn" Click="OnTocClick" Tag="SectionImageFormats">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Image Formats" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocGlossary" Classes="NavBtn" Click="OnTocClick" Tag="SectionGlossary">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-book-2d-16.png"/>
+                            <TextBlock Text="Glossary" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="TocTroubleshooting" Classes="NavBtn" Click="OnTocClick" Tag="SectionTroubleshooting">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Troubleshooting" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </ScrollViewer>
         </Border>
@@ -79,7 +169,7 @@
 
                 <!-- Page header -->
                 <StackPanel Spacing="4">
-                    <TextBlock Text="📖  Help &amp; Documentation"
+                    <TextBlock Text="Help &amp; Documentation"
                                Classes="PageTitle" Foreground="#5BC0FF"/>
                     <TextBlock Text="Everything you need to know about Open Burning Suite — from quick start guides to advanced technical details."
                                Classes="PageSubtitle" TextWrapping="Wrap"/>
@@ -103,7 +193,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="🔒 Elevation (Admin / Root) Note" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="12"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
+                                    <TextBlock Text="Elevation (Admin / Root) Note" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="12"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" FontSize="11" LineHeight="18"
                                            Text="Many optical disc operations require direct hardware access. On Windows, run the application as Administrator. On Linux and macOS, run with root privileges (sudo). The status bar at the bottom shows whether the application is running with elevated privileges. Without elevation, some features (burning, blanking, direct reading) may not work."/>
                             </StackPanel>
@@ -141,7 +235,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionDiscover" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔍 Discover Drives &amp; Media" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
+                            <TextBlock Text="Discover Drives &amp; Media" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Discover view scans your system for optical drives and inspects inserted media. This is usually the first thing to check before performing any disc operation."/>
 
@@ -159,7 +257,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="Drive discovery uses native platform APIs: SCSI Generic (SG_IO) on Linux, IOCTL_SCSI_PASS_THROUGH_DIRECT on Windows, and IOKit SCSITaskLib on macOS. Media probing sends MMC READ DISC INFORMATION and READ TRACK INFORMATION SCSI commands to retrieve disc metadata. All sense data buffers are 252 bytes per the SPC-5 specification."/>
                             </StackPanel>
@@ -172,7 +274,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionCopyDisc" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💿 Copy Disc to Image" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Copy Disc to Image" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Copy Disc view reads an optical disc and saves it as an image file on your computer. This is useful for creating backups, archiving discs, or preparing images for later burning."/>
 
@@ -190,7 +296,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="Raw sector reads use the MMC READ CD command (opcode 0xBE) with expected sector type and subchannel selector fields. Standard reads use READ(10) at 2048 bytes/sector. Audio sectors are read with Audio Paranoia mode using multiple overlapping reads to detect and correct C1/C2 errors. Jitter correction aligns audio samples across consecutive reads to eliminate inter-read offset drift."/>
                             </StackPanel>
@@ -203,7 +313,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionBuildImage" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🏗 Build Disc Image" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-construction-2d-16.png"/>
+                            <TextBlock Text="Build Disc Image" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Build Image view creates disc images from files and folders on your computer. You can create data discs, audio CDs, bootable discs, and more."/>
 
@@ -233,7 +347,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="ISO 9660 images are built by writing the System Area (32 KB), Primary Volume Descriptor (PVD), optional supplementary descriptors (Joliet SVD, El Torito boot catalog), path tables, and directory records followed by file data extents. UDF images follow the ECMA-167 / OSTA UDF specification. El Torito boot catalogs reference Initial/Default Entry boot images. Audio CD images consist of 2352-byte raw PCM sectors at 44100 Hz, 16-bit stereo. CD-TEXT packs are written as 18-byte R-W subchannel packs per Red Book Annex J."/>
                             </StackPanel>
@@ -246,7 +364,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionBurnWrite" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn / Write Disc" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn / Write Disc" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Burn view writes disc images to optical media, or builds and burns directly (on-the-fly). It supports all common media types from CD-R to BDXL."/>
 
@@ -272,11 +394,15 @@
 
                         <TextBlock Text="Gaming Patches &amp; Special Formats" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • LibCrypt protection (PS1) — Applies LibCrypt subchannel patching for PlayStation 1 games using an .sbi file. The SBI file contains the protected sector information.&#x0a;  • Dreamcast GDI/CDI patching — Applies patches specific to Sega Dreamcast disc images in GDI or CDI format.&#x0a;  • Region-free patching — Removes region lock restrictions from the disc image.&#x0a;  • Boot sector patching — Patches the boot sector for compatibility with modified console firmware.&#x0a;  • ESR patch (PS2 DVD-R) — Injects a DVD-Video UDF structure into a PS2 ISO image so that the MechaCon controller treats the disc as a DVD-Video, bypassing the PS2 authentication check on DVD-R media.&#x0a;  • Master Disc patch (PS2) — Writes the 'PlayStation Master Disc' identifier into sectors 12-13 for use with MechaPwn DEX PS2 consoles. Supports NTSC-J, NTSC-U, PAL, and WORLD region settings.&#x0a;  • PSX 80 Minute patch (PS1/PS2 CD-R) — Appends 27,000 dummy sectors (2352 bytes each) to a raw BIN image for compatibility with 80-minute CD-R media on PlayStation consoles.&#x0a;  • PSX Undither patch (PS1) — Scans a raw PS1 BIN image for GPU dithering patterns and patches them out, improving visual quality on modern displays.&#x0a;&#x0a;⚠&#xFE0F; Gaming patches should only be used with legally owned software."/>
+                                   Text="  • LibCrypt protection (PS1) — Applies LibCrypt subchannel patching for PlayStation 1 games using an .sbi file. The SBI file contains the protected sector information.&#x0a;  • Dreamcast GDI/CDI patching — Applies patches specific to Sega Dreamcast disc images in GDI or CDI format.&#x0a;  • Region-free patching — Removes region lock restrictions from the disc image.&#x0a;  • Boot sector patching — Patches the boot sector for compatibility with modified console firmware.&#x0a;  • ESR patch (PS2 DVD-R) — Injects a DVD-Video UDF structure into a PS2 ISO image so that the MechaCon controller treats the disc as a DVD-Video, bypassing the PS2 authentication check on DVD-R media.&#x0a;  • Master Disc patch (PS2) — Writes the 'PlayStation Master Disc' identifier into sectors 12-13 for use with MechaPwn DEX PS2 consoles. Supports NTSC-J, NTSC-U, PAL, and WORLD region settings.&#x0a;  • PSX 80 Minute patch (PS1/PS2 CD-R) — Appends 27,000 dummy sectors (2352 bytes each) to a raw BIN image for compatibility with 80-minute CD-R media on PlayStation consoles.&#x0a;  • PSX Undither patch (PS1) — Scans a raw PS1 BIN image for GPU dithering patterns and patches them out, improving visual quality on modern displays.&#x0a;&#x0a;Gaming patches should only be used with legally owned software."/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="Burning uses the MMC WRITE(12) command for DVD/Blu-ray media (32-bit transfer length for reduced command overhead) and WRITE(10) for standard audio/data CDs (16-bit transfer length). DAO mode uses the SET WRITE PARAMETERS mode page to configure the drive before issuing WRITE commands. Buffer underrun protection is enabled via the BURN-Free bit in the write parameters mode page. The disc visualization shows the current LBA (Logical Block Address) mapped to a physical spiral position on the disc in real time."/>
                             </StackPanel>
@@ -289,7 +415,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionVerify" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="✅ Verify / Check" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
+                            <TextBlock Text="Verify / Check" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Verify view checks disc integrity, compares a disc to an image file, or validates image checksums. Verification is essential to ensure your burned discs are error-free."/>
 
@@ -303,11 +433,15 @@
 
                         <TextBlock Text="Results" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="After verification completes, the Results panel shows:&#x0a;  • Total Sectors scanned&#x0a;  • Good Sectors (passed)&#x0a;  • Bad Sectors (errors or mismatches)&#x0a;  • Checksum value (can be copied to clipboard)&#x0a;  • Overall result (Pass ✅ or Fail ❌)&#x0a;&#x0a;The disc visualization shows a real-time map of the verification progress on a virtual disc spiral."/>
+                                   Text="After verification completes, the Results panel shows:&#x0a;  • Total Sectors scanned&#x0a;  • Good Sectors (passed)&#x0a;  • Bad Sectors (errors or mismatches)&#x0a;  • Checksum value (can be copied to clipboard)&#x0a;  • Overall result (Pass or Fail)&#x0a;&#x0a;The disc visualization shows a real-time map of the verification progress on a virtual disc spiral."/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="For raw BIN/CUE images, disc verification uses READ CD (raw 2352-byte sectors) instead of READ(10). Each sector is individually classified by its sync pattern: sectors with the CD sync pattern are data (2048 bytes of user data extracted), sectors without sync are audio. When Audio Track Verification is enabled, audio sectors are hashed at the full 2352 bytes per sector. Both the disc side and image side use the exact same per-sector classification logic, ensuring consistent checksums regardless of CUE layout (single-file or multi-file) or pregap placement. On mixed-mode CDs, the 150-frame pregap between data and audio tracks is correctly handled: data ranges exclude the pregap (which contains audio-format sectors), and audio ranges include it when Audio Track Verification is enabled. If a sector read fails with the initial expected sector type, the engine retries with CD-DA type to recover pregap sectors near track boundaries. The disc visualization maps LBA positions to physical radius on the disc spiral (inner hub to outer edge)."/>
                             </StackPanel>
@@ -320,7 +454,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionAdvanced" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="⚙&#xFE0F; Advanced Utilities" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Advanced Utilities" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Advanced view provides direct drive operations: ejecting/loading the tray, blanking rewritable discs, and formatting media."/>
 
@@ -338,7 +476,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="Blanking sends the MMC BLANK command (opcode 0xA1) with type 0x00 (full) or 0x01 (minimal/quick). Formatting uses the FORMAT UNIT command (opcode 0x04) with appropriate format descriptors for each media type. Tray operations use START STOP UNIT (opcode 0x1B) with the LoEj and Start bits."/>
                             </StackPanel>
@@ -351,7 +493,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionEncryption" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔒 Disc Image Encryption" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
+                            <TextBlock Text="Disc Image Encryption" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="Open Burning Suite includes a built-in disc image encryption feature to protect sensitive backups. You can encrypt any disc image file with a password and decrypt it later for burning or verification."/>
 
@@ -365,7 +511,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="Encryption uses AES-256-CBC with PBKDF2 (RFC 8018) key derivation from the password. The file header contains the magic bytes 'OBSE', format version, KDF salt, initialization vector, HMAC-SHA256 integrity tag, and the original file size. The HMAC verifies the encrypted payload has not been tampered with before decryption begins."/>
                             </StackPanel>
@@ -378,7 +528,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionAudioWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎵 Audio &amp; Music Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
+                            <TextBlock Text="Audio &amp; Music Wizard" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Audio Wizard guides you step-by-step through creating audio CDs, copying music files to disc, or ripping audio CDs. It is designed for users who want a simple, guided experience."/>
 
@@ -400,7 +554,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Audio CD Format" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Audio CD Format" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="Red Book audio CDs store uncompressed PCM audio at 44,100 Hz sample rate, 16-bit depth, stereo (2 channels). Each audio sector is 2,352 bytes and holds 1/75th of a second of audio. A standard 74-minute CD holds approximately 333,000 audio sectors. CD-TEXT data is encoded in R-W subchannel packs (18 bytes each) per Red Book Annex J / MMC-3. WAV files are converted; FLAC and MP3 files are decoded to PCM before burning."/>
                             </StackPanel>
@@ -413,7 +571,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionVideoWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎬 Video Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
+                            <TextBlock Text="Video Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Video Wizard guides you through creating video discs that play in standalone players: DVD-Video, Blu-ray, BDAV, 3D Blu-ray, VCD, SVCD, and XSVCD."/>
 
@@ -427,7 +589,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="DVD-Video authoring generates navigation packs (NV_PCK) containing PCI and DSI packets for chapter navigation. Each NV_PCK is exactly 2,048 bytes: 14-byte pack header + 24-byte system header + 979-byte PCI PES + 1,017-byte DSI PES. DSI contains VOBU_SRI with forward/backward search entries for trick-play. BD 3D SSIF interleaving uses 192 allocation units per extent (AU = 6,144 bytes, extent ≈ 1.2 MB) for smooth stereoscopic playback. VCD/SVCD/XSVCD builds inject the CD-XA001 marker and follow the White Book specification."/>
                             </StackPanel>
@@ -440,7 +606,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionDataWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📁 Data Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Data Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Data Wizard guides you through creating data discs from files and folders. It simplifies the process of selecting files, choosing a file system, and burning to disc."/>
 
@@ -459,7 +629,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionGameWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🎮 Game Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
+                            <TextBlock Text="Game Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Game Wizard helps you create game discs from image files or folders, with system-specific presets for optimal compatibility."/>
 
@@ -486,7 +660,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionCopyWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💿 Copy Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Copy Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Copy Disc Wizard guides you step-by-step through copying an optical disc to an image file. It simplifies drive selection, output configuration, and the read process."/>
 
@@ -509,7 +687,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionBlankWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🧹 Blank / Erase Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                            <TextBlock Text="Blank / Erase Disc Wizard" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="The Blank Disc Wizard guides you step-by-step through erasing rewritable discs or formatting blank media."/>
 
@@ -532,7 +714,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionDiscTypes" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📀 Disc Types Reference" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Disc Types Reference" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
                                    Text="A comprehensive guide to all optical disc formats supported by Open Burning Suite."/>
 
@@ -562,7 +748,11 @@
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="💡 Technical Detail — Disc Profiles" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
+                                    <TextBlock Text="Technical Detail — Disc Profiles" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
+                                </StackPanel>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
                                            Text="Each media type is identified by a profile number in the MMC GET CONFIGURATION command. Examples: BD-RE = 0x0043, BD-RE DL = 0x0046, BD-RE TL BDXL = 0x004B, BD-RE QL BDXL = 0x004D, BD-R SRM = 0x0041, BD-R RRM = 0x0042, BD-R DL = 0x0045, BD-R TL BDXL = 0x004A, BD-R QL BDXL = 0x004C. All BD-RE variants support overwriting without blanking."/>
                             </StackPanel>
@@ -575,7 +765,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionFileSystems" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📂 File Systems Reference" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="File Systems Reference" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
 
                         <TextBlock Text="ISO 9660" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
@@ -604,7 +798,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionImageFormats" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💾 Disc Image Formats Reference" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Disc Image Formats Reference" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
 
                         <TextBlock Text="ISO (.iso)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
@@ -649,7 +847,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionGlossary" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="📘 Glossary" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-book-2d-16.png"/>
+                            <TextBlock Text="Glossary" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" FontSize="11" LineHeight="18" xml:space="preserve"><Bold>Buffer Underrun</Bold> — When the drive's write buffer empties during burning, causing a failed burn. Modern drives have protection (BURN-Proof, SafeBurn) to pause and resume.
 
 <Bold>CD-TEXT</Bold> — Metadata (artist, album, track titles) embedded in the subchannel of audio CDs. Displayed by compatible CD players.
@@ -715,7 +917,11 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionTroubleshooting" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔧 Troubleshooting" Classes="SectionHeader" FontSize="18"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Troubleshooting" Classes="SectionHeader" FontSize="18"/>
+                        </StackPanel>
 
                         <TextBlock Text="No drives detected" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"

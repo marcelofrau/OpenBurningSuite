@@ -8,7 +8,7 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="📁  Data Disc Wizard"
+                <TextBlock Text="Data Disc Wizard"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
                 <TextBlock Text="Create and burn data discs from files and folders — guided step by step."
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
@@ -81,7 +81,8 @@
                             Click="OnModeBuildImage"
                             ToolTip.Tip="Select files and folders to create a disc image (ISO) that can be burned later">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="🏗" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-construction-2d-50.png"/>
                             <TextBlock Text="Build Data Image" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create a disc image from files &amp; folders"
@@ -98,7 +99,8 @@
                             Click="OnModeBuildAndBurn"
                             ToolTip.Tip="Select files and folders, build a disc image, and burn it directly to disc">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="🔥" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
                             <TextBlock Text="Build &amp; Burn to Disc" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Build an image from files &amp; burn to disc"
@@ -115,7 +117,8 @@
                             Click="OnModeBurnImage"
                             ToolTip.Tip="Select an existing disc image file and burn it to a disc">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <Image Width="50" Height="50" HorizontalAlignment="Center"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
                             <TextBlock Text="Burn Existing Image" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Burn an existing ISO or disc image to disc"
@@ -137,24 +140,52 @@
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="📁 Source Files &amp; Folders" Classes="SectionHeader"/>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Source Files &amp; Folders" Classes="SectionHeader"/>
+                        </StackPanel>
                             <TextBlock x:Name="TxtBuildFileCount" Text="(0 items, 0 B)"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Content="📄 Add Files" Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnAddBuildFilesClick"
-                                    ToolTip.Tip="Add individual files to the disc"/>
-                            <Button Content="📁 Add Folder" Classes="ActionBtn"
+                                    ToolTip.Tip="Add individual files to the disc">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
+                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="ActionBtn"
                                     Click="OnAddBuildFolderClick"
-                                    ToolTip.Tip="Add an entire folder and its contents"/>
-                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    ToolTip.Tip="Add an entire folder and its contents">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Add Folder" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnRemoveBuildItemClick"
-                                    ToolTip.Tip="Remove selected item from the list"/>
-                            <Button Content="🗑 Clear All" Classes="DangerBtn"
+                                    ToolTip.Tip="Remove selected item from the list">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
+                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnClearBuildItemsClick"
-                                    ToolTip.Tip="Remove all items from the list"/>
+                                    ToolTip.Tip="Remove all items from the list">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                    <TextBlock Text="Clear All" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
 
                         <Border Classes="DropZone" DragDrop.AllowDrop="True"
@@ -187,7 +218,7 @@
                             </ListBox>
                         </Border>
 
-                        <TextBlock Text="💡 Drag and drop files or folders here"
+                        <TextBlock Text="Drag and drop files or folders here"
                                    Foreground="#5A7A9A" FontSize="10"/>
                     </StackPanel>
                 </Border>
@@ -195,7 +226,11 @@
                 <!-- Disc Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="⚙&#xFE0F; Disc Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Disc Settings" Classes="SectionHeader"/>
+                        </StackPanel>
 
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
@@ -259,7 +294,11 @@
                 <!-- Output Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <TextBlock Text="💾 Output Image Path" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
+                            <TextBlock Text="Output Image Path" Classes="SectionHeader"/>
+                        </StackPanel>
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBox x:Name="TxtBuildOutputPath"
                                      Watermark="Output ISO image path..."
@@ -273,8 +312,14 @@
                 </Border>
 
                 <!-- Advanced Options -->
-                <Expander Classes="SettingsExpander" Header="⚙&#xFE0F; Advanced Options (optional)"
-                          IsExpanded="False">
+                <Expander Classes="SettingsExpander" IsExpanded="False">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Advanced Options (optional)"/>
+                        </StackPanel>
+                    </Expander.Header>
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <WrapPanel Orientation="Horizontal">
                             <CheckBox x:Name="ChkBuildJolietLong"
@@ -327,8 +372,14 @@
                 </Expander>
 
                 <!-- Bootable Disc Options -->
-                <Expander Classes="SettingsExpander" Header="🖥 Bootable Disc (El Torito, optional)"
-                          IsExpanded="False">
+                <Expander Classes="SettingsExpander" IsExpanded="False">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-bootable-16.png"/>
+                            <TextBlock Text="Bootable Disc (El Torito, optional)"/>
+                        </StackPanel>
+                    </Expander.Header>
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <CheckBox x:Name="ChkBuildBootable"
                                   Content="Create bootable disc (El Torito)"
@@ -393,24 +444,52 @@
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="📁 Source Files &amp; Folders" Classes="SectionHeader"/>
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                            <TextBlock Text="Source Files &amp; Folders" Classes="SectionHeader"/>
+                        </StackPanel>
                             <TextBlock x:Name="TxtBBFileCount" Text="(0 items, 0 B)"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Content="📄 Add Files" Classes="PrimaryBtn"
+                            <Button Classes="PrimaryBtn"
                                     Click="OnAddBBFilesClick"
-                                    ToolTip.Tip="Add individual files to the disc"/>
-                            <Button Content="📁 Add Folder" Classes="ActionBtn"
+                                    ToolTip.Tip="Add individual files to the disc">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
+                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="ActionBtn"
                                     Click="OnAddBBFolderClick"
-                                    ToolTip.Tip="Add an entire folder and its contents"/>
-                            <Button Content="🗑 Remove Selected" Classes="DangerBtn"
+                                    ToolTip.Tip="Add an entire folder and its contents">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
+                                    <TextBlock Text="Add Folder" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnRemoveBBItemClick"
-                                    ToolTip.Tip="Remove selected item"/>
-                            <Button Content="🗑 Clear All" Classes="DangerBtn"
+                                    ToolTip.Tip="Remove selected item">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
+                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Classes="DangerBtn"
                                     Click="OnClearBBItemsClick"
-                                    ToolTip.Tip="Remove all items"/>
+                                    ToolTip.Tip="Remove all items">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Image Width="16" Height="16"
+                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                    <TextBlock Text="Clear All" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
                         </StackPanel>
 
                         <Border Classes="DropZone" DragDrop.AllowDrop="True"
@@ -443,7 +522,7 @@
                             </ListBox>
                         </Border>
 
-                        <TextBlock Text="💡 Drag and drop files or folders here"
+                        <TextBlock Text="Drag and drop files or folders here"
                                    Foreground="#5A7A9A" FontSize="10"/>
                     </StackPanel>
                 </Border>
@@ -451,7 +530,11 @@
                 <!-- Disc &amp; Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="⚙&#xFE0F; Disc &amp; Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
+                            <TextBlock Text="Disc &amp; Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
 
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
@@ -553,9 +636,15 @@
                                       ToolTip.Tip="Enable buffer underrun protection to prevent errors"/>
                         </WrapPanel>
 
-                        <Button Content="🔄 Refresh Drives" Classes="ActionBtn"
+                        <Button Classes="ActionBtn"
                                 Click="OnRefreshDrivesClick" Margin="0,4,0,0"
-                                ToolTip.Tip="Re-scan for optical disc drives"/>
+                                ToolTip.Tip="Re-scan for optical disc drives">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                <TextBlock Text="Refresh Drives" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </Border>
             </StackPanel>
@@ -569,7 +658,11 @@
                 <!-- Image Selection -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="💿 Disc Image File" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Disc Image File" Classes="SectionHeader"/>
+                        </StackPanel>
 
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBox x:Name="TxtBurnImagePath"
@@ -586,7 +679,7 @@
 
                         <TextBlock x:Name="TxtBurnImageInfo" Text=""
                                    Foreground="#5A7A9A" FontSize="10"/>
-                        <TextBlock Text="💡 Drag and drop an image file here"
+                        <TextBlock Text="Drag and drop an image file here"
                                    Foreground="#5A7A9A" FontSize="10"/>
                     </StackPanel>
                 </Border>
@@ -594,7 +687,11 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="🔥 Burn Settings" Classes="SectionHeader"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
+                        </StackPanel>
 
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
@@ -657,9 +754,15 @@
                                       ToolTip.Tip="Close the disc session after burning (no further writes possible)"/>
                         </WrapPanel>
 
-                        <Button Content="🔄 Refresh Drives" Classes="ActionBtn"
+                        <Button Classes="ActionBtn"
                                 Click="OnRefreshDrivesClick" Margin="0,4,0,0"
-                                ToolTip.Tip="Re-scan for optical disc drives"/>
+                                ToolTip.Tip="Re-scan for optical disc drives">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
+                                <TextBlock Text="Refresh Drives" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </Border>
             </StackPanel>
@@ -726,19 +829,37 @@
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnDataNextClick" IsVisible="False"
                             ToolTip.Tip="Proceed to the next step"/>
-                    <Button x:Name="BtnDataExecute" Content="🔥 Start"
+                    <Button x:Name="BtnDataExecute"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnDataExecuteClick" IsVisible="False"
-                            ToolTip.Tip="Start the operation"/>
-                    <Button x:Name="BtnDataCancel" Content="⏹ Cancel"
+                            ToolTip.Tip="Start the operation">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                            <TextBlock Text="Start" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnDataCancel"
                             Classes="DangerBtn" Grid.Column="3"
                             Margin="8,0,0,0" Click="OnDataCancelClick"
                             IsVisible="False"
-                            ToolTip.Tip="Cancel the current operation"/>
-                    <Button x:Name="BtnDataFinish" Content="✅ Done — Return Home"
+                            ToolTip.Tip="Cancel the current operation">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                            <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnDataFinish"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnDataFinishClick" IsVisible="False"
-                            ToolTip.Tip="Operation complete — return to step 1"/>
+                            ToolTip.Tip="Operation complete — return to step 1">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Image Width="16" Height="16"
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
+                            <TextBlock Text="Done — Return Home" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </Border>
 

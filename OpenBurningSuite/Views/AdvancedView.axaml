@@ -21,9 +21,13 @@
                                   HorizontalAlignment="Stretch"
                                   ToolTip.Tip="Select the drive to operate on"/>
                         <Button x:Name="BtnRefreshDrives" Grid.Column="1"
-                                Content="🔄" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 Margin="6,0,0,0" Click="OnRefreshDrivesClick"
-                                ToolTip.Tip="Refresh the list of available drives"/>
+                                ToolTip.Tip="Refresh the list of available drives" MinWidth="32" MinHeight="32">
+                            <Image Width="16" Height="16"
+                                    Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-advanced-16.png"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -35,14 +39,24 @@
                     <TextBlock Text="Open or close the disc tray on the selected drive."
                                Foreground="#5A7A9A" FontSize="11"/>
                     <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
-                        <Button x:Name="BtnEject"
-                                Content="⏏&#xFE0F; Eject Tray" Classes="ActionBtn"
+                        <Button x:Name="BtnEject" Classes="ActionBtn"
                                 Click="OnEjectClick"
-                                ToolTip.Tip="Open the disc tray"/>
-                        <Button x:Name="BtnLoadTray"
-                                Content="📥 Load Tray" Classes="ActionBtn"
+                                ToolTip.Tip="Open the disc tray">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-eject-2d-16.png"/>
+                                <TextBlock Text="Eject Tray" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnLoadTray" Classes="ActionBtn"
                                 Click="OnLoadTrayClick"
-                                ToolTip.Tip="Close the disc tray"/>
+                                ToolTip.Tip="Close the disc tray">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-open-file-folder-16.png"/>
+                                <TextBlock Text="Load Tray" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -55,14 +69,24 @@
                                Foreground="#5A7A9A" FontSize="11"/>
 
                     <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
-                        <Button x:Name="BtnBlankQuick"
-                                Content="⚡&#xFE0F; Quick Blank" Classes="ActionBtn"
+                        <Button x:Name="BtnBlankQuick" Classes="ActionBtn"
                                 Click="OnBlankQuickClick"
-                                ToolTip.Tip="Quick blank only clears TOC — fast but data may be recoverable"/>
-                        <Button x:Name="BtnBlankFull"
-                                Content="🗑  Full Blank" Classes="ActionBtn"
+                                ToolTip.Tip="Quick blank only clears TOC — fast but data may be recoverable">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-quick-blank-16.png"/>
+                                <TextBlock Text="Quick Blank" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnBlankFull" Classes="ActionBtn"
                                 Click="OnBlankFullClick"
-                                ToolTip.Tip="Full blank overwrites entire disc — slower but more thorough"/>
+                                ToolTip.Tip="Full blank overwrites entire disc — slower but more thorough">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-full-blank-16.png"/>
+                                <TextBlock Text="Full Blank" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -75,14 +99,24 @@
                                Foreground="#5A7A9A" FontSize="11"/>
 
                     <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
-                        <Button x:Name="BtnFormatQuick"
-                                Content="⚡&#xFE0F; Quick Format" Classes="ActionBtn"
+                        <Button x:Name="BtnFormatQuick" Classes="ActionBtn"
                                 Click="OnFormatQuickClick"
-                                ToolTip.Tip="Quick format — prepares disc for use without full surface certification"/>
-                        <Button x:Name="BtnFormatFull"
-                                Content="📀 Full Format" Classes="ActionBtn"
+                                ToolTip.Tip="Quick format — prepares disc for use without full surface certification">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-quick-format-16.png"/>
+                                <TextBlock Text="Quick Format" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="BtnFormatFull" Classes="ActionBtn"
                                 Click="OnFormatFullClick"
-                                ToolTip.Tip="Full format with certification — slower but ensures disc integrity"/>
+                                ToolTip.Tip="Full format with certification — slower but ensures disc integrity">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-full-format-16.png"/>
+                                <TextBlock Text="Full Format" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -94,9 +128,15 @@
                         <TextBlock Text="Progress" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnCancelOp" Grid.Column="1"
-                                Content="⏹  Cancel" Classes="DangerBtn"
+                                Classes="DangerBtn"
                                 IsEnabled="False" Click="OnCancelOpClick"
-                                ToolTip.Tip="Cancel the current operation"/>
+                                ToolTip.Tip="Cancel the current operation">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
+                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <ProgressBar x:Name="OperationProgressBar" Classes="BurnProgress" Value="0"/>
@@ -116,9 +156,15 @@
                     <Grid ColumnDefinitions="Auto,*">
                         <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Content="🧹 Clear" Classes="ActionBtn"
+                                Classes="ActionBtn"
                                 HorizontalAlignment="Right" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the log output"/>
+                                ToolTip.Tip="Clear the log output">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Image Width="16" Height="16"
+                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
+                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
                     </Grid>
 
                     <TextBox x:Name="TxtLog" Classes="LogBox" Height="180"/>

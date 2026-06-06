@@ -22,16 +22,25 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        try
         {
-            _mainWindow = new MainWindow();
-            desktop.MainWindow = _mainWindow;
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                _mainWindow = new MainWindow();
+                desktop.MainWindow = _mainWindow;
 
-            // Set up the native menu (macOS menu bar & supported Linux desktops)
-            BuildNativeMenu();
+                Helpers.Logger.Info("MainWindow created successfully");
+
+                BuildNativeMenu();
+            }
+
+            base.OnFrameworkInitializationCompleted();
         }
-
-        base.OnFrameworkInitializationCompleted();
+        catch (Exception ex)
+        {
+            Helpers.Logger.Error(ex, "Failed to initialize application");
+            throw;
+        }
     }
 
     // -----------------------------------------------------------------------
