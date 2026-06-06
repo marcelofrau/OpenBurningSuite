@@ -53,7 +53,7 @@ jobs:
         run: dotnet publish OpenBurningSuite -c Release -r win-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -o publish
 
       - name: Create ZIP (Portable)
-        run: 7z a -tzip -mx=9 OpenBurningSuite-win-${{ matrix.arch }}.zip .\publish\*
+        run: 7z a -tzip -mx=9 OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}.zip .\publish\*
 
       - name: Install Inno Setup
         run: |
@@ -73,7 +73,7 @@ jobs:
           DefaultGroupName=Open Burning Suite
           UninstallDisplayIcon={app}\OpenBurningSuite.exe
           OutputDir=installer
-          OutputBaseFilename=OpenBurningSuite-win-${{ matrix.arch }}-Installer
+          OutputBaseFilename=OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}-Installer
           Compression=lzma2/ultra64
           SolidCompression=yes
           WizardStyle=modern
@@ -103,14 +103,14 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: win-${{ matrix.arch }}-zip
-          path: OpenBurningSuite-win-${{ matrix.arch }}.zip
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}.zip
           if-no-files-found: error
 
       - name: Upload Installer
         uses: actions/upload-artifact@v5
         with:
           name: win-${{ matrix.arch }}-installer
-          path: installer/OpenBurningSuite-win-${{ matrix.arch }}-Installer.exe
+          path: installer/OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}-Installer.exe
           if-no-files-found: error
 
       - name: Upload to Release
@@ -118,5 +118,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            OpenBurningSuite-win-${{ matrix.arch }}.zip
-            installer/OpenBurningSuite-win-${{ matrix.arch }}-Installer.exe
+            OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}.zip
+            installer/OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}-Installer.exe

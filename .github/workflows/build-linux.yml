@@ -75,7 +75,7 @@ jobs:
       - name: Create ZIP (Portable)
         run: |
           cd publish
-          zip -9 -r ../OpenBurningSuite-linux-${{ matrix.arch }}.zip .
+          zip -9 -r ../OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.zip .
 
       - name: Create DEB Installer
         run: |
@@ -150,7 +150,7 @@ jobs:
           Categories=Utility;DiscBurning;
           DESKTOP
 
-          dpkg-deb --root-owner-group -Zxz -z9 --build deb OpenBurningSuite-linux-${{ matrix.arch }}-Installer.deb
+          dpkg-deb --root-owner-group -Zxz -z9 --build deb OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}-Installer.deb
 
       - name: Create RPM Package
         run: |
@@ -242,7 +242,7 @@ jobs:
 
           rpmbuild --define "_topdir $(pwd)/rpmbuild" --target ${RPM_ARCH} -bb rpmbuild/SPECS/openburningsuite.spec
 
-          cp rpmbuild/RPMS/${RPM_ARCH}/*.rpm OpenBurningSuite-linux-${{ matrix.arch }}.rpm
+          cp rpmbuild/RPMS/${RPM_ARCH}/*.rpm OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.rpm
 
       - name: Create APK Package (Alpine Linux)
         run: |
@@ -324,7 +324,7 @@ jobs:
 
           tar -czf control.tar.gz .PKGINFO .post-install
           (cd apk-data && tar -czf ../data.tar.gz .)
-          cat control.tar.gz data.tar.gz > OpenBurningSuite-linux-${{ matrix.arch }}.apk
+          cat control.tar.gz data.tar.gz > OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.apk
 
       - name: Create Pacman Package (Arch Linux)
         run: |
@@ -424,7 +424,7 @@ jobs:
           LANG=C bsdtar -czf .MTREE --format=mtree \
             --options='!all,use-set,type,uid,gid,mode,time,size,md5,sha256,link' \
             .PKGINFO usr etc
-          LANG=C bsdtar -cf - .PKGINFO .MTREE usr etc | zstd -c -T0 --ultra -20 > ../OpenBurningSuite-linux-${{ matrix.arch }}.pkg.tar.zst
+          LANG=C bsdtar -cf - .PKGINFO .MTREE usr etc | zstd -c -T0 --ultra -20 > ../OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.pkg.tar.zst
           cd ..
 
       - name: Create AppImage
@@ -465,7 +465,7 @@ jobs:
           APPRUN
           chmod +x AppDir/AppRun
 
-          ARCH=${{ matrix.appimage_arch }} ./appimagetool --appimage-extract-and-run --comp zstd AppDir OpenBurningSuite-linux-${{ matrix.arch }}.AppImage
+          ARCH=${{ matrix.appimage_arch }} ./appimagetool --appimage-extract-and-run --comp zstd AppDir OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.AppImage
 
       - name: Create Snap
         run: |
@@ -526,7 +526,7 @@ jobs:
           DESKTOP
           cp snap-dir/usr/share/applications/openburningsuite.desktop snap-dir/meta/gui/
 
-          snap pack snap-dir --filename=OpenBurningSuite-linux-${{ matrix.arch }}.snap --compression=xz
+          snap pack snap-dir --filename=OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.snap --compression=xz
 
       - name: Create Flatpak
         run: |
@@ -607,62 +607,62 @@ jobs:
           EOF
 
           flatpak build-export flatpak-repo flatpak-build
-          flatpak build-bundle --arch=${{ matrix.flatpak_arch }} flatpak-repo OpenBurningSuite-linux-${{ matrix.arch }}.flatpak io.github.svengdk.OpenBurningSuite
+          flatpak build-bundle --arch=${{ matrix.flatpak_arch }} flatpak-repo OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.flatpak io.github.svengdk.OpenBurningSuite
 
       - name: Upload ZIP (Portable)
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-zip
-          path: OpenBurningSuite-linux-${{ matrix.arch }}.zip
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.zip
           if-no-files-found: error
 
       - name: Upload DEB Installer
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-deb
-          path: OpenBurningSuite-linux-${{ matrix.arch }}-Installer.deb
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}-Installer.deb
           if-no-files-found: error
 
       - name: Upload RPM Package
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-rpm
-          path: OpenBurningSuite-linux-${{ matrix.arch }}.rpm
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.rpm
           if-no-files-found: error
 
       - name: Upload APK Package (Alpine Linux)
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-apk
-          path: OpenBurningSuite-linux-${{ matrix.arch }}.apk
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.apk
           if-no-files-found: error
 
       - name: Upload Pacman Package (Arch Linux)
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-pacman
-          path: OpenBurningSuite-linux-${{ matrix.arch }}.pkg.tar.zst
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.pkg.tar.zst
           if-no-files-found: error
 
       - name: Upload AppImage
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-appimage
-          path: OpenBurningSuite-linux-${{ matrix.arch }}.AppImage
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.AppImage
           if-no-files-found: error
 
       - name: Upload Snap
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-snap
-          path: OpenBurningSuite-linux-${{ matrix.arch }}.snap
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.snap
           if-no-files-found: error
 
       - name: Upload Flatpak
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-flatpak
-          path: OpenBurningSuite-linux-${{ matrix.arch }}.flatpak
+          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.flatpak
           if-no-files-found: error
 
       - name: Upload to Release
@@ -670,11 +670,11 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            OpenBurningSuite-linux-${{ matrix.arch }}.zip
-            OpenBurningSuite-linux-${{ matrix.arch }}-Installer.deb
-            OpenBurningSuite-linux-${{ matrix.arch }}.rpm
-            OpenBurningSuite-linux-${{ matrix.arch }}.apk
-            OpenBurningSuite-linux-${{ matrix.arch }}.pkg.tar.zst
-            OpenBurningSuite-linux-${{ matrix.arch }}.AppImage
-            OpenBurningSuite-linux-${{ matrix.arch }}.snap
-            OpenBurningSuite-linux-${{ matrix.arch }}.flatpak
+            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.zip
+            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}-Installer.deb
+            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.rpm
+            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.apk
+            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.pkg.tar.zst
+            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.AppImage
+            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.snap
+            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.flatpak
