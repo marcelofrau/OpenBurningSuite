@@ -167,7 +167,7 @@ public partial class MainWindow : Window
 
     private void OnAboutClick(object? sender, RoutedEventArgs e)
     {
-        var about = new SplashWindow();
+        var about = new SplashWindow(showCloseButton: true);
         about.ShowDialog(this);
     }
 

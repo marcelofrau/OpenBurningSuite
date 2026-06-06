@@ -26,10 +26,12 @@
   <ItemGroup>
     <None Remove="icon.png" />
     <None Remove="Assets\Icons\**\*.png" />
+    <None Remove="Assets\splash-bg.png" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="icon.png" />
     <AvaloniaResource Include="Assets\Icons\**\*.png" />
+    <AvaloniaResource Include="Assets\splash-bg.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />

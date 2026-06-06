@@ -3,11 +3,11 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using OpenBurningSuite.Views;
 
 namespace OpenBurningSuite;
@@ -21,14 +21,15 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override async void OnFrameworkInitializationCompleted()
+    public override void OnFrameworkInitializationCompleted()
     {
         try
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var splash = new SplashWindow();
-                var splashShownAt = DateTime.UtcNow;
+                splash.Topmost = true;
+                var splashTime = DateTime.UtcNow;
                 splash.Show();
 
                 _mainWindow = new MainWindow();
@@ -38,14 +39,26 @@ public partial class App : Application
 
                 BuildNativeMenu();
 
-                _mainWindow.Show();
+                var elapsed = (int)(DateTime.UtcNow - splashTime).TotalMilliseconds;
+                var remaining = 1500 - elapsed;
 
-                var elapsed = (int)(DateTime.UtcNow - splashShownAt).TotalMilliseconds;
-                var remaining = 10000 - elapsed;
-                if (remaining > 0)
-                    await Task.Delay(remaining);
-
-                splash.Close();
+                if (remaining <= 0)
+                {
+                    splash.Close();
+                    _mainWindow.Show();
+                }
+                else
+                {
+                    var timer = new DispatcherTimer(
+                        TimeSpan.FromMilliseconds(remaining),
+                        DispatcherPriority.Normal,
+                        (_, _) =>
+                        {
+                            splash.Close();
+                            _mainWindow.Show();
+                        });
+                    timer.Start();
+                }
             }
 
             base.OnFrameworkInitializationCompleted();

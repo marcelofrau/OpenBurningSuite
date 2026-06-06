@@ -44,7 +44,7 @@
                              ToolTip.Tip="Application settings and preferences"
                              MinWidth="40" MinHeight="32">
                         <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-main-16.png"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"
                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button x:Name="BtnHelpNav" Classes="NavBtn" Click="OnHelpClick"
