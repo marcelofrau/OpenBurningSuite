@@ -7,7 +7,7 @@ $OutDir = "$PSScriptRoot\publish"
 $ProjectRoot = Join-Path $PSScriptRoot ".."
 
 Write-Host "==> Publishing Open Burning Suite for $RID ..."
-dotnet publish "$ProjectRoot\OpenBurningSuite\OpenBurningSuite.csproj" `
+dotnet publish -p:PublishReadyToRun=true "$ProjectRoot\OpenBurningSuite\OpenBurningSuite.csproj" `
     -c Release `
     -r $RID `
     --self-contained `

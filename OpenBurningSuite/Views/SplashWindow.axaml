@@ -7,9 +7,7 @@
         ShowInTaskbar="False"
         CanResize="False"
         Background="#0A1520"
-        ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="NoChrome"
-        ExtendClientAreaTitleBarHeightHint="-1">
+        SystemDecorations="None">
 
     <Grid>
         <Rectangle>

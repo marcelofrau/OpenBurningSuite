@@ -8,7 +8,7 @@ OUTDIR="$SCRIPT_DIR/publish"
 PROJECT_ROOT="$SCRIPT_DIR/.."
 
 echo "==> Publishing Open Burning Suite for $RID ..."
-dotnet publish "$PROJECT_ROOT/OpenBurningSuite/OpenBurningSuite.csproj" \
+dotnet publish -p:PublishReadyToRun=true "$PROJECT_ROOT/OpenBurningSuite/OpenBurningSuite.csproj" \
   -c Release \
   -r "$RID" \
   --self-contained \

@@ -3,6 +3,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -20,13 +21,14 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         try
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 var splash = new SplashWindow();
+                var splashShownAt = DateTime.UtcNow;
                 splash.Show();
 
                 _mainWindow = new MainWindow();
@@ -37,6 +39,12 @@ public partial class App : Application
                 BuildNativeMenu();
 
                 _mainWindow.Show();
+
+                var elapsed = (int)(DateTime.UtcNow - splashShownAt).TotalMilliseconds;
+                var remaining = 10000 - elapsed;
+                if (remaining > 0)
+                    await Task.Delay(remaining);
+
                 splash.Close();
             }
 

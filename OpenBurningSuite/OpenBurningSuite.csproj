@@ -6,6 +6,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PublishReadyToRun>true</PublishReadyToRun>
     <AssemblyName>OpenBurningSuite</AssemblyName>
     <RootNamespace>OpenBurningSuite</RootNamespace>
     <ApplicationIcon>icon.ico</ApplicationIcon>
