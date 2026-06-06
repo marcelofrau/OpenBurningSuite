@@ -82,7 +82,7 @@
                             ToolTip.Tip="Create and burn a DVD-Video disc from a VIDEO_TS folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
                             <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-dvd-video-50.png"/>
                             <TextBlock Text="Video DVD from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a DVD-Video disc from a VIDEO_TS folder"
@@ -100,7 +100,7 @@
                             ToolTip.Tip="Create and burn a Blu-ray disc from a BDMV folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
                             <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-bluray-video-50.png"/>
                             <TextBlock Text="Video Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a Blu-ray disc from a BDMV folder"
@@ -118,7 +118,7 @@
                             ToolTip.Tip="Create and burn a BDAV recording disc from a BDAV folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
                             <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-editing-3d-50.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-bdav-50.png"/>
                             <TextBlock Text="BDAV Recording from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a BDAV disc from a BDAV recording folder"
@@ -136,7 +136,7 @@
                             ToolTip.Tip="Create and burn a 3D Blu-ray disc from a BDMV 3D folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
                             <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-editing-3d-50.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-bd3d-50.png"/>
                             <TextBlock Text="3D Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a 3D Blu-ray disc from a BDMV 3D folder"
@@ -154,7 +154,7 @@
                             ToolTip.Tip="Create and burn a UHD (4K HDR) Blu-ray disc from a BDMV folder">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
                             <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-editing-3d-50.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-uhd-50.png"/>
                             <TextBlock Text="UHD Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Create &amp; burn a UHD 4K HDR Blu-ray disc from BDMV"

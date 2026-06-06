@@ -5,8 +5,8 @@ Source: `MainWindow.axaml`
 | # | Line | Stem | Size | Context | File |
 |---|------|------|------|---------|------|
 | 1 | 34 | `icons8-home` | 16px | — | `icons8-home_icons8-home_16.png` |
-| 2 | 41 | `icons8-settings-2d` | 16px | — | `icons8-settings-2d_icons8-settings-2d_16.png` |
-| 3 | 47 | `icons8-info` | 16px | — | `icons8-info_icons8-info_16.png` |
+| 2 | 41 | `icons8-settings-main` | 16px | — | `icons8-settings-main_icons8-settings-main_16.png` |
+| 3 | 47 | `icons8-info-main` | 16px | — | `icons8-info-main_icons8-info-main_16.png` |
 | 4 | 69 | `icons8-home` | 16px | Home | `Home_icons8-home_16.png` |
 | 5 | 76 | `icons8-info-2d` | 16px | Disc Info | `Disc_Info_icons8-info-2d_16.png` |
 | 6 | 83 | `icons8-discover-2d` | 16px | Discover | `Discover_icons8-discover-2d_16.png` |
@@ -26,7 +26,7 @@ Source: `MainWindow.axaml`
 | 20 | 233 | `icons8-copy-2d` | 50px | Copy Disc | `Copy_Disc_icons8-copy-2d_50.png` |
 | 21 | 247 | `fluentui-check-mark-button` | 50px | Verify Disc | `Verify_Disc_fluentui-check-mark-button_50.png` |
 | 22 | 261 | `icons8-discover-2d` | 50px | Discover Drives | `Discover_Drives_icons8-discover-2d_50.png` |
-| 23 | 275 | `icons8-info` | 50px | Disc Info | `Disc_Info_icons8-info_50.png` |
+| 23 | 275 | `icons8-info-main` | 50px | Disc Info | `Disc_Info_icons8-info-main_50.png` |
 | 24 | 289 | `icons8-duplicate-2d` | 50px | Copy Disc Wizard | `Copy_Disc_Wizard_icons8-duplicate-2d_50.png` |
 | 25 | 303 | `icons8-erase` | 50px | Blank Disc | `Blank_Disc_icons8-erase_50.png` |
 | 26 | 320 | `icons8-cd-3d` | 50px | Burn &amp; Write | `Burn_amp_Write_icons8-cd-3d_50.png` |
@@ -34,4 +34,5 @@ Source: `MainWindow.axaml`
 | 28 | 350 | `icons8-copy-2d` | 50px | Copy &amp; Dump | `Copy_amp_Dump_icons8-copy-2d_50.png` |
 | 29 | 365 | `fluentui-check-mark-button` | 50px | Verify &amp; Check | `Verify_amp_Check_fluentui-check-mark-button_50.png` |
 | 30 | 380 | `icons8-game-controller` | 50px | Gaming Disc Support | `Gaming_Disc_Support_icons8-game-controller_50.png` |
-| 31 | 395 | `icons8-settings-2d` | 50px | Advanced Functions | `Advanced_Functions_icons8-settings-2d_50.png` |
+| 31 | 395 | `icons8-settings-main` | 50px | Advanced Functions | `Advanced_Functions_icons8-settings-main_50.png` |
+| 32 | 438 | `icons8-lock-3d` | 16px | Ready — select an action to get started. | `Ready_—_select_an_action_to_get_started._icons8-lock-3d_16.png` |

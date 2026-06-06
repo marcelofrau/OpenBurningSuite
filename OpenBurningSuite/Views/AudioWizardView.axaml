@@ -82,7 +82,7 @@
                             ToolTip.Tip="Add audio tracks, set metadata, and burn a Red Book audio CD">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
                             <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-audio-50.png"/>
                             <TextBlock Text="Create Audio CD" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Build &amp; burn a Red Book audio CD from audio files"
@@ -100,7 +100,7 @@
                             ToolTip.Tip="Copy MP3, WMA, FLAC, WAV and other music files to a data disc">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
                             <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-music-3d-50.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-music-audio-50.png"/>
                             <TextBlock Text="Copy Music to Disc" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                             <TextBlock Text="Burn music files as data to CD, DVD, or Blu-ray"
@@ -322,7 +322,7 @@
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-audio-16.png"/>
                             <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
                         </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
@@ -561,7 +561,7 @@
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-audio-16.png"/>
                             <TextBlock Text="Disc Settings" Classes="SectionHeader"/>
                         </StackPanel>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
@@ -632,7 +632,7 @@
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-audio-16.png"/>
                             <TextBlock Text="Source Drive" Classes="SectionHeader"/>
                         </StackPanel>
                         <Grid ColumnDefinitions="*,Auto">
@@ -824,7 +824,7 @@
                             ToolTip.Tip="Start the operation">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
+                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-audio-16.png"/>
                             <TextBlock Text="Start" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>

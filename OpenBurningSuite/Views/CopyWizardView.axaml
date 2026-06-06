@@ -17,11 +17,41 @@
             <!-- Step indicators -->
             <Border Classes="Card">
                 <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
-                    <TextBlock x:Name="TxtCopyStep1Ind" Text="① Source Drive" Foreground="#5BC0FF" FontWeight="Bold"/>
-                    <TextBlock Text="→" Foreground="#5A7A9A"/>
-                    <TextBlock x:Name="TxtCopyStep2Ind" Text="② Output Settings" Foreground="#5A7A9A"/>
-                    <TextBlock Text="→" Foreground="#5A7A9A"/>
-                    <TextBlock x:Name="TxtCopyStep3Ind" Text="③ Copy" Foreground="#5A7A9A"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="CopyStepInd1" Background="#1E90FF" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="1" Foreground="White" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="CopyStepLbl1" Text="Source Drive"
+                                   Foreground="#E8F0FE" FontSize="12"
+                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="CopyStepInd2" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="CopyStepLbl2" Text="Output Settings"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Border x:Name="CopyStepInd3" Background="#1E3450" CornerRadius="12"
+                                Width="24" Height="24" Padding="0">
+                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
+                                       FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock x:Name="CopyStepLbl3" Text="Copy"
+                                   Foreground="#5A7A9A" FontSize="12"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
                 </StackPanel>
             </Border>
 

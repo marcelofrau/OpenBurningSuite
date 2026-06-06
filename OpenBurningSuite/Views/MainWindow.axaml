@@ -38,13 +38,13 @@
                              ToolTip.Tip="Application settings and preferences"
                              MinWidth="40" MinHeight="32">
                         <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-main-16.png"
                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button x:Name="BtnHelpNav" Classes="NavBtn" Click="OnHelpClick"
                              ToolTip.Tip="Help and documentation" MinWidth="40" MinHeight="32">
                         <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-16.png"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-main-16.png"
                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
@@ -272,7 +272,7 @@
                                     ToolTip.Tip="Detailed disc and drive information — MID, ATIP, physical format, speeds">
                                 <StackPanel HorizontalAlignment="Center" Spacing="6">
                                     <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-info-50.png"/>
+                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-info-main-50.png"/>
                                     <TextBlock Text="Disc Info" FontSize="13" FontWeight="SemiBold"
                                                HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                                 </StackPanel>
@@ -392,7 +392,7 @@
                             <Border Grid.Row="2" Grid.Column="1" Classes="Card" Margin="0,0,0,0">
                                 <StackPanel Spacing="8">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Image Width="18" Height="18" Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-settings-2d-50.png"/>
+                                        <Image Width="18" Height="18" Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-settings-main-50.png"/>
                                         <TextBlock Text="Advanced Functions" Classes="SectionHeader"/>
                                     </StackPanel>
                                     <TextBlock Text="Erase rewritable discs (quick/full blank), disc finalization, M-DISC archival, LibCrypt/region-free patching, raw sector I/O, and cross-platform SCSI/MMC access."

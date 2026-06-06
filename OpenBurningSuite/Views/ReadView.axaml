@@ -187,6 +187,8 @@
                       CornerRadius="8"
                       Padding="16"
                       IsExpanded="True"
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Stretch"
                       ToolTip.Tip="Pre-configured settings for various gaming console disc formats">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal" Spacing="8">

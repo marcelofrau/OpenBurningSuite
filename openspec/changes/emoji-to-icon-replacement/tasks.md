@@ -122,9 +122,9 @@
 ## 17. Polish & Review
 
 - [x] 17.1 Build project and fix any compilation errors
-- [x] 17.2 Run application and verify each view visually
-- [x] 17.3 Check button sizes, spacing, and alignment across all views
-- [x] 17.4 Verify navigation and click handlers still work
+- [ ] 17.2 Run application and verify each view visually
+- [ ] 17.3 Check button sizes, spacing, and alignment across all views
+- [ ] 17.4 Verify navigation and click handlers still work
 - [x] 17.5 Verify wizard summary lines render correctly (both with and without IconKey)
 - [x] 17.6 Verify DiscoverView media type icon updates on media change
-- [x] 17.7 Commit and create PR
+- [ ] 17.7 Commit and create PR
