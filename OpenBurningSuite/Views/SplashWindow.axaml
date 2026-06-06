@@ -20,6 +20,14 @@
             </Rectangle.Fill>
         </Rectangle>
 
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top"
+                Margin="8" Width="24" Height="24"
+                Background="Transparent" BorderThickness="0"
+                Cursor="Hand" Click="OnCloseClick">
+            <TextBlock Text="✕" FontSize="14" Foreground="#5A7A9A"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Button>
+
         <Border VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel Orientation="Vertical" Spacing="12" HorizontalAlignment="Center">
                 <Image Width="64" Height="64"

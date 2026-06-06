@@ -165,6 +165,12 @@ public partial class MainWindow : Window
     private void OnBlankWizardClick(object? sender, RoutedEventArgs e) =>
         SetActiveView(BtnBlankWizard, ViewBlankWizard, "Blank Disc Wizard");
 
+    private void OnAboutClick(object? sender, RoutedEventArgs e)
+    {
+        var about = new SplashWindow();
+        about.ShowDialog(this);
+    }
+
     private void OnSettingsClick(object? sender, RoutedEventArgs e)
     {
         HideAllViews();

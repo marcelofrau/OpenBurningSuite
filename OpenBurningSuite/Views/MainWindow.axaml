@@ -34,6 +34,12 @@
                                Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-home-16.png"
                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
+                    <Button x:Name="BtnAboutNav" Classes="NavBtn" Click="OnAboutClick"
+                             ToolTip.Tip="About Open Burning Suite" MinWidth="40" MinHeight="32">
+                        <Image Width="16" Height="16"
+                               Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-information-16.png"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
                     <Button x:Name="BtnSettingsNav" Classes="NavBtn" Click="OnSettingsClick"
                              ToolTip.Tip="Application settings and preferences"
                              MinWidth="40" MinHeight="32">
