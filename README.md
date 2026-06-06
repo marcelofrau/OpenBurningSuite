@@ -4,7 +4,7 @@
 
 # Open Burning Suite
 
-> **Fork** by [marcelofrau](https://github.com/marcelofrau) — adding native **CHD (MAME Compressed Hunks of Data)** support for burning retro gaming discs directly from `.chd` files.
+> **Active fork** by [marcelofrau](https://github.com/marcelofrau) — the [upstream project](https://github.com/SvenGDK/OpenBurningSuite) appears to be stalled, so I'm continuing development here with new features, bug fixes, and UI improvements. Pull requests are sent back upstream to keep the original project alive.
 >
 > [Upstream →](https://github.com/SvenGDK/OpenBurningSuite) | [Issue #1 — CHD Support](https://github.com/SvenGDK/OpenBurningSuite/issues/1)
 
@@ -40,6 +40,8 @@ Under the hood, Open Burning Suite talks directly to your optical drive using na
 | ⚙️ | **Advanced** | Disc erase & format (quick/full) · Eject/load tray · Finalization · M-DISC archival · Real-time disc visualization |
 | 🔒 | **Encryption** | AES-256-CBC disc image encryption with password protection (.obse format) · PS3 disc decryption (IRD/dkey/hex) |
 | 🧙 | **Wizards** | Step-by-step Quick Start wizards for Audio, Video, Data, Gaming, Copy, and Blank/Erase discs |
+| 💿 | **Disc Info** | Drive and media information panel — MID, ATIP, physical format, supported write speeds, buffer info, firmware, serial number |
+| 🛡️ | **Admin Required** | RAW/DAO/SCSI commands require administrator/elevated privileges on all platforms |
 
 See the [full documentation](https://svengdk.github.io/OpenBurningSuite/) for detailed guides on each feature.
 
