@@ -50,7 +50,7 @@ jobs:
           restore-keys: ${{ runner.os }}-nuget-
 
       - name: Publish
-        run: dotnet publish OpenBurningSuite -c Release -r win- -p:PublishReadyToRun=true ${{ matrix.arch }} --self-contained -o publish
+        run: dotnet publish OpenBurningSuite -c Release -r win-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -o publish
 
       - name: Create ZIP (Portable)
         run: 7z a -tzip -mx=9 OpenBurningSuite-win-${{ matrix.arch }}.zip .\publish\*

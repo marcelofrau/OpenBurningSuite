@@ -60,7 +60,7 @@ jobs:
           restore-keys: ${{ runner.os }}-nuget-
 
       - name: Publish
-        run: dotnet publish OpenBurningSuite -c Release -r linux- -p:PublishReadyToRun=true ${{ matrix.arch }} --self-contained -o publish
+        run: dotnet publish OpenBurningSuite -c Release -r linux-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -o publish
 
       - name: Install build tools
         run: |
