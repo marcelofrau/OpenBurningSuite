@@ -1,7 +1,13 @@
-# Open Burning Suite — Status do Projeto
+---
+layout: default
+title: Project Status
+permalink: /status
+---
 
-> Atualizado: Jun 2026
-> Branch ativa: `feat/emoji-to-icon-replacement`
+# Open Burning Suite — Project Status
+
+> Updated: Jun 2026
+> Active branch: `main`
 
 ## ✅ Concluído
 

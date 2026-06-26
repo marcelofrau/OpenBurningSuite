@@ -14,310 +14,470 @@ This page describes the technical architecture of Open Burning Suite, its layere
 
 Open Burning Suite follows a clean **layered architecture** where each layer depends only on the layer below it:
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│                       Avalonia UI Views                       │
-│  Discover · Copy Disc · Build Image · Burn/Write · Verify    │
-│  Advanced · Settings · Help                                   │
-│  AudioWizard · VideoWizard · DataWizard · GameWizard          │
-│  CopyWizard · BlankWizard                                     │
-│  DiscVisualizationControl (SkiaSharp)                        │
-├──────────────────────────────────────────────────────────────┤
-│                       Services Layer                          │
-│  BurnService · ReadService · BuildService · VerifyService    │
-│  DiscDiscoveryService · DiscEncryptionService                │
-│  GamingDiscService · SettingsService                         │
-│  Ps3DiscService · Xbox360StealthService · XisoService        │
-├──────────────────────────────────────────────────────────────┤
-│                    Native Engine Layer                        │
-│  Optical: BurnEngine · ReadEngine · OpticalDrive             │
-│  Iso: IsoBuilder · VcdBuilder · ElToritoWriter               │
-│       HfsPlusBuilder · RockRidgeExtensions/Reader             │
-│       CcdParser/Writer · CdiParser/Writer · MdfParser/Writer  │
-│       NrgParser/Writer · ImgParser/Writer                     │
-│  Audio: AudioConverter · AudioCdBuilder · CdTextEncoder      │
-│         PlaylistParser · AudioReaderFactory                   │
-│  Video: BluRayAuthoringBuilder · DvdAuthoringBuilder         │
-│         VideoTranscoder (FFmpeg)                              │
-│  Toc: TocCueConverter                                        │
-├──────────────────────────────────────────────────────────────┤
-│                 SCSI / MMC Command Layer                      │
-│           MmcCommands · ScsiCommand · ScsiResult              │
-├──────────────────────────────────────────────────────────────┤
-│              Platform SCSI Transport Layer                    │
-│  WindowsScsiTransport (IOCTL_SCSI_PASS_THROUGH_DIRECT)      │
-│  LinuxScsiTransport (SG_IO)                                  │
-│  MacOsScsiTransport (IOKit SCSITaskLib)                      │
-├──────────────────────────────────────────────────────────────┤
-│                Platform Utilities Layer                       │
-│  NativeDeviceDiscovery · NativeEject · NativePrivilege       │
-└──────────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph Views["Avalonia UI Views"]
+        V1["Discover / Copy / Build / Burn / Write / Verify"]
+        V2["Advanced / Settings / Help"]
+        V3["AudioWizard / VideoWizard / DataWizard / GameWizard"]
+        V4["CopyWizard / BlankWizard / DiscInfoView"]
+        V5["DiscVisualizationControl (SkiaSharp) / SplashWindow"]
+    end
+
+    subgraph Services["Services Layer"]
+        S1["BurnService"]
+        S2["ReadService"]
+        S3["BuildService"]
+        S4["VerifyService"]
+        S5["DiscDiscoveryService"]
+        S6["DiscInfoService"]
+        S7["DiscEncryptionService"]
+        S8["GamingDiscService"]
+        S9["SettingsService"]
+        S10["Ps3DiscService / Xbox360StealthService / XisoService"]
+    end
+
+    subgraph Engine["Native Engine Layer"]
+        E1["Optical: BurnEngine / ReadEngine / OpticalDrive"]
+        E2["Iso: IsoBuilder / VcdBuilder / HfsPlusBuilder"]
+        E3["Audio: AudioConverter / AudioCdBuilder / CdTextEncoder"]
+        E4["Video: BluRayAuthoringBuilder / DvdAuthoringBuilder"]
+        E5["Toc: TocCueConverter / Format parsers"]
+    end
+
+    subgraph SCSI["SCSI / MMC Command Layer"]
+        C1["MmcCommands / ScsiCommand / ScsiResult"]
+    end
+
+    subgraph Transport["Platform SCSI Transport Layer"]
+        T1["WindowsScsiTransport (IOCTL_SCSI_PASS_THROUGH_DIRECT)"]
+        T2["LinuxScsiTransport (SG_IO)"]
+        T3["MacOsScsiTransport (IOKit SCSITaskLib)"]
+    end
+
+    subgraph Platform["Platform Utilities Layer"]
+        U1["NativeDeviceDiscovery (.Windows / .Linux / .macOS)"]
+        U2["NativeEject"]
+        U3["NativePrivilege"]
+    end
+
+    V1 --> S1 & S2 & S3 & S4
+    V2 --> S9
+    V3 --> S1 & S3
+    V4 --> S5 & S6 & S8
+    V5 --> S5
+
+    S1 --> E1
+    S2 --> E1
+    S3 --> E2
+    S4 --> E1
+    S6 --> E1
+    S7 --> C1
+
+    E1 --> C1
+    E2 --> C1
+    E3 --> C1
+    E4 --> C1
+
+    C1 --> T1 & T2 & T3
+    T1 & T2 & T3 --> U1 & U2 & U3
 ```
 
 ---
 
 ## Layer Descriptions
 
-### 1. UI Layer (`Views/`)
+### Avalonia UI Views
 
-The presentation layer built with **Avalonia UI** using the Fluent theme. The main window provides sidebar navigation across multiple views:
+The top layer contains 16 views plus a splash window and a custom SkiaSharp-based disc visualization control. Views are primarily written in AXAML with C# code-behind, following a code-behind pattern (no formal MVVM framework — bindings are done manually via property change notification).
 
-| View | File | Purpose |
-|:-----|:-----|:--------|
-| **MainWindow** | `MainWindow.axaml` | App shell, sidebar navigation, status display |
-| **DiscoverView** | `DiscoverView.axaml` | Drive detection and disc info |
-| **WriteView** | `WriteView.axaml` | Burn configuration and execution |
-| **ReadView** | `ReadView.axaml` | Read configuration and execution |
-| **BuildView** | `BuildView.axaml` | Image building from files/folders |
-| **VerifyView** | `VerifyView.axaml` | Verification operations |
-| **AdvancedView** | `AdvancedView.axaml` | Erase, finalize, and advanced disc operations |
-| **AudioWizardView** | `AudioWizardView.axaml` | Audio CD creation, music copy, and CD ripping |
-| **VideoWizardView** | `VideoWizardView.axaml` | DVD-Video, Blu-ray, BDAV, 3D, VCD/SVCD/XSVCD authoring |
-| **DataWizardView** | `DataWizardView.axaml` | Guided data disc creation |
-| **GameWizardView** | `GameWizardView.axaml` | Gaming disc preset-driven workflows |
-| **CopyWizardView** | `CopyWizardView.axaml` | Guided disc copy with gaming presets and PS3 decryption |
-| **BlankWizardView** | `BlankWizardView.axaml` | Guided disc erase and format operations |
-| **SettingsView** | `SettingsView.axaml` | Application settings and preferences |
-| **HelpView** | `HelpView.axaml` | In-app help documentation with TOC navigation |
-| **DiscVisualizationControl** | `DiscVisualizationControl.cs` | Real-time disc visualization (SkiaSharp) |
+**View categories:**
+- **Main operations:** Discover, Copy Disc, Build Image, Burn/Write, Verify
+- **Configuration:** Advanced, Settings, Help
+- **Quick Start Wizards:** Audio, Video, Data, Game, Copy, Blank/Erase
+- **Information:** Disc Info panel, Disc Visualization
+- **Overlay:** Splash Window (startup)
 
-### 2. Services Layer (`Services/`)
+### Services Layer
 
-The orchestration layer that coordinates between the UI and native engines. Services handle high-level business logic, progress reporting, and error management.
+Services encapsulate business logic for each major operation. They coordinate between views and the native engine layer:
 
 | Service | Responsibility |
-|:--------|:--------------|
-| **BurnService** | Orchestrates burn operations, multi-copy management, disc eject polling |
-| **ReadService** | Dispatches read operations to the appropriate format handler |
-| **BuildService** | Manages ISO, audio, VCD/SVCD/XSVCD, DVD-Video, Blu-ray, and BDAV image construction workflows |
-| **VerifyService** | Coordinates verification operations, checksum computation (MD5, SHA-1, SHA-256, SHA-512, CRC32) |
-| **VcdSvcdVerifier** | VCD/SVCD-specific disc image structural validation |
-| **MdfMdsVerifier** | MDF/MDS-specific disc image structural validation |
-| **DiscDiscoveryService** | Wraps platform-specific drive enumeration |
-| **DiscContentDetectionService** | Detects disc content type (data, audio, video, gaming) from drive or image; recommends output format, sector size, and subchannel mode |
-| **DiscEncryptionService** | Encrypts and decrypts disc images using AES-256-CBC with PBKDF2 key derivation (.obse format) |
-| **GamingDiscService** | Detects gaming systems, applies presets, manages gaming-specific parameters |
-| **Ps3DiscService** | PlayStation 3 disc handling: PARAM.SFO parsing, IRD/.dkey/hex-key decryption, region map processing |
-| **Xbox360StealthService** | Xbox 360 disc handling: DMI/PFI/SS extraction, XGD2/XGD3 game detection |
-| **XisoService** | Xbox ISO (XDVDFS) handling: reads and extracts files from Xbox DVD filesystem images |
-| **SettingsService** | Manages loading and saving of application settings to a JSON file |
+|:--------|:---------------|
+| `BurnService` | Coordinates burn operations across media types, manages CHD conversion |
+| `ReadService` | Handles disc reading to all output formats |
+| `BuildService` | Creates ISO/UDF/HFS+ filesystem images |
+| `VerifyService` | Performs checksum verification and disc-to-image comparison |
+| `DiscDiscoveryService` | Detects and enumerates optical drives |
+| `DiscInfoService` | Retrieves detailed disc/drive information (MID, ATIP, formats, speeds) |
+| `DiscEncryptionService` | AES-256-CBC encryption/decryption of disc images (.obse) |
+| `GamingDiscService` | Console-specific disc detection and preset logic |
+| `SettingsService` | Persistent user settings (chdman path, preferences) |
+| `Ps3DiscService` | PS3 IRD/dkey/hex decryption support |
+| `Xbox360StealthService` | Xbox 360 stealth patching |
 
-### 3. Native Engine Layer (`Native/`)
+### Native Engine Layer
 
-The core implementation layer containing the actual disc operation logic, organized into subdirectories:
+The engine layer implements the actual disc operations. It is split into domains:
 
-#### Optical (`Native/Optical/`)
+**Optical Engine:**
+- `BurnEngine` — SCSI WRITE commands, buffer management, burn strategy
+- `ReadEngine` — SCSI READ commands, sector extraction, error recovery
+- `OpticalDrive` — Drive capabilities, media type detection, speed negotiation
 
-| Component | File | Responsibility |
-|:----------|:-----|:--------------|
-| **BurnEngine** | `BurnEngine.cs` | Writes image data to disc in 16-sector chunks, parses CUE sheets, handles SAO and DAO write modes |
-| **ReadEngine** | `ReadEngine.cs` | Reads sectors with configurable error handling, paranoia modes |
-| **OpticalDrive** | `OpticalDrive.cs` + `OpticalDriveModels.cs` | High-level drive abstraction (inquiry, disc info, media detection, format, erase, eject) with associated data models |
+**Iso/Disc Image Engine:**
+- `IsoBuilder`, `VcdBuilder`, `HfsPlusBuilder` — filesystem image creation
+- `RockRidgeExtensions` / `RockRidgeReader` — POSIX extensions
+- `CcdParser`/`Writer`, `CdiParser`/`Writer`, `MdfParser`/`Writer` — format support
+- `NrgParser`/`Writer`, `ImgParser`/`Writer` — additional format support
 
-#### ISO / Image Formats (`Native/Iso/`)
+**Audio Engine:**
+- `AudioConverter` — Audio file transcoding
+- `AudioCdBuilder` — Red Book audio CD creation with CD-TEXT
+- `CdTextEncoder` — CD-TEXT pack encoding
+- `PlaylistParser` — M3U/PLS/WPL/ASX import
 
-| Component | File | Responsibility |
-|:----------|:-----|:--------------|
-| **IsoBuilder** | `IsoBuilder.cs` | Builds ISO 9660/Joliet/UDF images using DiscUtils |
-| **VcdBuilder** | `VcdBuilder.cs` | Builds VCD, SVCD, and XSVCD disc images (CD-ROM XA Mode 2) |
-| **ElToritoWriter** | `ElToritoWriter.cs` | Writes El Torito boot records for bootable disc images |
-| **HfsPlusBuilder** | `HfsPlusBuilder.cs` | HFS+ hybrid disc image support |
-| **RockRidgeExtensions** | `RockRidgeExtensions.cs` | Rock Ridge POSIX extension writing |
-| **RockRidgeReader** | `RockRidgeReader.cs` | Rock Ridge POSIX extension reading |
-| **CcdParser / CcdWriter** | `CcdParser.cs`, `CcdWriter.cs` | CloneCD image format (CCD/IMG/SUB) reading and writing |
-| **CdiParser / CdiWriter** | `CdiParser.cs`, `CdiWriter.cs` | DiscJuggler image format (CDI v2.0–4.0) reading and writing |
-| **MdfParser / MdfWriter** | `MdfParser.cs`, `MdfWriter.cs` | Alcohol 120% image format (MDF/MDS) reading and writing |
-| **NrgParser / NrgWriter** | `NrgParser.cs`, `NrgWriter.cs` | Nero image format (NRG v1/v2) reading and writing |
-| **ImgParser / ImgWriter** | `ImgParser.cs`, `ImgWriter.cs` | Raw disc image format (IMG) reading and writing |
-| **SubParser / SubWriter** | `SubParser.cs`, `SubWriter.cs` | Subchannel data (SUB) parsing, format detection, CRC-16 validation, and writing |
+**Video Engine:**
+- `BluRayAuthoringBuilder` — BDMV/BDAV structure authoring
+- `DvdAuthoringBuilder` — VIDEO_TS structure authoring
+- `VideoTranscoder` — FFmpeg video transcoding adapter
 
-#### Audio (`Native/Audio/`)
+### SCSI / MMC Command Layer
 
-| Component | File | Responsibility |
-|:----------|:-----|:--------------|
-| **AudioConverter** | `AudioConverter.cs` | Converts audio formats for CD burning using NAudio |
-| **AudioCdBuilder** | `AudioCdBuilder.cs` | Builds Red Book audio CD images |
-| **CdTextEncoder** | `CdTextEncoder.cs` | Encodes CD-TEXT metadata for audio CDs |
-| **PlaylistParser** | `PlaylistParser.cs` | Loads and saves M3U, M3U8, PLS, WPL, ASX playlists |
-| **AudioReaderFactory** | `AudioReaderFactory.cs` | Creates audio file readers for various formats |
+This layer defines the SCSI command set used for optical drive communication:
 
-#### Video (`Native/Video/`)
+```mermaid
+sequenceDiagram
+    participant App as Application
+    participant Scsi as ScsiCommand
+    participant Transport as SCSI Transport
+    participant Drive as Optical Drive
 
-| Component | File | Responsibility |
-|:----------|:-----|:--------------|
-| **DvdAuthoringBuilder** | `DvdAuthoringBuilder.cs` | Builds DVD-Video directory structures (VIDEO_TS) |
-| **BluRayAuthoringBuilder** | `BluRayAuthoringBuilder.cs` | Builds Blu-ray BDMV, BDAV, and 3D disc structures |
-| **VideoTranscoder** | `VideoTranscoder.cs` | FFmpeg-based video transcoding for DVD, Blu-ray, BDAV, 3D, VCD/SVCD/XSVCD |
+    App->>Scsi: Create command (opcode, data, direction)
+    Scsi->>Scsi: Build CDB (Command Descriptor Block)
+    Scsi->>Transport: Execute(cdb, buffer, timeout)
+    Transport->>Drive: Send SCSI command via platform API
+    Drive-->>Transport: SCSI status + data
+    Transport-->>Scsi: ScsiResult (status, sense data)
+    Scsi-->>App: Process result
+```
 
-#### TOC / CUE (`Native/Toc/`)
+Key components:
+- `MmcCommands` — Static definitions of MMC opcodes and parameter pages
+- `ScsiCommand` — Encapsulates CDB construction, buffer allocation, timeout handling
+- `ScsiResult` — Parses sense data, extracts error information
 
-| Component | File | Responsibility |
-|:----------|:-----|:--------------|
-| **TocCueConverter** | `TocCueConverter.cs` | Parses and converts CUE sheets and TOC files |
+### Platform SCSI Transport Layer
 
-#### Platform Utilities (`Native/Platform/`)
+Each platform has its own SCSI transport implementation behind the `IScsiTransport` interface:
 
-| Component | File(s) | Responsibility |
-|:----------|:--------|:--------------|
-| **NativeDeviceDiscovery** | `NativeDeviceDiscovery.cs` + `.Linux.cs` / `.Windows.cs` / `.macOS.cs` | Platform-specific optical drive enumeration (partial class per OS) |
-| **NativeEject** | `NativeEject.cs` + `.Linux.cs` / `.Windows.cs` / `.macOS.cs` | Platform-specific disc tray eject/load (partial class per OS) |
-| **NativePrivilege** | `NativePrivilege.cs` | Platform-specific privilege elevation checks |
+| Platform | Implementation | API |
+|:---------|:---------------|:----|
+| Windows | `WindowsScsiTransport` | `IOCTL_SCSI_PASS_THROUGH_DIRECT` via `DeviceIoControl` |
+| Linux | `LinuxScsiTransport` | `SG_IO` ioctl on `/dev/sg*` |
+| macOS | `MacOsScsiTransport` | IOKit `SCSITaskDeviceInterface` |
 
-### 4. SCSI / MMC Command Layer (`Native/Scsi/`)
+The factory pattern (`ScsiTransportFactory`) selects the correct transport at runtime based on `OSPlatform`.
 
-Builds and interprets SCSI Command Descriptor Blocks (CDBs) per the **MMC-5** (Multimedia Commands) standard:
+### Platform Utilities Layer
 
-| Component | File | Responsibility |
-|:----------|:-----|:--------------|
-| **MmcCommands** | `MmcCommands.cs` | Static builders for MMC commands: INQUIRY, READ(10), WRITE(10), WRITE(12), BLANK, READ DISC INFO, READ TRACK INFO, TEST UNIT READY, etc. |
-| **ScsiCommand** | `ScsiCommand.cs` | Encapsulates a SCSI CDB with direction and transfer length |
-| **ScsiResult** | `ScsiResult.cs` | Parses SCSI response data and sense data (fixed/descriptor format) |
+Cross-platform helpers for system integration:
 
-### 5. Platform Transport Layer (`Native/Scsi/`)
+```mermaid
+graph LR
+    subgraph Windows
+        W1["SetupAPI device enumeration"]
+        W2["IOCTL_STORAGE_EJECT_MEDIA"]
+        W3["WindowsPrincipal.IsInRole"]
+    end
+    subgraph Linux
+        L1["/sys/class/scsi_generic/ enumeration"]
+        L2["SG_IO eject via MMC"]
+        L3["geteuid() == 0 check"]
+    end
+    subgraph macOS
+        M1["IOKit registry iteration"]
+        M2["IOKit eject via SCSITask"]
+        M3["EUID check"]
+    end
 
-Platform-specific implementations of the `IScsiTransport` interface:
+    NativeDeviceDiscovery --> W1 & L1 & M1
+    NativeEject --> W2 & L2 & M2
+    NativePrivilege --> W3 & L3 & M3
+```
 
-| Transport | File | Platform | Mechanism |
-|:----------|:-----|:---------|:----------|
-| **IScsiTransport** | `IScsiTransport.cs` | All | Interface defining the SCSI command execution contract |
-| **WindowsScsiTransport** | `WindowsScsiTransport.cs` | Windows | `IOCTL_SCSI_PASS_THROUGH_DIRECT` via P/Invoke to `kernel32.dll` |
-| **LinuxScsiTransport** | `LinuxScsiTransport.cs` | Linux | `SG_IO` ioctl on `/dev/sg*` or `/dev/sr*` devices |
-| **MacOsScsiTransport** | `MacOsScsiTransport.cs` | macOS | IOKit SCSITaskLib SCSI passthrough |
-| **ScsiTransportFactory** | `ScsiTransportFactory.cs` | All | Factory that creates the correct transport based on `RuntimeInformation.IsOSPlatform()` |
+---
+
+## Application Startup Flow
+
+```mermaid
+sequenceDiagram
+    participant Main as Program.cs
+    participant App as App.axaml.cs
+    participant Splash as SplashWindow
+    participant MainWnd as MainWindow
+    participant Disc as DiscDiscoveryService
+
+    Main->>App: BuildAvaloniaApp().StartWithClassicDesktopLifetime()
+    App->>Splash: Show splash window
+    Splash-->>Splash: Display logo + version + loading
+    App->>Disc: Detect optical drives
+    Disc-->>App: Drive list
+    App->>MainWnd: Create MainWindow with drive data
+    MainWnd-->>MainWnd: Populate sidebar, set up views
+    App->>Splash: Close splash
+    App->>MainWnd: Show main window
+```
+
+---
+
+## Burn Operation Flow
+
+```mermaid
+sequenceDiagram
+    participant View as WriteView
+    participant Service as BurnService
+    participant Chd as ChdHelper
+    participant Engine as BurnEngine
+    participant Scsi as ScsiCommand
+    participant Drive as OpticalDrive
+
+    View->>Service: StartBurn(job)
+    Service->>Service: Determine media type & write mode
+
+    alt Source is CHD
+        Service->>Chd: ConvertChdToBinCue(path)
+        Chd-->>Service: BIN/CUE temp path
+    end
+
+    Service->>Engine: Prepare burn image
+    Engine->>Drive: Get write parameters
+    Drive-->>Engine: Write speed, buffer size
+
+    loop Each write unit
+        Engine->>Scsi: WRITE (10/12/16) command
+        Scsi->>Drive: Execute SCSI write
+        Drive-->>Scsi: Write status
+        Scsi-->>Engine: Result
+        Engine-->>Service: Progress callback
+    end
+
+    Service->>Engine: Close session / finalize
+    Engine->>Scsi: CLOSE TRACK / SESSION
+    alt Verify enabled
+        Service->>Service: Read back & compare checksums
+    end
+    Service-->>View: BurnResult (success)
+```
+
+---
+
+## Disc Information Retrieval
+
+```mermaid
+sequenceDiagram
+    participant View as DiscInfoView
+    participant Service as DiscInfoService
+    participant Manuf as MediaManufacturerLookup
+    participant Drive as OpticalDrive
+    participant Scsi as MmcCommands
+
+    View->>Service: GetDiscInfo(drive)
+    Service->>Drive: Select media
+    Service->>Scsi: GET CONFIGURATION
+    Scsi-->>Service: Feature descriptors
+    Service->>Scsi: READ DISC INFORMATION
+    Scsi-->>Service: Disc structure
+    Service->>Scsi: READ TRACK INFORMATION
+    Scsi-->>Service: Track info
+
+    alt Media is CD
+        Service->>Scsi: READ TOC/PMA/ATIP
+        Scsi-->>Service: ATIP data
+        Service->>Manuf: Lookup manufacturer by ATIP code
+    else Media is DVD or BD
+        Service->>Scsi: READ DISC INFORMATION (Physical Format)
+        Scsi-->>Service: Media ID (MID)
+        Service->>Manuf: Lookup manufacturer by MID
+    end
+
+    Service->>Drive: Query capabilities
+    Drive-->>Service: Write speeds, buffer size, feature bits
+    Service-->>View: DiscInfoResult (full report)
+```
 
 ---
 
 ## Key Design Decisions
 
-### Native SCSI/MMC Implementation
+### Why Native SCSI Instead of CLI Tools?
 
-**Why:** Traditional disc burning applications rely on external command-line tools (cdrecord, wodim, growisofs, mkisofs). This creates dependency management issues, inconsistent error handling, and platform-specific tool availability problems.
+Unlike most disc burning applications that wrap command-line tools (`cdrecord`, `wodim`, `growisofs`, `mkisofs`), Open Burning Suite communicates directly with the optical drive:
 
-**Solution:** Open Burning Suite implements all disc operations directly using SCSI/MMC-5 commands sent through platform-specific SCSI passthrough mechanisms. This provides:
+- **No external dependencies** — the application is self-contained
+- **Consistent behavior** — same SCSI commands on every platform
+- **Better error reporting** — direct access to sense data and drive status
+- **Finer control** — raw sector access, subchannel data, custom write modes
 
-- Zero external runtime dependencies
-- Consistent behavior across platforms
-- Direct hardware error reporting via SCSI sense data
-- Fine-grained control over all disc operations
+### Code Example: Executing a SCSI Command
 
-### Platform Abstraction via Interface
+```csharp
+// From ScsiCommand.cs — simplified
+public ScsiResult Execute(IScsiTransport transport, byte[] cdb,
+                          byte[] buffer, int timeoutMs)
+{
+    var result = transport.Execute(cdb, buffer, timeoutMs);
 
-The `IScsiTransport` interface defines a single method for executing SCSI commands:
+    if (result.Status == ScsiStatus.CheckCondition)
+    {
+        var sense = SenseData.Parse(result.SenseBuffer);
+        if (sense.IsRecoverableError)
+            return new ScsiResult(result.Data, sense, isWarning: true);
+
+        throw new ScsiException(sense);
+    }
+
+    return new ScsiResult(result.Data, senseData: null);
+}
+```
+
+### Why Code-Behind Instead of MVVM?
+
+The original upstream project used code-behind for view logic. This fork maintains that pattern for consistency and incremental migration. New features (Disc Info, Icon system) introduce helper classes and services that can be extracted into a formal ViewModel layer in a future refactor.
+
+---
+
+## SCSI Command Categories
+
+| Category | Commands | Example Opcodes |
+|:---------|:---------|:----------------|
+| **Inquiry** | GET CONFIGURATION, FEATURE, EVENT STATUS | 46h, 4Ah, 4Dh |
+| **Read** | READ (10/12/16), READ CD, READ TOC/PMA/ATIP | 28h, A8h, BEh |
+| **Write** | WRITE (10/12/16), WRITE AND VERIFY | 2Ah, AAh, 2Eh |
+| **Session** | CLOSE TRACK/SESSION, RESERVE TRACK, SYNCHRONIZE CACHE | 5Bh, 53h, 35h |
+| **Media** | READ DISC INFORMATION, READ TRACK INFORMATION | 51h, 52h |
+| **Mode** | MODE SENSE (6/10), MODE SELECT (6/10) | 1Ah, 5Ah, 15h, 55h |
+| **Misc** | START STOP UNIT, PREVENT ALLOW MEDIUM REMOVAL, LOAD/UNLOAD MEDIUM | 1Bh, 1Eh, A6h |
+
+---
+
+## Image Format Support Pipeline
+
+```mermaid
+graph LR
+    subgraph Input["Input Image Formats"]
+        I1["ISO (.iso)"]
+        I2["BIN/CUE (.bin+.cue)"]
+        I3["NRG (.nrg)"]
+        I4["MDF/MDS (.mdf+.mds)"]
+        I5["CCD/IMG/SUB"]
+        I6["CDI (.cdi)"]
+        I7["TOC/BIN"]
+        I8["CHD (.chd)"]
+    end
+
+    subgraph Convert["Conversion Pipeline"]
+        C1["Parser → Internal Sector Representation"]
+        C2["chdman → BIN/CUE" ]
+    end
+
+    subgraph Output["Output / Burn Format"]
+        O1["BIN/CUE (intermediate)"]
+        O2["RAW sectors → SCSI WRITE"]
+    end
+
+    I1 --> C1
+    I2 --> C1
+    I3 --> C1
+    I4 --> C1
+    I5 --> C1
+    I6 --> C1
+    I7 --> C1
+    I8 --> C2 --> C1
+    C1 --> O1 --> O2
+```
+
+---
+
+## Service Dependencies
+
+```mermaid
+graph TD
+    BurnSvc["BurnService"] --> OpticalDrive
+    BurnSvc --> ChdHelper
+    BurnSvc --> BurnEngine
+    ReadSvc["ReadService"] --> OpticalDrive
+    ReadSvc --> ReadEngine
+    BuildSvc["BuildService"] --> IsoBuilder
+    BuildSvc --> AudioCdBuilder
+    VerifySvc["VerifyService"] --> OpticalDrive
+    DiscInfoSvc["DiscInfoService"] --> OpticalDrive
+    DiscInfoSvc --> MediaManufacturerLookup
+    DiscDiscoverySvc["DiscDiscoveryService"] --> NativeDeviceDiscovery
+    DriveWatcherSvc["DriveWatcherService"] --> WindowsDeviceNotifier
+
+    style BurnSvc fill:#1A7CE0,color:#fff
+    style ReadSvc fill:#1A7CE0,color:#fff
+    style BuildSvc fill:#1A7CE0,color:#fff
+    style VerifySvc fill:#1A7CE0,color:#fff
+    style DiscInfoSvc fill:#1A7CE0,color:#fff
+```
+
+---
+
+## Project Structure
 
 ```
-IScsiTransport
-├── WindowsScsiTransport  →  IOCTL_SCSI_PASS_THROUGH_DIRECT
-├── LinuxScsiTransport    →  SG_IO ioctl
-└── MacOsScsiTransport    →  macOS passthrough
+OpenBurningSuite/
+├── OpenBurningSuite.slnx        # Solution file (.slnx format)
+├── OpenBurningSuite.csproj      # .NET 8 project
+├── Program.cs                   # Entry point
+├── App.axaml / App.axaml.cs     # Application + theme
+│
+├── Models/                      # Data models
+│   ├── AppSettings.cs           # User configuration
+│   ├── BurnJob.cs               # Burn operation parameters
+│   ├── BurnProgress.cs          # Burn progress tracking
+│   ├── DiscDrive.cs             # Drive representation
+│   ├── DiscInfoResult.cs        # Disc information result
+│   └── ...                      # (20+ model classes)
+│
+├── Services/                    # Business logic
+│   ├── BurnService.cs
+│   ├── ReadService.cs
+│   ├── BuildService.cs
+│   ├── VerifyService.cs
+│   ├── DiscInfoService.cs
+│   ├── DiscDiscoveryService.cs
+│   ├── DiscEncryptionService.cs
+│   ├── GamingDiscService.cs
+│   └── ...
+│
+├── Native/                      # Native engine
+│   ├── Optical/                 # BurnEngine, ReadEngine, OpticalDrive
+│   ├── Audio/                   # AudioCdBuilder, AudioConverter
+│   ├── Video/                   # VideoTranscoder, BluRay/DVD authoring
+│   ├── Scsi/                    # SCSI commands + platform transports
+│   ├── Platform/                # NativeDeviceDiscovery, Eject, Privilege
+│   └── Toc/                     # TOC/CUE conversion
+│
+├── Controls/                    # Custom Avalonia controls
+│   ├── IconButton.cs
+│   ├── IconTextBlock.cs
+│   ├── IconConverter.cs
+│   └── IconSourceExtension.cs
+│
+├── Helpers/                     # Utilities
+│   ├── ChdHelper.cs             # CHD extraction via chdman
+│   ├── IconHelper.cs            # PNG icon loading
+│   ├── Logger.cs                # Logging with ms precision
+│   └── MediaManufacturerLookup.cs  # 150+ vendor IDs
+│
+└── Views/                       # AXAML views (16 views + splash)
+    ├── MainWindow.axaml/.cs
+    ├── SplashWindow.axaml/.cs
+    ├── WriteView.axaml/.cs
+    ├── ReadView.axaml/.cs
+    ├── DiscInfoView.axaml/.cs
+    └── ...
 ```
-
-`ScsiTransportFactory` selects the correct implementation at runtime based on the detected platform.
-
-### Write Strategy: 16-Sector Chunks
-
-BurnEngine writes data in **16-sector chunks** (16 × 2048 = 32,768 bytes per write command). WRITE(10) is used for CD media (16-bit transfer length) and WRITE(12) for DVD/BD media (32-bit transfer length for reduced command overhead). This balances:
-
-- Drive buffer efficiency (large enough to minimize command overhead)
-- Progress granularity (small enough for responsive progress updates)
-- Compatibility (universally supported transfer size)
-
-### Tray Lock Safety
-
-BurnEngine wraps all write operations in a `try/finally` block to ensure the disc tray is **always unlocked** (`PREVENT/ALLOW MEDIUM REMOVAL`) even if an exception occurs. This prevents discs from being permanently locked in the drive after a failed burn.
-
-### Sense Data Handling
-
-SCSI sense data is handled in both **fixed format** (response codes `0x70`/`0x71`) and **descriptor format** (response codes `0x72`/`0x73`). The sense key, ASC (Additional Sense Code), and ASCQ (Additional Sense Code Qualifier) are extracted at the correct offsets for each format.
-
----
-
-## Data Models (`Models/`)
-
-### Job Models
-
-Each operation type has a corresponding "job" model that carries all parameters:
-
-| Model | Properties |
-|:------|:-----------|
-| **BurnJob** | Image path, CUE path, device, write mode/speed, copies, simulation, buffer underrun protection, overburn, multi-session, BD-R mode, layer break |
-| **ReadJob** | Device, output path/format, speed, error recovery, sector size, subchannel mode, paranoia, gaming preset |
-| **BuildJob** | Source folder, output path, disc type, filesystem, volume metadata, boot options, audio tracks, CD-TEXT, gaming system |
-| **VerifyJob** | Device, image path, verification mode, checksum algorithm, subchannel/audio verification |
-| **BluRayAuthoringJob** | Video files, playlists, BDMV/BDAV mode, 3D stereoscopic settings, depth offset |
-| **DvdAuthoringJob** | Video files, DVD-Video authoring parameters |
-
-### Progress Models
-
-Each job type has a progress model for real-time status reporting:
-
-| Model | Key Fields |
-|:------|:-----------|
-| **BurnProgress** | Percent, speed, bytes written/total, elapsed/remaining, status message |
-| **ReadProgress** | Percent, sectors read/total/error, speed, elapsed/remaining |
-| **BuildProgress** | Percent, bytes processed/total, current file, elapsed |
-| **VerifyProgress** | Percent, sectors verified/total, good/bad sectors, elapsed/remaining |
-| **VerifyResult** | Checksum, sector counts, error details |
-
-### Disc Models
-
-| Model | Purpose |
-|:------|:--------|
-| **DiscDrive** | Drive capabilities, supported speeds, media type detection |
-| **DriveCapabilities** | Per-format read/write profile capabilities and feature flags (DriveProfileCapabilities, DriveFeatureCapabilities) |
-| **DiscMedia** | Media capacity, used space, sessions, tracks, volume label |
-| **DiscContentInfo** | Detected disc content classification (data, audio, video, gaming) with format recommendations |
-| **BluRayContentInfo** | Blu-ray content type classification (Data, Movie, PS3/PS4/PS5 Game) |
-
-### Image Format Models
-
-| Model | Purpose |
-|:------|:--------|
-| **CcdImage** | CloneCD image structure and metadata |
-| **CdiImage** | DiscJuggler image structure and metadata |
-| **MdfImage** | Alcohol 120% image structure and metadata |
-| **NrgImage** | Nero image structure and metadata |
-| **ImgImage** | Raw disc image structure and metadata |
-
-### Application Models
-
-| Model | Purpose |
-|:------|:--------|
-| **AppSettings** | Application-wide settings and preferences, persisted as JSON |
-| **GamingPreset** | Read/write settings for a specific gaming console's disc format (sector size, subchannel, speed, write mode) |
-
----
-
-## Helpers (`Helpers/`)
-
-| Helper | Purpose |
-|:-------|:--------|
-| **PlatformHelper** | Runtime platform detection: `IsLinux`, `IsWindows`, `IsMacOS`; default device paths |
-| **FormatHelper** | Disc capacity constants for all media types; supported format lists; write mode strings |
-
----
-
-## External Dependencies
-
-| Library | Purpose | Used By |
-|:--------|:--------|:--------|
-| [DiscUtils.Iso9660](https://github.com/DiscUtils/DiscUtils) | ISO 9660, Joliet, and UDF filesystem building | `IsoBuilder` |
-| [NAudio](https://github.com/naudio/NAudio) | Audio file reading, format conversion, CD audio encoding | `AudioConverter`, `AudioCdBuilder`, `AudioReaderFactory` |
-| [Avalonia](https://avaloniaui.net/) | Cross-platform UI framework with XAML | All `Views/` |
-| [FFmpeg](https://ffmpeg.org/) *(optional, runtime)* | Video transcoding for DVD-Video, Blu-ray, BDAV, 3D, VCD/SVCD/XSVCD | `VideoTranscoder` |
-
-> **Note:** FFmpeg is an optional runtime dependency — it is required for video authoring features but not for disc burning, reading, building, or verification. It is detected at runtime on the system PATH or common installation locations.
-
----
-
-## Code Conventions
-
-- **Nullable reference types** are enabled project-wide (`<Nullable>enable</Nullable>`)
-- **Static compiled Regex** patterns with `RegexOptions.IgnoreCase | RegexOptions.Compiled`
-- **XML doc comments** on all public APIs
-- **Byte-to-uint casting** before bit-shifting to prevent signed integer promotion issues
-- **Path traversal protection** — IsoBuilder validates all paths resolve within the source folder
-- **Process deadlock prevention** — stdout/stderr are drained before `WaitForExit()` on all `Process.Start` calls
-
----
-
-**Next:** [FAQ →]({{ '/faq' | relative_url }})

@@ -4,212 +4,245 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} — {{ site.title }}</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.min.css">
-  <style>
-    :root {
-      --sidebar-width: 260px;
-      --header-height: 64px;
-      --accent: #e85d04;
-      --accent-light: #fef0e6;
-      --bg: #ffffff;
-      --sidebar-bg: #f6f8fa;
-      --border: #d0d7de;
-      --text: #1f2328;
-      --text-muted: #656d76;
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/docs.css' | relative_url }}">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#1E90FF',
+      primaryTextColor: '#E8F0FE',
+      primaryBorderColor: '#1E3450',
+      lineColor: '#5BC0FF',
+      secondaryColor: '#152030',
+      tertiaryColor: '#0A1520',
+      clusterBkg: '#0C1622',
+      clusterBorder: '#1E3450',
+      nodeBorder: '#1E3450',
+      nodeTextColor: '#E8F0FE',
+      edgeLabelBackground: '#152030',
+      fontFamily: 'Inter, sans-serif'
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-    }
-
-    /* Header */
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: var(--header-height);
-      background: linear-gradient(135deg, #e85d04 0%, #dc2f02 100%);
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 24px;
-      z-index: 100;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-    }
-
-    .site-header a {
-      color: white;
-      text-decoration: none;
-    }
-
-    .site-header h1 {
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-
-    .site-header h1 span {
-      font-weight: 400;
-      opacity: 0.85;
-      margin-left: 8px;
-      font-size: 0.9rem;
-    }
-
-    .header-links {
-      margin-left: auto;
-      display: flex;
-      gap: 16px;
-      font-size: 0.875rem;
-    }
-
-    .header-links a:hover { text-decoration: underline; }
-
-    /* Mobile menu toggle */
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      margin-right: 12px;
-      padding: 4px;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      position: fixed;
-      top: var(--header-height);
-      left: 0;
-      bottom: 0;
-      width: var(--sidebar-width);
-      background: var(--sidebar-bg);
-      border-right: 1px solid var(--border);
-      overflow-y: auto;
-      padding: 20px 0;
-      z-index: 50;
-    }
-
-    .sidebar nav { padding: 0 16px; }
-
-    .sidebar nav a {
-      display: block;
-      padding: 8px 12px;
-      margin: 2px 0;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.875rem;
-      border-radius: 6px;
-      transition: background 0.15s;
-    }
-
-    .sidebar nav a:hover {
-      background: var(--accent-light);
-      color: var(--accent);
-    }
-
-    .sidebar nav a.active {
-      background: var(--accent);
-      color: white;
-      font-weight: 600;
-    }
-
-    /* Main content */
-    .main-content {
-      margin-left: var(--sidebar-width);
-      margin-top: var(--header-height);
-      padding: 32px 48px;
-      max-width: 900px;
-    }
-
-    .markdown-body {
-      font-size: 16px;
-    }
-
-    .markdown-body h1 { margin-top: 0; padding-bottom: 0.3em; border-bottom: 1px solid var(--border); }
-    .markdown-body h2 { margin-top: 1.5em; }
-    .markdown-body table { display: table; width: 100%; }
-
-    /* Footer */
-    .site-footer {
-      margin-top: 48px;
-      padding: 24px 0;
-      border-top: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      text-align: center;
-    }
-
-    .site-footer a { color: var(--accent); text-decoration: none; }
-    .site-footer a:hover { text-decoration: underline; }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .menu-toggle { display: block; }
-      .sidebar {
-        transform: translateX(-100%);
-        transition: transform 0.3s;
-        z-index: 90;
-      }
-      .sidebar.open { transform: translateX(0); }
-      .main-content {
-        margin-left: 0;
-        padding: 24px 16px;
-      }
-      .header-links { display: none; }
-    }
-  </style>
+  });</script>
 </head>
 <body>
 
   <!-- Header -->
-  <header class="site-header">
-    <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle navigation">☰</button>
-    <h1>
-      <a href="{{ '/' | relative_url }}">🔥 {{ site.title }}<span>{{ site.description | truncate: 60 }}</span></a>
-    </h1>
-    <div class="header-links">
-      <a href="https://github.com/SvenGDK/OpenBurningSuite">GitHub</a>
+  <header class="site-header" style="position:fixed;top:0;left:0;right:0;height:64px;background:linear-gradient(135deg,#1A7CE0 0%,#1E90FF 100%);color:white;display:flex;align-items:center;padding:0 24px;z-index:100;box-shadow:0 1px 3px rgba(0,0,0,.3);">
+    <button class="sidebar-toggle" onclick="document.querySelector('.docs-sidebar').classList.toggle('open')" aria-label="Toggle navigation" style="display:none;background:none;border:none;color:white;font-size:1.5rem;cursor:pointer;padding:4px;margin-right:12px;">☰</button>
+    <a href="{{ '/' | relative_url }}" style="color:white;text-decoration:none;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.25rem;font-weight:700;">{{ site.title }}</span>
+      <span style="font-weight:400;opacity:.85;font-size:.9rem;">— {{ site.description | truncate: 60 }}</span>
+    </a>
+    <div style="margin-left:auto;display:flex;gap:16px;font-size:.875rem;">
+      <a href="https://github.com/marcelofrau/OpenBurningSuite" style="color:white;text-decoration:none;">GitHub</a>
     </div>
   </header>
 
-  <!-- Sidebar navigation -->
-  <aside class="sidebar">
-    <nav>
-      {% for item in site.nav %}
-        <a href="{{ item.url | relative_url }}"
-           {% if page.url == item.url or page.url == item.url | append: '/' %}class="active"{% endif %}>
-          {{ item.title }}
-        </a>
-      {% endfor %}
-    </nav>
-  </aside>
+  <!-- Docs layout -->
+  <div class="docs-layout" style="margin-top:64px;">
 
-  <!-- Main content -->
-  <main class="main-content">
-    <article class="markdown-body">
-      {{ content }}
-    </article>
-    <footer class="site-footer">
-      <p>
-        <a href="https://github.com/SvenGDK/OpenBurningSuite">Open Burning Suite</a>
-        is released under the <a href="https://github.com/SvenGDK/OpenBurningSuite/blob/main/LICENSE">BSD 2-Clause License</a>.
-      </p>
-    </footer>
-  </main>
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <nav>
+        {% assign sections = site.data.sidebar | default: site.sidebar %}
+        {% if sections %}
+          {% for section in sections %}
+          <div class="sidebar-section">
+            <div class="sidebar-label">{{ section.label }}</div>
+            {% for link in section.links %}
+              <a href="{{ link.url | relative_url }}"
+                 class="sidebar-link{% if page.url == link.url or page.url == link.url | append: '/' %} active{% endif %}">
+                {{ link.title }}
+              </a>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="sidebar-section">
+            <div class="sidebar-label">Getting Started</div>
+            <a href="{{ '/getting-started' | relative_url }}" class="sidebar-link{% if page.url == '/getting-started/' %} active{% endif %}">Getting Started</a>
+            <a href="{{ '/burning' | relative_url }}" class="sidebar-link{% if page.url == '/burning/' %} active{% endif %}">Burning Discs</a>
+            <a href="{{ '/reading' | relative_url }}" class="sidebar-link{% if page.url == '/reading/' %} active{% endif %}">Reading Discs</a>
+            <a href="{{ '/building-images' | relative_url }}" class="sidebar-link{% if page.url == '/building-images/' %} active{% endif %}">Building Images</a>
+            <a href="{{ '/verification' | relative_url }}" class="sidebar-link{% if page.url == '/verification/' %} active{% endif %}">Verification</a>
+            <a href="{{ '/gaming-discs' | relative_url }}" class="sidebar-link{% if page.url == '/gaming-discs/' %} active{% endif %}">Gaming Discs</a>
+            <a href="{{ '/supported-formats' | relative_url }}" class="sidebar-link{% if page.url == '/supported-formats/' %} active{% endif %}">Supported Formats</a>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-label">Reference</div>
+            <a href="{{ '/architecture' | relative_url }}" class="sidebar-link{% if page.url == '/architecture/' %} active{% endif %}">Architecture</a>
+            <a href="{{ '/faq' | relative_url }}" class="sidebar-link{% if page.url == '/faq/' %} active{% endif %}">FAQ</a>
+            <a href="{{ '/status' | relative_url }}" class="sidebar-link{% if page.url == '/status/' %} active{% endif %}">Project Status</a>
+          </div>
+        {% endif %}
+      </nav>
+    </aside>
+
+    <!-- Content -->
+    <main class="docs-content">
+      <article class="docs-body">
+        {{ content }}
+      </article>
+      <footer style="margin-top:48px;padding:24px 0;border-top:1px solid var(--border);color:var(--dim);font-size:.8rem;text-align:center;">
+        <a href="https://github.com/marcelofrau/OpenBurningSuite" style="color:var(--blue);text-decoration:none;">Open Burning Suite</a>
+        is released under the
+        <a href="https://github.com/marcelofrau/OpenBurningSuite/blob/main/LICENSE" style="color:var(--blue);text-decoration:none;">BSD 2-Clause License</a>.
+      </footer>
+    </main>
+  </div>
 
   <script>
     // Close sidebar on link click (mobile)
-    document.querySelectorAll('.sidebar nav a').forEach(function(link) {
+    document.querySelectorAll('.docs-sidebar a').forEach(function(link) {
       link.addEventListener('click', function() {
-        document.querySelector('.sidebar').classList.remove('open');
+        document.querySelector('.docs-sidebar').classList.remove('open');
       });
     });
+
+    // Mermaid lightbox
+    (function() {
+      const mermaidCodeMap = new Map();
+
+      // Store original Mermaid code before rendering
+      document.querySelectorAll('.docs-body .mermaid').forEach(function(el) {
+        const id = el.id || ('mermaid-' + Math.random().toString(36).slice(2, 9));
+        if (!el.id) el.id = id;
+        mermaidCodeMap.set(id, el.textContent.trim());
+      });
+
+      // Build lightbox UI
+      const overlay = document.createElement('div');
+      overlay.className = 'mermaid-lightbox';
+      overlay.innerHTML = [
+        '<div class="mermaid-lightbox-toolbar">',
+        '  <button type="button" class="mermaid-lightbox-button" data-action="reset">Reset Zoom</button>',
+        '  <button type="button" class="mermaid-lightbox-button" data-action="close">Close</button>',
+        '</div>',
+        '<div class="mermaid-lightbox-viewport">',
+        '  <div class="mermaid-lightbox-stage"></div>',
+        '</div>',
+        '<div class="mermaid-lightbox-hint">Scroll to zoom · Drag to pan · Esc to close</div>'
+      ].join('');
+      document.body.appendChild(overlay);
+
+      const viewport = overlay.querySelector('.mermaid-lightbox-viewport');
+      const stage = overlay.querySelector('.mermaid-lightbox-stage');
+      const closeBtn = overlay.querySelector('[data-action="close"]');
+      const resetBtn = overlay.querySelector('[data-action="reset"]');
+
+      let isOpen = false;
+      let scale = 1;
+      let fitScale = 1;
+      let offsetX = 0;
+      let offsetY = 0;
+      let dragging = false;
+      let startX = 0;
+      let startY = 0;
+      const minScale = 0.05;
+      const maxScale = 60;
+
+      function applyTransform() {
+        stage.style.transform = 'translate(calc(-50% + ' + offsetX + 'px), calc(-50% + ' + offsetY + 'px)) scale(' + scale + ')';
+      }
+
+      function fitToViewport() {
+        var svg = stage.querySelector('svg');
+        if (!svg) return 1;
+        var vb = svg.viewBox && svg.viewBox.baseVal;
+        var w = vb && vb.width ? vb.width : svg.getBBox().width;
+        var h = vb && vb.height ? vb.height : svg.getBBox().height;
+        svg.style.width = w + 'px';
+        svg.style.height = h + 'px';
+        var vw = viewport.clientWidth;
+        var vh = viewport.clientHeight;
+        return Math.min((vw * 0.9) / w, (vh * 0.9) / h);
+      }
+
+      function resetTransform() {
+        scale = fitScale;
+        offsetX = 0;
+        offsetY = 0;
+        applyTransform();
+      }
+
+      function openLightbox(mermaidCode) {
+        stage.innerHTML = '';
+        var pre = document.createElement('pre');
+        pre.className = 'mermaid';
+        pre.textContent = mermaidCode;
+        stage.appendChild(pre);
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        isOpen = true;
+        mermaid.run({ querySelector: '.mermaid-lightbox-stage .mermaid' }).then(function() {
+          fitScale = fitToViewport();
+          scale = fitScale;
+          offsetX = 0;
+          offsetY = 0;
+          applyTransform();
+        });
+      }
+
+      function closeLightbox() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        stage.innerHTML = '';
+        isOpen = false;
+      }
+
+      // Click on inline diagram opens lightbox
+      document.querySelectorAll('.docs-body .mermaid').forEach(function(diagram) {
+        diagram.addEventListener('click', function() {
+          var id = diagram.id;
+          var code = mermaidCodeMap.get(id);
+          if (code) openLightbox(code);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeLightbox);
+      resetBtn.addEventListener('click', resetTransform);
+      overlay.addEventListener('click', function(event) {
+        if (event.target === overlay) closeLightbox();
+      });
+
+      // Zoom with scroll wheel
+      viewport.addEventListener('wheel', function(e) {
+        if (!isOpen) return;
+        e.preventDefault();
+        var delta = e.deltaY > 0 ? -0.1 : 0.1;
+        scale = Math.min(maxScale, Math.max(minScale, scale + delta * scale));
+        applyTransform();
+      }, { passive: false });
+
+      // Drag to pan
+      viewport.addEventListener('mousedown', function(e) {
+        if (!isOpen || e.target.closest('.mermaid-lightbox-toolbar')) return;
+        dragging = true;
+        startX = e.clientX - offsetX;
+        startY = e.clientY - offsetY;
+        viewport.style.cursor = 'grabbing';
+      });
+      window.addEventListener('mousemove', function(e) {
+        if (!dragging) return;
+        offsetX = e.clientX - startX;
+        offsetY = e.clientY - startY;
+        applyTransform();
+      });
+      window.addEventListener('mouseup', function() {
+        dragging = false;
+        if (viewport) viewport.style.cursor = '';
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (!isOpen) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'r' || e.key === 'R') resetTransform();
+      });
+    })();
   </script>
+
 </body>
 </html>
