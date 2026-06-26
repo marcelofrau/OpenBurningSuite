@@ -12,20 +12,26 @@
   <link rel="stylesheet" href="{{ '/assets/css/docs.css' | relative_url }}">
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>mermaid.initialize({
+    startOnLoad: false,
+    securityLevel: 'loose',
+    flowchart: { curve: 'basis', useMaxWidth: true, htmlLabels: true },
     theme: 'base',
     themeVariables: {
-      primaryColor: '#1E90FF',
-      primaryTextColor: '#E8F0FE',
-      primaryBorderColor: '#1E3450',
-      lineColor: '#5BC0FF',
-      secondaryColor: '#152030',
-      tertiaryColor: '#0A1520',
-      clusterBkg: '#0C1622',
-      clusterBorder: '#1E3450',
-      nodeBorder: '#1E3450',
-      nodeTextColor: '#E8F0FE',
+      background:          '#0C1622',
+      primaryColor:        '#1E90FF',
+      primaryTextColor:    '#E8F0FE',
+      primaryBorderColor:  '#1E3450',
+      lineColor:           '#5BC0FF',
+      secondaryColor:      '#152030',
+      tertiaryColor:       '#0A1520',
+      clusterBkg:          '#0C1622',
+      clusterBorder:       '#1E3450',
+      nodeBorder:          '#1E3450',
+      nodeTextColor:       '#E8F0FE',
       edgeLabelBackground: '#152030',
-      fontFamily: 'Inter, sans-serif'
+      titleColor:          '#5BC0FF',
+      textColor:           '#E8F0FE',
+      fontFamily:          'Inter, sans-serif'
     }
   });</script>
 </head>
@@ -105,16 +111,25 @@
       });
     });
 
-    // Mermaid lightbox
+    // Mermaid DOM conversion + render
     (function() {
       const mermaidCodeMap = new Map();
 
-      // Store original Mermaid code before rendering
-      document.querySelectorAll('.docs-body .mermaid').forEach(function(el) {
-        const id = el.id || ('mermaid-' + Math.random().toString(36).slice(2, 9));
-        if (!el.id) el.id = id;
-        mermaidCodeMap.set(id, el.textContent.trim());
+      // Convert <pre><code class="language-mermaid"> → <pre class="mermaid">
+      document.querySelectorAll('.docs-body pre > code.language-mermaid').forEach(function(code) {
+        const pre = code.parentElement;
+        const div = document.createElement('pre');
+        div.className = 'mermaid';
+        const codeContent = code.textContent;
+        div.textContent = codeContent;
+        const id = 'mermaid-' + Math.random().toString(36).slice(2, 9);
+        div.id = id;
+        mermaidCodeMap.set(id, codeContent);
+        pre.replaceWith(div);
       });
+
+      // Render all converted diagrams
+      mermaid.run({ querySelector: '.mermaid' });
 
       // Build lightbox UI
       const overlay = document.createElement('div');
