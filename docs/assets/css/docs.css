@@ -1,4 +1,13 @@
 /* ─── Docs layout ───────────────────────────────────────── */
+html, body {
+  background: #0C1622;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 :root {
   --blue:          #1E90FF;
   --blue-dark:     #1A7CE0;
@@ -21,10 +30,9 @@
 
 .docs-layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 280px 1fr;
   min-height: calc(100vh - 64px);
-  max-width: 1300px;
-  margin: 0 auto;
+  background: var(--bg);
 }
 
 /* ─── Sidebar ───────────────────────────────────────────── */
@@ -86,6 +94,7 @@
 .docs-content {
   padding: 48px 56px 80px;
   min-width: 0;
+  max-width: 960px;
 }
 
 .docs-body {
@@ -328,6 +337,5 @@
   .docs-sidebar.open { transform: translateX(0); }
   .docs-content {
     padding: 24px 16px;
-    margin-left: 0;
   }
 }
