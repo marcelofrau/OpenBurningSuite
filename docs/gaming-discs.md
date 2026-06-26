@@ -266,6 +266,85 @@ When a gaming disc is detected, the application suggests the appropriate preset.
 
 ---
 
+## Gaming Preset Configuration
+
+Each gaming preset configures sector size, subchannel mode, read/write speed, error recovery, and output format:
+
+| Console | Sector | Subchannel | Read Speed | Write Speed | Write Mode | Retries | Audio Paranoia | Output |
+|:--------|:-------|:-----------|:-----------|:------------|:-----------|:--------|:---------------|:-------|
+| PlayStation 1 | 2352 | RW_RAW | 4x | 4x | DAO | 5 | Yes | BIN/CUE |
+| PlayStation 2 | 2048 | None | 4x | 4x | DAO | 3 | — | ISO |
+| PlayStation 3 | 2048 | None | 2x | — | — | 3 | — | ISO |
+| PlayStation 4/5 | 2048 | None | 2x | — | — | 3 | — | ISO |
+| Sega Saturn | 2352 | RW | 4x | 4x | DAO | 5 | — | BIN/CUE |
+| Sega Dreamcast | 2352 | RW | 2x | 2x | DAO | 5 | — | CDI/BIN |
+| Sega Mega CD | 2352 | RW | 4x | 4x | DAO | 3 | Yes | BIN/CUE |
+| Xbox | 2048 | None | 2x | 4x | DAO | 3 | — | XISO |
+| Xbox 360 | 2048 | None | 2x | — | — | 3 | — | ISO |
+| GameCube | 2048 | None | 4x | — | — | 3 | — | ISO |
+| Wii | 2048 | None | 4x | — | — | 3 | — | ISO |
+| Neo Geo CD | 2352 | RW | 4x | — | — | 3 | — | BIN/CUE |
+| 3DO | 2352 | RW | 4x | — | — | 3 | — | BIN/CUE |
+| PC Engine | 2352 | RW | 4x | — | — | 3 | — | BIN/CUE |
+| Atari Jaguar | 2352 | RW | 4x | — | — | 3 | — | BIN/CUE |
+| Amiga CD32 | 2352 | RW | 4x | — | — | 3 | — | BIN/CUE |
+| Amiga CDTV | 2352 | RW | 4x | — | — | 3 | — | BIN/CUE |
+
+---
+
+## Xbox 360 Stealth Patching
+
+The **Xbox 360 Stealth Service** handles DMI (Disc Manufacturing Information), PFI (Physical Format Information), Security Sectors (SS), topology data, and video partition verification for Xbox 360 disc images (XGD2 and XGD3 formats).
+
+| Feature | Description |
+|:--------|:------------|
+| **DMI** | Disc Manufacturing Information patching |
+| **PFI** | Physical Format Information validation |
+| **SS** | Security Sector verification |
+| **Topology Data** | Disc topology verification |
+| **Video Partition** | Video partition validation and patching |
+
+Xbox 360 images use the XDVDFS (Xbox Disc Volume File System) with magic `MICROSOFT*XBOX*MEDIA`. The service detects XGD2 (game partition at 0xFD90000) and XGD3 (game partition at 0x2080000) formats.
+
+---
+
+## PS2 ESR Patching
+
+ESR (Electron Solid Runtime) patching allows playing backup DVD games on a soft-modded PlayStation 2 console. When enabled (in **Settings → Gaming Disc Defaults → Auto-ESR Patch**), the application automatically applies the ESR patch to PS2 game images during the build or burn process.
+
+---
+
+## Region-Free Patching
+
+Open Burning Suite can automatically remove region restrictions from game discs. Enable **Auto-Region-Free Patch** in **Settings → Gaming Disc Defaults** to strip region encoding when building or burning game images.
+
+---
+
+## XISO (Xbox Disc Image Format)
+
+The **XISO** format (Xbox DVD Filesystem / XDVDFS) is used by original Xbox and Xbox 360 games. Open Burning Suite supports:
+
+| Operation | Support | Notes |
+|:----------|:--------|:------|
+| **Read** | ✅ | Read Xbox/Xbox 360 discs as XISO images |
+| **Build** | ✅ | Create XISO images from files using the XDVDFS builder |
+| **Detect** | ✅ | Auto-detect XDVDFS filesystem by magic header |
+
+The XISO/Xbox gaming preset automatically selects XISO format as the output when reading Xbox game discs.
+
+---
+
+## Auto-Patching Settings
+
+| Setting | Default | Description |
+|:--------|:--------|:------------|
+| **Auto-ESR Patch** | Off | Automatically apply ESR patching for PS2 DVD compatibility |
+| **Auto-Region-Free Patch** | Off | Remove region restrictions from game discs automatically |
+
+Configure these in **Settings → Gaming Disc Defaults**.
+
+---
+
 ## Tips & Best Practices
 
 1. **Use raw sector mode for PS1 games.** PlayStation 1 games often rely on subchannel data and specific sector layouts. Use 2352-byte sectors and BIN/CUE format.

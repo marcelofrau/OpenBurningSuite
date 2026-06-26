@@ -32,6 +32,12 @@ sidebar:
     links:
       - title: Getting Started
         url: /getting-started
+  - label: Disc Operations
+    links:
+      - title: Discover Drives
+        url: /discover
+      - title: Disc Info
+        url: /disc-info
       - title: Burning Discs
         url: /burning
       - title: Reading Discs
@@ -40,12 +46,30 @@ sidebar:
         url: /building-images
       - title: Verification
         url: /verification
-      - title: Gaming Discs
+      - title: Advanced Utilities
+        url: /advanced
+  - label: Wizards
+    links:
+      - title: Audio & Music
+        url: /audio-wizard
+      - title: Video Disc
+        url: /video-wizard
+      - title: Data Disc
+        url: /data-wizard
+      - title: Game Disc
         url: /gaming-discs
-      - title: Supported Formats
-        url: /supported-formats
+      - title: Copy Disc
+        url: /copy-wizard
+      - title: Blank Disc
+        url: /blank-wizard
   - label: Reference
     links:
+      - title: Supported Formats
+        url: /supported-formats
+      - title: Disc Encryption
+        url: /encryption
+      - title: Settings
+        url: /settings
       - title: Architecture
         url: /architecture
       - title: FAQ

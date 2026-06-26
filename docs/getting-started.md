@@ -46,7 +46,7 @@ Install FFmpeg and ensure `ffmpeg` is available on your system PATH.
 | Detection Method | Description |
 |:-----------------|:------------|
 | **PATH** | If `chdman` (or `chdman.exe` on Windows) is on your system PATH, it is detected automatically. |
-| **Settings** | You can set a custom path in **Settings → General → CHD Image → chdman path**. Use the **Browse** button to select the executable, then click **Test** to verify it works. |
+| **Settings** | You can set a custom path in **Settings → Paths & Locations → chdman Path**. Use the **Browse** button to select the executable, then click **Test** to verify it works. |
 | **Common locations** | The application also searches standard install paths: `C:\mame\chdman.exe` (Windows), `/opt/homebrew/bin/chdman` (macOS), `/usr/bin/chdman` (Linux). |
 
 If chdman is not installed, the application will show a clear error message when you attempt to work with CHD files.

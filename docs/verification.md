@@ -170,6 +170,29 @@ If a sector read fails (e.g., due to disc damage or an unexpected sector type), 
 
 ---
 
+## Auto-Verification
+
+You can enable automatic verification in **Settings**:
+
+| Setting | Description | Default |
+|:--------|:------------|:--------|
+| **Auto-Verify After Burn** | Automatically verify the disc after every burn operation | Off |
+| **Auto-Verify After Read** | Automatically verify after copying a disc to an image | Off |
+| **Default Checksum Algorithm** | Hash algorithm used for verification | SHA-256 |
+
+---
+
+## Format-Specific Verifiers
+
+Open Burning Suite includes specialized verification for specific image formats:
+
+| Format | Verifier | Description |
+|:--------|:----------|:------------|
+| **MDF/MDS** | `MdfMdsVerifier` | Validates and parses Alcohol 120% image files |
+| **VCD/SVCD/XSVCD** | `VcdSvcdVerifier` | Verifies Video CD image structure and integrity |
+
+---
+
 ## Tips & Best Practices
 
 1. **Always verify important burns.** A verification pass catches errors that might not be apparent until the disc is needed.

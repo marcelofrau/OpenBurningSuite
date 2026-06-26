@@ -73,18 +73,33 @@
           <div class="sidebar-section">
             <div class="sidebar-label">Getting Started</div>
             <a href="{{ '/getting-started' | relative_url }}" class="sidebar-link{% if page.url == '/getting-started/' %} active{% endif %}">Getting Started</a>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-label">Disc Operations</div>
+            <a href="{{ '/discover' | relative_url }}" class="sidebar-link{% if page.url == '/discover/' %} active{% endif %}">Discover Drives</a>
+            <a href="{{ '/disc-info' | relative_url }}" class="sidebar-link{% if page.url == '/disc-info/' %} active{% endif %}">Disc Info</a>
             <a href="{{ '/burning' | relative_url }}" class="sidebar-link{% if page.url == '/burning/' %} active{% endif %}">Burning Discs</a>
             <a href="{{ '/reading' | relative_url }}" class="sidebar-link{% if page.url == '/reading/' %} active{% endif %}">Reading Discs</a>
             <a href="{{ '/building-images' | relative_url }}" class="sidebar-link{% if page.url == '/building-images/' %} active{% endif %}">Building Images</a>
             <a href="{{ '/verification' | relative_url }}" class="sidebar-link{% if page.url == '/verification/' %} active{% endif %}">Verification</a>
-            <a href="{{ '/gaming-discs' | relative_url }}" class="sidebar-link{% if page.url == '/gaming-discs/' %} active{% endif %}">Gaming Discs</a>
-            <a href="{{ '/supported-formats' | relative_url }}" class="sidebar-link{% if page.url == '/supported-formats/' %} active{% endif %}">Supported Formats</a>
+            <a href="{{ '/advanced' | relative_url }}" class="sidebar-link{% if page.url == '/advanced/' %} active{% endif %}">Advanced Utilities</a>
+          </div>
+          <div class="sidebar-section">
+            <div class="sidebar-label">Wizards</div>
+            <a href="{{ '/audio-wizard' | relative_url }}" class="sidebar-link{% if page.url == '/audio-wizard/' %} active{% endif %}">Audio & Music</a>
+            <a href="{{ '/video-wizard' | relative_url }}" class="sidebar-link{% if page.url == '/video-wizard/' %} active{% endif %}">Video Disc</a>
+            <a href="{{ '/data-wizard' | relative_url }}" class="sidebar-link{% if page.url == '/data-wizard/' %} active{% endif %}">Data Disc</a>
+            <a href="{{ '/gaming-discs' | relative_url }}" class="sidebar-link{% if page.url == '/gaming-discs/' %} active{% endif %}">Game Disc</a>
+            <a href="{{ '/copy-wizard' | relative_url }}" class="sidebar-link{% if page.url == '/copy-wizard/' %} active{% endif %}">Copy Disc</a>
+            <a href="{{ '/blank-wizard' | relative_url }}" class="sidebar-link{% if page.url == '/blank-wizard/' %} active{% endif %}">Blank Disc</a>
           </div>
           <div class="sidebar-section">
             <div class="sidebar-label">Reference</div>
+            <a href="{{ '/supported-formats' | relative_url }}" class="sidebar-link{% if page.url == '/supported-formats/' %} active{% endif %}">Supported Formats</a>
+            <a href="{{ '/encryption' | relative_url }}" class="sidebar-link{% if page.url == '/encryption/' %} active{% endif %}">Disc Encryption</a>
+            <a href="{{ '/settings' | relative_url }}" class="sidebar-link{% if page.url == '/settings/' %} active{% endif %}">Settings</a>
             <a href="{{ '/architecture' | relative_url }}" class="sidebar-link{% if page.url == '/architecture/' %} active{% endif %}">Architecture</a>
             <a href="{{ '/faq' | relative_url }}" class="sidebar-link{% if page.url == '/faq/' %} active{% endif %}">FAQ</a>
-            <a href="{{ '/status' | relative_url }}" class="sidebar-link{% if page.url == '/status/' %} active{% endif %}">Project Status</a>
           </div>
         {% endif %}
       </nav>

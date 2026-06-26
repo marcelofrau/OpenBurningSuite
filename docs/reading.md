@@ -88,6 +88,56 @@ For audio CDs, Open Burning Suite provides a **paranoia mode** that performs err
 
 ---
 
+## Gaming Presets for Reading
+
+Applying a gaming preset configures sector size, subchannel mode, speed, and error recovery for a specific console.
+
+| Console | Sector Size | Subchannel | Speed |
+|:--------|:-----------|:-----------|:------|
+| PlayStation 1 | 2352 | RW_RAW | 4x |
+| PlayStation 2 | 2048 | None | 4x |
+| PlayStation 3 | 2048 | None | 2x |
+| PlayStation 4/5 | 2048 | None | 2x |
+| Sega Saturn | 2352 | RW | 4x |
+| Sega Dreamcast | 2352 | RW | 2x |
+| Sega Mega CD | 2352 | RW | 4x |
+| Xbox | 2048 | None | 2x |
+| Xbox 360 | 2048 | None | 2x |
+| GameCube | 2048 | None | 4x |
+| Wii | 2048 | None | 4x |
+| Neo Geo CD | 2352 | RW | 4x |
+| 3DO | 2352 | RW | 4x |
+| PC Engine | 2352 | RW | 4x |
+| Atari Jaguar | 2352 | RW | 4x |
+| Amiga CD32 | 2352 | RW | 4x |
+| Amiga CDTV | 2352 | RW | 4x |
+
+The **Copy Disc Wizard** provides a guided step-by-step workflow with gaming preset support.
+
+---
+
+## PS3 Disc Decryption
+
+PlayStation 3 game ISOs use AES-128-CBC sector-level encryption. Open Burning Suite detects encrypted PS3 ISOs and offers decryption during the read process:
+
+| Key Source | Description |
+|:-----------|:------------|
+| **IRD file (.ird)** | Official IRD file (versions 6–9) containing the encrypted disc key |
+| **Disc key file (.dkey)** | Plaintext disc key file |
+| **Hex disc key** | 32-character hex string entered directly |
+
+After decryption, the image can be used with emulators or burned to BD-R media.
+
+---
+
+## CHD Output
+
+CHD (Compressed Hunks of Data) is available as an output format for compressed disc image storage. This requires [chdman]({{ '/getting-started' | relative_url }}#chdman-mame-chd-tools) to be installed.
+
+---
+
+---
+
 ## Gaming Disc Presets
 
 Open Burning Suite includes pre-configured reading presets for gaming discs. When a gaming preset is selected, the following parameters are automatically configured:

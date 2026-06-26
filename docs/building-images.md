@@ -183,6 +183,22 @@ Builds stereoscopic 3D Blu-ray discs using **MVC (Multiview Video Coding)**. Sup
 
 ---
 
+## Gaming Disc Images
+
+Open Burning Suite supports building images structured for specific gaming consoles. The **Game Disc Wizard** provides guided setup, or you can configure manually in the Build view:
+
+| Console | Sector Size | File System | Notes |
+|:--------|:-----------|:------------|:------|
+| PlayStation 1 | 2352 (raw) | ISO 9660 | CD-ROM XA Mode 2 |
+| PlayStation 2 | 2048 | ISO 9660 + UDF | DVD-based |
+| Xbox | 2048 | XDVDFS (XISO) | Requires XISO mode |
+| Xbox 360 | 2048 | XDVDFS (XISO) | Dual-layer support |
+| GameCube | 2048 | Custom | Mini DVD (~1.36 GB) |
+
+For game disc reading and console-specific presets, see [Game Disc Presets]({{ '/gaming-discs' | relative_url }}).
+
+---
+
 ## Progress Tracking
 
 During an image build, Open Burning Suite reports:

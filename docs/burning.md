@@ -185,6 +185,18 @@ M-DISC uses an inorganic stone-like recording layer for archival longevity (esti
 
 You can force a specific media type if automatic detection doesn't work correctly. This is useful for unusual disc types or drives with limited detection capabilities.
 
+### Image Encryption
+
+You can encrypt disc images before burning using AES-256-CBC with a password:
+
+1. Select a source image file in the **Burn / Write** view
+2. Enable the encryption option
+3. Enter and confirm a strong password
+4. The application creates a `.obse` (Open Burning Suite Encrypted) file
+5. Burn the encrypted image to disc
+
+Encrypted images use PBKDF2 key derivation and include HMAC-SHA256 integrity verification. The original image file is not modified.
+
 ### Image Decryption
 
 Open Burning Suite can decrypt encrypted disc images before burning:

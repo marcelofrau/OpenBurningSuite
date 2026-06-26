@@ -106,6 +106,7 @@ M-DISC uses an inorganic recording layer (stone-like) instead of organic dye, pr
 | IMG | `.img` | ✅ | ✅ | — | Raw disc image |
 | CDI | `.cdi` | ✅ | ✅ | — | DiscJuggler disc image (v2.0, 3.0, 3.5, 4.0) |
 | XISO | `.iso` | ✅ | ✅ | — | Xbox DVD filesystem (XDVDFS) image |
+| OBS Encrypted | `.obse` | — | — | — | [Encrypted disc image]({{ '/encryption' | relative_url }}) (AES-256-CBC + PBKDF2) — decrypted on-the-fly before burning |
 | VCD | `.bin` + `.cue` | ✅ | — | ✅ | Video CD raw Mode 2 XA sector image |
 | SVCD | `.bin` + `.cue` | ✅ | — | ✅ | Super Video CD raw Mode 2 XA sector image |
 | XSVCD | `.bin` + `.cue` | ✅ | — | ✅ | eXtended Super Video CD raw Mode 2 XA sector image |
@@ -240,7 +241,7 @@ Some features rely on optional external tools that are **not bundled** with Open
 | **ffmpeg** | Video authoring (DVD-Video, Blu-ray, VCD, SVCD, XSVCD) | [ffmpeg.org](https://ffmpeg.org/) — add to PATH |
 | **chdman** | Reading/extracting CHD disc images | Included with [MAME](https://www.mamedev.org/release.html) — add to PATH or configure in Settings |
 
-Both tools are auto-detected from PATH, or you can set a custom path in **Settings → General**.
+Both tools are auto-detected from PATH, or you can set a custom path in **Settings → Paths & Locations**.
 
 ---
 
