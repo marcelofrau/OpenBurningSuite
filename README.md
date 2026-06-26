@@ -12,7 +12,7 @@
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)]()
 
-<img src="/Screenshots/Home.png" width="75%">
+<img src="/docs/social-preview.jpg" width="75%">
 
 </div>
 
