@@ -4,6 +4,10 @@
 
 # Open Burning Suite
 
+[![Build Windows](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-Windows.yml/badge.svg)](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-Windows.yml)
+[![Build Linux](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-linux.yml/badge.svg)](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-linux.yml)
+[![Build macOS](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-macOS.yml/badge.svg)](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-macOS.yml)
+
 > **Active fork** by [marcelofrau](https://github.com/marcelofrau) — the [upstream project](https://github.com/SvenGDK/OpenBurningSuite) appears to be stalled, so I'm continuing development here with new features, bug fixes, and UI improvements. Pull requests are sent back upstream to keep the original project alive.
 >
 > [Upstream →](https://github.com/SvenGDK/OpenBurningSuite) | [Issue #1 — CHD Support](https://github.com/SvenGDK/OpenBurningSuite/issues/1)
@@ -23,6 +27,20 @@
 **Open Burning Suite** is a free, open-source disc burning application for **Windows**, **Linux**, and **macOS**. It lets you burn, copy, create, and verify CDs, DVDs, HD DVDs, and Blu-ray discs — all from one app. Step-by-step wizards for audio, video, data, and gaming discs make it easy to get started, while advanced options give experienced users full control.
 
 Under the hood, Open Burning Suite talks directly to your optical drive using native **SCSI/MMC commands**, so there are no external tools to install. It's built with **.NET 8** and **Avalonia UI** for a modern look and feel on every platform.
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/marcelofrau/OpenBurningSuite.git
+cd OpenBurningSuite
+dotnet build OpenBurningSuite/OpenBurningSuite.csproj
+dotnet run --project OpenBurningSuite/OpenBurningSuite.csproj
+```
+
+> **Windows:** Run as Administrator for SCSI passthrough.
+> **Linux/macOS:** See [Platform Guides](#platform-guides) below.
 
 ---
 
@@ -75,11 +93,13 @@ This application uses icons from the following sources:
 | Source | License | Attribution |
 |:-------|:--------|:------------|
 | [Icons8](https://icons8.com) | Free with attribution | Icons by [Icons8](https://icons8.com) |
-| [FluentUI Emoji](https://github.com/microsoft/fluentui-emoji) — Microsoft | MIT | Emojis by Microsoft FluentUI Emoji |
-| [Twemoji](https://github.com/jdecked/twemoji) — Twitter/X | CC-BY 4.0 | Emoji graphics by [Twemoji](https://github.com/jdecked/twemoji) |
-| [KyleBing/retro-game-console-icons](https://github.com/KyleBing/retro-game-console-icons) | GPL-3.0 | Console icons by [KyleBing](https://github.com/KyleBing/retro-game-console-icons) |
+| [FluentUI System Icons](https://github.com/microsoft/fluentui-system-icons) — Microsoft | MIT | Icons by Microsoft FluentUI System Icons |
 
 All icons were sourced from the [icons8-personal-set](https://github.com/marcelofrau/icons8-personal-set) collection.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ## License
 
