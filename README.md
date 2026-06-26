@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="OpenBurningSuite/icon.png" width="128px">
+<img src="docs/social-preview.jpg" alt="Open Burning Suite" width="800"/>
 
 # Open Burning Suite
 
@@ -15,8 +15,6 @@
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)]()
-
-<img src="/docs/social-preview.jpg" width="75%">
 
 </div>
 
