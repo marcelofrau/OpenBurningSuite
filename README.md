@@ -138,12 +138,12 @@ Guided step-by-step workflows — no experience needed:
 
 | | |
 |:---:|:---:|
-| **Home Screen** | **Write / Burn View** |
-| <img src="Screenshots/Home.png" width="100%"> | <img src="Screenshots/WriteView.png" width="100%"> |
-| **Read View** | **Audio Wizard** |
-| <img src="Screenshots/ReadView.png" width="100%"> | <img src="Screenshots/AudioWizardView.png" width="100%"> |
-| **Video Wizard** | **Disc Info Panel** |
-| <img src="Screenshots/VideoWizardView.png" width="100%"> | <img src="Screenshots/DiscInfoView.png" width="100%"> |
+| **Home Screen** | **Burn / Write View** |
+| <img src="Screenshots/Home.png" width="100%"> | <img src="Screenshots/Burn.png" width="100%"> |
+| **Build View** | **Discover View** |
+| <img src="Screenshots/Build.png" width="100%"> | <img src="Screenshots/Discover.png" width="100%"> |
+| **Audio Wizard** | **Video Wizard** |
+| <img src="Screenshots/AudioWizards.png" width="100%"> | <img src="Screenshots/VideoWizards.png" width="100%"> |
 
 </details>
 
