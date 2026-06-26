@@ -98,7 +98,7 @@ M-DISC uses an inorganic recording layer (stone-like) instead of organic dye, pr
 |:-------|:-------------|:----:|:-----:|:-----:|:------------|
 | ISO 9660 | `.iso` | ✅ | ✅ | ✅ | Standard disc image |
 | BIN/CUE | `.bin` + `.cue` | ✅ | ✅ | ✅ | Raw sector image + CUE sheet |
-| CHD | `.chd` | ✅ | — | — | MAME CHD (Compressed Hunks of Data) — supported for reading/extraction via chdman; extracted to BIN/CUE for burning |
+| CHD | `.chd` | ✅ | — | — | MAME CHD (Compressed Hunks of Data) — requires chdman (optional tool) for reading/extraction; extracted to BIN/CUE for burning |
 | CCD/IMG/SUB | `.ccd` + `.img` + `.sub` | ✅ | ✅ | — | CloneCD disc image (CCD v2/v3) |
 | TOC/BIN | `.toc` + `.bin` | ✅ | ✅ | — | cdrdao-style TOC + raw image |
 | NRG | `.nrg` | ✅ | ✅ | — | Nero disc image |
@@ -228,6 +228,19 @@ Audio CDs follow the **Red Book** standard: 16-bit PCM audio at 44,100 Hz stereo
 | SHA-1 | 160-bit (40 hex chars) | FIPS 180-4 |
 | SHA-256 | 256-bit (64 hex chars) | FIPS 180-4 |
 | SHA-512 | 512-bit (128 hex chars) | FIPS 180-4 |
+
+---
+
+## External Tool Dependencies
+
+Some features rely on optional external tools that are **not bundled** with Open Burning Suite:
+
+| Tool | Required For | Installation |
+|:-----|:-------------|:-------------|
+| **ffmpeg** | Video authoring (DVD-Video, Blu-ray, VCD, SVCD, XSVCD) | [ffmpeg.org](https://ffmpeg.org/) — add to PATH |
+| **chdman** | Reading/extracting CHD disc images | Included with [MAME](https://www.mamedev.org/release.html) — add to PATH or configure in Settings |
+
+Both tools are auto-detected from PATH, or you can set a custom path in **Settings → General**.
 
 ---
 

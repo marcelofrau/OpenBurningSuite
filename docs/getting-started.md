@@ -29,9 +29,27 @@ dotnet --version
 
 You'll need a physical optical disc drive connected to your system for burning, reading, and verification operations. Image building works without a drive.
 
-### Optional: FFmpeg
+### Optional External Tools
 
-[FFmpeg](https://ffmpeg.org/) is required for video authoring features (DVD-Video, Blu-ray, BDAV, Blu-ray 3D, VCD, SVCD, XSVCD). Install FFmpeg and ensure it is available on your system PATH.
+Open Burning Suite uses two optional external tools for advanced features. Neither is required for basic burning, reading, or disc operations.
+
+#### FFmpeg
+
+[FFmpeg](https://ffmpeg.org/) is required for video authoring (DVD-Video, Blu-ray, BDAV, Blu-ray 3D, VCD, SVCD, XSVCD).
+
+Install FFmpeg and ensure `ffmpeg` is available on your system PATH.
+
+#### chdman (MAME CHD Tools)
+
+[chdman](https://www.mamedev.org/release.html) is required for reading and extracting CHD (Compressed Hunks of Data) disc images, commonly used for game preservation. You need at least **chdman v0.287** (included with MAME).
+
+| Detection Method | Description |
+|:-----------------|:------------|
+| **PATH** | If `chdman` (or `chdman.exe` on Windows) is on your system PATH, it is detected automatically. |
+| **Settings** | You can set a custom path in **Settings → General → CHD Image → chdman path**. Use the **Browse** button to select the executable, then click **Test** to verify it works. |
+| **Common locations** | The application also searches standard install paths: `C:\mame\chdman.exe` (Windows), `/opt/homebrew/bin/chdman` (macOS), `/usr/bin/chdman` (Linux). |
+
+If chdman is not installed, the application will show a clear error message when you attempt to work with CHD files.
 
 ### Platform-Specific Requirements
 
