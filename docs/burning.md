@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Burning Discs
+description: Burn CDs, DVDs, HD DVDs, Blu-ray and M-DISC with Open Burning Suite. TAO, SAO, DAO, RAW modes, simulation, overburn, and multi-copy support.
 permalink: /burning
 ---
 

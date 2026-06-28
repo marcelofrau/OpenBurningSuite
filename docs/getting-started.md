@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Getting Started
+description: Install, build from source, and run Open Burning Suite on Windows, Linux and macOS. Requirements, platform setup, and first-run guide.
 permalink: /getting-started
 ---
 

@@ -2,7 +2,7 @@ title: Open Burning Suite
 description: >-
   Burn, read, build, and verify CD / DVD / HD DVD / Blu-ray discs on
   Windows, Linux and macOS.
-url: "https://marcelofrau.github.io"
+url: "https://openburningsuite.pages.dev"
 baseurl: "/OpenBurningSuite"
 
 markdown: kramdown
@@ -11,6 +11,10 @@ kramdown:
   syntax_highlighter: rouge
 
 permalink: pretty
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
 exclude:
   - Gemfile
