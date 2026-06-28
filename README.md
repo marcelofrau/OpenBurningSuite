@@ -4,13 +4,12 @@
 
 # 🔥 Open Burning Suite
 
-[![Build Windows](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-Windows.yml/badge.svg)](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-Windows.yml)
-[![Build Linux](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-linux.yml/badge.svg)](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-linux.yml)
-[![Build macOS](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-macOS.yml/badge.svg)](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build-macOS.yml)
-[![.NET 8.0](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
-[![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)]()
+[![Build](https://img.shields.io/github/actions/workflow/status/marcelofrau/OpenBurningSuite/build.yml?style=flat-square&label=build)](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/build.yml)
 [![Docs](https://img.shields.io/github/actions/workflow/status/marcelofrau/OpenBurningSuite/deploy-docs.yml?style=flat-square&label=docs&logo=cloudflare)](https://github.com/marcelofrau/OpenBurningSuite/actions/workflows/deploy-docs.yml)
+[![Website](https://img.shields.io/badge/Website-openburningsuite.pages.dev-0078D6?style=flat-square&logo=cloudflare)](https://openburningsuite.pages.dev)
+[![.NET 8.0](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square)](https://dotnet.microsoft.com/)
+[![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg?style=flat-square)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue?style=flat-square)]()
 
 > **🚀 Active fork** by [marcelofrau](https://github.com/marcelofrau) — continuing development with new features, bug fixes, and UI improvements. Pull requests sent back upstream to keep the original project alive.
 >
