@@ -10,6 +10,7 @@
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square)](https://dotnet.microsoft.com/)
 [![License: BSD-2-Clause](https://img.shields.io/badge/License-BSD_2--Clause-orange.svg?style=flat-square)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue?style=flat-square)]()
+[![VirusTotal](https://img.shields.io/badge/Security-VirusTotal_Scanned-394EFF?style=flat-square&logo=virustotal)](https://www.virustotal.com/gui/home/upload)
 
 > **🚀 Active fork** by [marcelofrau](https://github.com/marcelofrau) — continuing development with new features, bug fixes, and UI improvements. Pull requests sent back upstream to keep the original project alive.
 >
