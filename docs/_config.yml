@@ -12,6 +12,8 @@ kramdown:
 
 permalink: pretty
 
+image: https://openburningsuite.pages.dev/social-preview.jpg
+
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
