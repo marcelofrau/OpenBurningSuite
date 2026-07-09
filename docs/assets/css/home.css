@@ -482,6 +482,10 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid var(--border);
 }
 
+.about-card:not(:last-of-type) {
+  margin-bottom: 20px;
+}
+
 .about-card {
   display: flex;
   gap: 40px;
