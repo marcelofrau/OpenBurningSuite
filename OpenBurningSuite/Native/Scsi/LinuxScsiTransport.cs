@@ -78,7 +78,7 @@ public sealed class LinuxScsiTransport : IScsiTransport
     public void Open(string devicePath)
     {
         if (string.IsNullOrWhiteSpace(devicePath))
-            throw new ArgumentException("Device path must not be empty.", nameof(devicePath));
+            throw new ArgumentException("设备路径不能为空。", nameof(devicePath));
 
         if (_fd >= 0)
             close(_fd);
@@ -108,7 +108,7 @@ public sealed class LinuxScsiTransport : IScsiTransport
                 ? Marshal.PtrToStringAnsi(errPtr) ?? $"errno={errno}"
                 : $"errno={errno}";
             throw new InvalidOperationException(
-                $"Failed to open SCSI device '{devicePath}': {errMsg} (errno={errno})");
+                $"无法打开 SCSI 设备“{devicePath}”：{errMsg}（errno={errno}）");
         }
     }
 
@@ -165,10 +165,10 @@ public sealed class LinuxScsiTransport : IScsiTransport
     public ScsiResult Execute(ScsiCommand command)
     {
         if (_fd < 0)
-            throw new InvalidOperationException("SCSI transport is not open.");
+            throw new InvalidOperationException("SCSI 传输未打开。");
 
         if (command?.Cdb == null || command.Cdb.Length == 0)
-            throw new ArgumentException("CDB must not be null or empty.", nameof(command));
+            throw new ArgumentException("CDB 不能为 null 或空。", nameof(command));
 
         var senseBuffer = new byte[252];
         var hdr = new SgIoHdr();

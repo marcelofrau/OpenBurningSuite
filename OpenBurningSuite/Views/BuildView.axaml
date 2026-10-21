@@ -7,34 +7,34 @@
         <StackPanel Margin="24" Spacing="16">
 
             <!-- Header -->
-            <TextBlock Text="Build Disc Image" Classes="PageTitle"/>
-            <TextBlock Text="Create ISO, audio CD, Video DVD, Blu-ray, and gaming disc images from source files."
+            <TextBlock Text="构建光盘镜像" Classes="PageTitle"/>
+            <TextBlock Text="从源文件创建 ISO、音频 CD、视频 DVD、蓝光和游戏光盘镜像。"
                        Classes="PageSubtitle"/>
 
             <!-- Disc &amp; Filesystem Settings -->
             <Border Classes="Card">
                 <StackPanel Spacing="12">
-                    <TextBlock Text="Disc &amp; Filesystem Settings" Classes="SectionHeader"/>
+                    <TextBlock Text="光盘与文件系统设置" Classes="SectionHeader"/>
 
                     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                         <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Disc Type:" Classes="FieldLabel"/>
+                            <TextBlock Text="光盘类型：" Classes="FieldLabel"/>
                             <ComboBox x:Name="CmbDiscType" HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Select the target disc type (CD, DVD, Blu-ray, etc.)"/>
+                                      ToolTip.Tip="选择目标光盘类型（CD、DVD、蓝光等）"/>
                         </StackPanel>
                         <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4">
-                            <TextBlock Text="File System:" Classes="FieldLabel"/>
+                            <TextBlock Text="文件系统：" Classes="FieldLabel"/>
                             <ComboBox x:Name="CmbFileSystem" HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="File system format for the disc image"/>
+                                      ToolTip.Tip="光盘镜像使用的文件系统格式"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,8,8,0">
-                            <TextBlock Text="Volume Label:" Classes="FieldLabel"/>
+                            <TextBlock Text="卷标：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtVolumeLabel" Watermark="DISC_LABEL"
                                      Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="Volume label that will appear when the disc is mounted"/>
+                                     ToolTip.Tip="挂载光盘时显示的卷标"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,8,0,0">
-                            <TextBlock Text="Capacity:" Classes="FieldLabel"/>
+                            <TextBlock Text="容量：" Classes="FieldLabel"/>
                             <Border Background="#152030" CornerRadius="4" Padding="10,7"
                                     VerticalAlignment="Center" HorizontalAlignment="Stretch"
                                     MinHeight="32">
@@ -51,105 +51,98 @@
             <!-- Source Folder &amp; Output -->
             <Border Classes="Card">
                 <StackPanel Spacing="10">
-                    <TextBlock Text="Source &amp; Output" Classes="SectionHeader"/>
+                    <TextBlock Text="源与输出" Classes="SectionHeader"/>
 
                     <Grid ColumnDefinitions="120,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
-                        <TextBlock Text="Source Folder:" Grid.Row="0" Grid.Column="0"
+                        <TextBlock Text="源文件夹：" Grid.Row="0" Grid.Column="0"
                                    Classes="FieldLabel" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <TextBox x:Name="TxtSourceFolder" Grid.Row="0" Grid.Column="1"
-                                 Watermark="Source directory..." Background="#152030" Foreground="#E8F0FE"
-                                 ToolTip.Tip="Folder containing files to add to the disc image"
+                                 Watermark="源目录…" Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="要添加到光盘镜像的文件所在文件夹"
                                  DragDrop.AllowDrop="True" DragDrop.DragOver="OnSourceDragOver" DragDrop.Drop="OnSourceDrop"/>
                         <Button x:Name="BtnBrowseSource" Grid.Row="0" Grid.Column="2"
-                                Content="Browse…" Classes="ActionBtn" Margin="6,0,0,0"
+                                Content="浏览…" Classes="ActionBtn" Margin="6,0,0,0"
                                 Click="OnBrowseSourceClick"
-                                ToolTip.Tip="Browse for a source folder"/>
+                                ToolTip.Tip="浏览并选择源文件夹"/>
 
-                        <TextBlock Text="Drag and drop a folder or files here" Foreground="#5A7A9A" FontSize="10"
+                        <TextBlock Text="💡 将文件夹或文件拖放到此处" Foreground="#5A7A9A" FontSize="10"
                                    Margin="120,2,0,0" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
 
-                        <TextBlock Text="Output Image:" Grid.Row="2" Grid.Column="0"
+                        <TextBlock Text="输出镜像：" Grid.Row="2" Grid.Column="0"
                                    Classes="FieldLabel" VerticalAlignment="Center"
                                    Margin="0,8,8,0"/>
                         <TextBox x:Name="TxtOutputPath" Grid.Row="2" Grid.Column="1"
                                  Margin="0,8,0,0"
-                                 Watermark="Output .iso path..." Background="#152030" Foreground="#E8F0FE"
-                                 ToolTip.Tip="Path where the disc image file will be saved"
+                                 Watermark="输出 .iso 路径…" Background="#152030" Foreground="#E8F0FE"
+                                 ToolTip.Tip="光盘镜像文件的保存路径"
                                  DragDrop.AllowDrop="True" DragDrop.DragOver="OnFilePathDragOver" DragDrop.Drop="OnFilePathDrop"/>
                         <Button x:Name="BtnBrowseOutput" Grid.Row="2" Grid.Column="2"
-                                Content="Browse…" Classes="ActionBtn" Margin="6,8,0,0"
+                                Content="浏览…" Classes="ActionBtn" Margin="6,8,0,0"
                                 Click="OnBrowseOutputClick"
-                                ToolTip.Tip="Choose where to save the output image"/>
+                                ToolTip.Tip="选择输出镜像的保存位置"/>
 
-                        <TextBlock Text="Publisher:" Grid.Row="3" Grid.Column="0"
+                        <TextBlock Text="出版者：" Grid.Row="3" Grid.Column="0"
                                    Classes="FieldLabel" VerticalAlignment="Center"
                                    Margin="0,8,8,0"/>
                         <TextBox x:Name="TxtPublisher" Grid.Row="3" Grid.Column="1"
                                  Grid.ColumnSpan="2" Margin="0,8,0,0"
-                                 Watermark="Publisher name (optional)"
+                                 Watermark="出版者名称（可选）"
                                  Background="#152030" Foreground="#E8F0FE"
-                                 ToolTip.Tip="Publisher name stored in the disc metadata"/>
+                                 ToolTip.Tip="存储在光盘元数据中的出版者名称"/>
 
-                        <TextBlock Text="Preparer:" Grid.Row="4" Grid.Column="0"
+                        <TextBlock Text="制作者：" Grid.Row="4" Grid.Column="0"
                                    Classes="FieldLabel" VerticalAlignment="Center"
                                    Margin="0,8,8,0"/>
                         <TextBox x:Name="TxtPreparer" Grid.Row="4" Grid.Column="1"
                                  Grid.ColumnSpan="2" Margin="0,8,0,0"
-                                 Watermark="Data preparer identifier (optional)"
+                                 Watermark="数据制作者标识（可选）"
                                  Background="#152030" Foreground="#E8F0FE"
-                                 ToolTip.Tip="Data preparer identifier stored in the disc metadata"/>
+                                 ToolTip.Tip="存储在光盘元数据中的数据制作者标识"/>
 
-                        <TextBlock Text="Application:" Grid.Row="5" Grid.Column="0"
+                        <TextBlock Text="应用程序：" Grid.Row="5" Grid.Column="0"
                                    Classes="FieldLabel" VerticalAlignment="Center"
                                    Margin="0,8,8,0"/>
                         <TextBox x:Name="TxtApplication" Grid.Row="5" Grid.Column="1"
                                  Grid.ColumnSpan="2" Margin="0,8,0,0"
-                                 Watermark="Application identifier (optional)"
+                                 Watermark="应用程序标识（可选）"
                                  Background="#152030" Foreground="#E8F0FE"
-                                 ToolTip.Tip="Application identifier stored in the disc metadata"/>
+                                 ToolTip.Tip="存储在光盘元数据中的应用程序标识"/>
                     </Grid>
                 </StackPanel>
             </Border>
 
             <!-- Advanced Options -->
-            <Expander Classes="SettingsExpander">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                        <TextBlock Text="Advanced Options" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Expander.Header>
+            <Expander Header="⚙️  高级选项" Classes="SettingsExpander">
                 <Grid ColumnDefinitions="*,*" Margin="0,8,0,0">
                     <StackPanel Grid.Column="0" Spacing="6">
                         <CheckBox x:Name="ChkJolietLong"
-                                  Content="Joliet long filenames" Foreground="#E8F0FE" IsChecked="True"
-                                  ToolTip.Tip="Allow filenames longer than 64 characters using the Joliet extension"/>
+                                  Content="Joliet 长文件名" Foreground="#E8F0FE" IsChecked="True"
+                                  ToolTip.Tip="使用 Joliet 扩展允许超过 64 个字符的文件名"/>
                         <CheckBox x:Name="ChkRockRidge"
-                                  Content="Rock Ridge extensions" Foreground="#E8F0FE"
-                                  ToolTip.Tip="Add POSIX metadata (permissions, symlinks, long names) via Rock Ridge extensions"/>
+                                  Content="Rock Ridge 扩展" Foreground="#E8F0FE"
+                                  ToolTip.Tip="通过 Rock Ridge 扩展添加 POSIX 元数据（权限、符号链接、长文件名）"/>
                         <CheckBox x:Name="ChkDeepDir"
-                                  Content="Deep directory nesting" Foreground="#E8F0FE"
-                                  ToolTip.Tip="Allow directory nesting deeper than 8 levels (ISO 9660 limit relaxation)"/>
+                                  Content="深层目录嵌套" Foreground="#E8F0FE"
+                                  ToolTip.Tip="允许超过 8 层的目录嵌套（放宽 ISO 9660 限制）"/>
                         <CheckBox x:Name="ChkLowercase"
-                                  Content="Allow lowercase filenames" Foreground="#E8F0FE"
-                                  ToolTip.Tip="Permit lowercase characters in ISO 9660 filenames (non-standard)"/>
+                                  Content="允许小写文件名" Foreground="#E8F0FE"
+                                  ToolTip.Tip="允许 ISO 9660 文件名使用小写字母（非标准）"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Spacing="6">
                         <CheckBox x:Name="ChkSpecialChars"
-                                  Content="Allow special characters" Foreground="#E8F0FE"
-                                  ToolTip.Tip="Allow special characters in filenames beyond the ISO 9660 d-character set"/>
+                                  Content="允许特殊字符" Foreground="#E8F0FE"
+                                  ToolTip.Tip="允许 ISO 9660 d 字符集之外的特殊字符"/>
                         <CheckBox x:Name="ChkPad"
-                                  Content="Pad disc to capacity" Foreground="#E8F0FE"
-                                  ToolTip.Tip="Pad the image with zeros to fill the full disc capacity"/>
+                                  Content="填充光盘至满容量" Foreground="#E8F0FE"
+                                  ToolTip.Tip="用零填充镜像以占满光盘容量"/>
                         <CheckBox x:Name="ChkSortFiles"
-                                  Content="Sort files" Foreground="#E8F0FE"
-                                  ToolTip.Tip="Sort files alphabetically within each directory on the disc"/>
+                                  Content="排序文件" Foreground="#E8F0FE"
+                                  ToolTip.Tip="按字母顺序排列光盘各目录中的文件"/>
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="Charset:" Foreground="#8EAFC8"
+                            <TextBlock Text="字符集：" Foreground="#8EAFC8"
                                        FontSize="11" VerticalAlignment="Center"/>
                             <ComboBox x:Name="CmbCharset" Width="110"
-                                      ToolTip.Tip="Character encoding for filenames on the disc">
+                                      ToolTip.Tip="光盘文件名的字符编码">
                                 <ComboBoxItem Content="UTF-8"/>
                                 <ComboBoxItem Content="ISO-8859-1"/>
                                 <ComboBoxItem Content="ASCII"/>
@@ -160,35 +153,28 @@
             </Expander>
 
             <!-- Boot Image (El Torito) -->
-            <Expander Classes="SettingsExpander">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-bootable-16.png"/>
-                        <TextBlock Text="Boot Image (El Torito)" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Expander.Header>
+            <Expander Header="💾  启动镜像（El Torito 引导）" Classes="SettingsExpander">
                 <StackPanel Spacing="8" Margin="0,8,0,0">
                     <CheckBox x:Name="ChkBootable"
-                              Content="Create bootable disc" Foreground="#E8F0FE"
-                              ToolTip.Tip="Enable El Torito boot catalog to make the disc bootable"/>
+                              Content="创建可启动光盘" Foreground="#E8F0FE"
+                              ToolTip.Tip="启用 El Torito 引导目录以使光盘可启动"/>
                     <Grid ColumnDefinitions="*,Auto">
                         <TextBox x:Name="TxtBootImage"
-                                 Watermark="Boot image file (e.g. isolinux/isolinux.bin)..."
+                                 Watermark="启动镜像文件（例如 isolinux/isolinux.bin）…"
                                  Background="#152030" Foreground="#E8F0FE" IsEnabled="False"
-                                 ToolTip.Tip="Path to the El Torito boot image file (e.g. isolinux.bin or GRUB image)"
+                                 ToolTip.Tip="El Torito 引导镜像文件路径（例如 isolinux.bin 或 GRUB 镜像）"
                                  DragDrop.AllowDrop="True" DragDrop.DragOver="OnFilePathDragOver" DragDrop.Drop="OnBootImageDrop"/>
                         <Button x:Name="BtnBrowseBoot" Grid.Column="1"
-                                Content="Browse…" Classes="ActionBtn" Margin="6,0,0,0"
+                                Content="浏览…" Classes="ActionBtn" Margin="6,0,0,0"
                                 IsEnabled="False" Click="OnBrowseBootClick"
-                                ToolTip.Tip="Browse for an El Torito boot image file"/>
+                                ToolTip.Tip="浏览并选择 El Torito 引导镜像文件"/>
                     </Grid>
                     <Grid ColumnDefinitions="*,*" Margin="0,4,0,0">
                         <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Emulation Mode:" Foreground="#8EAFC8" FontSize="11"/>
+                            <TextBlock Text="模拟模式：" Foreground="#8EAFC8" FontSize="11"/>
                             <ComboBox x:Name="CmbBootEmulation" IsEnabled="False"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="El Torito emulation mode — No Emulation for modern bootloaders, floppy for legacy BIOS">
+                                      ToolTip.Tip="El Torito 模拟模式 — 现代引导程序选择“无模拟”，传统 BIOS 选择软盘模拟">
                                 <ComboBoxItem Content="No Emulation" IsSelected="True"/>
                                 <ComboBoxItem Content="1.2 MB Floppy"/>
                                 <ComboBoxItem Content="1.44 MB Floppy"/>
@@ -197,10 +183,10 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Spacing="4">
-                            <TextBlock Text="Platform:" Foreground="#8EAFC8" FontSize="11"/>
+                            <TextBlock Text="平台：" Foreground="#8EAFC8" FontSize="11"/>
                             <ComboBox x:Name="CmbBootPlatform" IsEnabled="False"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="El Torito boot platform identifier (x86 for BIOS, EFI for UEFI boot)">
+                                      ToolTip.Tip="El Torito 引导平台标识（BIOS 用 x86，UEFI 启动用 EFI）">
                                 <ComboBoxItem Content="x86 (BIOS)" IsSelected="True"/>
                                 <ComboBoxItem Content="PowerPC"/>
                                 <ComboBoxItem Content="Mac"/>
@@ -210,145 +196,119 @@
                     </Grid>
                     <Grid ColumnDefinitions="*,*" Margin="0,4,0,0">
                         <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Load Segment (hex, 0=default):" Foreground="#8EAFC8" FontSize="11"/>
+                            <TextBlock Text="加载段（十六进制，0=默认）：" Foreground="#8EAFC8" FontSize="11"/>
                             <TextBox x:Name="TxtBootLoadSegment" Text="0" IsEnabled="False"
                                      Background="#152030" Foreground="#E8F0FE" Width="120"
                                      HorizontalAlignment="Left"
-                                     ToolTip.Tip="El Torito load segment address in hex (0 uses default 0x07C0)"/>
+                                     ToolTip.Tip="El Torito 加载段地址（十六进制，0 表示使用默认值 0x07C0）"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Spacing="4">
-                            <TextBlock Text="Sector Count (0=auto):" Foreground="#8EAFC8" FontSize="11"/>
+                            <TextBlock Text="扇区数（0=自动）：" Foreground="#8EAFC8" FontSize="11"/>
                             <TextBox x:Name="TxtBootSectorCount" Text="0" IsEnabled="False"
                                      Background="#152030" Foreground="#E8F0FE" Width="120"
                                      HorizontalAlignment="Left"
-                                     ToolTip.Tip="Number of 512-byte virtual sectors to load (0 = auto-detect from file size)"/>
+                                     ToolTip.Tip="要加载的 512 字节虚拟扇区数（0 = 根据文件大小自动检测）"/>
                         </StackPanel>
                     </Grid>
                     <CheckBox x:Name="ChkBootInfoTable" IsEnabled="False"
-                              Content="Patch boot info table (ISOLINUX / GRUB)" Foreground="#E8F0FE"
-                              ToolTip.Tip="Patch the boot image with a boot info table containing LBA and size (required by ISOLINUX/GRUB)"/>
-                    <TextBlock Text="EFI dual-boot image (optional):" Foreground="#8EAFC8"
+                              Content="修补启动信息表（ISOLINUX / GRUB）" Foreground="#E8F0FE"
+                              ToolTip.Tip="向启动镜像写入包含 LBA 和大小信息的启动信息表（ISOLINUX/GRUB 要求）"/>
+                    <TextBlock Text="EFI 双启动镜像（可选）：" Foreground="#8EAFC8"
                                FontSize="11" Margin="0,4,0,0"/>
                     <Grid ColumnDefinitions="*,Auto">
                         <TextBox x:Name="TxtEfiBootImage" IsEnabled="False"
-                                 Watermark="EFI boot image (e.g. efi/boot/bootx64.efi)..."
+                                 Watermark="EFI 启动镜像（例如 efi/boot/bootx64.efi）…"
                                  Background="#152030" Foreground="#E8F0FE"
-                                 ToolTip.Tip="Path to the EFI boot image for dual BIOS+UEFI boot support"
+                                 ToolTip.Tip="用于 BIOS+UEFI 双启动的 EFI 启动镜像路径"
                                  DragDrop.AllowDrop="True" DragDrop.DragOver="OnFilePathDragOver" DragDrop.Drop="OnEfiBootDrop"/>
                         <Button x:Name="BtnBrowseEfiBoot" Grid.Column="1"
-                                Content="Browse…" Classes="ActionBtn" Margin="6,0,0,0"
+                                Content="浏览…" Classes="ActionBtn" Margin="6,0,0,0"
                                 IsEnabled="False" Click="OnBrowseEfiBootClick"
-                                ToolTip.Tip="Browse for an EFI boot image file"/>
+                                ToolTip.Tip="浏览并选择 EFI 启动镜像文件"/>
                     </Grid>
                 </StackPanel>
             </Expander>
 
             <!-- CD-XA / CD-i Options -->
-            <Expander Classes="SettingsExpander">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                        <TextBlock Text="CD-XA &amp; CD-i Options" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Expander.Header>
+            <Expander Header="📀  CD-XA 与 CD-i 选项" Classes="SettingsExpander">
                 <StackPanel Spacing="8" Margin="0,8,0,0">
                     <CheckBox x:Name="ChkCdXaMode"
-                              Content="CD-ROM XA mode (inject CD-XA001 marker in PVD)"
+                              Content="CD-ROM XA 模式（在 PVD 中注入 CD-XA001 标记）"
                               Foreground="#E8F0FE"
-                              ToolTip.Tip="Mark the disc as CD-ROM XA (Mode 2 sectors). Required for VCD/SVCD and CD-i discs."/>
-                    <TextBlock Text="Marks the disc as CD-ROM XA compliant (Mode 2 Form 1/Form 2 sectors). Automatically set for VCD/SVCD builds."
+                              ToolTip.Tip="将光盘标记为 CD-ROM XA（Mode 2 扇区）。VCD/SVCD 和 CD-i 光盘需要此设置。"/>
+                    <TextBlock Text="将光盘标记为符合 CD-ROM XA（Mode 2 Form 1/Form 2 扇区）。构建 VCD/SVCD 时自动启用。"
                                Foreground="#5A7A9A" FontSize="10" TextWrapping="Wrap"/>
                     <CheckBox x:Name="ChkIncludeCdiApp"
-                              Content="Include CD-i application stub (VCD playback on CD-i players)"
+                              Content="包含 CD-i 应用程序存根（在 CD-i 播放机上播放 VCD）"
                               Foreground="#E8F0FE"
-                              ToolTip.Tip="Add a minimal CD-i application module for VCD playback on Philips CD-i players (Green Book)"/>
-                    <TextBlock Text="Adds a CDI directory with a minimal CD-i application module for VCD playback on Philips CD-i players (Green Book). Only applicable for VCD builds."
+                              ToolTip.Tip="添加最小的 CD-i 应用程序模块，以便在飞利浦 CD-i 播放机上播放 VCD（绿皮书）"/>
+                    <TextBlock Text="添加包含最小 CD-i 应用程序模块的 CDI 目录，以便在飞利浦 CD-i 播放机上播放 VCD（绿皮书）。仅适用于 VCD 构建。"
                                Foreground="#5A7A9A" FontSize="10" TextWrapping="Wrap"/>
                 </StackPanel>
             </Expander>
 
             <!-- Audio CD Builder -->
-            <Expander Classes="SettingsExpander">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                        <TextBlock Text="Audio CD Builder" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Expander.Header>
+            <Expander Header="🎵  音频 CD 构建器" Classes="SettingsExpander">
                 <StackPanel Spacing="10" Margin="0,8,0,0">
                     <Grid ColumnDefinitions="*,*">
                         <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Album Title (CD-TEXT):" Classes="FieldLabel"/>
+                            <TextBlock Text="专辑标题（CD-TEXT 文本）：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtCdTextAlbum" Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="CD-TEXT album title embedded in the disc sub-channel data"/>
+                                     ToolTip.Tip="嵌入光盘子通道数据的 CD-TEXT 专辑标题"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Spacing="4">
-                            <TextBlock Text="Artist (CD-TEXT):" Classes="FieldLabel"/>
+                            <TextBlock Text="艺术家（CD-TEXT 文本）：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtCdTextArtist" Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="CD-TEXT performer/artist name embedded in the disc sub-channel data"/>
+                                     ToolTip.Tip="嵌入光盘子通道数据的 CD-TEXT 表演者/艺术家名称"/>
                         </StackPanel>
                     </Grid>
 
                     <!-- Extended CD-TEXT fields -->
                     <Grid ColumnDefinitions="*,*,*" Margin="0,4,0,0">
                         <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Songwriter:" Classes="FieldLabel"/>
+                            <TextBlock Text="词作者：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtCdTextSongwriter" Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="CD-TEXT songwriter name"/>
+                                     ToolTip.Tip="CD-TEXT 词作者名称"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Composer:" Classes="FieldLabel"/>
+                            <TextBlock Text="作曲：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtCdTextComposer" Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="CD-TEXT composer name"/>
+                                     ToolTip.Tip="CD-TEXT 作曲者名称"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Spacing="4">
-                            <TextBlock Text="Arranger:" Classes="FieldLabel"/>
+                            <TextBlock Text="编曲：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtCdTextArranger" Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="CD-TEXT arranger name"/>
+                                     ToolTip.Tip="CD-TEXT 编曲者名称"/>
                         </StackPanel>
                     </Grid>
                     <Grid ColumnDefinitions="*,*,*" Margin="0,4,0,0">
                         <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Genre:" Classes="FieldLabel"/>
+                            <TextBlock Text="流派：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtCdTextGenre" Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="CD-TEXT genre"/>
+                                     ToolTip.Tip="CD-TEXT 流派"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Disc Message:" Classes="FieldLabel"/>
+                            <TextBlock Text="光盘信息：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtCdTextMessage" Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="CD-TEXT disc message"/>
+                                     ToolTip.Tip="CD-TEXT 光盘信息"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Spacing="4">
-                            <TextBlock Text="MCN/UPC (13 digits):" Classes="FieldLabel"/>
+                            <TextBlock Text="MCN/UPC（13 位）：" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtMediaCatalogNumber" Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="Media Catalog Number (UPC/EAN barcode, exactly 13 digits)" MaxLength="13"/>
+                                     ToolTip.Tip="介质目录编号（UPC/EAN 条码，必须为 13 位）" MaxLength="13"/>
                         </StackPanel>
                     </Grid>
 
                     <Grid ColumnDefinitions="*,Auto,Auto">
-                        <TextBlock Text="Tracks:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                        <TextBlock Text="音轨：" Classes="FieldLabel" VerticalAlignment="Center"/>
                         <Button x:Name="BtnAddTrack" Grid.Column="1"
-                                Classes="ActionBtn"
+                                Content="➕ 添加音轨" Classes="ActionBtn"
                                 Margin="0,0,6,0" Click="OnAddTrackClick"
-                                ToolTip.Tip="Add audio track files (WAV, MP3, WMA, FLAC, OGG, AIFF)">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
-                                <TextBlock Text="Add Track" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="添加音频轨道文件（WAV、MP3、WMA、FLAC、OGG、AIFF）"/>
                         <Button x:Name="BtnRemoveTrack" Grid.Column="2"
-                                Classes="ActionBtn"
+                                Content="➖ 移除" Classes="ActionBtn"
                                 Click="OnRemoveTrackClick"
-                                ToolTip.Tip="Remove the selected audio track from the list">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-remove-16.png"/>
-                                <TextBlock Text="Remove" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="从列表中移除选中的音轨"/>
                     </Grid>
 
                     <ListBox x:Name="AudioTrackList"
@@ -356,33 +316,26 @@
                              Background="#152030"
                              BorderBrush="#1E3450" BorderThickness="1"
                              CornerRadius="4"
-                             ToolTip.Tip="Audio tracks to include on the CD. Drag and drop audio files here."
+                             ToolTip.Tip="要包含在 CD 中的音轨。可将音频文件拖放到此处。"
                              DragDrop.AllowDrop="True" DragDrop.DragOver="OnAudioDragOver" DragDrop.Drop="OnAudioDrop"/>
 
                     <TextBlock x:Name="TxtTotalTime"
-                               Text="Total time: 0:00"
+                               Text="总时长：0:00"
                                Foreground="#1E90FF" FontSize="12"/>
                 </StackPanel>
             </Expander>
 
             <!-- Gaming System Disc Builders -->
-            <Expander Classes="SettingsExpander">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
-                        <TextBlock Text="Gaming System Disc Builders" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Expander.Header>
+            <Expander Header="🎮  游戏机光盘构建器" Classes="SettingsExpander">
                 <StackPanel Spacing="8" Margin="0,8,0,0">
-                    <TextBlock Text="Configure the disc structure for a specific gaming platform:"
+                    <TextBlock Text="为特定游戏机配置光盘结构："
                                Foreground="#5A7A9A" FontSize="11"/>
                     <ComboBox x:Name="CmbGamingSystem"
                               HorizontalAlignment="Stretch"
-                              PlaceholderText="Select gaming system..."
+                              PlaceholderText="选择游戏机…"
                               SelectionChanged="OnGamingSystemChanged"
-                              ToolTip.Tip="Select a gaming system preset to auto-configure disc structure">
-                        <ComboBoxItem Content="(Standard — no gaming preset)"/>
+                              ToolTip.Tip="选择游戏机预设以自动配置光盘结构">
+                        <ComboBoxItem Content="（标准 — 无游戏机预设）"/>
                         <ComboBoxItem Content="PlayStation 1"/>
                         <ComboBoxItem Content="PlayStation 2"/>
                         <ComboBoxItem Content="PlayStation 3"/>
@@ -409,7 +362,7 @@
                     </ComboBox>
                     <Border Background="#152030" CornerRadius="6" Padding="10">
                         <TextBlock x:Name="TxtGamingDesc"
-                                   Text="No gaming preset selected."
+                                   Text="未选择游戏机预设。"
                                    Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
                     </Border>
                 </StackPanel>
@@ -419,34 +372,22 @@
             <Border Classes="Card">
                 <StackPanel Spacing="10">
                     <Grid ColumnDefinitions="*,Auto,Auto">
-                        <TextBlock Text="Build" Classes="SectionHeader"
+                        <TextBlock Text="构建" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnBuild" Grid.Column="1"
-                                Classes="PrimaryBtn"
+                                Content="🏗  构建镜像" Classes="PrimaryBtn"
                                 Margin="0,0,8,0" Click="OnBuildClick"
-                                ToolTip.Tip="Start building the disc image">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-create-16.png"/>
-                                <TextBlock Text="Build Image" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="开始构建光盘镜像"/>
                         <Button x:Name="BtnCancelBuild" Grid.Column="2"
-                                Classes="DangerBtn"
+                                Content="⏹  取消" Classes="DangerBtn"
                                 IsEnabled="False" Click="OnCancelBuildClick"
-                                ToolTip.Tip="Cancel the current build operation">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="取消当前构建操作"/>
                     </Grid>
 
                     <ProgressBar x:Name="BuildProgressBar" Classes="BurnProgress" Value="0"/>
 
                     <Grid ColumnDefinitions="*,Auto,Auto">
-                        <TextBlock x:Name="TxtBuildStatus" Text="Ready."
+                        <TextBlock x:Name="TxtBuildStatus" Text="就绪。"
                                    Foreground="#5A7A9A" FontSize="11" VerticalAlignment="Center"/>
                         <TextBlock x:Name="TxtBuildETA" Grid.Column="1"
                                    Text="" Foreground="#5A7A9A" FontSize="11"
@@ -457,17 +398,11 @@
                     </Grid>
 
                     <Grid ColumnDefinitions="Auto,*">
-                        <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
+                        <TextBlock Text="日志" Classes="SectionHeader" VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Classes="ActionBtn"
+                                Content="🧹 清除" Classes="ActionBtn"
                                 HorizontalAlignment="Right" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the build log output">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
-                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="清除构建日志输出"/>
                     </Grid>
 
                     <TextBox x:Name="TxtLog" Classes="LogBox" Height="160"/>

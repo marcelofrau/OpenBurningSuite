@@ -8,59 +8,55 @@
         <StackPanel Margin="24" Spacing="16">
 
             <!-- Header -->
-            <TextBlock Text="Copy Disc to Image" Classes="PageTitle"/>
-            <TextBlock Text="Copy optical discs to image files with full subchannel and gaming system support."
+            <TextBlock Text="将光盘复制为镜像" Classes="PageTitle"/>
+            <TextBlock Text="将光盘复制为镜像文件，完整支持子通道和游戏机预设。"
                        Classes="PageSubtitle"/>
 
             <!-- Source & Output -->
             <Border Classes="Card">
                 <StackPanel Spacing="12">
-                    <TextBlock Text="Source &amp; Output" Classes="SectionHeader"/>
+                    <TextBlock Text="源与输出" Classes="SectionHeader"/>
 
                     <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto,Auto">
-                        <TextBlock Text="Drive:" Grid.Row="0" Grid.Column="0"
+                        <TextBlock Text="光驱：" Grid.Row="0" Grid.Column="0"
                                    Classes="FieldLabel" VerticalAlignment="Center" Margin="0,0,8,0"/>
                         <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="*,Auto">
                             <ComboBox x:Name="CmbDrive"
-                                      PlaceholderText="Select optical drive..."
+                                      PlaceholderText="选择光驱…"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Choose which optical drive to read from"/>
+                                      ToolTip.Tip="选择要读取的光驱"/>
                             <Button x:Name="BtnRefreshDrives" Grid.Column="1"
-                                    Classes="ActionBtn"
+                                    Content="🔄" Classes="ActionBtn"
                                     Margin="6,0,0,0" Click="OnRefreshDrivesClick"
-                                    ToolTip.Tip="Rescan the system for connected optical drives">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
+                                    ToolTip.Tip="重新扫描系统中已连接的光驱"/>
                         </Grid>
 
-                        <TextBlock Text="Output Format:" Grid.Row="1" Grid.Column="0"
+                        <TextBlock Text="输出格式：" Grid.Row="1" Grid.Column="0"
                                    Classes="FieldLabel" VerticalAlignment="Center"
                                    Margin="0,8,8,0"/>
                         <ComboBox x:Name="CmbOutputFormat" Grid.Row="1" Grid.Column="1"
                                   Margin="0,8,0,0" HorizontalAlignment="Stretch"
-                                  ToolTip.Tip="Image file format for the output (ISO, BIN/CUE, NRG, etc.)"/>
+                                  ToolTip.Tip="输出的镜像文件格式（ISO、BIN/CUE、NRG 等）"/>
 
-                        <TextBlock Text="Output Path:" Grid.Row="2" Grid.Column="0"
+                        <TextBlock Text="输出路径：" Grid.Row="2" Grid.Column="0"
                                    Classes="FieldLabel" VerticalAlignment="Center"
                                    Margin="0,8,8,0"/>
                         <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="*,Auto" Margin="0,8,0,0">
                             <TextBox x:Name="TxtOutputPath"
-                                     Watermark="Output image file path..."
+                                     Watermark="输出镜像文件路径…"
                                      Background="#152030" Foreground="#E8F0FE"
                                      DragDrop.AllowDrop="True"
                                      DragDrop.DragOver="OnOutputPathDragOver"
                                      DragDrop.Drop="OnOutputPathDrop"
-                                     ToolTip.Tip="Full path for the output image file"/>
+                                     ToolTip.Tip="输出镜像文件的完整路径"/>
                             <Button x:Name="BtnBrowseOutput" Grid.Column="1"
-                                    Content="Browse…" Classes="ActionBtn"
+                                    Content="浏览…" Classes="ActionBtn"
                                     Margin="6,0,0,0" Click="OnBrowseOutputClick"
-                                    ToolTip.Tip="Open a file dialog to choose where to save the image"/>
+                                    ToolTip.Tip="打开文件对话框以选择镜像保存位置"/>
                         </Grid>
 
                         <TextBlock Grid.Row="3" Grid.Column="1"
-                                    Text="Drag and drop a file here"
+                                   Text="💡 将文件拖放到此处"
                                    Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
                     </Grid>
                 </StackPanel>
@@ -70,47 +66,38 @@
             <Border Classes="Card" x:Name="PnlDetectedContent" IsVisible="False">
                 <StackPanel Spacing="10">
                     <Grid ColumnDefinitions="*,Auto">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
-                            <TextBlock Text="Detected Content" Classes="SectionHeader"
-                                       VerticalAlignment="Center"/>
-                        </StackPanel>
+                        <TextBlock Text="🔍  检测到的内容" Classes="SectionHeader"
+                                   VerticalAlignment="Center"/>
                         <Button x:Name="BtnDetectContent" Grid.Column="1"
+                                Content="🔎  检测光盘"
                                 Classes="ActionBtn" Click="OnDetectContentClick"
-                                ToolTip.Tip="Analyze the inserted disc to detect its content type and auto-configure optimal copy settings">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
-                                <TextBlock Text="Detect Disc" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="分析已插入的光盘以检测内容类型，并自动配置最佳复制设置"/>
                     </Grid>
 
                     <Border Background="#0A1520" CornerRadius="6" Padding="12">
                         <Grid ColumnDefinitions="120,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="4">
-                            <TextBlock Text="Content Type:" Grid.Row="0" Grid.Column="0"
+                            <TextBlock Text="内容类型：" Grid.Row="0" Grid.Column="0"
                                        Foreground="#5A7A9A" FontSize="11"/>
                             <TextBlock x:Name="TxtDetectedContentType" Grid.Row="0" Grid.Column="1"
-                                       Text="Not detected" Foreground="#E8F0FE" FontSize="11"
+                                       Text="未检测" Foreground="#E8F0FE" FontSize="11"
                                        FontWeight="SemiBold"/>
 
-                            <TextBlock Text="Volume Label:" Grid.Row="1" Grid.Column="0"
+                            <TextBlock Text="卷标：" Grid.Row="1" Grid.Column="0"
                                        Foreground="#5A7A9A" FontSize="11"/>
                             <TextBlock x:Name="TxtDetectedVolumeLabel" Grid.Row="1" Grid.Column="1"
                                        Text="" Foreground="#8EAFC8" FontSize="11"/>
 
-                            <TextBlock Text="Media Type:" Grid.Row="2" Grid.Column="0"
+                            <TextBlock Text="介质类型：" Grid.Row="2" Grid.Column="0"
                                        Foreground="#5A7A9A" FontSize="11"/>
                             <TextBlock x:Name="TxtDetectedMediaType" Grid.Row="2" Grid.Column="1"
                                        Text="" Foreground="#8EAFC8" FontSize="11"/>
 
-                            <TextBlock Text="Tracks:" Grid.Row="3" Grid.Column="0"
+                            <TextBlock Text="音轨：" Grid.Row="3" Grid.Column="0"
                                        Foreground="#5A7A9A" FontSize="11"/>
                             <TextBlock x:Name="TxtDetectedTracks" Grid.Row="3" Grid.Column="1"
                                        Text="" Foreground="#8EAFC8" FontSize="11"/>
 
-                            <TextBlock Text="Configuration:" Grid.Row="4" Grid.Column="0"
+                            <TextBlock Text="配置：" Grid.Row="4" Grid.Column="0"
                                        Foreground="#5A7A9A" FontSize="11"/>
                             <TextBlock x:Name="TxtDetectedConfig" Grid.Row="4" Grid.Column="1"
                                        Text="" Foreground="#1E90FF" FontSize="11" TextWrapping="Wrap"/>
@@ -122,20 +109,20 @@
             <!-- Options -->
             <Border Classes="Card">
                 <StackPanel Spacing="10">
-                    <TextBlock Text="Copy Options" Classes="SectionHeader"/>
+                    <TextBlock Text="复制选项" Classes="SectionHeader"/>
 
                     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto">
 
                         <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Copy Speed:" Classes="FieldLabel"/>
+                            <TextBlock Text="复制速度：" Classes="FieldLabel"/>
                             <ComboBox x:Name="CmbReadSpeed" HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Speed at which to read the disc (lower speeds can improve accuracy)"/>
+                                      ToolTip.Tip="读取光盘的速度（较低速度可提高准确性）"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4">
-                            <TextBlock Text="Error Recovery:" Classes="FieldLabel"/>
+                            <TextBlock Text="错误恢复：" Classes="FieldLabel"/>
                             <ComboBox x:Name="CmbErrorRecovery" HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="How to handle read errors encountered during the rip">
+                                      ToolTip.Tip="如何处理抓取过程中遇到的读取错误">
                                 <ComboBoxItem Content="Yes (skip and retry)" Tag="Yes"/>
                                 <ComboBoxItem Content="No (ignore errors)" Tag="No"/>
                                 <ComboBoxItem Content="Abort on error" Tag="Abort"/>
@@ -143,62 +130,54 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,8,8,0">
-                            <TextBlock Text="Retry Count:" Classes="FieldLabel"/>
+                            <TextBlock Text="重试次数：" Classes="FieldLabel"/>
                             <NumericUpDown x:Name="NumRetries" Minimum="0" Maximum="20" Value="3"
                                            Background="#152030" Foreground="#E8F0FE"
-                                           ToolTip.Tip="Number of retry attempts for failed sector reads"/>
+                                           ToolTip.Tip="扇区读取失败时的重试次数"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,8,0,0">
-                            <TextBlock Text="Sector Size:" Classes="FieldLabel"/>
+                            <TextBlock Text="扇区大小：" Classes="FieldLabel"/>
                             <ComboBox x:Name="CmbSectorSize" HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Raw sector size in bytes (2048 for data, 2352 for audio/raw)"/>
+                                      ToolTip.Tip="原始扇区大小（字节，数据为 2048，音频/原始为 2352）"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Grid.Column="0" Spacing="4" Margin="0,8,8,0">
-                            <TextBlock Text="Subchannel Mode:" Classes="FieldLabel"/>
+                            <TextBlock Text="子通道模式：" Classes="FieldLabel"/>
                             <ComboBox x:Name="CmbSubchannel" HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Subchannel data extraction mode (needed for some copy-protected or gaming discs)"/>
+                                      ToolTip.Tip="子通道数据提取模式（某些防复制或游戏光盘需要）"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Grid.Column="1" Spacing="8" Margin="0,12,0,0">
                             <CheckBox x:Name="ChkAudioParanoia"
-                                      Content="Audio Paranoia Mode"
+                                      Content="音频精确抓取模式"
                                       Foreground="#E8F0FE"
-                                      ToolTip.Tip="Enable extra audio error correction for scratched or damaged audio CDs"/>
+                                      ToolTip.Tip="为有划痕或损坏的音频 CD 启用额外的音频纠错"/>
                             <CheckBox x:Name="ChkJitterCorrection"
-                                      Content="Jitter Correction"
+                                      Content="抖动校正"
                                       IsChecked="True"
                                       Foreground="#E8F0FE"
-                                      ToolTip.Tip="Correct jitter errors during audio ripping for bit-perfect copies"/>
+                                      ToolTip.Tip="在音频抓取过程中校正抖动错误，以获得比特级精确的副本"/>
                             <CheckBox x:Name="ChkReadBadSectors"
-                                      Content="Read all sectors (including bad)"
+                                      Content="读取所有扇区（包括坏扇区）"
                                       Foreground="#E8F0FE"
-                                      ToolTip.Tip="Attempt to read every sector even if errors are detected"/>
+                                      ToolTip.Tip="即使检测到错误也尝试读取每个扇区"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </Border>
 
             <!-- Gaming System Presets -->
-            <Expander Background="#0E1A2B"
+            <Expander Header="🎮  游戏机预设"
+                      Background="#0E1A2B"
                       Foreground="#E8F0FE"
                       BorderBrush="#1E3450" BorderThickness="1"
                       CornerRadius="8"
                       Padding="16"
                       IsExpanded="True"
-                      HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Stretch"
-                      ToolTip.Tip="Pre-configured settings for various gaming console disc formats">
-                <Expander.Header>
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
-                        <TextBlock Text="Gaming System Presets" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Expander.Header>
+                      ToolTip.Tip="针对各种游戏机光盘格式的预配置设置">
                 <StackPanel Spacing="8" Margin="0,8,0,0">
-                    <TextBlock Text="Select a preset to automatically configure sector size, subchannel, and error recovery settings:"
+                    <TextBlock Text="选择预设以自动配置扇区大小、子通道和错误恢复设置："
                                Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
                     <ItemsControl x:Name="PresetsList">
                         <ItemsControl.ItemsPanel>
@@ -209,8 +188,8 @@
                     </ItemsControl>
                     <Border Classes="InfoCard" Padding="10">
                         <StackPanel Spacing="4">
-                            <TextBlock Text="Selected Preset:" Foreground="#5A7A9A" FontSize="11"/>
-                            <TextBlock x:Name="TxtPresetDesc" Text="No preset selected."
+                            <TextBlock Text="已选预设：" Foreground="#5A7A9A" FontSize="11"/>
+                            <TextBlock x:Name="TxtPresetDesc" Text="未选择预设。"
                                        Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
                         </StackPanel>
                     </Border>
@@ -220,30 +199,26 @@
             <!-- Encryption -->
             <Border Classes="Card">
                 <StackPanel Spacing="10">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
-                        <TextBlock Text="Encryption" Classes="SectionHeader"/>
-                    </StackPanel>
-                    <TextBlock Text="Optionally encrypt the output image to protect sensitive backups."
+                    <TextBlock Text="🔒  加密" Classes="SectionHeader"/>
+                    <TextBlock Text="可选加密输出镜像以保护敏感备份。"
                                Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
                     <CheckBox x:Name="ChkEncryptOutput"
-                              Content="Encrypt output image (AES-256)"
+                              Content="加密输出镜像（AES-256）"
                               Foreground="#E8F0FE"
-                              ToolTip.Tip="Encrypt the disc image after reading using AES-256-CBC with password protection"/>
+                              ToolTip.Tip="读取后使用 AES-256-CBC 和密码保护加密光盘镜像"/>
                     <StackPanel x:Name="PnlEncryptPassword" IsVisible="False" Spacing="6" Margin="20,0,0,0">
-                        <TextBlock Text="Password:" Classes="FieldLabel"/>
+                        <TextBlock Text="密码：" Classes="FieldLabel"/>
                         <TextBox x:Name="TxtEncryptPassword"
                                  PasswordChar="●"
-                                 Watermark="Enter encryption password..."
+                                 Watermark="输入加密密码…"
                                  Background="#152030" Foreground="#E8F0FE"
-                                 ToolTip.Tip="Password for encrypting the disc image (remember this to decrypt later)"/>
-                        <TextBlock Text="Confirm Password:" Classes="FieldLabel"/>
+                                 ToolTip.Tip="用于加密光盘镜像的密码（请记住以便日后解密）"/>
+                        <TextBlock Text="确认密码：" Classes="FieldLabel"/>
                         <TextBox x:Name="TxtEncryptPasswordConfirm"
                                  PasswordChar="●"
-                                 Watermark="Confirm encryption password..."
+                                 Watermark="再次输入加密密码…"
                                  Background="#152030" Foreground="#E8F0FE"
-                                 ToolTip.Tip="Re-enter the password to confirm"/>
+                                 ToolTip.Tip="再次输入密码以确认"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -252,28 +227,18 @@
             <Border Classes="Card">
                 <StackPanel Spacing="10">
                     <Grid ColumnDefinitions="*,Auto,Auto">
-                        <TextBlock Text="Progress" Classes="SectionHeader"
+                        <TextBlock Text="进度" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnStartRead" Grid.Column="1"
+                                Content="▶  开始复制"
                                 Classes="PrimaryBtn" Click="OnStartReadClick"
                                 Margin="0,0,8,0"
-                                ToolTip.Tip="Begin reading the disc to the specified output file">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
-                                <TextBlock Text="Start Copy" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="开始将光盘读取到指定的输出文件"/>
                         <Button x:Name="BtnCancelRead" Grid.Column="2"
+                                Content="⏹  取消"
                                 Classes="DangerBtn" Click="OnCancelReadClick"
                                 IsEnabled="False"
-                                ToolTip.Tip="Cancel the current read operation">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="取消当前读取操作"/>
                     </Grid>
 
                     <ProgressBar x:Name="ReadProgress"
@@ -282,13 +247,13 @@
                                  Foreground="#1E90FF" Background="#152030"/>
 
                     <Grid ColumnDefinitions="*,Auto,Auto,Auto">
-                        <TextBlock x:Name="TxtReadStatus" Text="Ready."
+                        <TextBlock x:Name="TxtReadStatus" Text="就绪。"
                                    Foreground="#5A7A9A" FontSize="11"
                                    VerticalAlignment="Center"/>
                         <TextBlock x:Name="TxtReadElapsed" Grid.Column="1"
                                    Text="" Foreground="#8EAFC8" FontSize="11"
                                    VerticalAlignment="Center" Margin="0,0,12,0"
-                                   ToolTip.Tip="Elapsed time since the read operation started"/>
+                                   ToolTip.Tip="自读取操作开始以来经过的时间"/>
                         <TextBlock x:Name="TxtReadSpeed" Grid.Column="2"
                                    Text="" Foreground="#1E90FF" FontSize="11"
                                    VerticalAlignment="Center" Margin="0,0,12,0"/>
@@ -300,22 +265,17 @@
                     <!-- Disc Visualization -->
                     <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
                             Padding="8" IsVisible="False"
-                            ToolTip.Tip="Real-time disc reading visualization — shows LBA position on the physical disc spiral">
+                            ToolTip.Tip="实时读取可视化 — 显示光盘物理螺旋上的 LBA 位置">
                         <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
                     </Border>
 
                     <Grid ColumnDefinitions="*,Auto">
-                        <TextBlock Text="Log" Classes="SectionHeader"
+                        <TextBlock Text="日志" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
+                                Content="🧹 清除"
                                 Classes="ActionBtn" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the log output">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
-                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="清除日志输出"/>
                     </Grid>
 
                     <TextBox x:Name="TxtLog"

@@ -202,9 +202,9 @@ public partial class GameWizardView : UserControl
         PrgGameExec.Value = 0;
         TxtGameExecPercent.Text = "0%";
         TxtGameExecSpeed.Text = string.Empty;
-        TxtGameExecStatus.Text = "Preparing...";
+        TxtGameExecStatus.Text = "正在准备…";
         TxtGameExecLog.Text = string.Empty;
-        TxtGameStep4Title.Text = "Executing...";
+        TxtGameStep4Title.Text = "正在执行…";
 
         // Reset disc visualization for a fresh operation
         DiscVizBorder.IsVisible = false;
@@ -236,13 +236,13 @@ public partial class GameWizardView : UserControl
                     break;
             }
 
-            TxtGameStep4Title.Text = "✅ Complete!";
-            TxtGameExecStatus.Text = "Operation completed successfully.";
+            TxtGameStep4Title.Text = "✅ 完成！";
+            TxtGameExecStatus.Text = "操作已成功完成。";
         }
         catch (OperationCanceledException)
         {
-            TxtGameStep4Title.Text = "⏹ Cancelled";
-            TxtGameExecStatus.Text = "Operation was cancelled by user.";
+            TxtGameStep4Title.Text = "⏹ 已取消";
+            TxtGameExecStatus.Text = "操作已被用户取消。";
             AppendLog("[Info] Operation cancelled.");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -250,8 +250,8 @@ public partial class GameWizardView : UserControl
         }
         catch (Exception ex)
         {
-            TxtGameStep4Title.Text = "❌ Failed";
-            TxtGameExecStatus.Text = $"Error: {ex.Message}";
+            TxtGameStep4Title.Text = "❌ 失败";
+            TxtGameExecStatus.Text = $"错误：{ex.Message}";
             AppendLog($"[Error] {ex.Message}");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -280,22 +280,22 @@ public partial class GameWizardView : UserControl
         {
             case GameWizardMode.FromImage:
                 if (string.IsNullOrWhiteSpace(TxtGameImagePath.Text))
-                    return "Please specify a game disc image file.";
+                    return "请指定游戏光盘镜像文件。";
                 if (!File.Exists(TxtGameImagePath.Text.Trim()))
-                    return "The specified image file does not exist.";
+                    return "指定的镜像文件不存在。";
                 if (CmbGameSystem.SelectedItem == null)
-                    return "Please select a gaming system.";
+                    return "请选择游戏机。";
                 if (CmbGameDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case GameWizardMode.FromFolder:
                 if (string.IsNullOrWhiteSpace(TxtGameFolderPath.Text))
-                    return "Please specify a game folder.";
+                    return "请指定游戏文件夹。";
                 if (!Directory.Exists(TxtGameFolderPath.Text.Trim()))
-                    return "The specified folder does not exist.";
+                    return "指定的文件夹不存在。";
                 if (CmbGameFolderSystem.SelectedItem == null)
-                    return "Please select a gaming system.";
+                    return "请选择游戏机。";
                 // Validate output directory exists when a custom output path is specified
                 if (!string.IsNullOrWhiteSpace(TxtGameFolderOutputPath.Text))
                 {
@@ -304,13 +304,13 @@ public partial class GameWizardView : UserControl
                         return $"Output directory does not exist: {outputDir}";
                 }
                 if (ChkGameFolderBurn.IsChecked == true && CmbGameFolderDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 if (ChkGameFolderBurn.IsChecked != true && string.IsNullOrWhiteSpace(TxtGameFolderOutputPath.Text))
-                    return "Please specify an output image path, or enable 'Burn to Disc'.";
+                    return "请指定输出镜像路径，或启用“刻录到光盘”。";
                 return null;
 
             default:
-                return "Please choose a source type first.";
+                return "请先选择来源类型。";
         }
     }
 
@@ -325,8 +325,8 @@ public partial class GameWizardView : UserControl
         {
             case GameWizardMode.FromImage:
                 var systemName = CmbGameSystem.SelectedItem?.ToString() ?? "Unknown";
-                AddSummaryLine("💿 Task", "Burn Game Disc from Image");
-                AddSummaryLine("📄 Image File", TxtGameImagePath.Text ?? "(not set)");
+                AddSummaryLine("💿 任务", "从镜像刻录游戏光盘");
+                AddSummaryLine("📄 镜像文件", TxtGameImagePath.Text ?? "（未设置）");
                 if (File.Exists(TxtGameImagePath.Text?.Trim()))
                 {
                     var fi = new FileInfo(TxtGameImagePath.Text!.Trim());
@@ -342,16 +342,16 @@ public partial class GameWizardView : UserControl
                                 totalBinSize += new FileInfo(binFile).Length;
                         }
                         if (totalBinSize > 0)
-                            AddSummaryLine("📏 Image Size", FormatHelper.FormatBytes(totalBinSize));
+                            AddSummaryLine("📏 镜像大小", FormatHelper.FormatBytes(totalBinSize));
                         else
-                            AddSummaryLine("📏 Image Size", "⚠ No BIN files found");
+                            AddSummaryLine("📏 镜像大小", "⚠ 未找到 BIN 文件");
                     }
                     else
                     {
-                        AddSummaryLine("📏 Image Size", FormatHelper.FormatBytes(fi.Length));
+                        AddSummaryLine("📏 镜像大小", FormatHelper.FormatBytes(fi.Length));
                     }
                 }
-                AddSummaryLine("🎮 Gaming System", systemName);
+                AddSummaryLine("🎮 游戏机", systemName);
                 // PS3 encryption status check in summary
                 var trimmedImagePath = TxtGameImagePath.Text?.Trim();
                 if (systemName == "PlayStation 3" && File.Exists(trimmedImagePath))
@@ -361,15 +361,15 @@ public partial class GameWizardView : UserControl
                         var bdInfo = GamingDiscService.DetectBluRayContent(trimmedImagePath!);
                         if (bdInfo.ContentType == BluRayContentType.Ps3Game)
                         {
-                            var encStatus = bdInfo.IsEncrypted ? "🔒 Encrypted" : "🔓 Decrypted";
-                            AddSummaryLine("🔐 Encryption Status", encStatus);
+                            var encStatus = bdInfo.IsEncrypted ? "🔒 已加密" : "🔓 已解密";
+                            AddSummaryLine("🔐 加密状态", encStatus);
                             if (bdInfo.IsEncrypted)
                             {
                                 // Check if user has provided a disc key for decryption
                                 var hasKey = GetPs3DiscKey() != null;
-                                AddSummaryLine("⚠ Warning", hasKey
-                                    ? "PS3 ISO will be decrypted before burning."
-                                    : "Encrypted PS3 ISOs will not work on consoles. Provide an IRD file or disc key.");
+                                AddSummaryLine("⚠ 警告", hasKey
+                                    ? "刻录前将解密 PS3 ISO 镜像。"
+                                    : "加密的 PS3 ISO 镜像无法在游戏机上运行。请提供 IRD 文件或光盘密钥。");
                             }
                         }
                     }
@@ -377,60 +377,60 @@ public partial class GameWizardView : UserControl
                 }
                 if (FormatHelper.GamingPresets.TryGetValue(systemName, out var preset))
                 {
-                    AddSummaryLine("📀 Sector Size", $"{preset.SectorSize} bytes");
+                    AddSummaryLine("📀 扇区大小", $"{preset.SectorSize} 字节");
                     if (!string.IsNullOrEmpty(preset.SubchannelMode) && preset.SubchannelMode != "None")
-                        AddSummaryLine("📡 Subchannel", preset.SubchannelMode);
+                        AddSummaryLine("📡 子通道", preset.SubchannelMode);
                 }
                 var gameDrive = CmbGameDrive.SelectedItem as DiscDrive;
-                AddSummaryLine("💿 Target Drive", gameDrive?.DisplayName ?? "(none)");
-                AddSummaryLine("⚡ Write Speed", GetSelectedText(CmbGameSpeed, "2x"));
-                AddSummaryLine("📝 Write Mode", GetSelectedText(CmbGameWriteMode, "DAO"));
-                AddSummaryLine("📦 Copies", ((int)(NumGameCopies.Value ?? 1)).ToString());
+                AddSummaryLine("💿 目标光驱", gameDrive?.DisplayName ?? "（无）");
+                AddSummaryLine("⚡ 写入速度", GetSelectedText(CmbGameSpeed, "2x"));
+                AddSummaryLine("📝 写入模式", GetSelectedText(CmbGameWriteMode, "DAO"));
+                AddSummaryLine("📦 份数", ((int)(NumGameCopies.Value ?? 1)).ToString());
                 if (ChkGameVerify.IsChecked == true)
-                    AddSummaryLine("✅ Verify After Burn", "Yes");
+                    AddSummaryLine("✅ 刻录后校验", "是");
                 if (ChkGameSimulate.IsChecked == true)
-                    AddSummaryLine("🔬 Simulation Mode", "Yes (no actual write)");
+                    AddSummaryLine("🔬 模拟模式", "是（不实际写入）");
                 // Gaming patches summary
                 if (ChkGameEsr.IsChecked == true)
-                    AddSummaryLine("🎮 ESR Patch", "Yes (PS2 DVD-R)");
+                    AddSummaryLine("🎮 ESR 补丁", "是（PS2 DVD-R）");
                 if (ChkGameMasterDisc.IsChecked == true)
                 {
                     var mdRegion = (CmbGameMasterRegion.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "NTSC-U";
-                    AddSummaryLine("🎮 Master Disc Patch", $"Yes ({mdRegion})");
+                    AddSummaryLine("🎮 Master Disc 补丁", $"是（{mdRegion}）");
                 }
                 if (ChkGamePsx80Min.IsChecked == true)
-                    AddSummaryLine("🎮 PSX 80min Patch", "Yes");
+                    AddSummaryLine("🎮 PSX 80 分钟补丁", "是");
                 if (ChkGamePsxUndither.IsChecked == true)
-                    AddSummaryLine("🎮 PSX Undither", "Yes");
+                    AddSummaryLine("🎮 PSX 去抖动", "是");
                 break;
 
             case GameWizardMode.FromFolder:
                 var folderSystem = CmbGameFolderSystem.SelectedItem?.ToString() ?? "Unknown";
-                AddSummaryLine("📁 Task", "Build & Burn Game Disc from Folder");
-                AddSummaryLine("📂 Source Folder", TxtGameFolderPath.Text ?? "(not set)");
-                AddSummaryLine("🎮 Gaming System", folderSystem);
-                AddSummaryLine("📀 Disc Type", GetSelectedText(CmbGameFolderDiscType, "CD"));
-                AddSummaryLine("📂 File System", GetSelectedText(CmbGameFolderFileSystem, "ISO 9660"));
-                AddSummaryLine("🏷 Volume Label", string.IsNullOrWhiteSpace(TxtGameFolderVolumeLabel.Text) ? "GAME_DISC" : TxtGameFolderVolumeLabel.Text!);
+                AddSummaryLine("📁 Task", "从文件夹构建并刻录游戏光盘");
+                AddSummaryLine("📂 源文件夹", TxtGameFolderPath.Text ?? "（未设置）");
+                AddSummaryLine("🎮 游戏机", folderSystem);
+                AddSummaryLine("📀 光盘类型", GetSelectedText(CmbGameFolderDiscType, "CD"));
+                AddSummaryLine("📂 文件系统", GetSelectedText(CmbGameFolderFileSystem, "ISO 9660"));
+                AddSummaryLine("🏷 卷标", string.IsNullOrWhiteSpace(TxtGameFolderVolumeLabel.Text) ? "GAME_DISC" : TxtGameFolderVolumeLabel.Text!);
 
                 if (!string.IsNullOrWhiteSpace(TxtGameFolderOutputPath.Text))
-                    AddSummaryLine("💾 Output Image", TxtGameFolderOutputPath.Text);
+                    AddSummaryLine("💾 输出镜像", TxtGameFolderOutputPath.Text);
                 else
-                    AddSummaryLine("💾 Output Image", "(temporary file)");
+                    AddSummaryLine("💾 输出镜像", "（临时文件）");
 
                 if (ChkGameFolderBurn.IsChecked == true)
                 {
                     var folderDrive = CmbGameFolderDrive.SelectedItem as DiscDrive;
-                    AddSummaryLine("💿 Target Drive", folderDrive?.DisplayName ?? "(none)");
-                    AddSummaryLine("⚡ Write Speed", GetSelectedText(CmbGameFolderSpeed, "2x"));
+                    AddSummaryLine("💿 目标光驱", folderDrive?.DisplayName ?? "（无）");
+                    AddSummaryLine("⚡ 写入速度", GetSelectedText(CmbGameFolderSpeed, "2x"));
                     if (ChkGameFolderVerify.IsChecked == true)
-                        AddSummaryLine("✅ Verify After Burn", "Yes");
+                        AddSummaryLine("✅ 刻录后校验", "是");
                     if (ChkGameFolderSimulate.IsChecked == true)
-                        AddSummaryLine("🔬 Simulation Mode", "Yes (no actual write)");
+                        AddSummaryLine("🔬 模拟模式", "是（不实际写入）");
                 }
                 else
                 {
-                    AddSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
         }
@@ -457,58 +457,16 @@ public partial class GameWizardView : UserControl
         GameSummaryContent.Children.Add(sp);
     }
 
-    private void AddSummaryLine(string iconKey, string label, string value)
-    {
-        var sp = new StackPanel { Orientation = Avalonia.Layout.Orientation.Horizontal, Spacing = 8 };
-
-        if (!string.IsNullOrEmpty(iconKey))
-        {
-            var uri = Helpers.IconHelper.GetUri(iconKey, 16);
-            if (uri != null)
-            {
-                try
-                {
-                    var bitmap = new Avalonia.Media.Imaging.Bitmap(Avalonia.Platform.AssetLoader.Open(new Uri(uri)));
-                    sp.Children.Add(new Image
-                    {
-                        Source = bitmap,
-                        Width = 16,
-                        Height = 16,
-                        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
-                    });
-                }
-                catch { }
-            }
-        }
-
-        sp.Children.Add(new TextBlock
-        {
-            Text = label + ":",
-            Foreground = Avalonia.Media.Brush.Parse("#8EAFC8"),
-            FontSize = 12,
-            FontWeight = Avalonia.Media.FontWeight.SemiBold,
-            Width = 180
-        });
-        sp.Children.Add(new TextBlock
-        {
-            Text = value,
-            Foreground = Avalonia.Media.Brush.Parse("#E8F0FE"),
-            FontSize = 12,
-            TextWrapping = Avalonia.Media.TextWrapping.Wrap
-        });
-        GameSummaryContent.Children.Add(sp);
-    }
-
     // -----------------------------------------------------------------------
     // EXECUTE: Burn from Image File
     // -----------------------------------------------------------------------
     private async Task ExecuteFromImageAsync(CancellationToken ct)
     {
-        TxtGameStep4Title.Text = "🔥 Burning Game Disc...";
+        TxtGameStep4Title.Text = "🔥 正在刻录游戏光盘…";
 
         var drive = CmbGameDrive.SelectedItem as DiscDrive;
         if (drive == null)
-            throw new InvalidOperationException("No target drive selected.");
+            throw new InvalidOperationException("未选择目标光驱。");
 
         var imagePath = TxtGameImagePath.Text!.Trim();
         var systemName = CmbGameSystem.SelectedItem?.ToString() ?? string.Empty;
@@ -568,12 +526,12 @@ public partial class GameWizardView : UserControl
                         AppendLog("❌ PS3 ISO is encrypted but no valid disc key was provided.");
                         AppendLog("   Please provide an IRD file, .dkey file, or hex key to decrypt.");
                         throw new InvalidOperationException(
-                            "PS3 ISO is encrypted but no valid disc key was provided. " +
-                            "Please provide an IRD file, .dkey file, or hex key.");
+                            "PS3 ISO 镜像已加密，但未提供有效的光盘密钥。" +
+                            "请提供 IRD 文件、.dkey 文件或十六进制密钥。");
                     }
 
                     AppendLog("🔓 Decrypting PS3 ISO before burning...");
-                    TxtGameStep4Title.Text = "🔓 Decrypting PS3 ISO...";
+                    TxtGameStep4Title.Text = "🔓 正在解密 PS3 ISO 镜像…";
 
                     // Create temp file for decrypted ISO
                     tempDecryptedPath = Path.Combine(Path.GetTempPath(),
@@ -594,12 +552,12 @@ public partial class GameWizardView : UserControl
                     {
                         AppendLog($"❌ PS3 decryption failed: {decryptResult}");
                         try { if (File.Exists(tempDecryptedPath)) File.Delete(tempDecryptedPath); } catch { }
-                        throw new InvalidOperationException($"PS3 decryption failed: {decryptResult}");
+                        throw new InvalidOperationException($"PS3 解密失败：{decryptResult}");
                     }
 
                     AppendLog("✅ PS3 ISO decrypted successfully.");
                     imagePath = tempDecryptedPath;
-                    TxtGameStep4Title.Text = "🔥 Burning Game Disc...";
+                    TxtGameStep4Title.Text = "🔥 正在刻录游戏光盘…";
                 }
                 else if (bdInfo.ContentType == BluRayContentType.Ps3Game && !bdInfo.IsEncrypted)
                 {
@@ -662,9 +620,9 @@ public partial class GameWizardView : UserControl
             if (p.CurrentSpeedX > 0)
                 TxtGameExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
             if (p.Remaining.TotalSeconds > 0)
-                TxtGameExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtGameExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtGameExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtGameExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtGameExecStatus.Text = p.StatusMessage;
             if (!string.IsNullOrEmpty(p.LogLine))
@@ -718,7 +676,7 @@ public partial class GameWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteFromFolderAsync(CancellationToken ct)
     {
-        TxtGameStep4Title.Text = "🏗 Building Game Disc...";
+        TxtGameStep4Title.Text = "🏗 正在构建游戏光盘…";
 
         var sourceFolder = TxtGameFolderPath.Text!.Trim();
         var systemName = CmbGameFolderSystem.SelectedItem?.ToString() ?? string.Empty;
@@ -743,7 +701,7 @@ public partial class GameWizardView : UserControl
             // Phase 1: Build ISO image
             AppendLog($"[Info] Building game disc image from: {sourceFolder}");
             AppendLog($"[Info] Gaming system: {systemName}");
-            TxtGameExecStatus.Text = "Building disc image...";
+            TxtGameExecStatus.Text = "正在构建光盘镜像…";
 
             var buildJob = new BuildJob
             {
@@ -769,9 +727,9 @@ public partial class GameWizardView : UserControl
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtGameExecStatus.Text = p.StatusMessage;
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtGameExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtGameExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtGameExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtGameExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.LogLine))
                     AppendLog(p.LogLine);
             });
@@ -810,7 +768,7 @@ public partial class GameWizardView : UserControl
                 burnJob.CloseDisc = true;
 
                 AppendLog($"[Info] Burning to {drive.DisplayName}...");
-                TxtGameExecStatus.Text = "Burning game disc...";
+                TxtGameExecStatus.Text = "正在刻录游戏光盘…";
 
                 var burnService = new BurnService();
                 var burnProgress = new Progress<BurnProgress>(p =>
@@ -820,9 +778,9 @@ public partial class GameWizardView : UserControl
                     if (p.CurrentSpeedX > 0)
                         TxtGameExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                     if (p.Remaining.TotalSeconds > 0)
-                        TxtGameExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                        TxtGameExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                     else if (p.Elapsed.TotalSeconds > 0)
-                        TxtGameExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                        TxtGameExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                     if (!string.IsNullOrEmpty(p.StatusMessage))
                         TxtGameExecStatus.Text = p.StatusMessage;
                     if (!string.IsNullOrEmpty(p.LogLine))
@@ -1085,11 +1043,11 @@ public partial class GameWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select Game Disc Image",
+            Title = "选择游戏光盘镜像",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
-                new FilePickerFileType("Disc Images") { Patterns = new[] { "*.iso", "*.bin", "*.chd", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.img", "*.cue", "*.ccd", "*.obse" } },
+                new FilePickerFileType("Disc Images") { Patterns = new[] { "*.iso", "*.bin", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.img", "*.cue", "*.ccd", "*.obse" } },
                 new FilePickerFileType("All Files") { Patterns = new[] { "*.*" } }
             }
         });
@@ -1108,7 +1066,7 @@ public partial class GameWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select Game Folder",
+            Title = "选择游戏文件夹",
             AllowMultiple = false
         });
 
@@ -1126,7 +1084,7 @@ public partial class GameWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save Game Disc Image",
+            Title = "保存游戏光盘镜像",
             SuggestedFileName = "GameDisc",
             FileTypeChoices = new[]
             {
@@ -1202,23 +1160,23 @@ public partial class GameWizardView : UserControl
             {
                 var sizeMb = totalBinSize / (1024.0 * 1024.0);
                 var trackInfo = binFiles.Count > 1 ? $", {binFiles.Count} tracks" : "";
-                TxtGameImageInfo.Text = $"Size: {sizeMb:F1} MB ({totalBinSize:N0} bytes{trackInfo}) | Format: BIN/CUE";
+                TxtGameImageInfo.Text = $"大小：{sizeMb:F1} MB（{totalBinSize:N0} 字节{trackInfo}）| 格式：BIN/CUE";
             }
             else
             {
-                TxtGameImageInfo.Text = $"Size: ⚠ No BIN files found for CUE sheet | Format: .CUE";
+                TxtGameImageInfo.Text = $"大小：⚠ 未找到 CUE 索引文件对应的 BIN 文件 | 格式：.CUE";
             }
         }
         else
         {
-            TxtGameImageInfo.Text = $"Size: {FormatHelper.FormatBytes(fi.Length)} | Format: {fi.Extension.ToUpperInvariant()}";
+            TxtGameImageInfo.Text = $"大小：{FormatHelper.FormatBytes(fi.Length)} | 格式：{fi.Extension.ToUpperInvariant()}";
         }
 
         // Auto-detect gaming system
         var detected = GamingDiscService.DetectGamingSystem(path);
         if (detected != null)
         {
-            TxtGameDetectedSystem.Text = $"🎮 Detected system: {detected}";
+            TxtGameDetectedSystem.Text = $"🎮 检测到游戏机：{detected}";
 
             // For PS3 games, check encryption status and show additional info
             if (detected.Contains("PlayStation 3", StringComparison.OrdinalIgnoreCase))
@@ -1228,10 +1186,10 @@ public partial class GameWizardView : UserControl
                     var bdInfo = GamingDiscService.DetectBluRayContent(path);
                     if (bdInfo.ContentType == Models.BluRayContentType.Ps3Game)
                     {
-                        var encStatus = bdInfo.IsEncrypted ? "🔒 Encrypted" : "🔓 Decrypted";
+                        var encStatus = bdInfo.IsEncrypted ? "🔒 已加密" : "🔓 已解密";
                         var titleInfo = !string.IsNullOrWhiteSpace(bdInfo.Title) ? $" — {bdInfo.Title}" : "";
                         var titleId = !string.IsNullOrWhiteSpace(bdInfo.TitleId) ? $" [{bdInfo.TitleId}]" : "";
-                        TxtGameDetectedSystem.Text = $"🎮 Detected: PlayStation 3{titleInfo}{titleId} ({encStatus})";
+                        TxtGameDetectedSystem.Text = $"🎮 检测到：PlayStation 3{titleInfo}{titleId}（{encStatus}）";
                         if (bdInfo.IsEncrypted)
                         {
                             TxtGameDetectedSystem.Text += "\n⚠ PS3 ISO is encrypted — decryption is recommended before burning";
@@ -1252,7 +1210,7 @@ public partial class GameWizardView : UserControl
         }
         else
         {
-            TxtGameDetectedSystem.Text = "⚠ Could not auto-detect gaming system — please select manually.";
+            TxtGameDetectedSystem.Text = "⚠ 无法自动检测游戏机 — 请手动选择。";
         }
     }
 
@@ -1276,7 +1234,7 @@ public partial class GameWizardView : UserControl
         }
         catch { }
 
-        TxtGameFolderInfo.Text = $"{fileCount} files, {FormatHelper.FormatBytes(size)}";
+        TxtGameFolderInfo.Text = $"{fileCount} 个文件，{FormatHelper.FormatBytes(size)}";
         TxtGameFolderSize.Text = FormatHelper.FormatBytes(size);
     }
 
@@ -1306,7 +1264,7 @@ public partial class GameWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = isDkey ? "Select .dkey File" : "Select IRD File",
+            Title = isDkey ? "选择 .dkey 文件" : "选择 IRD 文件",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
@@ -1330,12 +1288,12 @@ public partial class GameWizardView : UserControl
         byte[]? key = GetPs3DiscKey();
         if (key != null && key.Length == 16)
         {
-            TxtPs3KeyStatus.Text = "✅ Valid disc key loaded.";
+            TxtPs3KeyStatus.Text = "✅ 已加载有效的光盘密钥。";
             TxtPs3KeyStatus.Foreground = Avalonia.Media.Brush.Parse("#4CAF50");
         }
         else
         {
-            TxtPs3KeyStatus.Text = "❌ Invalid or missing disc key.";
+            TxtPs3KeyStatus.Text = "❌ 光盘密钥无效或缺失。";
             TxtPs3KeyStatus.Foreground = Avalonia.Media.Brush.Parse("#FF6B6B");
         }
     }
@@ -1412,10 +1370,9 @@ public partial class GameWizardView : UserControl
 
     private void AppendLogCore(string line)
     {
-        var timestampedLine = $"[{DateTime.Now:HH:mm:ss.fff}] {line}";
         TxtGameExecLog.Text = string.IsNullOrEmpty(TxtGameExecLog.Text)
-            ? timestampedLine
-            : TxtGameExecLog.Text + Environment.NewLine + timestampedLine;
+            ? line
+            : TxtGameExecLog.Text + Environment.NewLine + line;
 
         // Trim log to prevent unbounded memory growth (keep last ~20 KB)
         var text = TxtGameExecLog.Text;

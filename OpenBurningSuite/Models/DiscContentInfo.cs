@@ -128,7 +128,7 @@ public class DiscContentInfo
     public DiscContentType ContentType { get; set; } = DiscContentType.Unknown;
 
     /// <summary>Human-readable content type label (e.g. "🎬 DVD-Video", "🎵 Audio CD").</summary>
-    public string ContentLabel { get; set; } = "Unknown";
+    public string ContentLabel { get; set; } = "未知";
 
     /// <summary>Volume label from the disc filesystem (ISO 9660 / Joliet / UDF).</summary>
     public string VolumeLabel { get; set; } = string.Empty;
@@ -206,15 +206,15 @@ public class DiscContentInfo
             var parts = new List<string>();
             parts.Add(ContentLabel);
             if (!string.IsNullOrEmpty(VolumeLabel))
-                parts.Add($"Volume: {VolumeLabel}");
+                parts.Add($"卷标：{VolumeLabel}");
             if (!string.IsNullOrEmpty(GameTitle))
-                parts.Add($"Title: {GameTitle}");
+                parts.Add($"标题：{GameTitle}");
             if (!string.IsNullOrEmpty(GameTitleId))
-                parts.Add($"ID: {GameTitleId}");
+                parts.Add($"ID：{GameTitleId}");
             if (AudioTrackCount > 0 && DataTrackCount > 0)
-                parts.Add($"{AudioTrackCount} audio + {DataTrackCount} data tracks");
+                parts.Add($"{AudioTrackCount} 条音频 + {DataTrackCount} 条数据轨道");
             else if (AudioTrackCount > 0)
-                parts.Add($"{AudioTrackCount} audio tracks");
+                parts.Add($"{AudioTrackCount} 条音轨");
             return string.Join(" | ", parts);
         }
     }

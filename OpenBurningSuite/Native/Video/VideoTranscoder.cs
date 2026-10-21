@@ -136,8 +136,8 @@ public static class VideoTranscoder
     public static async Task<VideoInfo> ProbeAsync(string videoPath, CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is not installed. Please install FFmpeg for video transcoding support. " +
-            "Visit https://ffmpeg.org/download.html for installation instructions.");
+            "未安装 FFmpeg。请安装 FFmpeg 以支持视频转码。" +
+            "安装说明请访问 https://ffmpeg.org/download.html。");
 
         var ffprobe = Path.Combine(Path.GetDirectoryName(ffmpeg) ?? ".",
             RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "ffprobe.exe" : "ffprobe");
@@ -178,10 +178,10 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for DVD video transcoding.");
+            "DVD 视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         bool isNtsc = videoStandard.Equals("NTSC", StringComparison.OrdinalIgnoreCase);
         string resolution = isNtsc ? "720:480" : "720:576";
@@ -216,7 +216,7 @@ public static class VideoTranscoder
 
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding to DVD format ({videoStandard})...",
+            StatusMessage = $"正在转码为 DVD 格式（{videoStandard}）…",
             LogLine = $"[Info] Transcoding: {Path.GetFileName(inputPath)} → DVD MPEG-2 PS"
         });
 
@@ -256,10 +256,10 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for Blu-ray video transcoding.");
+            "蓝光视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         // Parse resolution from format
         var (width, height, isInterlaced) = ParseVideoFormat(videoFormat);
@@ -299,7 +299,7 @@ public static class VideoTranscoder
 
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding to Blu-ray format ({videoFormat} {videoCodec})...",
+            StatusMessage = $"正在转码为蓝光格式（{videoFormat} {videoCodec}）…",
             LogLine = $"[Info] Transcoding: {Path.GetFileName(inputPath)} → Blu-ray M2TS ({videoCodec} {videoFormat})"
         });
 
@@ -324,7 +324,7 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for audio transcoding.");
+            "音频转码需要 FFmpeg。");
 
         string audioParams = codec.ToUpperInvariant() switch
         {
@@ -352,7 +352,7 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for audio transcoding.");
+            "音频转码需要 FFmpeg。");
 
         string audioParams = codec.ToUpperInvariant() switch
         {
@@ -380,7 +380,7 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for subtitle conversion.");
+            "字幕转换需要 FFmpeg。");
 
         bool isNtsc = videoStandard.Equals("NTSC", StringComparison.OrdinalIgnoreCase);
         string resolution = isNtsc ? "720x480" : "720x576";
@@ -403,7 +403,7 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for subtitle conversion.");
+            "字幕转换需要 FFmpeg。");
 
         var (width, height, _) = ParseVideoFormat(videoFormat);
 
@@ -448,10 +448,10 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for Blu-ray 3D video transcoding.");
+            "蓝光 3D 视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         var (width, height, isInterlaced) = ParseVideoFormat(videoFormat);
         int vBitrate = videoBitrateKbps > 0
@@ -506,7 +506,7 @@ public static class VideoTranscoder
                 break;
 
             default:
-                throw new ArgumentException($"Unsupported 3D mode: '{mode3D}'. Supported: MVC, SideBySide, TopBottom.");
+                throw new ArgumentException($"不支持的 3D 模式：“{mode3D}”。支持：MVC、SideBySide、TopBottom。");
         }
 
         sb.Append($"-an -f mpegts -y \"{outputPath}\"");
@@ -515,7 +515,7 @@ public static class VideoTranscoder
 
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding 3D {modeUpper} to Blu-ray format ({videoFormat})...",
+            StatusMessage = $"正在将 3D {modeUpper} 转码为蓝光格式（{videoFormat}）…",
             LogLine = $"[Info] 3D Transcoding: {Path.GetFileName(inputPath)} → Blu-ray 3D M2TS ({modeUpper})"
         });
 
@@ -559,24 +559,24 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for BDAV video transcoding.");
+            "BDAV 视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         // Validate BDAV-allowed audio codecs per BDA specification Part 3-2
         var allowedAudioCodecs = new[] { "AC3", "EAC3", "DTS", "LPCM" };
         var normalizedAudioCodec = audioCodec.ToUpperInvariant();
         if (Array.IndexOf(allowedAudioCodecs, normalizedAudioCodec) < 0)
             throw new ArgumentException(
-                $"Audio codec '{audioCodec}' is not supported for BDAV. Allowed: AC3, EAC3, DTS, LPCM.");
+                $"BDAV 不支持音频编解码器“{audioCodec}”。允许：AC3、EAC3、DTS、LPCM。");
 
         // Validate BDAV-allowed video codecs
         var allowedVideoCodecs = new[] { "H264", "MPEG2", "VC1" };
         var normalizedVideoCodec = videoCodec.ToUpperInvariant();
         if (Array.IndexOf(allowedVideoCodecs, normalizedVideoCodec) < 0)
             throw new ArgumentException(
-                $"Video codec '{videoCodec}' is not supported for BDAV. Allowed: H264, MPEG2, VC1.");
+                $"BDAV 不支持视频编解码器“{videoCodec}”。允许：H264、MPEG2、VC1。");
 
         const int bdavMaxBitrateKbps = 28000;
         var (width, height, isInterlaced) = ParseVideoFormat(videoFormat);
@@ -615,7 +615,7 @@ public static class VideoTranscoder
 
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding to BDAV format ({videoFormat} {videoCodec})...",
+            StatusMessage = $"正在转码为 BDAV 格式（{videoFormat} {videoCodec}）…",
             LogLine = $"[Info] Transcoding: {Path.GetFileName(inputPath)} → BDAV M2TS ({videoCodec} {videoFormat})"
         });
 
@@ -705,15 +705,15 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for video transcoding.");
+            "视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         var containerType = FormatHelper.GetContainerType(Path.GetExtension(inputPath));
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding {containerType} to DVD format ({videoStandard})...",
+            StatusMessage = $"正在将 {containerType} 转码为 DVD 格式（{videoStandard}）…",
             LogLine = $"[Info] Container: {containerType} → DVD MPEG-2 PS ({Path.GetFileName(inputPath)})"
         });
 
@@ -787,15 +787,15 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for Blu-ray video transcoding.");
+            "蓝光视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         var containerType = FormatHelper.GetContainerType(Path.GetExtension(inputPath));
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding {containerType} to Blu-ray format ({videoFormat} {videoCodec})...",
+            StatusMessage = $"正在将 {containerType} 转码为蓝光格式（{videoFormat} {videoCodec}）…",
             LogLine = $"[Info] Container: {containerType} → Blu-ray M2TS ({Path.GetFileName(inputPath)})"
         });
 
@@ -863,28 +863,28 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for BDAV video transcoding.");
+            "BDAV 视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         // Validate BDAV-allowed codecs
         var allowedAudioCodecs = new[] { "AC3", "EAC3", "DTS", "LPCM" };
         var normalizedAudioCodec = audioCodec.ToUpperInvariant();
         if (Array.IndexOf(allowedAudioCodecs, normalizedAudioCodec) < 0)
             throw new ArgumentException(
-                $"Audio codec '{audioCodec}' is not supported for BDAV. Allowed: AC3, EAC3, DTS, LPCM.");
+                $"BDAV 不支持音频编解码器“{audioCodec}”。允许：AC3、EAC3、DTS、LPCM。");
 
         var allowedVideoCodecs = new[] { "H264", "MPEG2", "VC1" };
         var normalizedVideoCodec = videoCodec.ToUpperInvariant();
         if (Array.IndexOf(allowedVideoCodecs, normalizedVideoCodec) < 0)
             throw new ArgumentException(
-                $"Video codec '{videoCodec}' is not supported for BDAV. Allowed: H264, MPEG2, VC1.");
+                $"BDAV 不支持视频编解码器“{videoCodec}”。允许：H264、MPEG2、VC1。");
 
         var containerType = FormatHelper.GetContainerType(Path.GetExtension(inputPath));
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding {containerType} to BDAV format ({videoFormat} {videoCodec})...",
+            StatusMessage = $"正在将 {containerType} 转码为 BDAV 格式（{videoFormat} {videoCodec}）…",
             LogLine = $"[Info] Container: {containerType} → BDAV M2TS ({Path.GetFileName(inputPath)})"
         });
 
@@ -948,15 +948,15 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for Blu-ray 3D video transcoding.");
+            "蓝光 3D 视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         var containerType = FormatHelper.GetContainerType(Path.GetExtension(inputPath));
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding {containerType} to Blu-ray 3D ({mode3D} {videoFormat})...",
+            StatusMessage = $"正在将 {containerType} 转码为蓝光 3D（{mode3D} {videoFormat}）…",
             LogLine = $"[Info] Container: {containerType} → Blu-ray 3D M2TS ({mode3D}) ({Path.GetFileName(inputPath)})"
         });
 
@@ -1008,7 +1008,7 @@ public static class VideoTranscoder
                 break;
 
             default:
-                throw new ArgumentException($"Unsupported 3D mode: '{mode3D}'. Supported: MVC, SideBySide, TopBottom.");
+                throw new ArgumentException($"不支持的 3D 模式：“{mode3D}”。支持：MVC、SideBySide、TopBottom。");
         }
 
         sb.Append("-map 0:v:0 ");
@@ -1050,15 +1050,15 @@ public static class VideoTranscoder
         CancellationToken ct = default)
     {
         var ffmpeg = FindFfmpeg() ?? throw new InvalidOperationException(
-            "FFmpeg is required for UHD Blu-ray video transcoding.");
+            "UHD 蓝光视频转码需要 FFmpeg。");
 
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input video file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入视频文件：{inputPath}");
 
         var containerType = FormatHelper.GetContainerType(Path.GetExtension(inputPath));
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Transcoding {containerType} to UHD Blu-ray ({videoFormat} HEVC {hdrMode})...",
+            StatusMessage = $"正在将 {containerType} 转码为 UHD 蓝光（{videoFormat} HEVC {hdrMode}）…",
             LogLine = $"[Info] Container: {containerType} → UHD BD M2TS (HEVC Main10, {hdrMode}) ({Path.GetFileName(inputPath)})"
         });
 
@@ -1271,8 +1271,8 @@ public static class VideoTranscoder
             "576I" => (720, 576, true),
             "480P" => (720, 480, false),
             "480I" => (720, 480, true),
-            _ => throw new ArgumentException($"Unsupported video format: '{format}'. " +
-                "Supported formats: 2160p, 1080p, 1080i, 720p, 576p, 576i, 480p, 480i.")
+            _ => throw new ArgumentException($"不支持的视频格式：“{format}”。" +
+                "支持的格式：2160p、1080p、1080i、720p、576p、576i、480p、480i。")
         };
     }
 
@@ -1375,7 +1375,7 @@ public static class VideoTranscoder
                 ? string.Join("\n", lines[^5..])
                 : errorOutput;
             throw new InvalidOperationException(
-                $"FFmpeg exited with code {process.ExitCode}:\n{lastLines}");
+                $"FFmpeg 退出码为 {process.ExitCode}：\n{lastLines}");
         }
     }
 

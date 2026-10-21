@@ -82,7 +82,7 @@ public class VerifyService
         IProgress<VerifyProgress> progress,
         CancellationToken ct)
     {
-        progress.Report(new VerifyProgress { StatusMessage = "Reading disc for verification...", LogLine = $"Device: {job.DevicePath}" });
+        progress.Report(new VerifyProgress { StatusMessage = "正在读取光盘以进行校验…", LogLine = $"Device: {job.DevicePath}" });
 
         // Validate device path across platforms:
         // Linux: /dev/sr0, /dev/cdrom, etc.
@@ -180,7 +180,7 @@ public class VerifyService
                         CurrentLba = verified,
                         Elapsed = elapsed,
                         Remaining = remaining,
-                        StatusMessage = $"Verified {verified} sectors ({totalBytes / 1_048_576} MB)...",
+                        StatusMessage = $"已校验 {verified} 个扇区（{totalBytes / 1_048_576} MB）…",
                         // Only log every 10,000 sectors to keep log clean
                         LogLine = verified % 10_000 == 0
                             ? $"OK: {goodSectors} | Bad: {badSectors}"
@@ -197,7 +197,7 @@ public class VerifyService
             progress.Report(new VerifyProgress
             {
                 PercentComplete = 100,
-                StatusMessage = passed ? "Verification complete." : $"Verification complete — {badSectors} bad sector(s).",
+                StatusMessage = passed ? "校验完成。" : $"校验完成 — {badSectors} 个坏扇区。",
                 LogLine = $"{job.ChecksumType}: {checksum}"
             });
 
@@ -237,7 +237,6 @@ public class VerifyService
         CancellationToken ct)
     {
         const int sectorSize = 2048;
-        await Task.CompletedTask;
         const int sectorsPerRead = 32;
         using var hasher = CreateHasher(job.ChecksumType);
         long goodSectors = 0;
@@ -250,9 +249,9 @@ public class VerifyService
         // Wait for drive to become ready — drives need time to spin up after tray
         // close/load (typically 2-15 seconds). A single TestUnitReady check fails
         // if the media was just inserted or the tray was recently closed.
-        progress.Report(new VerifyProgress { StatusMessage = "Waiting for drive to become ready..." });
+        progress.Report(new VerifyProgress { StatusMessage = "正在等待光驱就绪…" });
         if (!drive.WaitForDriveReady())
-            return new VerifyResult { Passed = false, ErrorSummary = "Drive is not ready. Please ensure a disc is inserted and the tray is closed." };
+            return new VerifyResult { Passed = false, ErrorSummary = "光驱未就绪。请确认已插入光盘且托盘已关闭。" };
 
         // Lock the tray during verification to prevent accidental ejection
         drive.PreventMediumRemoval(true);
@@ -367,7 +366,7 @@ public class VerifyService
                     CurrentLba = currentLba,
                     Elapsed = elapsed,
                     Remaining = remaining,
-                    StatusMessage = $"Verified {verified} sectors ({totalBytes / 1_048_576} MB)...",
+                    StatusMessage = $"已校验 {verified} 个扇区（{totalBytes / 1_048_576} MB）…",
                     // Only log every 10,000 sectors to keep log clean
                     LogLine = currentLba % 10_000 < (uint)sectorsPerRead || currentLba >= totalSectorsEstimate
                         ? $"OK: {goodSectors} | Bad: {badSectors}"
@@ -384,7 +383,7 @@ public class VerifyService
         progress.Report(new VerifyProgress
         {
             PercentComplete = 100,
-            StatusMessage = passed ? "Verification complete." : $"Verification complete — {badSectors} bad sector(s).",
+            StatusMessage = passed ? "校验完成。" : $"校验完成 — {badSectors} 个坏扇区。",
             LogLine = $"{job.ChecksumType}: {checksum}"
         });
 
@@ -465,7 +464,7 @@ public class VerifyService
                         CurrentLba = sectors,
                         Elapsed = elapsed,
                         Remaining = remaining,
-                        StatusMessage = $"Read {totalBytes / 1_048_576} MB...",
+                        StatusMessage = $"已读取 {totalBytes / 1_048_576} MB…",
                         // Only log every ~10 MB to keep log clean
                         LogLine = totalBytes % (10 * 1_048_576) < read
                             ? $"Sectors: {sectors}"
@@ -481,7 +480,7 @@ public class VerifyService
             progress.Report(new VerifyProgress
             {
                 PercentComplete = 100,
-                StatusMessage = "Verification complete.",
+                StatusMessage = "校验完成。",
                 LogLine = $"{job.ChecksumType}: {checksum}"
             });
 
@@ -520,7 +519,7 @@ public class VerifyService
     {
         progress.Report(new VerifyProgress
         {
-            StatusMessage = "Comparing disc to image...",
+            StatusMessage = "正在将光盘与镜像对比…",
             LogLine = $"Disc: {job.DevicePath} | Image: {job.ImagePath}"
         });
 
@@ -753,7 +752,7 @@ public class VerifyService
             {
                 progress.Report(new VerifyProgress
                 {
-                    StatusMessage = "Raw sector image detected — verifying data and audio tracks...",
+                    StatusMessage = "检测到原始扇区镜像 — 正在校验数据轨道和音轨…",
                     LogLine = "[Info] BIN image uses 2352-byte sectors. Reading raw sectors from disc via " +
                               "READ CD for data tracks (extracting 2048-byte user data) and audio tracks " +
                               "(full 2352-byte sectors) for complete verification."
@@ -763,7 +762,7 @@ public class VerifyService
             {
                 progress.Report(new VerifyProgress
                 {
-                    StatusMessage = "Raw sector image detected — sector-size-aware comparison...",
+                    StatusMessage = "检测到原始扇区镜像 — 正在按扇区大小进行比对…",
                     LogLine = "[Info] BIN image uses 2352-byte sectors. Reading raw sectors from disc via " +
                               "READ CD and extracting user data (2048 bytes) from each 2352-byte sector " +
                               "for consistent comparison."
@@ -886,7 +885,7 @@ public class VerifyService
         progress.Report(new VerifyProgress
         {
             PercentComplete = 100,
-            StatusMessage = match ? "MATCH: Disc and image are identical." : "MISMATCH: Disc and image differ!",
+            StatusMessage = match ? "匹配：光盘与镜像完全一致。" : "不匹配：光盘与镜像存在差异！",
             LogLine = $"Disc  {job.ChecksumType}: {discChecksumStd}\nImage {job.ChecksumType}: {imageChecksumStd}"
         });
 
@@ -986,7 +985,7 @@ public class VerifyService
 
         progress.Report(new VerifyProgress
         {
-            StatusMessage = $"Computing {job.ChecksumType} for {Path.GetFileName(imagePath)}...",
+            StatusMessage = $"正在为 {Path.GetFileName(imagePath)} 计算 {job.ChecksumType}…",
             LogLine = $"File: {imagePath}"
         });
 
@@ -1133,7 +1132,6 @@ public class VerifyService
         IProgress<VerifyProgress> progress, CancellationToken ct,
         int pctStart, int pctEnd)
     {
-        await Task.CompletedTask;
         const int sectorSize = 2048;
         const int sectorsPerRead = 32;
         using var hasher = CreateHasher(hashType);
@@ -1257,7 +1255,7 @@ public class VerifyService
                     TotalSectors = totalSectors,
                     Elapsed = elapsed,
                     Remaining = remaining,
-                    StatusMessage = $"Hashing disc... {totalBytes / 1_048_576} MB",
+                    StatusMessage = $"正在计算光盘哈希…{totalBytes / 1_048_576} MB",
                     // Only log every 10,000 sectors to keep log clean
                     LogLine = currentLba % 10_000 < (uint)sectorsPerRead || currentLba >= totalSectors
                         ? $"Read {totalBytes / 1_048_576} MB"
@@ -1440,7 +1438,7 @@ public class VerifyService
                         TotalSectors = totalDataSectors,
                         Elapsed = elapsed,
                         Remaining = remaining,
-                        StatusMessage = $"Hashing disc data tracks... {totalBytes / 1_048_576} MB",
+                        StatusMessage = $"正在计算光盘数据轨道哈希…{totalBytes / 1_048_576} MB",
                         LogLine = sectorsRead % 10_000 < (uint)sectorsPerRead || sectorsRead >= totalDataSectors
                             ? $"Read {totalBytes / 1_048_576} MB"
                             : null
@@ -2087,7 +2085,7 @@ public class VerifyService
                         TotalSectors = totalSectorsToRead,
                         Elapsed = elapsed,
                         Remaining = remaining,
-                        StatusMessage = $"Reading disc raw sectors... {totalUserBytes / 1_048_576} MB",
+                        StatusMessage = $"正在读取光盘原始扇区…{totalUserBytes / 1_048_576} MB",
                         LogLine = sectorsRead % 10_000 < (uint)sectorsPerRead || sectorsRead >= totalSectorsToRead
                             ? $"Read {totalUserBytes / 1_048_576} MB"
                             : null
@@ -2271,7 +2269,7 @@ public class VerifyService
                         PercentComplete = pct,
                         Elapsed = elapsed,
                         Remaining = remaining,
-                        StatusMessage = $"Hashing... {read / 1_048_576} MB",
+                        StatusMessage = $"正在计算哈希…{read / 1_048_576} MB",
                         LogLine = read % (10 * 1_048_576) < n
                             ? $"Read {read / 1_048_576} MB"
                             : null
@@ -2315,7 +2313,7 @@ public class VerifyService
                 PercentComplete = pct,
                 Elapsed = elapsed,
                 Remaining = remaining,
-                StatusMessage = $"Hashing {Path.GetFileName(filePath)}... {read / 1_048_576} MB",
+                StatusMessage = $"正在计算 {Path.GetFileName(filePath)} 的哈希…{read / 1_048_576} MB",
                 LogLine = read % (10 * 1_048_576) < n
                     ? $"Read {read / 1_048_576} MB"
                     : null
@@ -2371,7 +2369,7 @@ public class VerifyService
                     PercentComplete = pct,
                     Elapsed = elapsed,
                     Remaining = remaining,
-                    StatusMessage = $"Extracting user data from raw image... {read / 1_048_576} MB",
+                    StatusMessage = $"正在从原始镜像中提取用户数据…{read / 1_048_576} MB",
                     LogLine = $"Processed {read / 1_048_576} MB"
                 });
             }
@@ -2527,7 +2525,7 @@ public class VerifyService
                         PercentComplete = pct,
                         Elapsed = elapsed,
                         Remaining = remaining,
-                        StatusMessage = $"Hashing track files... {bytesRead / 1_048_576} MB",
+                        StatusMessage = $"正在计算轨道文件哈希…{bytesRead / 1_048_576} MB",
                         LogLine = $"Read {bytesRead / 1_048_576} MB"
                     });
                 }
@@ -2854,7 +2852,7 @@ public class VerifyService
         "SHA256" => SHA256.Create(),
         "SHA512" => SHA512.Create(),
         "CRC32"  => new Crc32(),
-        _        => throw new ArgumentException($"Unsupported checksum type: '{upper}'. Supported: MD5, SHA1, SHA256, SHA512, CRC32.")
+        _        => throw new ArgumentException($"不支持的校验和类型：“{upper}”。支持：MD5、SHA1、SHA256、SHA512、CRC32。")
     };
 }
 

@@ -230,9 +230,9 @@ public partial class AudioWizardView : UserControl
         PrgExec.Value = 0;
         TxtExecPercent.Text = "0%";
         TxtExecSpeed.Text = string.Empty;
-        TxtExecStatus.Text = "Preparing...";
+        TxtExecStatus.Text = "正在准备…";
         TxtExecLog.Text = string.Empty;
-        TxtStep4Title.Text = "Executing...";
+        TxtStep4Title.Text = "正在执行…";
 
         // Reset disc visualization for a fresh operation
         DiscVizBorder.IsVisible = false;
@@ -267,13 +267,13 @@ public partial class AudioWizardView : UserControl
                     break;
             }
 
-            TxtStep4Title.Text = "✅ Complete!";
-            TxtExecStatus.Text = "Operation completed successfully.";
+            TxtStep4Title.Text = "✅ 完成！";
+            TxtExecStatus.Text = "操作已成功完成。";
         }
         catch (OperationCanceledException)
         {
-            TxtStep4Title.Text = "⏹ Cancelled";
-            TxtExecStatus.Text = "Operation was cancelled by user.";
+            TxtStep4Title.Text = "⏹ 已取消";
+            TxtExecStatus.Text = "操作已被用户取消。";
             AppendLog("[Info] Operation cancelled.");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -281,8 +281,8 @@ public partial class AudioWizardView : UserControl
         }
         catch (Exception ex)
         {
-            TxtStep4Title.Text = "❌ Failed";
-            TxtExecStatus.Text = $"Error: {ex.Message}";
+            TxtStep4Title.Text = "❌ 失败";
+            TxtExecStatus.Text = $"错误：{ex.Message}";
             AppendLog($"[Error] {ex.Message}");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -311,40 +311,40 @@ public partial class AudioWizardView : UserControl
         {
             case WizardMode.CreateAudioCd:
                 if (_createTracks.Count == 0)
-                    return "Please add at least one audio track.";
+                    return "请至少添加一条音轨。";
                 if (_createTracks.Count > 99)
-                    return "Audio CDs support a maximum of 99 tracks.";
+                    return "音频 CD 最多支持 99 条音轨。";
                 // Red Book audio CD maximum is ~80 minutes (99 min with overburn, but 80 min is safe)
                 var totalDuration = TimeSpan.FromTicks(_createTracks.Sum(t => t.Duration.Ticks));
                 if (totalDuration.TotalMinutes > 80)
                     return $"Total duration ({totalDuration:mm\\:ss}) exceeds 80-minute CD capacity. Remove some tracks or use shorter files.";
                 if (string.IsNullOrWhiteSpace(TxtCreateOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtCreateOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
                         return $"Output directory does not exist: {outDir}";
                 }
                 if (ChkCreateBurnImage.IsChecked == true && CmbCreateDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case WizardMode.CopyMusic:
                 if (_copyFiles.Count == 0)
-                    return "Please add at least one music file.";
+                    return "请至少添加一个音乐文件。";
                 if (CmbCopyDrive.SelectedItem == null)
-                    return "Please select a target drive.";
+                    return "请选择目标光驱。";
                 return null;
 
             case WizardMode.RipAudioCd:
                 if (CmbRipDrive.SelectedItem == null)
-                    return "Please select a source drive containing an audio CD.";
+                    return "请选择装有音频 CD 的源光驱。";
                 if (string.IsNullOrWhiteSpace(TxtRipOutputFolder.Text))
-                    return "Please specify an output folder for the ripped tracks.";
+                    return "请指定抓取音轨的输出文件夹。";
                 return null;
 
             default:
-                return "Please choose a task first.";
+                return "请先选择一个任务。";
         }
     }
 
@@ -358,47 +358,47 @@ public partial class AudioWizardView : UserControl
         switch (_mode)
         {
             case WizardMode.CreateAudioCd:
-                AddSummaryLine("🎵 Task", "Create Audio CD (Red Book)");
-                AddSummaryLine("📀 Tracks", $"{_createTracks.Count} track(s), total {GetTotalDuration()}");
+                AddSummaryLine("🎵 任务", "创建音频 CD（红皮书）");
+                AddSummaryLine("📀 音轨", $"{_createTracks.Count} 条音轨，总时长 {GetTotalDuration()}");
                 if (!string.IsNullOrWhiteSpace(TxtCdAlbum.Text))
-                    AddSummaryLine("💿 Album", TxtCdAlbum.Text!);
+                    AddSummaryLine("💿 专辑", TxtCdAlbum.Text!);
                 if (!string.IsNullOrWhiteSpace(TxtCdArtist.Text))
-                    AddSummaryLine("🎤 Artist", TxtCdArtist.Text!);
-                AddSummaryLine("💾 Output Image", TxtCreateOutputPath.Text ?? "(not set)");
+                    AddSummaryLine("🎤 艺术家", TxtCdArtist.Text!);
+                AddSummaryLine("💾 输出镜像", TxtCreateOutputPath.Text ?? "（未设置）");
                 if (ChkCreateBurnImage.IsChecked == true)
                 {
                     var drive = CmbCreateDrive.SelectedItem as DiscDrive;
-                    AddSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddSummaryLine("⚡ Write Speed", GetSelectedText(CmbCreateSpeed, "Auto"));
-                    AddSummaryLine("📝 Write Mode", GetSelectedText(CmbCreateWriteMode, "DAO"));
-                    AddSummaryLine("📦 Copies", ((int)(NumCreateCopies.Value ?? 1)).ToString());
+                    AddSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddSummaryLine("⚡ 写入速度", GetSelectedText(CmbCreateSpeed, "Auto"));
+                    AddSummaryLine("📝 写入模式", GetSelectedText(CmbCreateWriteMode, "DAO"));
+                    AddSummaryLine("📦 份数", ((int)(NumCreateCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
 
             case WizardMode.CopyMusic:
-                AddSummaryLine("🎶 Task", "Copy Music Files to Disc");
-                AddSummaryLine("📁 Files", $"{_copyFiles.Count} file(s), {GetTotalCopySize()}");
+                AddSummaryLine("🎶 任务", "将音乐文件复制到光盘");
+                AddSummaryLine("📁 文件", $"{_copyFiles.Count} 个文件，{GetTotalCopySize()}");
                 var copyDrive = CmbCopyDrive.SelectedItem as DiscDrive;
-                AddSummaryLine("💿 Target Drive", copyDrive?.DisplayName ?? "(none)");
-                AddSummaryLine("📀 Disc Type", GetSelectedText(CmbCopyDiscType, "CD"));
-                AddSummaryLine("📂 Filesystem", GetSelectedText(CmbCopyFilesystem, "ISO 9660 + Joliet"));
-                AddSummaryLine("⚡ Write Speed", GetSelectedText(CmbCopySpeed, "Auto"));
-                AddSummaryLine("🏷 Volume Label", string.IsNullOrWhiteSpace(TxtCopyVolumeLabel.Text) ? "MUSIC_DISC" : TxtCopyVolumeLabel.Text!);
+                AddSummaryLine("💿 目标光驱", copyDrive?.DisplayName ?? "（无）");
+                AddSummaryLine("📀 光盘类型", GetSelectedText(CmbCopyDiscType, "CD"));
+                AddSummaryLine("📂 文件系统", GetSelectedText(CmbCopyFilesystem, "ISO 9660 + Joliet"));
+                AddSummaryLine("⚡ 写入速度", GetSelectedText(CmbCopySpeed, "Auto"));
+                AddSummaryLine("🏷 卷标", string.IsNullOrWhiteSpace(TxtCopyVolumeLabel.Text) ? "MUSIC_DISC" : TxtCopyVolumeLabel.Text!);
                 break;
 
             case WizardMode.RipAudioCd:
-                AddSummaryLine("🎧 Task", "Rip Audio CD");
+                AddSummaryLine("🎧 任务", "抓取音频 CD");
                 var ripDrive = CmbRipDrive.SelectedItem as DiscDrive;
-                AddSummaryLine("💿 Source Drive", ripDrive?.DisplayName ?? "(none)");
-                AddSummaryLine("🎵 Output Format", GetSelectedText(CmbRipFormat, "WAV"));
-                AddSummaryLine("📁 Output Folder", TxtRipOutputFolder.Text ?? "(not set)");
-                AddSummaryLine("⚡ Read Speed", GetSelectedText(CmbRipSpeed, "Max"));
-                AddSummaryLine("🛡 Audio Paranoia", ChkRipParanoia.IsChecked == true ? "Enabled" : "Disabled");
-                AddSummaryLine("🔧 Jitter Correction", ChkRipJitter.IsChecked == true ? "Enabled" : "Disabled");
+                AddSummaryLine("💿 源光驱", ripDrive?.DisplayName ?? "（无）");
+                AddSummaryLine("🎵 输出格式", GetSelectedText(CmbRipFormat, "WAV"));
+                AddSummaryLine("📁 输出文件夹", TxtRipOutputFolder.Text ?? "（未设置）");
+                AddSummaryLine("⚡ 读取速度", GetSelectedText(CmbRipSpeed, "Max"));
+                AddSummaryLine("🛡 音频精确抓取", ChkRipParanoia.IsChecked == true ? "已启用" : "已禁用");
+                AddSummaryLine("🔧 抖动校正", ChkRipJitter.IsChecked == true ? "已启用" : "已禁用");
                 break;
         }
     }
@@ -424,54 +424,12 @@ public partial class AudioWizardView : UserControl
         SummaryContent.Children.Add(sp);
     }
 
-    private void AddSummaryLine(string iconKey, string label, string value)
-    {
-        var sp = new StackPanel { Orientation = Avalonia.Layout.Orientation.Horizontal, Spacing = 8 };
-
-        if (!string.IsNullOrEmpty(iconKey))
-        {
-            var uri = Helpers.IconHelper.GetUri(iconKey, 16);
-            if (uri != null)
-            {
-                try
-                {
-                    var bitmap = new Avalonia.Media.Imaging.Bitmap(Avalonia.Platform.AssetLoader.Open(new Uri(uri)));
-                    sp.Children.Add(new Image
-                    {
-                        Source = bitmap,
-                        Width = 16,
-                        Height = 16,
-                        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
-                    });
-                }
-                catch { }
-            }
-        }
-
-        sp.Children.Add(new TextBlock
-        {
-            Text = label + ":",
-            Foreground = Avalonia.Media.Brush.Parse("#8EAFC8"),
-            FontSize = 12,
-            FontWeight = Avalonia.Media.FontWeight.SemiBold,
-            Width = 160
-        });
-        sp.Children.Add(new TextBlock
-        {
-            Text = value,
-            Foreground = Avalonia.Media.Brush.Parse("#E8F0FE"),
-            FontSize = 12,
-            TextWrapping = Avalonia.Media.TextWrapping.Wrap
-        });
-        SummaryContent.Children.Add(sp);
-    }
-
     // -----------------------------------------------------------------------
     // EXECUTE: Create Audio CD
     // -----------------------------------------------------------------------
     private async Task ExecuteCreateAudioCdAsync(CancellationToken ct)
     {
-        TxtStep4Title.Text = "🔥 Creating Audio CD...";
+        TxtStep4Title.Text = "🔥 正在创建音频 CD…";
 
         // Build the BuildJob
         var tracks = new List<AudioTrack>();
@@ -516,9 +474,9 @@ public partial class AudioWizardView : UserControl
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtExecStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.LogLine))
                 AppendLog(p.LogLine);
         });
@@ -555,7 +513,7 @@ public partial class AudioWizardView : UserControl
             };
 
             AppendLog($"[Info] Burning to {drive.DisplayName}...");
-            TxtExecStatus.Text = "Burning audio CD...";
+            TxtExecStatus.Text = "正在刻录音频 CD…";
 
             var burnService = new BurnService();
             var burnProgress = new Progress<BurnProgress>(p =>
@@ -565,9 +523,9 @@ public partial class AudioWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -616,11 +574,11 @@ public partial class AudioWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteCopyMusicAsync(CancellationToken ct)
     {
-        TxtStep4Title.Text = "🎶 Copying Music to Disc...";
+        TxtStep4Title.Text = "🎶 正在将音乐复制到光盘…";
 
         var drive = CmbCopyDrive.SelectedItem as DiscDrive;
         if (drive == null)
-            throw new InvalidOperationException("No target drive selected.");
+            throw new InvalidOperationException("未选择目标光驱。");
 
         // Phase 1: Create a temporary folder with the music files (symlinks or copies)
         var tempDir = Path.Combine(Path.GetTempPath(), $"OpenBurningSuite_MusicDisc_{Guid.NewGuid().ToString("N")[..8]}");
@@ -629,7 +587,7 @@ public partial class AudioWizardView : UserControl
         try
         {
             AppendLog("[Info] Preparing music files...");
-            TxtExecStatus.Text = "Preparing files...";
+            TxtExecStatus.Text = "正在准备文件…";
 
             // Copy/link files to temp dir
             for (int i = 0; i < _copyFiles.Count; i++)
@@ -652,7 +610,7 @@ public partial class AudioWizardView : UserControl
 
             // Phase 2: Build ISO image
             AppendLog("[Info] Building data disc image...");
-            TxtExecStatus.Text = "Building disc image...";
+            TxtExecStatus.Text = "正在构建光盘镜像…";
 
             var volumeLabel = string.IsNullOrWhiteSpace(TxtCopyVolumeLabel.Text)
                 ? "MUSIC_DISC"
@@ -690,7 +648,7 @@ public partial class AudioWizardView : UserControl
 
             // Phase 3: Burn to disc
             AppendLog($"[Info] Burning to {drive.DisplayName}...");
-            TxtExecStatus.Text = "Burning to disc...";
+            TxtExecStatus.Text = "正在刻录到光盘…";
 
             var burnJob = new BurnJob
             {
@@ -713,9 +671,9 @@ public partial class AudioWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -772,11 +730,11 @@ public partial class AudioWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteRipAudioCdAsync(CancellationToken ct)
     {
-        TxtStep4Title.Text = "🎧 Ripping Audio CD...";
+        TxtStep4Title.Text = "🎧 正在抓取音频 CD…";
 
         var drive = CmbRipDrive.SelectedItem as DiscDrive;
         if (drive == null)
-            throw new InvalidOperationException("No source drive selected.");
+            throw new InvalidOperationException("未选择源光驱。");
 
         var outputFolder = TxtRipOutputFolder.Text ?? string.Empty;
         if (!Directory.Exists(outputFolder))
@@ -823,9 +781,9 @@ public partial class AudioWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -837,7 +795,7 @@ public partial class AudioWizardView : UserControl
 
             // Extract WAV tracks from the BIN file
             AppendLog("[Info] Extracting individual WAV tracks...");
-            TxtExecStatus.Text = "Extracting WAV tracks...";
+            TxtExecStatus.Text = "正在提取 WAV 音轨…";
 
             await ExtractWavTracksFromBinCueAsync(tempBin, tempCue, outputFolder, ct);
 
@@ -880,9 +838,9 @@ public partial class AudioWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -979,7 +937,7 @@ public partial class AudioWizardView : UserControl
 
             Dispatcher.UIThread.Post(() =>
             {
-                TxtExecStatus.Text = $"Extracting Track {trackNum}...";
+                TxtExecStatus.Text = $"正在提取轨道 {trackNum}…";
                 PrgExec.Value = 70 + (i * 30.0 / trackStarts.Count);
                 TxtExecPercent.Text = $"{(int)PrgExec.Value}%";
             });
@@ -1053,7 +1011,7 @@ public partial class AudioWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add Audio Tracks",
+            Title = "添加音轨",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -1136,7 +1094,7 @@ public partial class AudioWizardView : UserControl
     {
         var total = TimeSpan.FromTicks(_createTracks.Sum(t => t.Duration.Ticks));
         var durationStr = total.TotalHours >= 1 ? total.ToString(@"h\:mm\:ss") : total.ToString(@"mm\:ss");
-        TxtCreateTrackCount.Text = $"({_createTracks.Count} track{(_createTracks.Count != 1 ? "s" : "")}, {durationStr} total)";
+        TxtCreateTrackCount.Text = $"（{_createTracks.Count} 条音轨，总时长 {durationStr}）";
     }
 
     // Drag-drop for audio tracks (also handles playlist files)
@@ -1183,7 +1141,7 @@ public partial class AudioWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Import Playlist",
+            Title = "导入播放列表",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -1283,7 +1241,7 @@ public partial class AudioWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Export Playlist",
+            Title = "导出播放列表",
             SuggestedFileName = "AudioCD",
             FileTypeChoices = new[]
             {
@@ -1344,7 +1302,7 @@ public partial class AudioWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add Music Files",
+            Title = "添加音乐文件",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -1364,7 +1322,7 @@ public partial class AudioWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select Music Folder",
+            Title = "选择音乐文件夹",
             AllowMultiple = false
         });
 
@@ -1415,7 +1373,7 @@ public partial class AudioWizardView : UserControl
     private void UpdateCopyFileInfo()
     {
         var totalSize = _copyFiles.Sum(f => f.FileSize);
-        TxtCopyFileCount.Text = $"({_copyFiles.Count} file{(_copyFiles.Count != 1 ? "s" : "")}, {FormatHelper.FormatBytes(totalSize)})";
+        TxtCopyFileCount.Text = $"（{_copyFiles.Count} 个文件，{FormatHelper.FormatBytes(totalSize)}）";
     }
 
     // Drag-drop for copy files (also handles playlist files)
@@ -1462,7 +1420,7 @@ public partial class AudioWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Import Playlist",
+            Title = "导入播放列表",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -1522,7 +1480,7 @@ public partial class AudioWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Export Playlist",
+            Title = "导出播放列表",
             SuggestedFileName = "MusicDisc",
             FileTypeChoices = new[]
             {
@@ -1633,7 +1591,7 @@ public partial class AudioWizardView : UserControl
             _player.Play();
 
             nowPlaying.Text = $"🎵 {Path.GetFileName(filePath)}";
-            playPauseBtn.Content = "⏸ Pause";
+            playPauseBtn.Content = "⏸ 暂停";
             positionSlider.Maximum = _audioReader.TotalTime.TotalSeconds;
             positionSlider.IsEnabled = true;
 
@@ -1641,8 +1599,8 @@ public partial class AudioWizardView : UserControl
         }
         catch (Exception ex)
         {
-            nowPlaying.Text = $"⚠ Cannot preview: {ex.Message}";
-            playPauseBtn.Content = "▶ Play";
+            nowPlaying.Text = $"⚠ 无法预览：{ex.Message}";
+            playPauseBtn.Content = "▶ 播放";
         }
     }
 
@@ -1653,12 +1611,12 @@ public partial class AudioWizardView : UserControl
         if (_player.PlaybackState == PlaybackState.Playing)
         {
             _player.Pause();
-            playPauseBtn.Content = "▶ Play";
+            playPauseBtn.Content = "▶ 播放";
         }
         else
         {
             _player.Play();
-            playPauseBtn.Content = "⏸ Pause";
+            playPauseBtn.Content = "⏸ 暂停";
         }
     }
 
@@ -1702,7 +1660,7 @@ public partial class AudioWizardView : UserControl
         {
             _playbackTimer?.Stop();
             if (_activePlayPauseBtn != null)
-                _activePlayPauseBtn.Content = "▶ Play";
+                _activePlayPauseBtn.Content = "▶ 播放";
         }
     }
 
@@ -1711,8 +1669,8 @@ public partial class AudioWizardView : UserControl
     {
         if (stopped)
         {
-            nowPlaying.Text = "No track selected";
-            playPauseBtn.Content = "▶ Play";
+            nowPlaying.Text = "未选择音轨";
+            playPauseBtn.Content = "▶ 播放";
             positionSlider.Value = 0;
             positionSlider.IsEnabled = false;
             playbackTime.Text = "00:00 / 00:00";
@@ -1729,7 +1687,7 @@ public partial class AudioWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save Audio CD Image",
+            Title = "保存音频 CD 镜像",
             SuggestedFileName = "AudioCD",
             FileTypeChoices = new[]
             {
@@ -1748,7 +1706,7 @@ public partial class AudioWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select Output Folder for Ripped Tracks",
+            Title = "选择抓取音轨的输出文件夹",
             AllowMultiple = false
         });
 
@@ -1864,10 +1822,9 @@ public partial class AudioWizardView : UserControl
 
     private void AppendLogCore(string line)
     {
-        var timestampedLine = $"[{DateTime.Now:HH:mm:ss.fff}] {line}";
         TxtExecLog.Text = string.IsNullOrEmpty(TxtExecLog.Text)
-            ? timestampedLine
-            : TxtExecLog.Text + Environment.NewLine + timestampedLine;
+            ? line
+            : TxtExecLog.Text + Environment.NewLine + line;
 
         // Trim log to prevent unbounded memory growth (keep last ~20 KB)
         var text = TxtExecLog.Text;

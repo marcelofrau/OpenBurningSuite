@@ -163,7 +163,7 @@ public sealed class BluRayAuthoringBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 2,
-            StatusMessage = $"Building {formatLabel} disc structure...",
+            StatusMessage = $"正在构建 {formatLabel} 光盘结构…",
             LogLine = $"[Info] Creating {rootDirName} directory: {bdmvDir}"
         });
 
@@ -286,7 +286,7 @@ public sealed class BluRayAuthoringBuilder
 
                         progress.Report(new BuildProgress
                         {
-                            StatusMessage = $"Generated 3D SSIF for clip {clipId}",
+                            StatusMessage = $"已为片段 {clipId} 生成 3D SSIF",
                             LogLine = $"[Info] 3D SSIF: {clipId}.ssif ({job.Stereoscopic3DMode}, {ssifExtentStartPoints.Count} extents)"
                         });
                     }
@@ -308,7 +308,7 @@ public sealed class BluRayAuthoringBuilder
                     progress.Report(new BuildProgress
                     {
                         PercentComplete = pct,
-                        StatusMessage = $"Processed clip {itemsProcessed}/{totalPlayItems}",
+                        StatusMessage = $"已处理片段 {itemsProcessed}/{totalPlayItems}",
                         LogLine = $"[Info] Clip {clipId}: {Path.GetFileName(playItem.VideoPath)} → {clipId}.m2ts"
                     });
 
@@ -320,7 +320,7 @@ public sealed class BluRayAuthoringBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = 55,
-                StatusMessage = "Generating clip information files...",
+                StatusMessage = "正在生成片段信息文件…",
                 LogLine = "[Info] Writing CLPI (Clip Information) files"
             });
 
@@ -342,7 +342,7 @@ public sealed class BluRayAuthoringBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = 65,
-                StatusMessage = "Generating playlist files...",
+                StatusMessage = "正在生成播放列表文件…",
                 LogLine = "[Info] Writing MPLS (Movie Playlist) files"
             });
 
@@ -381,7 +381,7 @@ public sealed class BluRayAuthoringBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = 78,
-                StatusMessage = "Generating disc index...",
+                StatusMessage = "正在生成光盘索引…",
                 LogLine = "[Info] Writing index.bdmv"
             });
 
@@ -395,7 +395,7 @@ public sealed class BluRayAuthoringBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = 85,
-                StatusMessage = "Generating movie objects...",
+                StatusMessage = "正在生成影片对象…",
                 LogLine = "[Info] Writing MovieObject.bdmv"
             });
 
@@ -411,7 +411,7 @@ public sealed class BluRayAuthoringBuilder
                 progress.Report(new BuildProgress
                 {
                     PercentComplete = 88,
-                    StatusMessage = "Creating auxiliary data...",
+                    StatusMessage = "正在创建辅助数据…",
                     LogLine = "[Info] Writing AUXDATA files"
                 });
 
@@ -426,7 +426,7 @@ public sealed class BluRayAuthoringBuilder
                 progress.Report(new BuildProgress
                 {
                     PercentComplete = 92,
-                    StatusMessage = "Creating BD-J interactive content...",
+                    StatusMessage = "正在创建 BD-J 交互内容…",
                     LogLine = $"[Info] Building BD-J structure ({job.BdJApplications.Count} application(s), " +
                               $"Profile {job.BdJProfileVersion})"
                 });
@@ -454,7 +454,7 @@ public sealed class BluRayAuthoringBuilder
                     foreach (var jarPath in app.JarPaths)
                     {
                         if (!File.Exists(jarPath))
-                            throw new FileNotFoundException($"BD-J JAR file not found: {jarPath}");
+                            throw new FileNotFoundException($"未找到 BD-J JAR 文件：{jarPath}");
 
                         var jarFileName = Path.GetFileName(jarPath);
                         var destJarPath = Path.Combine(jarDir, jarFileName);
@@ -501,7 +501,7 @@ public sealed class BluRayAuthoringBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = 100,
-                StatusMessage = $"{formatLabel} disc structure complete.",
+                StatusMessage = $"{formatLabel} 光盘结构构建完成。",
                 LogLine = $"[Info] {rootDirName} structure built: {bdmvDir}"
             });
 
@@ -522,29 +522,29 @@ public sealed class BluRayAuthoringBuilder
     private static void ValidateJob(BluRayAuthoringJob job)
     {
         if (job.Playlists.Count == 0)
-            throw new ArgumentException("At least one playlist is required for Blu-ray authoring.");
+            throw new ArgumentException("蓝光制作至少需要一个播放列表。");
 
         if (job.Playlists.Count > 999)
-            throw new ArgumentException("Blu-ray supports a maximum of 999 playlists.");
+            throw new ArgumentException("蓝光最多支持 999 个播放列表。");
 
         foreach (var playlist in job.Playlists)
         {
             if (playlist.PlayItems.Count == 0)
-                throw new ArgumentException("Each playlist must contain at least one play item.");
+                throw new ArgumentException("每个播放列表必须至少包含一个播放项。");
 
             if (playlist.PlayItems.Count > 999)
-                throw new ArgumentException("Blu-ray supports a maximum of 999 play items per playlist.");
+                throw new ArgumentException("蓝光每个播放列表最多支持 999 个播放项。");
 
             foreach (var item in playlist.PlayItems)
             {
                 if (string.IsNullOrWhiteSpace(item.VideoPath))
-                    throw new ArgumentException("Video path must not be empty for Blu-ray play items.");
+                    throw new ArgumentException("蓝光播放项的视频路径不能为空。");
 
                 if (item.AudioStreams.Count > 32)
-                    throw new ArgumentException("Blu-ray supports a maximum of 32 audio streams per play item.");
+                    throw new ArgumentException("蓝光每个播放项最多支持 32 条音频流。");
 
                 if (item.SubtitleStreams.Count > 255)
-                    throw new ArgumentException("Blu-ray supports a maximum of 255 subtitle streams per play item.");
+                    throw new ArgumentException("蓝光每个播放项最多支持 255 条字幕流。");
             }
         }
 
@@ -555,7 +555,7 @@ public sealed class BluRayAuthoringBuilder
             var format = job.VideoFormat.ToUpperInvariant();
             if (Array.IndexOf(validFormats, format) < 0)
                 throw new ArgumentException(
-                    $"UHD Blu-ray requires 2160p or 1080p video format, got: {job.VideoFormat}");
+                    $"UHD 蓝光要求 2160p 或 1080p 视频格式，实际为：{job.VideoFormat}");
 
             // UHD BD mandates HEVC (H.265) codec
             if (!string.IsNullOrEmpty(job.VideoCodec) &&
@@ -563,35 +563,35 @@ public sealed class BluRayAuthoringBuilder
                 !job.VideoCodec.Equals("H265", StringComparison.OrdinalIgnoreCase) &&
                 !job.VideoCodec.Equals("H.265", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    $"UHD Blu-ray requires HEVC (H.265) video codec, got: {job.VideoCodec}");
+                    $"UHD 蓝光要求 HEVC（H.265）视频编解码器，实际为：{job.VideoCodec}");
 
             // UHD BD does not support 3D stereoscopic content
             if (job.Stereoscopic3D)
                 throw new ArgumentException(
-                    "UHD Blu-ray does not support 3D stereoscopic content. " +
-                    "Disable Stereoscopic3D or use standard Blu-ray 3D instead.");
+                    "UHD 蓝光不支持 3D 立体内容。" +
+                    "请禁用 Stereoscopic3D 或改用标准蓝光 3D。");
 
             // Validate HDR mode
             var validHdrModes = new[] { "HDR10", "DOLBYVISION", "HDR10PLUS", "HLG" };
             var hdrMode = job.HdrMode.ToUpperInvariant().Replace(" ", "").Replace("-", "");
             if (Array.IndexOf(validHdrModes, hdrMode) < 0)
                 throw new ArgumentException(
-                    $"Unsupported HDR mode: {job.HdrMode}. " +
-                    "Supported modes: HDR10, DolbyVision, HDR10Plus, HLG.");
+                    $"不支持的 HDR 模式：{job.HdrMode}。" +
+                    "支持的模式：HDR10、DolbyVision、HDR10Plus、HLG。");
 
             // Validate UHD disc size (accept both "BD-66" and "UHD BD-66 (66 GB)" style strings)
             var discSizeUpper = job.UhdDiscSize.ToUpperInvariant();
             if (!discSizeUpper.Contains("BD-66") && !discSizeUpper.Contains("BD-100"))
                 throw new ArgumentException(
-                    $"Unsupported UHD disc size: {job.UhdDiscSize}. " +
-                    "Supported sizes: BD-66 (66 GB), BD-100 (100 GB).");
+                    $"不支持的 UHD 光盘容量：{job.UhdDiscSize}。" +
+                    "支持的容量：BD-66（66 GB）、BD-100（100 GB）。");
         }
         else
         {
             var validFormats = new[] { "1080P", "1080I", "720P", "576P", "576I", "480P", "480I" };
             var format = job.VideoFormat.ToUpperInvariant();
             if (Array.IndexOf(validFormats, format) < 0)
-                throw new ArgumentException($"Unsupported video format: {job.VideoFormat}");
+                throw new ArgumentException($"不支持的视频格式：{job.VideoFormat}");
         }
 
         // BD-J validation
@@ -599,40 +599,40 @@ public sealed class BluRayAuthoringBuilder
         {
             if (job.IsBdav)
                 throw new ArgumentException(
-                    "BD-J interactive content is not supported with BDAV recording format. " +
-                    "Use BDMV (movie) format instead.");
+                    "BDAV 录像格式不支持 BD-J 交互内容。" +
+                    "请改用 BDMV（影片）格式。");
 
             if (job.BdJApplications.Count == 0)
                 throw new ArgumentException(
-                    "At least one BD-J application is required when EnableBdJ is true.");
+                    "启用 EnableBdJ 时至少需要一个 BD-J 应用程序。");
 
             if (job.BdJApplications.Count > 9999)
                 throw new ArgumentException(
-                    "BD-J supports a maximum of 9,999 applications per disc.");
+                    "BD-J 每张光盘最多支持 9,999 个应用程序。");
 
             var validProfiles = new[] { "1.0", "1.1", "2.0", "5.0", "6.0" };
             if (Array.IndexOf(validProfiles, job.BdJProfileVersion) < 0)
                 throw new ArgumentException(
-                    $"Unsupported BD-J profile version: {job.BdJProfileVersion}. " +
-                    "Supported versions: 1.0, 1.1, 2.0, 5.0, 6.0.");
+                    $"不支持的 BD-J 配置文件版本：{job.BdJProfileVersion}。" +
+                    "支持的版本：1.0、1.1、2.0、5.0、6.0。");
 
             if (job.BdJNetworkAccess && job.BdJProfileVersion == "1.0")
                 throw new ArgumentException(
-                    "BD-J network access requires Profile 2.0 or higher.");
+                    "BD-J 网络访问需要 Profile 2.0 或更高版本。");
 
             foreach (var app in job.BdJApplications)
             {
                 if (app.JarPaths.Count == 0)
                     throw new ArgumentException(
-                        $"BD-J application '{app.Name}' must have at least one JAR file.");
+                        $"BD-J 应用程序“{app.Name}”必须至少包含一个 JAR 文件。");
 
                 if (string.IsNullOrWhiteSpace(app.InitialClass))
                     throw new ArgumentException(
-                        $"BD-J application '{app.Name}' must specify an initial Xlet class.");
+                        $"BD-J 应用程序“{app.Name}”必须指定初始 Xlet 类。");
 
                 if (app.Priority < 1 || app.Priority > 255)
                     throw new ArgumentException(
-                        $"BD-J application '{app.Name}' priority must be 1-255, got: {app.Priority}");
+                        $"BD-J 应用程序“{app.Name}”的优先级必须为 1-255，实际为：{app.Priority}");
             }
         }
     }
@@ -2110,16 +2110,16 @@ public sealed class BluRayAuthoringBuilder
 
         // Validate input files exist and have content
         if (!File.Exists(baseViewPath))
-            throw new FileNotFoundException($"Base view M2TS not found: {baseViewPath}");
+            throw new FileNotFoundException($"未找到基础视图 M2TS：{baseViewPath}");
         if (!File.Exists(dependentViewPath))
-            throw new FileNotFoundException($"Dependent view M2TS not found: {dependentViewPath}");
+            throw new FileNotFoundException($"未找到从属视图 M2TS：{dependentViewPath}");
 
         var baseInfo = new FileInfo(baseViewPath);
         var depInfo = new FileInfo(dependentViewPath);
         if (baseInfo.Length == 0)
-            throw new InvalidOperationException($"Base view M2TS is empty: {baseViewPath}");
+            throw new InvalidOperationException($"基础视图 M2TS 为空：{baseViewPath}");
         if (depInfo.Length == 0)
-            throw new InvalidOperationException($"Dependent view M2TS is empty: {dependentViewPath}");
+            throw new InvalidOperationException($"从属视图 M2TS 为空：{dependentViewPath}");
 
         // Validate both files appear to be BD TS (sync byte at position 4)
         ValidateBdTsSyncByte(baseViewPath, "base view");

@@ -70,7 +70,7 @@ public class ReadService
                     // wrap the sector data in MDF/MDS format.
                     progress.Report(new ReadProgress
                     {
-                        StatusMessage = "Reading disc for MDF/MDS output...",
+                        StatusMessage = "正在读取光盘以输出 MDF/MDS…",
                         LogLine = "[Info] MDF/MDS output — reading disc data."
                     });
                     await ReadToMdfMdsAsync(job, progress, cancellationToken);
@@ -80,7 +80,7 @@ public class ReadService
                     // For raw reads, the full 2352-byte sectors are preserved.
                     progress.Report(new ReadProgress
                     {
-                        StatusMessage = "Reading disc for IMG output...",
+                        StatusMessage = "正在读取光盘以输出 IMG…",
                         LogLine = "[Info] IMG output — reading raw disc image."
                     });
                     await _engine.ReadToIsoAsync(job, progress, cancellationToken);
@@ -89,7 +89,7 @@ public class ReadService
                     // NRG (Nero) v2 format: read disc data, then wrap in NRG chunk structure.
                     progress.Report(new ReadProgress
                     {
-                        StatusMessage = "Reading disc for NRG output...",
+                        StatusMessage = "正在读取光盘以输出 NRG…",
                         LogLine = "[Info] NRG output — reading disc data for Nero NRG v2 format."
                     });
                     await ReadToNrgAsync(job, progress, cancellationToken);
@@ -98,7 +98,7 @@ public class ReadService
                     // Read disc to raw BIN/CUE first, then convert to CDI format.
                     progress.Report(new ReadProgress
                     {
-                        StatusMessage = "Reading disc for CDI output...",
+                        StatusMessage = "正在读取光盘以输出 CDI…",
                         LogLine = "[Info] CDI output — reading raw disc data."
                     });
                     await ReadToCdiAsync(job, progress, cancellationToken);
@@ -107,7 +107,7 @@ public class ReadService
                     // Read disc to CloneCD format (CCD/IMG/SUB)
                     progress.Report(new ReadProgress
                     {
-                        StatusMessage = "Reading disc for CCD/IMG/SUB output...",
+                        StatusMessage = "正在读取光盘以输出 CCD/IMG/SUB…",
                         LogLine = "[Info] CCD output — reading raw disc with subchannel data."
                     });
                     // Ensure raw sector size for CCD format
@@ -125,7 +125,7 @@ public class ReadService
                     // to preserve the Mode 2 Form 1/Form 2 sector structure.
                     progress.Report(new ReadProgress
                     {
-                        StatusMessage = $"Reading {job.OutputFormat} disc (Mode 2 XA raw sectors)...",
+                        StatusMessage = $"正在读取 {job.OutputFormat} 光盘（Mode 2 XA 原始扇区）…",
                         LogLine = $"[Info] {job.OutputFormat} output — reading raw Mode 2 XA sectors to BIN/CUE."
                     });
                     // Ensure sector size is set for raw reading
@@ -143,7 +143,7 @@ public class ReadService
                     // Xbox uses XDVDFS (Xbox DVD File System) which can be extracted from standard ISO reads.
                     progress.Report(new ReadProgress
                     {
-                        StatusMessage = "Reading disc for Xbox ISO output...",
+                        StatusMessage = "正在读取光盘以输出 Xbox ISO…",
                         LogLine = "[Info] XISO (Xbox) output — reading disc data as ISO first."
                     });
                     await _engine.ReadToIsoAsync(job, progress, cancellationToken);
@@ -169,7 +169,7 @@ public class ReadService
             {
                 progress.Report(new ReadProgress
                 {
-                    StatusMessage = "Decrypting PS3 disc image...",
+                    StatusMessage = "正在解密 PS3 光盘镜像…",
                     LogLine = $"[Info] PS3 decryption — using IRD: {Path.GetFileName(job.IrdFilePath)}"
                 });
 
@@ -188,7 +188,7 @@ public class ReadService
                             progress.Report(new ReadProgress
                             {
                                 PercentComplete = pct,
-                                StatusMessage = $"Decrypting PS3: {pct}%",
+                                StatusMessage = $"正在解密 PS3：{pct}%",
                                 LogLine = pct % 10 == 0 ? $"[Info] PS3 decryption: {pct}% ({p.DecryptedSectors}/{p.TotalSectors} sectors)" : null
                             });
                         });
@@ -284,7 +284,7 @@ public class ReadService
     {
         var image = CdiParser.Parse(cdiFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CDI parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CDI 解析错误：{image.ErrorMessage}");
 
         CdiParser.ExtractToIso(cdiFilePath, image, outputIsoPath, progress);
     }
@@ -302,7 +302,7 @@ public class ReadService
     {
         var image = await CdiParser.ParseAsync(cdiFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CDI parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CDI 解析错误：{image.ErrorMessage}");
 
         await CdiParser.ExtractToIsoAsync(cdiFilePath, image, outputIsoPath, progress, ct)
             .ConfigureAwait(false);
@@ -319,7 +319,7 @@ public class ReadService
     {
         var image = CdiParser.Parse(cdiFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CDI parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CDI 解析错误：{image.ErrorMessage}");
 
         CdiParser.ConvertToBinCue(cdiFilePath, image, outputBinPath, outputCuePath);
     }
@@ -337,7 +337,7 @@ public class ReadService
     {
         var image = await CdiParser.ParseAsync(cdiFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CDI parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CDI 解析错误：{image.ErrorMessage}");
 
         await CdiParser.ConvertToBinCueAsync(cdiFilePath, image, outputBinPath, outputCuePath,
             progress, ct).ConfigureAwait(false);
@@ -354,7 +354,7 @@ public class ReadService
     {
         var image = CdiParser.Parse(cdiFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CDI parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CDI 解析错误：{image.ErrorMessage}");
 
         CdiParser.ExtractAllDataTracks(cdiFilePath, image, outputStream, progress);
     }
@@ -371,7 +371,7 @@ public class ReadService
     {
         var image = await CdiParser.ParseAsync(cdiFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CDI parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CDI 解析错误：{image.ErrorMessage}");
 
         await CdiParser.ExtractAllDataTracksAsync(cdiFilePath, image, outputStream, progress, ct)
             .ConfigureAwait(false);
@@ -389,7 +389,7 @@ public class ReadService
     {
         var image = CdiParser.Parse(cdiFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CDI parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CDI 解析错误：{image.ErrorMessage}");
 
         CdiParser.ExtractSession(cdiFilePath, image, sessionNumber, outputBinPath, outputCuePath);
     }
@@ -409,7 +409,7 @@ public class ReadService
     {
         var image = await CdiParser.ParseAsync(cdiFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CDI parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CDI 解析错误：{image.ErrorMessage}");
 
         await CdiParser.ExtractSessionAsync(cdiFilePath, image, sessionNumber,
             outputBinPath, outputCuePath, progress, ct).ConfigureAwait(false);
@@ -448,7 +448,7 @@ public class ReadService
 
             progress.Report(new ReadProgress
             {
-                StatusMessage = "Converting to MDF/MDS format...",
+                StatusMessage = "正在转换为 MDF/MDS 格式…",
                 LogLine = "[Info] Wrapping disc image in MDF/MDS format."
             });
 
@@ -510,7 +510,7 @@ public class ReadService
 
             progress.Report(new ReadProgress
             {
-                StatusMessage = "Converting to CDI format...",
+                StatusMessage = "正在转换为 CDI 格式…",
                 LogLine = "[Info] Wrapping raw disc data in CDI format."
             });
 
@@ -518,7 +518,7 @@ public class ReadService
             using var drive = new OpticalDrive(job.DevicePath);
             var toc = drive.ReadToc();
             if (toc == null || toc.Entries.Count == 0)
-                throw new InvalidOperationException("Could not read TOC for CDI conversion.");
+                throw new InvalidOperationException("无法读取 TOC 以进行 CDI 转换。");
 
             CdiWriter.WriteFromBin(tempBinPath, toc, cdiPath);
 
@@ -568,7 +568,7 @@ public class ReadService
 
             progress.Report(new ReadProgress
             {
-                StatusMessage = "Converting to NRG format...",
+                StatusMessage = "正在转换为 NRG 格式…",
                 LogLine = "[Info] Wrapping disc image in Nero NRG v2 format."
             });
 
@@ -722,7 +722,7 @@ public class ReadService
     {
         var image = CcdParser.Parse(ccdFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CCD parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CCD 解析错误：{image.ErrorMessage}");
 
         CcdParser.ExtractToIso(image.ImgFilePath, image, outputIsoPath, progress);
     }
@@ -735,7 +735,7 @@ public class ReadService
     {
         var image = await CcdParser.ParseAsync(ccdFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CCD parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CCD 解析错误：{image.ErrorMessage}");
 
         await CcdParser.ExtractToIsoAsync(image.ImgFilePath, image, outputIsoPath, progress, ct)
             .ConfigureAwait(false);
@@ -749,7 +749,7 @@ public class ReadService
     {
         var image = CcdParser.Parse(ccdFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CCD parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CCD 解析错误：{image.ErrorMessage}");
 
         CcdParser.ConvertToBinCue(image.ImgFilePath, image, outputBinPath, outputCuePath);
     }
@@ -762,7 +762,7 @@ public class ReadService
     {
         var image = await CcdParser.ParseAsync(ccdFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CCD parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CCD 解析错误：{image.ErrorMessage}");
 
         await CcdParser.ConvertToBinCueAsync(image.ImgFilePath, image, outputBinPath, outputCuePath,
             progress, ct).ConfigureAwait(false);
@@ -776,7 +776,7 @@ public class ReadService
     {
         var image = CcdParser.Parse(ccdFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CCD parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CCD 解析错误：{image.ErrorMessage}");
 
         CcdParser.ExtractAllDataTracks(image.ImgFilePath, image, outputStream, progress);
     }
@@ -789,7 +789,7 @@ public class ReadService
     {
         var image = await CcdParser.ParseAsync(ccdFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"CCD parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"CCD 解析错误：{image.ErrorMessage}");
 
         await CcdParser.ExtractAllDataTracksAsync(image.ImgFilePath, image, outputStream, progress, ct)
             .ConfigureAwait(false);
@@ -858,7 +858,7 @@ public class ReadService
     {
         var image = MdfParser.Parse(mdsFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         MdfParser.ExtractToIso(image.MdfFilePath, image, outputIsoPath, progress);
     }
@@ -875,7 +875,7 @@ public class ReadService
     {
         var image = await MdfParser.ParseAsync(mdsFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         await MdfParser.ExtractToIsoAsync(image.MdfFilePath, image, outputIsoPath, progress, ct)
             .ConfigureAwait(false);
@@ -892,7 +892,7 @@ public class ReadService
     {
         var image = MdfParser.Parse(mdsFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         MdfParser.ExtractToImg(image.MdfFilePath, image, outputImgPath, progress);
     }
@@ -909,7 +909,7 @@ public class ReadService
     {
         var image = await MdfParser.ParseAsync(mdsFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         await MdfParser.ExtractToImgAsync(image.MdfFilePath, image, outputImgPath, progress, ct)
             .ConfigureAwait(false);
@@ -927,7 +927,7 @@ public class ReadService
     {
         var image = MdfParser.Parse(mdsFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         MdfParser.ConvertToBinCue(image.MdfFilePath, image, outputBinPath, outputCuePath, progress);
     }
@@ -945,7 +945,7 @@ public class ReadService
     {
         var image = await MdfParser.ParseAsync(mdsFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         await MdfParser.ConvertToBinCueAsync(image.MdfFilePath, image, outputBinPath, outputCuePath,
             progress, ct).ConfigureAwait(false);
@@ -962,7 +962,7 @@ public class ReadService
     {
         var image = MdfParser.Parse(mdsFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         MdfParser.ConvertToCdi(image.MdfFilePath, image, outputCdiPath, progress);
     }
@@ -979,7 +979,7 @@ public class ReadService
     {
         var image = await MdfParser.ParseAsync(mdsFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         await MdfParser.ConvertToCdiAsync(image.MdfFilePath, image, outputCdiPath, progress, ct)
             .ConfigureAwait(false);
@@ -996,7 +996,7 @@ public class ReadService
     {
         var image = MdfParser.Parse(mdsFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         MdfParser.ExtractAllDataTracks(image.MdfFilePath, image, outputStream, progress);
     }
@@ -1013,7 +1013,7 @@ public class ReadService
     {
         var image = await MdfParser.ParseAsync(mdsFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"MDS parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"MDS 解析错误：{image.ErrorMessage}");
 
         await MdfParser.ExtractAllDataTracksAsync(image.MdfFilePath, image, outputStream, progress, ct)
             .ConfigureAwait(false);
@@ -1081,7 +1081,7 @@ public class ReadService
     {
         var image = NrgParser.Parse(nrgFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         NrgParser.ExtractToIso(nrgFilePath, image, outputIsoPath, progress);
     }
@@ -1094,7 +1094,7 @@ public class ReadService
     {
         var image = await NrgParser.ParseAsync(nrgFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         await NrgParser.ExtractToIsoAsync(nrgFilePath, image, outputIsoPath, progress, ct)
             .ConfigureAwait(false);
@@ -1108,7 +1108,7 @@ public class ReadService
     {
         var image = NrgParser.Parse(nrgFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         NrgParser.ConvertToBinCue(nrgFilePath, image, outputBinPath, outputCuePath, progress);
     }
@@ -1121,7 +1121,7 @@ public class ReadService
     {
         var image = await NrgParser.ParseAsync(nrgFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         await NrgParser.ConvertToBinCueAsync(nrgFilePath, image, outputBinPath, outputCuePath,
             progress, ct).ConfigureAwait(false);
@@ -1135,7 +1135,7 @@ public class ReadService
     {
         var image = NrgParser.Parse(nrgFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         NrgParser.ExtractAllDataTracks(nrgFilePath, image, outputStream, progress);
     }
@@ -1148,7 +1148,7 @@ public class ReadService
     {
         var image = await NrgParser.ParseAsync(nrgFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         await NrgParser.ExtractAllDataTracksAsync(nrgFilePath, image, outputStream, progress, ct)
             .ConfigureAwait(false);
@@ -1208,7 +1208,7 @@ public class ReadService
     {
         var image = ImgParser.Parse(imgFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 解析错误：{image.ErrorMessage}");
 
         ImgParser.ExtractToIso(imgFilePath, image, outputIsoPath, progress);
     }
@@ -1221,7 +1221,7 @@ public class ReadService
     {
         var image = await ImgParser.ParseAsync(imgFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 解析错误：{image.ErrorMessage}");
 
         await ImgParser.ExtractToIsoAsync(imgFilePath, image, outputIsoPath, progress, ct)
             .ConfigureAwait(false);
@@ -1235,7 +1235,7 @@ public class ReadService
     {
         var image = ImgParser.Parse(imgFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 解析错误：{image.ErrorMessage}");
 
         ImgParser.ConvertToBinCue(imgFilePath, image, outputBinPath, outputCuePath, progress);
     }
@@ -1248,7 +1248,7 @@ public class ReadService
     {
         var image = await ImgParser.ParseAsync(imgFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 解析错误：{image.ErrorMessage}");
 
         await ImgParser.ConvertToBinCueAsync(imgFilePath, image, outputBinPath, outputCuePath,
             progress, ct).ConfigureAwait(false);

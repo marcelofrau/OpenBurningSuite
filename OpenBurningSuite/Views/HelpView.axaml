@@ -10,155 +10,65 @@
                 BorderBrush="#1E3450" BorderThickness="0,0,1,0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="10,16,10,16" Spacing="2">
-                    <TextBlock Text="CONTENTS"
+                    <TextBlock Text="📖 目录"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,0,0,10"/>
 
-                    <Button x:Name="TocOverview" Content="Overview"
+                    <Button x:Name="TocOverview" Content="概览"
                             Classes="NavBtn" Click="OnTocClick" Tag="SectionOverview"/>
-                    <Button x:Name="TocGettingStarted" Content="Getting Started"
+                    <Button x:Name="TocGettingStarted" Content="快速入门"
                             Classes="NavBtn" Click="OnTocClick" Tag="SectionGettingStarted"/>
 
-                    <TextBlock Text="FEATURES"
+                    <TextBlock Text="功能特性"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,12,0,6"/>
 
-                    <Button x:Name="TocDiscover" Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscover">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
-                            <TextBlock Text="Discover Drives" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocCopyDisc" Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyDisc">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Copy Disc" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocBuildImage" Classes="NavBtn" Click="OnTocClick" Tag="SectionBuildImage">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-construction-2d-16.png"/>
-                            <TextBlock Text="Build Image" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocBurnWrite" Classes="NavBtn" Click="OnTocClick" Tag="SectionBurnWrite">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn / Write" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocVerify" Classes="NavBtn" Click="OnTocClick" Tag="SectionVerify">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
-                            <TextBlock Text="Verify" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocAdvanced" Classes="NavBtn" Click="OnTocClick" Tag="SectionAdvanced">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Advanced" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocEncryption" Classes="NavBtn" Click="OnTocClick" Tag="SectionEncryption">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
-                            <TextBlock Text="Encryption" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                    <Button x:Name="TocDiscover" Content="🔍 发现光驱"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscover"/>
+                    <Button x:Name="TocCopyDisc" Content="💿 复制光盘"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyDisc"/>
+                    <Button x:Name="TocBuildImage" Content="🏗 构建镜像"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBuildImage"/>
+                    <Button x:Name="TocBurnWrite" Content="🔥 刻录 / 写入"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBurnWrite"/>
+                    <Button x:Name="TocVerify" Content="✅ 校验"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionVerify"/>
+                    <Button x:Name="TocAdvanced" Content="⚙&#xFE0F; 高级"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionAdvanced"/>
+                    <Button x:Name="TocEncryption" Content="🔒 加密"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionEncryption"/>
 
-                    <TextBlock Text="WIZARDS"
+                    <TextBlock Text="向导"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,12,0,6"/>
 
-                    <Button x:Name="TocAudioWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionAudioWizard">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                            <TextBlock Text="Audio Wizard" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocVideoWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionVideoWizard">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                            <TextBlock Text="Video Wizard" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocDataWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionDataWizard">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Data Wizard" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocGameWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionGameWizard">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
-                            <TextBlock Text="Game Wizard" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocCopyWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyWizard">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Copy Wizard" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocBlankWizard" Classes="NavBtn" Click="OnTocClick" Tag="SectionBlankWizard">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
-                            <TextBlock Text="Blank Wizard" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                    <Button x:Name="TocAudioWizard" Content="🎵 音频向导"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionAudioWizard"/>
+                    <Button x:Name="TocVideoWizard" Content="🎬 视频向导"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionVideoWizard"/>
+                    <Button x:Name="TocDataWizard" Content="📁 数据向导"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDataWizard"/>
+                    <Button x:Name="TocGameWizard" Content="🎮 游戏向导"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionGameWizard"/>
+                    <Button x:Name="TocCopyWizard" Content="💿 复制向导"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionCopyWizard"/>
+                    <Button x:Name="TocBlankWizard" Content="🧹 擦除向导"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionBlankWizard"/>
 
-                    <TextBlock Text="REFERENCE"
+                    <TextBlock Text="参考"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,12,0,6"/>
 
-                    <Button x:Name="TocDiscTypes" Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscTypes">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Disc Types" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocFileSystems" Classes="NavBtn" Click="OnTocClick" Tag="SectionFileSystems">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="File Systems" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocImageFormats" Classes="NavBtn" Click="OnTocClick" Tag="SectionImageFormats">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Image Formats" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocGlossary" Classes="NavBtn" Click="OnTocClick" Tag="SectionGlossary">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-book-2d-16.png"/>
-                            <TextBlock Text="Glossary" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocTroubleshooting" Classes="NavBtn" Click="OnTocClick" Tag="SectionTroubleshooting">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Troubleshooting" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                    <Button x:Name="TocDiscTypes" Content="📀 光盘类型"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionDiscTypes"/>
+                    <Button x:Name="TocFileSystems" Content="📂 文件系统"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionFileSystems"/>
+                    <Button x:Name="TocImageFormats" Content="💾 镜像格式"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionImageFormats"/>
+                    <Button x:Name="TocGlossary" Content="📘 术语表"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionGlossary"/>
+                    <Button x:Name="TocTroubleshooting" Content="🔧 故障排查"
+                            Classes="NavBtn" Click="OnTocClick" Tag="SectionTroubleshooting"/>
                 </StackPanel>
             </ScrollViewer>
         </Border>
@@ -169,9 +79,9 @@
 
                 <!-- Page header -->
                 <StackPanel Spacing="4">
-                    <TextBlock Text="Help &amp; Documentation"
+                    <TextBlock Text="📖  帮助与文档"
                                Classes="PageTitle" Foreground="#5BC0FF"/>
-                    <TextBlock Text="Everything you need to know about Open Burning Suite — from quick start guides to advanced technical details."
+                    <TextBlock Text="关于 Open Burning Suite 的全部信息——从快速入门指南到深入的技术细节。"
                                Classes="PageSubtitle" TextWrapping="Wrap"/>
                 </StackPanel>
 
@@ -180,26 +90,20 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionOverview" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="Overview" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock Text="概览" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#E8F0FE" LineHeight="22">
-                            <Run Text="Open Burning Suite"/><Run Text=" is a professional, cross-platform application for optical disc authoring, burning, reading, and verification. It runs on "/>
-                            <Run Text="Windows, Linux, and macOS" FontWeight="SemiBold"/>
-                            <Run Text=" and supports a wide range of optical media — from CDs to Blu-ray BDXL and HD DVD."/>
+                            <Run Text="Open Burning Suite"/><Run Text=" 是一款专业的跨平台光盘制作、刻录、读取与校验应用，可运行于 "/><Run Text="Windows、Linux 和 macOS" FontWeight="SemiBold"/><Run Text="，支持从 CD 到蓝光 BDXL 及 HD DVD 的各类光盘介质。"/>
                         </TextBlock>
 
-                        <TextBlock Text="What can you do with Open Burning Suite?" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="Open Burning Suite 能做什么？" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="• Discover optical drives and inspect their capabilities and inserted media&#x0a;• Copy (rip) optical discs to image files in many formats&#x0a;• Build disc images from files and folders (data, audio, video, gaming)&#x0a;• Burn disc images to CD, DVD, HD DVD, or Blu-ray media&#x0a;• Verify disc integrity with checksums and sector-by-sector comparison&#x0a;• Erase, blank, and format rewritable media&#x0a;• Create audio CDs with CD-TEXT, video DVDs, Blu-ray discs, VCDs, SVCDs, and XSVCDs&#x0a;• Create gaming disc images with system-specific presets&#x0a;• Create bootable discs with El Torito support&#x0a;• Encrypt and decrypt disc images with AES-256 password protection (.obse format)"/>
+                                   Text="• 发现光驱，查看其能力与已放入的介质&#x0a;• 将光盘复制（抓取）为多种格式的镜像文件&#x0a;• 从文件与文件夹构建光盘镜像（数据、音频、视频、游戏）&#x0a;• 将光盘镜像刻录到 CD、DVD、HD DVD 或蓝光介质&#x0a;• 通过校验和与逐扇区比对校验光盘完整性&#x0a;• 擦除并格式化可重写介质&#x0a;• 制作带 CD-TEXT 文本的音频 CD、视频 DVD、蓝光光盘、VCD、SVCD 与 XSVCD&#x0a;• 使用各游戏机专用预设制作游戏光盘镜像&#x0a;• 制作支持 El Torito 引导的可引导光盘&#x0a;• 使用 AES-256 密码保护加密与解密光盘镜像（.obse 格式）"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
-                                    <TextBlock Text="Elevation (Admin / Root) Note" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="12"/>
-                                </StackPanel>
+                                <TextBlock Text="🔒 提权（管理员 / Root）说明" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="12"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" FontSize="11" LineHeight="18"
-                                           Text="Many optical disc operations require direct hardware access. On Windows, run the application as Administrator. On Linux and macOS, run with root privileges (sudo). The status bar at the bottom shows whether the application is running with elevated privileges. Without elevation, some features (burning, blanking, direct reading) may not work."/>
+                                           Text="许多光盘操作需要直接访问硬件。在 Windows 上请以管理员身份运行本应用；在 Linux 和 macOS 上请以 root 权限（sudo）运行。底部状态栏会显示应用当前是否以提权方式运行。未提权时，部分功能（刻录、擦除、直接读取）可能无法使用。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -210,23 +114,23 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionGettingStarted" Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="Getting Started" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock Text="快速入门" Classes="SectionHeader" FontSize="18"/>
 
-                        <TextBlock Text="The Main Window" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="主窗口" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="When you launch Open Burning Suite, you see the Home screen. On the left is the sidebar navigation with all available views. At the top-right corner you can find Home, Settings, and Help buttons. The status bar at the bottom shows context messages and your elevation status."/>
+                                   Text="启动 Open Burning Suite 后，首先看到的是主页。左侧是包含所有可用视图的侧边栏导航，右上角有主页、设置和帮助按钮，底部状态栏显示上下文消息与提权状态。"/>
 
-                        <TextBlock Text="Navigation" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="导航" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Use the sidebar to switch between views:&#x0a;&#x0a;  • Home — Quick Start tiles and feature overview&#x0a;  • Discover — Scan drives and probe media&#x0a;  • Copy Disc — Read/rip discs to image files&#x0a;  • Build Image — Create disc images from files&#x0a;  • Burn / Write — Write images to optical media&#x0a;  • Verify — Check disc or image integrity&#x0a;  • Advanced — Blank, erase, format discs&#x0a;&#x0a;Under Quick Start in the sidebar you also find guided wizards for Audio, Video, Data, Game, Copy Disc, and Blank Disc operations."/>
+                                   Text="使用侧边栏在各视图之间切换：&#x0a;&#x0a;  • 主页 — 快速开始磁贴与功能概览&#x0a;  • 发现 — 扫描光驱并探测介质&#x0a;  • 复制光盘 — 读取/抓取光盘为镜像文件&#x0a;  • 构建镜像 — 从文件创建光盘镜像&#x0a;  • 刻录 / 写入 — 将镜像写入光盘介质&#x0a;  • 校验 — 检查光盘或镜像的完整性&#x0a;  • 高级 — 擦除、格式化光盘&#x0a;&#x0a;侧边栏的“快速开始”下还提供音频、视频、数据、游戏、复制光盘和擦除光盘操作的分步向导。"/>
 
-                        <TextBlock Text="General Workflow" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="通用流程" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="A typical workflow follows these steps:&#x0a;&#x0a;  1. Discover — Ensure your drive is detected and check media status&#x0a;  2. Build (optional) — Create a disc image from files if you don't have one&#x0a;  3. Burn — Write the image to disc&#x0a;  4. Verify — Confirm the burn completed correctly&#x0a;&#x0a;Or use one of the Quick Start wizards which guide you through the entire process step by step."/>
+                                   Text="典型流程如下：&#x0a;&#x0a;  1. 发现 — 确认光驱已被识别，并检查介质状态&#x0a;  2. 构建（可选）— 若尚无镜像，先从文件创建光盘镜像&#x0a;  3. 刻录 — 将镜像写入光盘&#x0a;  4. 校验 — 确认刻录已正确完成&#x0a;&#x0a;也可以使用“快速开始”中的向导，按步骤完成整个流程。"/>
 
-                        <TextBlock Text="Tooltips" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="工具提示" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Almost every button, checkbox, and dropdown in the application has a tooltip. Hover your mouse over any control to see a brief explanation of what it does."/>
+                                   Text="应用中的几乎所有按钮、复选框和下拉框都带有工具提示。将鼠标悬停在任意控件上，即可看到其功能的简要说明。"/>
                     </StackPanel>
                 </Border>
 
@@ -235,35 +139,27 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionDiscover" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-search-16.png"/>
-                            <TextBlock Text="Discover Drives &amp; Media" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🔍 发现光驱与介质" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Discover view scans your system for optical drives and inspects inserted media. This is usually the first thing to check before performing any disc operation."/>
+                                   Text="“发现”视图会扫描系统中的光驱并检查已放入的介质。在执行任何光盘操作之前，通常应先检查此项。"/>
 
-                        <TextBlock Text="Optical Drives Table" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="光驱列表" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Click Refresh Drives to scan for connected optical drives. The table shows:&#x0a;&#x0a;  • Device Path — The system device path (e.g. /dev/sr0 on Linux, \\.\CdRom0 on Windows)&#x0a;  • Drive Letter — Windows drive letter (e.g. D:)&#x0a;  • Model — The manufacturer and model name of the drive&#x0a;  • Type — Drive category (CD-ROM, DVD-RW, BD-RE, etc.)&#x0a;  • Status — Whether a disc is loaded or the tray is empty"/>
+                                   Text="点击“刷新光驱”扫描已连接的光驱。列表显示：&#x0a;&#x0a;  • 设备路径 — 系统设备路径（例如 Linux 上的 /dev/sr0、Windows 上的 \\.\CdRom0）&#x0a;  • 盘符 — Windows 驱动器号（例如 D:）&#x0a;  • 型号 — 光驱的厂商与型号名称&#x0a;  • 类型 — 光驱类别（CD-ROM、DVD-RW、BD-RE 等）&#x0a;  • 状态 — 是否已放入光盘，或托盘为空"/>
 
-                        <TextBlock Text="Media Information" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="光盘信息" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Select a drive from the dropdown, then click Probe Media to read details about the inserted disc:&#x0a;&#x0a;  • Media Type — The specific disc format (CD-R, DVD+R DL, BD-RE, etc.)&#x0a;  • Disc State — Empty (blank), Appendable (multi-session with space), or Closed (finalized)&#x0a;  • Volume Label — The name stored on the disc&#x0a;  • Capacity — Total storage capacity of the media&#x0a;  • Used / Free — How much space is used and how much remains&#x0a;  • File System — Detected file system (ISO 9660, UDF, Joliet, HFS+)&#x0a;  • Sessions — Number of sessions on the disc (multi-session discs have more than one)&#x0a;  • Tracks — Number of data and audio tracks"/>
+                                   Text="从下拉框中选择光驱，然后点击“探测介质”读取已放入光盘的详细信息：&#x0a;&#x0a;  • 介质类型 — 具体的光盘格式（CD-R、DVD+R DL、BD-RE 等）&#x0a;  • 光盘状态 — 空白（可写）、可追加（多区段且尚有余量）或已关闭（已封盘）&#x0a;  • 卷标 — 光盘上存储的名称&#x0a;  • 容量 — 介质的总存储容量&#x0a;  • 已用 / 可用 — 已占用与剩余空间&#x0a;  • 文件系统 — 检测到的文件系统（ISO 9660、UDF、Joliet、HFS+）&#x0a;  • 区段 — 光盘上的区段数量（多区段光盘多于一个）&#x0a;  • 轨道 — 数据轨道与音频轨道的数量"/>
 
-                        <TextBlock Text="Drive Capabilities" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="光驱能力" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Shows what the selected drive can read and write: CD, DVD, HD DVD, and Blu-ray. Also lists all supported write speeds."/>
+                                   Text="显示所选光驱可读写的介质类型：CD、DVD、HD DVD 和蓝光，并列出所有支持的写入速度。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="Drive discovery uses native platform APIs: SCSI Generic (SG_IO) on Linux, IOCTL_SCSI_PASS_THROUGH_DIRECT on Windows, and IOKit SCSITaskLib on macOS. Media probing sends MMC READ DISC INFORMATION and READ TRACK INFORMATION SCSI commands to retrieve disc metadata. All sense data buffers are 252 bytes per the SPC-5 specification."/>
+                                           Text="光驱发现使用平台原生 API：Linux 上的 SCSI Generic（SG_IO）、Windows 上的 IOCTL_SCSI_PASS_THROUGH_DIRECT，以及 macOS 上的 IOKit SCSITaskLib。介质探测通过发送 MMC READ DISC INFORMATION 与 READ TRACK INFORMATION 等 SCSI 指令读取光盘元数据。所有 sense data 缓冲区均为 252 字节，符合 SPC-5 规范。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -274,35 +170,27 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionCopyDisc" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Copy Disc to Image" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="💿 复制光盘为镜像" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Copy Disc view reads an optical disc and saves it as an image file on your computer. This is useful for creating backups, archiving discs, or preparing images for later burning."/>
+                                   Text="“复制光盘”视图读取光盘并保存为计算机上的镜像文件，适用于制作备份、归档光盘，或为后续刻录准备镜像。"/>
 
-                        <TextBlock Text="Source &amp; Output" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="源与输出" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Drive — Select which optical drive contains the disc to copy&#x0a;  • Output Format — Choose the image file format: ISO (standard), BIN/CUE (raw with cue sheet), BIN/CUE/SBI (raw with LibCrypt subchannel-Q data for PS1), MDF/MDS, NRG (Nero), IMG (raw), CDI (DiscJuggler), CCD/IMG/SUB (CloneCD with subchannel), TOC/BIN, VCD, SVCD, XSVCD, or XISO (Xbox)&#x0a;  • Output Path — Where to save the image file (you can also drag and drop a file path)"/>
+                                   Text="  • 光驱 — 选择装有待复制光盘的光驱&#x0a;  • 输出格式 — 选择镜像文件格式：ISO（标准）、BIN/CUE（原始扇区并附带 CUE 索引文件）、BIN/CUE/SBI（原始扇区并附带 PS1 的 LibCrypt 子通道 Q 数据）、MDF/MDS、NRG（Nero）、IMG（原始）、CDI（DiscJuggler）、CCD/IMG/SUB（带子通道的 CloneCD）、TOC/BIN、VCD、SVCD、XSVCD 或 XISO（Xbox）&#x0a;  • 输出路径 — 镜像文件的保存位置（也可以拖放文件路径）"/>
 
-                        <TextBlock Text="Copy Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="复制选项" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Copy Speed — Speed at which to read the disc. Lower speeds (e.g. 4x, 8x) improve accuracy on damaged or scratched discs at the cost of longer read times. Maximum speed is fastest but may produce errors on imperfect media.&#x0a;&#x0a;  • Error Recovery — Controls what happens when a sector cannot be read:&#x0a;      – Yes (skip and retry): Retry failed sectors a number of times, then skip&#x0a;      – No (ignore errors): Read continues without retrying&#x0a;      – Abort on error: Stop the entire read if any error occurs&#x0a;&#x0a;  • Retry Count — Number of retry attempts for each failed sector (0–20). More retries can recover data from marginal sectors but increase read time.&#x0a;&#x0a;  • Sector Size — Size of each sector in bytes:&#x0a;      – 2048 bytes: Standard data sector size (suitable for most data discs)&#x0a;      – 2352 bytes: Raw sector size (includes all error correction, sync patterns, and headers — required for audio CDs and accurate disc images)&#x0a;&#x0a;  • Subchannel Mode — Controls extraction of subchannel data alongside main sectors:&#x0a;      – None: No subchannel extraction (fastest, sufficient for most data discs)&#x0a;      – Raw: Extract raw subchannel data (96 bytes per sector)&#x0a;      – Other modes may be available depending on the disc type&#x0a;      Subchannel data is essential for copy-protected discs and many gaming disc formats.&#x0a;&#x0a;  • Audio Paranoia Mode — Extra error correction for audio CDs. Reads each sector multiple times and cross-references results to produce bit-perfect audio copies. Recommended for scratched or damaged audio CDs.&#x0a;&#x0a;  • Jitter Correction — Corrects jitter (timing drift) during audio reading. Enabled by default. Helps ensure sample-accurate audio rips.&#x0a;&#x0a;  • Read all sectors (including bad) — Forces the reader to attempt every sector on the disc, even those flagged as bad. Useful for forensic or archival purposes."/>
+                                   Text="  • 读取速度 — 读取光盘的速度。较低速度（如 4x、8x）可提高受损或划伤光盘的读取准确性，但耗时更长。最高速度最快，但在介质状况不佳时可能产生错误。&#x0a;&#x0a;  • 错误恢复 — 控制无法读取某个扇区时的行为：&#x0a;      – 是（跳过并重试）：对失败扇区重试若干次后跳过&#x0a;      – 否（忽略错误）：直接继续读取，不重试&#x0a;      – 出错即中止：一旦发生错误就停止整个读取过程&#x0a;&#x0a;  • 重试次数 — 每个失败扇区的重试次数（0–20）。重试更多次可从临界扇区恢复数据，但会增加读取时间。&#x0a;&#x0a;  • 扇区大小 — 每个扇区的字节数：&#x0a;      – 2048 字节：标准数据扇区大小（适用于大多数数据光盘）&#x0a;      – 2352 字节：原始扇区大小（包含全部纠错码、同步模式与头部——音频 CD 与精确光盘镜像所必需）&#x0a;&#x0a;  • 子通道模式 — 控制是否在主扇区之外提取子通道数据：&#x0a;      – 无：不提取子通道数据（最快，对大多数数据光盘足够）&#x0a;      – 原始：提取原始子通道数据（每扇区 96 字节）&#x0a;      – 其他模式可能因光盘类型而异&#x0a;      对于受复制保护的光盘和许多游戏光盘格式，子通道数据至关重要。&#x0a;&#x0a;  • 音频精确抓取模式 — 针对音频 CD 的额外纠错。对每个扇区多次读取并交叉比对结果，以生成位精确的音频副本，建议用于划伤或受损的音频 CD。&#x0a;&#x0a;  • 抖动校正 — 在音频读取过程中校正抖动（时序漂移），默认启用，有助于确保音频抓取达到采样级精确。&#x0a;&#x0a;  • 读取所有扇区（含坏扇区）— 强制读取器尝试光盘上的每一个扇区，包括被标记为坏扇区的部分。适用于取证或归档用途。"/>
 
-                        <TextBlock Text="Gaming System Presets" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="游戏机预设" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Pre-configured settings for various gaming consoles. Selecting a preset automatically configures the sector size, subchannel mode, and error recovery to match the requirements of that system. Supported systems include PlayStation 1–5, PSP (UMD), Sega Saturn, Dreamcast, Mega CD, Xbox, Xbox 360, Xbox One/Series, GameCube, Wii, Wii U, Neo Geo CD, 3DO, Philips CD-i, PC Engine CD, Atari Jaguar CD, and Amiga CD32/CDTV."/>
+                                   Text="针对多种游戏机的预配置设置。选择预设后会自动配置扇区大小、子通道模式与错误恢复方式，以满足该平台的要求。支持的系统包括 PlayStation 1–5、PSP（UMD）、Sega Saturn、Dreamcast、Mega CD、Xbox、Xbox 360、Xbox One/Series、GameCube、Wii、Wii U、Neo Geo CD、3DO、Philips CD-i、PC Engine CD、Atari Jaguar CD 以及 Amiga CD32/CDTV。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="Raw sector reads use the MMC READ CD command (opcode 0xBE) with expected sector type and subchannel selector fields. Standard reads use READ(10) at 2048 bytes/sector. Audio sectors are read with Audio Paranoia mode using multiple overlapping reads to detect and correct C1/C2 errors. Jitter correction aligns audio samples across consecutive reads to eliminate inter-read offset drift."/>
+                                           Text="原始扇区读取使用 MMC READ CD 指令（操作码 0xBE），并指定预期扇区类型与子通道选择字段。标准读取使用 READ(10)，每扇区 2048 字节。音频扇区通过精确抓取模式以多次重叠读取来检测并纠正 C1/C2 错误。抖动校正会在连续读取之间对齐音频采样，以消除读取间的偏移漂移。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -313,47 +201,39 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionBuildImage" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-construction-2d-16.png"/>
-                            <TextBlock Text="Build Disc Image" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🏗 构建光盘镜像" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Build Image view creates disc images from files and folders on your computer. You can create data discs, audio CDs, bootable discs, and more."/>
+                                   Text="“构建镜像”视图可从计算机上的文件与文件夹创建光盘镜像，可制作数据光盘、音频 CD、可引导光盘等。"/>
 
-                        <TextBlock Text="Disc &amp; Filesystem Settings" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="光盘与文件系统设置" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Disc Type — Target disc type (CD, DVD, Blu-ray, etc.). Determines the capacity indicator.&#x0a;  • File System — The file system format for the image:&#x0a;      – ISO 9660: The universal standard. Compatible with virtually all operating systems and devices.&#x0a;      – Joliet: Extension of ISO 9660 adding long filenames (up to 64 chars) and Unicode support.&#x0a;      – UDF: Modern file system supporting large files (&gt;4 GB), required for DVD-Video, Blu-ray, and large data discs.&#x0a;      – Rock Ridge: Extension adding POSIX metadata (permissions, symlinks, long names) — mainly for Linux/Unix.&#x0a;      – HFS+: Apple's file system for macOS compatibility.&#x0a;  • Volume Label — A name that appears when the disc is mounted (e.g. in File Explorer or Finder).&#x0a;  • Capacity — Shows the target capacity based on the selected disc type."/>
+                                   Text="  • 光盘类型 — 目标光盘类型（CD、DVD、蓝光等），决定容量指示。&#x0a;  • 文件系统 — 镜像使用的文件系统格式：&#x0a;      – ISO 9660：通用标准，几乎兼容所有操作系统与设备。&#x0a;      – Joliet：ISO 9660 的扩展，增加长文件名（最多 64 个字符）与 Unicode 支持。&#x0a;      – UDF：现代文件系统，支持大文件（&gt;4 GB），DVD-Video、蓝光和大型数据光盘必需。&#x0a;      – Rock Ridge：增加 POSIX 元数据（权限、符号链接、长文件名）的扩展——主要用于 Linux/Unix。&#x0a;      – HFS+：Apple 的文件系统，用于兼容 macOS。&#x0a;  • 卷标 — 光盘挂载时显示的名称（例如在文件资源管理器或 Finder 中）。&#x0a;  • 容量 — 根据所选光盘类型显示目标容量。"/>
 
-                        <TextBlock Text="Source &amp; Output" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="源与输出" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Source Folder — The folder containing files to add to the disc image. You can also drag and drop.&#x0a;  • Output Image — Path where the .iso (or other format) file will be saved.&#x0a;  • Publisher — Publisher name stored in the disc metadata (optional).&#x0a;  • Preparer — Data preparer identifier in the disc metadata (optional).&#x0a;  • Application — Application identifier in the disc metadata (optional)."/>
+                                   Text="  • 源文件夹 — 包含要添加到光盘镜像的文件所在的文件夹，也可以直接拖放。&#x0a;  • 输出镜像 — .iso（或其他格式）文件的保存路径。&#x0a;  • 出版者 — 写入光盘元数据的出版者名称（可选）。&#x0a;  • 制作者 — 光盘元数据中的数据制作者标识（可选）。&#x0a;  • 应用程序 — 光盘元数据中的应用程序标识（可选）。"/>
 
-                        <TextBlock Text="Advanced Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="高级选项" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Joliet long filenames — Allow filenames longer than 64 characters using Joliet (may reduce compatibility with older systems).&#x0a;  • Rock Ridge extensions — Add POSIX metadata (permissions, symbolic links, long names) for Linux/Unix compatibility.&#x0a;  • Deep directory nesting — Allow directory trees deeper than 8 levels (relaxes the ISO 9660 limit).&#x0a;  • Allow lowercase filenames — Permits lowercase characters in ISO 9660 filenames (non-standard but widely supported).&#x0a;  • Allow special characters — Allows special characters beyond the ISO 9660 d-character set in filenames.&#x0a;  • Pad disc to capacity — Fills unused space with zeros, which some older readers require.&#x0a;  • Sort files — Sort files alphabetically within each directory.&#x0a;  • Charset — Character encoding for filenames: UTF-8 (recommended), ISO-8859-1 (Western European), or ASCII."/>
+                                   Text="  • Joliet 长文件名 — 允许通过 Joliet 使用超过 64 个字符的文件名（可能降低与旧系统的兼容性）。&#x0a;  • Rock Ridge 扩展 — 添加 POSIX 元数据（权限、符号链接、长文件名）以兼容 Linux/Unix。&#x0a;  • 深层目录嵌套 — 允许超过 8 层的目录结构（放宽 ISO 9660 的限制）。&#x0a;  • 允许小写文件名 — 允许 ISO 9660 文件名使用小写字符（非标准，但已被广泛支持）。&#x0a;  • 允许特殊字符 — 允许文件名使用 ISO 9660 d 字符集之外的字符。&#x0a;  • 补零填充光盘 — 用零填充未使用空间，某些较旧的读取设备有此要求。&#x0a;  • 排序文件 — 在每个目录内按字母顺序排列文件。&#x0a;  • 字符集 — 文件名的字符编码：UTF-8（推荐）、ISO-8859-1（西欧）或 ASCII。"/>
 
-                        <TextBlock Text="Boot Image (El Torito)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="引导镜像（El Torito）" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Create bootable optical discs using the El Torito standard:&#x0a;&#x0a;  • Create bootable disc — Enable the El Torito boot catalog on the disc.&#x0a;  • Boot image file — Path to the boot image (e.g. isolinux.bin, GRUB image).&#x0a;  • Emulation Mode:&#x0a;      – No Emulation: For modern bootloaders (ISOLINUX, GRUB). Most common.&#x0a;      – Floppy (1.2 / 1.44 / 2.88 MB): Emulates a floppy disk for legacy BIOS compatibility.&#x0a;      – Hard Disk: Emulates a hard disk boot device.&#x0a;  • Platform: x86 (BIOS), PowerPC, Mac, or EFI (UEFI).&#x0a;  • Load Segment — Memory address to load the boot image (hex, 0 = default 0x07C0).&#x0a;  • Sector Count — Number of 512-byte virtual sectors to load (0 = auto-detect).&#x0a;  • Patch boot info table — Required by ISOLINUX and GRUB. Patches the boot image with LBA and size.&#x0a;  • EFI dual-boot image — Optional second boot image for UEFI, enabling dual BIOS+UEFI boot."/>
+                                   Text="使用 El Torito 引导标准创建可引导光盘：&#x0a;&#x0a;  • 创建可引导光盘 — 在光盘上启用 El Torito 引导目录。&#x0a;  • 引导镜像文件 — 引导镜像的路径（例如 isolinux.bin、GRUB 镜像）。&#x0a;  • 仿真模式：&#x0a;      – 不仿真：用于现代引导程序（ISOLINUX、GRUB），最常用。&#x0a;      – 软盘（1.2 / 1.44 / 2.88 MB）：模拟软盘，用于兼容传统 BIOS。&#x0a;      – 硬盘：模拟硬盘引导设备。&#x0a;  • 平台：x86（BIOS）、PowerPC、Mac 或 EFI（UEFI）。&#x0a;  • 加载段 — 加载引导镜像的内存地址（十六进制，0 = 默认 0x07C0）。&#x0a;  • 扇区数 — 要加载的 512 字节虚拟扇区数（0 = 自动检测）。&#x0a;  • 修补引导信息表 — ISOLINUX 与 GRUB 必需。将 LBA 与大小信息修补到引导镜像中。&#x0a;  • EFI 双引导镜像 — 用于 UEFI 的可选第二引导镜像，可实现 BIOS+UEFI 双引导。"/>
 
-                        <TextBlock Text="CD-XA &amp; CD-i Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="CD-XA 与 CD-i 选项" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • CD-ROM XA mode — Marks the disc as CD-ROM XA (Mode 2 sectors). Required for VCD/SVCD discs and CD-i. Injects the CD-XA001 marker into the Primary Volume Descriptor.&#x0a;  • Include CD-i application stub — Adds a minimal CD-i application module for VCD playback on Philips CD-i players (Green Book standard). Only applicable for VCD builds."/>
+                                   Text="  • CD-ROM XA 模式 — 将光盘标记为 CD-ROM XA（Mode 2 扇区），VCD/SVCD 光盘与 CD-i 必需。会向主卷描述符中注入 CD-XA001 标记。&#x0a;  • 包含 CD-i 应用模块 — 添加一个最小的 CD-i 应用模块，以便在 Philips CD-i 播放机上播放 VCD（Green Book 标准）。仅适用于 VCD 构建。"/>
 
-                        <TextBlock Text="Audio CD Builder" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="音频 CD 制作" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Build audio CDs with optional CD-TEXT metadata embedded in the subchannel:&#x0a;&#x0a;  • Album Title, Artist, Songwriter, Composer, Arranger — CD-TEXT fields visible on compatible players.&#x0a;  • Genre, Disc Message — Additional CD-TEXT metadata.&#x0a;  • MCN/UPC — 13-digit Media Catalog Number (UPC/EAN barcode).&#x0a;  • Track list — Add audio tracks (WAV files) with per-track title and artist.&#x0a;&#x0a;CD-TEXT data is stored in the disc's Q-subchannel and is displayed by car stereos, CD players, and software that supports it."/>
+                                   Text="制作音频 CD，可选地将 CD-TEXT 文本元数据嵌入子通道：&#x0a;&#x0a;  • 专辑标题、艺术家、词作者、作曲、编曲 — 兼容播放机上可见的 CD-TEXT 字段。&#x0a;  • 流派、光盘信息 — 其他 CD-TEXT 元数据。&#x0a;  • MCN/UPC — 13 位媒体目录号（UPC/EAN 条码）。&#x0a;  • 轨道列表 — 添加音频轨道（WAV 文件），并可为每条轨道设置标题与艺术家。&#x0a;&#x0a;CD-TEXT 数据存储在光盘的 Q 子通道中，可由车载音响、CD 播放机及支持该功能的软件显示。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="ISO 9660 images are built by writing the System Area (32 KB), Primary Volume Descriptor (PVD), optional supplementary descriptors (Joliet SVD, El Torito boot catalog), path tables, and directory records followed by file data extents. UDF images follow the ECMA-167 / OSTA UDF specification. El Torito boot catalogs reference Initial/Default Entry boot images. Audio CD images consist of 2352-byte raw PCM sectors at 44100 Hz, 16-bit stereo. CD-TEXT packs are written as 18-byte R-W subchannel packs per Red Book Annex J."/>
+                                           Text="ISO 9660 镜像的写入顺序为：系统区（32 KB）、主卷描述符（PVD）、可选的补充描述符（Joliet SVD、El Torito 引导目录）、路径表与目录记录，随后是文件数据区。UDF 镜像遵循 ECMA-167 / OSTA UDF 规范。El Torito 引导目录引用初始/默认条目的引导镜像。音频 CD 镜像由 2352 字节的原始 PCM 扇区组成，采样率 44100 Hz、16 位立体声。CD-TEXT 数据包按 Red Book 附录 J 以 18 字节的 R-W 子通道包写入。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -364,47 +244,39 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionBurnWrite" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn / Write Disc" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🔥 刻录 / 写入光盘" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Burn view writes disc images to optical media, or builds and burns directly (on-the-fly). It supports all common media types from CD-R to BDXL."/>
+                                   Text="“刻录”视图可将光盘镜像写入光盘介质，也可直接构建并刻录（即时刻录）。支持从 CD-R 到 BDXL 的所有常见介质类型。"/>
 
-                        <TextBlock Text="Source Mode" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="源模式" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Choose how to provide the data to burn:&#x0a;&#x0a;  • Image File — Burn a pre-existing disc image file (.iso, .bin, .chd, .nrg, .mdf, .cdi, .ccd, .img). Browse or drag and drop the file. Non-native formats (NRG, MDF/MDS, CDI, CCD, IMG, CHD) are automatically converted to BIN/CUE for burning (CHD extraction requires chdman).&#x0a;  • Build on the fly — Select files and folders to build and burn directly to disc without creating a separate image file first. You can specify a source folder, add individual files/folders, set a volume label, and choose the file system."/>
+                                   Text="选择待刻录数据的提供方式：&#x0a;&#x0a;  • 镜像文件 — 刻录已有的光盘镜像文件（.iso、.bin、.nrg、.mdf、.cdi、.ccd、.img）。可浏览选择或拖放文件。非原生格式（NRG、MDF/MDS、CDI、CCD、IMG）会自动转换为 BIN/CUE 后再刻录。&#x0a;  • 即时构建 — 选择文件与文件夹，直接构建并刻录到光盘，无需先生成独立的镜像文件。可指定源文件夹、添加单个文件/文件夹、设置卷标并选择文件系统。"/>
 
-                        <TextBlock Text="Target Drive &amp; Write Settings" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="目标光驱与写入设置" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Drive — Select the burner drive to write to.&#x0a;  • Write Speed — Speed of the burn. Slower speeds (e.g. 4x, 8x) produce more reliable burns with fewer errors, especially on low-quality media. Maximum uses the highest speed the drive and media support.&#x0a;  • Write Mode:&#x0a;      – DAO (Disc-At-Once): Writes the entire disc in one pass without gaps. Best for audio CDs, gaming discs, and single-session data. The laser never turns off during writing.&#x0a;      – TAO (Track-At-Once): Writes one track at a time, with 2-second gaps between tracks. Allows multi-session. Suitable for data discs.&#x0a;      – SAO (Session-At-Once): Writes one complete session at a time.&#x0a;  • Copies — Number of disc copies to burn (1–99). The application prompts you to insert new media between each copy."/>
+                                   Text="  • 光驱 — 选择用于写入的刻录机。&#x0a;  • 写入速度 — 刻录速度。较低速度（如 4x、8x）刻录更可靠、错误更少，尤其在低质量介质上。最高速度会使用光驱与介质支持的最高值。&#x0a;  • 写入模式：&#x0a;      – DAO（Disc-At-Once，整盘一次写入）：一次连续写完整个光盘，轨道间无间隙。最适合音频 CD、游戏光盘与单区段数据光盘，写入过程中激光不会关闭。&#x0a;      – TAO（Track-At-Once，单轨道写入）：逐条轨道写入，轨道间有 2 秒间隙。支持多区段，适用于数据光盘。&#x0a;      – SAO（Session-At-Once，单区段写入）：每次写入一个完整区段。&#x0a;  • 份数 — 要刻录的光盘份数（1–99）。每份之间应用会提示插入新的介质。"/>
 
-                        <TextBlock Text="Burn Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="刻录选项" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Eject after burn — Automatically opens the disc tray when the burn completes, so you can remove the disc or insert a new one.&#x0a;&#x0a;  • Verify after burn — Reads the entire disc back after burning and compares it to the source image. Strongly recommended for important data.&#x0a;&#x0a;  • Simulate / Test write — Performs a full burn simulation (laser on, but at test power) without actually writing data. Use this to check if your drive, media, and settings work before committing to a real burn.&#x0a;&#x0a;  • Buffer underrun protection — Prevents buffer underrun errors by pausing and resuming the laser when the data buffer runs low. Supported by nearly all modern drives (BURN-Proof, SafeBurn, etc.). Keep this enabled unless you have a specific reason not to.&#x0a;&#x0a;  • Close / Finalize disc — Closes the disc session, making it readable in standalone players and non-writing drives. Required for DVD-Video, Blu-ray, and audio CDs to play in consumer devices. Disabling this leaves the disc appendable for multi-session.&#x0a;&#x0a;  • Overburn — Write beyond the official rated capacity of the disc. Risky — the outer edge of the disc is less reliable. Only use if you know your media can handle it. The overburn limit (in MB) controls how far past the rated capacity to write."/>
+                                   Text="  • 刻录后弹出 — 刻录完成后自动打开光盘托盘，便于取出光盘或放入新盘。&#x0a;&#x0a;  • 刻录后校验 — 刻录完成后回读整张光盘并与源镜像比对，重要数据强烈建议启用。&#x0a;&#x0a;  • 模拟刻录 / 测试写入 — 执行完整的刻录模拟（激光开启，但使用测试功率），不实际写入数据。可在正式刻录前验证光驱、介质与设置是否正常。&#x0a;&#x0a;  • 缓存欠载保护 — 在数据缓冲区不足时暂停并恢复激光，避免缓存欠载错误。几乎所有现代光驱都支持（BURN-Proof、SafeBurn 等）。除非有特殊理由，否则应保持启用。&#x0a;&#x0a;  • 关闭 / 封盘 — 关闭光盘区段，使其可被独立播放机和不支持写入的光驱读取。DVD-Video、蓝光和音频 CD 需要在消费类设备上播放时必须执行。禁用后光盘保持可追加状态，以便多区段写入。&#x0a;&#x0a;  • 超刻 — 写入超出光盘标称容量。存在风险——光盘外圈可靠性较低。仅在确认介质可承受时使用。超刻上限（MB）控制超出标称容量的写入量。"/>
 
-                        <TextBlock Text="Multi-Session" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="多区段" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Controls whether the disc can have data added later:&#x0a;&#x0a;  • Close (Single Session) — Writes one session and finalizes the disc. No more data can be added.&#x0a;  • Start (Multi-session) — Starts a new multi-session disc. Additional sessions can be appended later.&#x0a;  • Continue (Append session) — Adds a new session to an existing multi-session disc.&#x0a;&#x0a;Multi-session is only supported on CD-R, CD-RW, DVD-R, DVD+R, and some BD-R media. Each session has overhead (~13 MB on CD, ~30 MB on DVD), so total usable capacity decreases with each session."/>
+                                   Text="控制光盘后续是否还能追加数据：&#x0a;&#x0a;  • 关闭（单区段）— 写入一个区段并封盘，之后无法再追加数据。&#x0a;  • 开始（多区段）— 新建一张多区段光盘，之后可继续追加区段。&#x0a;  • 继续（追加区段）— 在现有多区段光盘上追加一个新区段。&#x0a;&#x0a;多区段仅受 CD-R、CD-RW、DVD-R、DVD+R 及部分 BD-R 介质支持。每个区段都有额外开销（CD 约 13 MB，DVD 约 30 MB），因此总可用容量会随区段增加而减少。"/>
 
-                        <TextBlock Text="Advanced Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="高级选项" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Force Media Type — Override automatic media type detection. Useful if the drive misidentifies media.&#x0a;  • BD-R Mode — Blu-ray Disc Recordable writing mode:&#x0a;      – SRM (Sequential Recording Mode): Standard sequential writing.&#x0a;      – SRM+POW: Sequential with Pseudo-Overwrite support.&#x0a;      – RRM (Random Recording Mode): Allows random-access writing (BD-RE-like behavior on BD-R).&#x0a;  • DVD Layer Break — Layer break position (in sectors) for dual-layer DVD. Set to 0 for automatic placement. Incorrect layer break position can cause playback issues on DVD players."/>
+                                   Text="  • 强制介质类型 — 覆盖自动介质类型检测。当光驱误判介质时很有用。&#x0a;  • BD-R 模式 — 蓝光可记录光盘的写入模式：&#x0a;      – SRM（顺序记录模式）：标准顺序写入。&#x0a;      – SRM+POW：支持伪覆盖的顺序写入。&#x0a;      – RRM（随机记录模式）：允许随机访问写入（在 BD-R 上获得类似 BD-RE 的行为）。&#x0a;  • DVD 换层点 — 双层 DVD 的换层位置（以扇区计）。设为 0 表示自动确定。换层点位置不当可能导致 DVD 播放机播放异常。"/>
 
-                        <TextBlock Text="Gaming Patches &amp; Special Formats" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="游戏补丁与特殊格式" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • LibCrypt protection (PS1) — Applies LibCrypt subchannel patching for PlayStation 1 games using an .sbi file. The SBI file contains the protected sector information.&#x0a;  • Dreamcast GDI/CDI patching — Applies patches specific to Sega Dreamcast disc images in GDI or CDI format.&#x0a;  • Region-free patching — Removes region lock restrictions from the disc image.&#x0a;  • Boot sector patching — Patches the boot sector for compatibility with modified console firmware.&#x0a;  • ESR patch (PS2 DVD-R) — Injects a DVD-Video UDF structure into a PS2 ISO image so that the MechaCon controller treats the disc as a DVD-Video, bypassing the PS2 authentication check on DVD-R media.&#x0a;  • Master Disc patch (PS2) — Writes the 'PlayStation Master Disc' identifier into sectors 12-13 for use with MechaPwn DEX PS2 consoles. Supports NTSC-J, NTSC-U, PAL, and WORLD region settings.&#x0a;  • PSX 80 Minute patch (PS1/PS2 CD-R) — Appends 27,000 dummy sectors (2352 bytes each) to a raw BIN image for compatibility with 80-minute CD-R media on PlayStation consoles.&#x0a;  • PSX Undither patch (PS1) — Scans a raw PS1 BIN image for GPU dithering patterns and patches them out, improving visual quality on modern displays.&#x0a;&#x0a;Gaming patches should only be used with legally owned software."/>
+                                   Text="  • LibCrypt 保护（PS1）— 使用 .sbi 文件对 PlayStation 1 游戏应用 LibCrypt 子通道修补。SBI 文件包含受保护扇区的信息。&#x0a;  • Dreamcast GDI/CDI 修补 — 对 GDI 或 CDI 格式的 Sega Dreamcast 光盘镜像应用专用补丁。&#x0a;  • 全区修补 — 移除光盘镜像中的区域锁定限制。&#x0a;  • 引导扇区修补 — 修补引导扇区，以兼容修改过固件的游戏机。&#x0a;  • ESR 补丁（PS2 DVD-R）— 向 PS2 ISO 镜像注入 DVD-Video UDF 结构，使 MechaCon 控制器将该光盘识别为 DVD-Video，从而绕过 DVD-R 介质上的 PS2 认证检查。&#x0a;  • Master Disc 补丁（PS2）— 将“PlayStation Master Disc”标识写入第 12–13 扇区，供 MechaPwn DEX PS2 主机使用。支持 NTSC-J、NTSC-U、PAL 和 WORLD 区域设置。&#x0a;  • PSX 80 分钟补丁（PS1/PS2 CD-R）— 向原始 BIN 镜像追加 27,000 个空扇区（每个 2352 字节），以兼容 PlayStation 主机上的 80 分钟 CD-R 介质。&#x0a;  • PSX 去抖动补丁（PS1）— 扫描原始 PS1 BIN 镜像中的 GPU 抖动图案并将其修补去除，从而在现代显示器上改善画质。&#x0a;&#x0a;⚠&#xFE0F; 游戏补丁仅应在拥有合法软件的前提下使用。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="Burning uses the MMC WRITE(12) command for DVD/Blu-ray media (32-bit transfer length for reduced command overhead) and WRITE(10) for standard audio/data CDs (16-bit transfer length). DAO mode uses the SET WRITE PARAMETERS mode page to configure the drive before issuing WRITE commands. Buffer underrun protection is enabled via the BURN-Free bit in the write parameters mode page. The disc visualization shows the current LBA (Logical Block Address) mapped to a physical spiral position on the disc in real time."/>
+                                           Text="刻录 DVD/蓝光介质时使用 MMC WRITE(12) 指令（32 位传输长度以降低指令开销），刻录标准音频/数据 CD 时使用 WRITE(10)（16 位传输长度）。DAO 模式在发送 WRITE 指令前通过 SET WRITE PARAMETERS 模式页配置光驱。缓存欠载保护通过写入参数模式页中的 BURN-Free 位启用。光盘可视化会实时显示当前 LBA（逻辑块地址）映射到光盘螺旋轨道上的物理位置。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -415,35 +287,27 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionVerify" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
-                            <TextBlock Text="Verify / Check" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="✅ 校验 / 检查" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Verify view checks disc integrity, compares a disc to an image file, or validates image checksums. Verification is essential to ensure your burned discs are error-free."/>
+                                   Text="“校验”视图可检查光盘完整性、将光盘与镜像文件比对，或验证镜像的校验和。校验是确保刻录光盘无错误的关键步骤。"/>
 
-                        <TextBlock Text="Verification Modes" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="校验模式" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Verify Disc — Reads every sector on the disc and computes a checksum. Reports total, good, and bad sectors. Use this to check the general health of a disc.&#x0a;&#x0a;  • Compare Disc to Image — Reads the disc and compares it sector-by-sector against an image file. Detects any differences between what was burned and the original image.&#x0a;&#x0a;  • Check Image Integrity — Computes a checksum of an image file without needing a disc. Useful to verify downloaded images match their published checksums."/>
+                                   Text="  • 校验光盘 — 读取光盘上的每个扇区并计算校验和，报告中扇区、好扇区与坏扇区的数量。可用于检查光盘的整体健康状况。&#x0a;&#x0a;  • 光盘与镜像比对 — 读取光盘并与镜像文件逐扇区比对，可发现实际刻录内容与原始镜像之间的任何差异。&#x0a;&#x0a;  • 检查镜像完整性 — 无需光盘即可计算镜像文件的校验和，适合验证下载的镜像是否与公布的校验和一致。"/>
 
-                        <TextBlock Text="Verification Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="校验选项" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Checksum Type — The hash algorithm to use:&#x0a;      – SHA-256: Strong, widely used. Recommended for general use.&#x0a;      – SHA-1: Legacy but still common.&#x0a;      – MD5: Fast but cryptographically weak. Fine for data integrity checks.&#x0a;      – SHA-512: Strongest option. Slightly slower.&#x0a;      – CRC32: Very fast but only a 32-bit check. Good for quick sanity checks.&#x0a;&#x0a;  • Sector-by-sector comparison — Compares every sector individually (thorough but slower). Recommended.&#x0a;  • Verify subchannel data — Also checks subchannel data stored alongside main sectors.&#x0a;  • Audio track verification — When enabled, reads and verifies audio track data from the disc alongside data tracks. Essential for complete verification of mixed-mode CDs (e.g. PS1 games with audio tracks). When disabled, only data tracks are compared."/>
+                                   Text="  • 校验和类型 — 使用的哈希算法：&#x0a;      – SHA-256：强度高、应用广泛，推荐日常使用。&#x0a;      – SHA-1：较旧但仍然常见。&#x0a;      – MD5：速度快但加密强度弱，用于数据完整性检查尚可。&#x0a;      – SHA-512：强度最高，速度略慢。&#x0a;      – CRC32：速度极快，但仅 32 位校验，适合快速初步检查。&#x0a;&#x0a;  • 逐扇区比对 — 逐个扇区进行比对（更彻底但更慢），推荐使用。&#x0a;  • 校验子通道数据 — 同时检查与主扇区一同存储的子通道数据。&#x0a;  • 音频轨道校验 — 启用后会一并读取并校验光盘上的音频轨道数据。对于混合模式 CD（如带音轨的 PS1 游戏）的完整校验必不可少。禁用时仅比对数据轨道。"/>
 
-                        <TextBlock Text="Results" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="结果" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="After verification completes, the Results panel shows:&#x0a;  • Total Sectors scanned&#x0a;  • Good Sectors (passed)&#x0a;  • Bad Sectors (errors or mismatches)&#x0a;  • Checksum value (can be copied to clipboard)&#x0a;  • Overall result (Pass or Fail)&#x0a;&#x0a;The disc visualization shows a real-time map of the verification progress on a virtual disc spiral."/>
+                                   Text="校验完成后，“结果”面板会显示：&#x0a;  • 已扫描扇区总数&#x0a;  • 好扇区（通过）&#x0a;  • 坏扇区（错误或不匹配）&#x0a;  • 校验和值（可复制到剪贴板）&#x0a;  • 总体结果（通过 ✅ 或失败 ❌）&#x0a;&#x0a;光盘可视化会在虚拟光盘螺旋上实时显示校验进度。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="For raw BIN/CUE images, disc verification uses READ CD (raw 2352-byte sectors) instead of READ(10). Each sector is individually classified by its sync pattern: sectors with the CD sync pattern are data (2048 bytes of user data extracted), sectors without sync are audio. When Audio Track Verification is enabled, audio sectors are hashed at the full 2352 bytes per sector. Both the disc side and image side use the exact same per-sector classification logic, ensuring consistent checksums regardless of CUE layout (single-file or multi-file) or pregap placement. On mixed-mode CDs, the 150-frame pregap between data and audio tracks is correctly handled: data ranges exclude the pregap (which contains audio-format sectors), and audio ranges include it when Audio Track Verification is enabled. If a sector read fails with the initial expected sector type, the engine retries with CD-DA type to recover pregap sectors near track boundaries. The disc visualization maps LBA positions to physical radius on the disc spiral (inner hub to outer edge)."/>
+                                           Text="对于原始 BIN/CUE 镜像，光盘校验使用 READ CD（原始 2352 字节扇区）而非 READ(10)。每个扇区按其同步模式单独分类：带有 CD 同步模式的扇区为数据扇区（从中提取 2048 字节用户数据），不带同步模式的扇区为音频扇区。启用音频轨道校验后，音频扇区按完整的每扇区 2352 字节计算哈希。光盘侧与镜像侧使用完全相同的逐扇区分类逻辑，因此无论 CUE 布局为单文件还是多文件、预间隙如何布置，校验和都保持一致。对于混合模式 CD，数据与音频轨道之间的 150 帧预间隙会被正确处理：数据范围排除预间隙（其中包含音频格式的扇区），而在启用音频轨道校验时音频范围会包含它。若按初始预期扇区类型读取失败，引擎会以 CD-DA 类型重试，以恢复轨道边界附近的预间隙扇区。光盘可视化将 LBA 位置映射为光盘螺旋上的物理半径（从内圈轮毂到外缘）。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -454,35 +318,27 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionAdvanced" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Advanced Utilities" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="⚙&#xFE0F; 高级工具" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Advanced view provides direct drive operations: ejecting/loading the tray, blanking rewritable discs, and formatting media."/>
+                                   Text="“高级”视图提供直接的光驱操作：弹出/载入托盘、擦除可重写光盘以及格式化介质。"/>
 
-                        <TextBlock Text="Eject / Load Tray" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="弹出 / 载入托盘" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Eject Tray — Opens the disc tray so you can insert or remove a disc.&#x0a;  • Load Tray — Closes the disc tray (on drives with motorized trays)."/>
+                                   Text="  • 弹出托盘 — 打开光盘托盘，以便放入或取出光盘。&#x0a;  • 载入托盘 — 关闭光盘托盘（适用于电动托盘的光驱）。"/>
 
-                        <TextBlock Text="Blank / Erase Rewritable Disc" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="擦除可重写光盘" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Erases CD-RW, DVD±RW, or BD-RE media so it can be rewritten:&#x0a;&#x0a;  • Quick Blank — Only erases the Table of Contents (TOC) and lead-in area. Very fast (a few seconds), but the old data remains physically on the disc and may be recoverable with specialized tools.&#x0a;&#x0a;  • Full Blank — Overwrites the entire disc surface with zeros. Takes much longer (10–30 minutes for CD-RW, longer for DVD/BD) but ensures no old data remains.&#x0a;&#x0a;You must blank a rewritable disc before writing new data to it (unless the drive supports automatic overwrite, as with DVD+RW and BD-RE)."/>
+                                   Text="擦除 CD-RW、DVD±RW 或 BD-RE 介质，使其可重新写入：&#x0a;&#x0a;  • 快速擦除 — 仅擦除目录（TOC）与导入区。速度极快（数秒），但旧数据仍物理保留在光盘上，可能被专用工具恢复。&#x0a;&#x0a;  • 完全擦除 — 用零覆盖整个光盘表面。耗时较长（CD-RW 约 10–30 分钟，DVD/BD 更久），但可确保不残留旧数据。&#x0a;&#x0a;向可重写光盘写入新数据前必须先擦除（除非光驱支持自动覆盖，如 DVD+RW 与 BD-RE）。"/>
 
-                        <TextBlock Text="Format Disc" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="格式化光盘" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Formats DVD+RW, DVD-RAM, BD-R, BD-RE, or HD DVD-RW media. Some media types require formatting before first use:&#x0a;&#x0a;  • Quick Format — Prepares the disc for use without full surface certification. Fast.&#x0a;  • Full Format — Performs surface certification across the entire disc. Slower but ensures disc integrity. Recommended for archival use and BD-R media.&#x0a;&#x0a;Note: DVD+RW media must be formatted before first use. BD-RE and DVD-RAM benefit from formatting but can often be used directly."/>
+                                   Text="格式化 DVD+RW、DVD-RAM、BD-R、BD-RE 或 HD DVD-RW 介质。部分介质类型在首次使用前需要格式化：&#x0a;&#x0a;  • 快速格式化 — 在不做完整表面认证的情况下准备好光盘，速度快。&#x0a;  • 完全格式化 — 对整张光盘进行表面认证，速度较慢，但可确保光盘完整性。建议用于归档用途和 BD-R 介质。&#x0a;&#x0a;注意：DVD+RW 介质首次使用前必须格式化。BD-RE 与 DVD-RAM 格式化后表现更好，但通常也可直接使用。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="Blanking sends the MMC BLANK command (opcode 0xA1) with type 0x00 (full) or 0x01 (minimal/quick). Formatting uses the FORMAT UNIT command (opcode 0x04) with appropriate format descriptors for each media type. Tray operations use START STOP UNIT (opcode 0x1B) with the LoEj and Start bits."/>
+                                           Text="擦除会发送 MMC BLANK 指令（操作码 0xA1），类型为 0x00（完全）或 0x01（最小/快速）。格式化使用 FORMAT UNIT 指令（操作码 0x04），并针对每种介质类型使用相应的格式描述符。托盘操作使用 START STOP UNIT（操作码 0x1B）以及 LoEj 和 Start 位。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -493,31 +349,23 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionEncryption" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"/>
-                            <TextBlock Text="Disc Image Encryption" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🔒 光盘镜像加密" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Open Burning Suite includes a built-in disc image encryption feature to protect sensitive backups. You can encrypt any disc image file with a password and decrypt it later for burning or verification."/>
+                                   Text="Open Burning Suite 内置光盘镜像加密功能，用于保护敏感备份。可对任意光盘镜像文件进行密码加密，并在需要刻录或校验时解密。"/>
 
-                        <TextBlock Text="Encryption" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="加密" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="To encrypt a disc image, select the image file and provide a strong password. The encrypted image is saved with the .obse extension (Open Burning Suite Encrypted). The original file is not modified."/>
+                                   Text="要加密光盘镜像，请选择镜像文件并设置强密码。加密后的镜像以 .obse 扩展名保存（Open Burning Suite Encrypted），原始文件不会被修改。"/>
 
-                        <TextBlock Text="Decryption" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="解密" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="When you select an .obse file for burning or verification, you will be prompted to enter the decryption password. The image is decrypted transparently before the operation begins."/>
+                                   Text="选择 .obse 文件进行刻录或校验时，应用会提示输入解密密码。操作开始前会透明地解密镜像。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="Encryption uses AES-256-CBC with PBKDF2 (RFC 8018) key derivation from the password. The file header contains the magic bytes 'OBSE', format version, KDF salt, initialization vector, HMAC-SHA256 integrity tag, and the original file size. The HMAC verifies the encrypted payload has not been tampered with before decryption begins."/>
+                                           Text="加密采用 AES-256-CBC，并通过 PBKDF2（RFC 8018）从密码派生密钥。文件头包含魔数字节“OBSE”、格式版本、KDF 盐值、初始化向量、HMAC-SHA256 完整性标签以及原始文件大小。解密开始前会通过 HMAC 验证加密载荷未被篡改。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -528,39 +376,31 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionAudioWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                            <TextBlock Text="Audio &amp; Music Wizard" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🎵 音频与音乐向导" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Audio Wizard guides you step-by-step through creating audio CDs, copying music files to disc, or ripping audio CDs. It is designed for users who want a simple, guided experience."/>
+                                   Text="音频向导会分步引导你制作音频 CD、将音乐文件复制到光盘，或抓取音频 CD。它面向希望以简单引导方式完成操作的用户。"/>
 
-                        <TextBlock Text="Step 1 — Choose Task" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 1 步 — 选择任务" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Create Audio CD — Build and burn a Red Book audio CD from WAV, FLAC, or MP3 files. The resulting disc will play in any standard CD player.&#x0a;  • Rip Audio CD — Extract audio tracks from an audio CD to individual WAV files, or save a raw BIN/CUE audio image.&#x0a;  • Copy Music to Disc — Burn audio files as data files (MP3, FLAC, etc.) to a disc for playback in devices that support those formats."/>
+                                   Text="  • 制作音频 CD — 从 WAV、FLAC 或 MP3 文件构建并刻录 Red Book 音频 CD，成品可在任何标准 CD 播放机中播放。&#x0a;  • 抓取音频 CD — 将音频 CD 中的音轨提取为独立的 WAV 文件，或保存为原始 BIN/CUE 音频镜像。&#x0a;  • 复制音乐到光盘 — 将音频文件以数据文件形式（MP3、FLAC 等）刻录到光盘，供支持这些格式的设备播放。"/>
 
-                        <TextBlock Text="Step 2 — Configure" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 2 步 — 配置" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Depending on the task selected, you configure track lists, CD-TEXT metadata (album, artist, per-track titles), output format and quality settings, drive selection, and write speed."/>
+                                   Text="根据所选任务，可配置轨道列表、CD-TEXT 文本元数据（专辑、艺术家、各轨道标题）、输出格式与质量设置、光驱选择以及写入速度。"/>
 
-                        <TextBlock Text="Step 3 — Summary" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 3 步 — 摘要" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Review all settings before execution. The wizard shows a summary of tracks, total duration, target media, and all configured options."/>
+                                   Text="执行前请核对所有设置。向导会显示轨道、总时长、目标介质以及全部已配置选项的摘要。"/>
 
-                        <TextBlock Text="Step 4 — Execute" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 4 步 — 执行" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The operation runs with a progress bar and log output. You can cancel at any time."/>
+                                   Text="操作执行时会显示进度条与日志输出，随时可以取消。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Audio CD Format" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 音频 CD 格式" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="Red Book audio CDs store uncompressed PCM audio at 44,100 Hz sample rate, 16-bit depth, stereo (2 channels). Each audio sector is 2,352 bytes and holds 1/75th of a second of audio. A standard 74-minute CD holds approximately 333,000 audio sectors. CD-TEXT data is encoded in R-W subchannel packs (18 bytes each) per Red Book Annex J / MMC-3. WAV files are converted; FLAC and MP3 files are decoded to PCM before burning."/>
+                                           Text="Red Book 音频 CD 以 44,100 Hz 采样率、16 位深度、立体声（2 声道）存储未压缩的 PCM 音频。每个音频扇区为 2,352 字节，容纳 1/75 秒的音频。一张标准 74 分钟光盘约含 333,000 个音频扇区。CD-TEXT 数据按 Red Book 附录 J / MMC-3 编码在 R-W 子通道包中（每包 18 字节）。WAV 文件会被转换，FLAC 与 MP3 文件在刻录前解码为 PCM。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -571,31 +411,23 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionVideoWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                            <TextBlock Text="Video Disc Wizard" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🎬 视频光盘向导" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Video Wizard guides you through creating video discs that play in standalone players: DVD-Video, Blu-ray, BDAV, 3D Blu-ray, VCD, SVCD, and XSVCD."/>
+                                   Text="视频向导引导你制作可在独立播放机中播放的视频光盘：DVD-Video、蓝光、BDAV、3D 蓝光、VCD、SVCD 与 XSVCD。"/>
 
-                        <TextBlock Text="Supported Formats" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="支持的格式" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • DVD-Video — Standard DVD format with VIDEO_TS folder structure. Plays in DVD players worldwide. Requires MPEG-2 video and AC3/DTS/MPEG audio.&#x0a;  • Blu-ray — Full Blu-ray (BDMV) with BDMV folder structure. Supports H.264/AVC, H.265/HEVC, and MPEG-2 video.&#x0a;  • BDAV — Blu-ray Audio/Video recording format, simpler than BDMV.&#x0a;  • 3D Blu-ray — Stereoscopic 3D Blu-ray with SSIF (Stereoscopic Interleaved File Format) support.&#x0a;  • VCD (Video CD) — Standard-definition video on CD media using MPEG-1 video. Widely supported in Asia.&#x0a;  • SVCD (Super Video CD) — Higher quality than VCD using MPEG-2 video on CD media.&#x0a;  • XSVCD (eXtended Super Video CD) — Extended parameters: higher bitrate (up to 3500 kbps) and resolution (up to 720×576) on CD media."/>
+                                   Text="  • DVD-Video — 采用 VIDEO_TS 目录结构的标准 DVD 格式，可在全球的 DVD 播放机中播放，要求 MPEG-2 视频与 AC3/DTS/MPEG 音频。&#x0a;  • 蓝光 — 完整的蓝光（BDMV），采用 BDMV 目录结构，支持 H.264/AVC、H.265/HEVC 与 MPEG-2 视频。&#x0a;  • BDAV — 蓝光音视频录制格式，比 BDMV 更简单。&#x0a;  • 3D 蓝光 — 支持 SSIF（立体交错文件格式）的立体 3D 蓝光。&#x0a;  • VCD（Video CD）— 在 CD 介质上使用 MPEG-1 视频的标准清晰度视频，在亚洲地区应用广泛。&#x0a;  • SVCD（Super Video CD）— 在 CD 介质上使用 MPEG-2 视频，画质高于 VCD。&#x0a;  • XSVCD（eXtended Super Video CD）— 扩展参数：在 CD 介质上提供更高码率（最高 3500 kbps）与更高分辨率（最高 720×576）。"/>
 
-                        <TextBlock Text="Workflow" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="流程" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  1. Choose the target format (DVD, Blu-ray, VCD, etc.)&#x0a;  2. Select the source video folder (containing VIDEO_TS, BDMV, or video files)&#x0a;  3. Configure settings (disc label, region, target drive, write speed)&#x0a;  4. Review the summary&#x0a;  5. Execute the build and burn"/>
+                                   Text="  1. 选择目标格式（DVD、蓝光、VCD 等）&#x0a;  2. 选择源视频文件夹（包含 VIDEO_TS、BDMV 或视频文件）&#x0a;  3. 配置设置（光盘标签、区域、目标光驱、写入速度）&#x0a;  4. 核对摘要&#x0a;  5. 执行构建与刻录"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="DVD-Video authoring generates navigation packs (NV_PCK) containing PCI and DSI packets for chapter navigation. Each NV_PCK is exactly 2,048 bytes: 14-byte pack header + 24-byte system header + 979-byte PCI PES + 1,017-byte DSI PES. DSI contains VOBU_SRI with forward/backward search entries for trick-play. BD 3D SSIF interleaving uses 192 allocation units per extent (AU = 6,144 bytes, extent ≈ 1.2 MB) for smooth stereoscopic playback. VCD/SVCD/XSVCD builds inject the CD-XA001 marker and follow the White Book specification."/>
+                                           Text="DVD-Video 制作会生成包含 PCI 与 DSI 数据包的导航包（NV_PCK），用于章节导航。每个 NV_PCK 恰好 2,048 字节：14 字节包头 + 24 字节系统头 + 979 字节 PCI PES + 1,017 字节 DSI PES。DSI 中包含 VOBU_SRI，提供用于特技播放的前向/后向搜索条目。BD 3D 的 SSIF 交错每个区段使用 192 个分配单元（AU = 6,144 字节，区段约 1.2 MB），以实现流畅的立体播放。VCD/SVCD/XSVCD 构建会注入 CD-XA001 标记，并遵循 White Book 规范。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -606,21 +438,17 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionDataWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Data Disc Wizard" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="📁 数据光盘向导" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Data Wizard guides you through creating data discs from files and folders. It simplifies the process of selecting files, choosing a file system, and burning to disc."/>
+                                   Text="数据向导引导你从文件与文件夹制作数据光盘，简化了选择文件、选定文件系统和刻录到光盘的流程。"/>
 
-                        <TextBlock Text="Tasks" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="任务" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Build Data Image — Create a disc image (.iso) from a folder of files. The image can be saved and burned later.&#x0a;  • Build &amp; Burn to Disc — Create and burn a data disc in one step without saving an intermediate image file.&#x0a;  • Burn Existing Image — Select a pre-existing disc image file (.iso, .bin, etc.) and burn it directly to a disc."/>
+                                   Text="  • 构建数据镜像 — 从包含文件的文件夹创建光盘镜像（.iso），可保存后再刻录。&#x0a;  • 构建并刻录到光盘 — 一步完成数据光盘的创建与刻录，不保存中间镜像文件。&#x0a;  • 刻录现有镜像 — 选择已有的光盘镜像文件（.iso、.bin 等）直接刻录到光盘。"/>
 
-                        <TextBlock Text="Configuration" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="配置" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Source folder selection&#x0a;  • Disc type (CD, DVD, Blu-ray)&#x0a;  • File system (ISO 9660, Joliet, UDF)&#x0a;  • Volume label&#x0a;  • Write speed and drive selection"/>
+                                   Text="  • 源文件夹选择&#x0a;  • 光盘类型（CD、DVD、蓝光）&#x0a;  • 文件系统（ISO 9660、Joliet、UDF）&#x0a;  • 卷标&#x0a;  • 写入速度与光驱选择"/>
                     </StackPanel>
                 </Border>
 
@@ -629,29 +457,25 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionGameWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
-                            <TextBlock Text="Game Disc Wizard" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🎮 游戏光盘向导" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Game Wizard helps you create game discs from image files or folders, with system-specific presets for optimal compatibility."/>
+                                   Text="游戏向导帮助你从镜像文件或文件夹制作游戏光盘，并提供各游戏机专用预设以获得最佳兼容性。"/>
 
-                        <TextBlock Text="Source Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="源选项" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Burn from Image File — Use a pre-existing game disc image (ISO, BIN/CUE, CDI, GDI, etc.)&#x0a;  • Build from Folder — Create a game disc from extracted game files"/>
+                                   Text="  • 从镜像文件刻录 — 使用已有的游戏光盘镜像（ISO、BIN/CUE、CDI、GDI 等）&#x0a;  • 从文件夹构建 — 使用解包后的游戏文件制作游戏光盘"/>
 
-                        <TextBlock Text="Gaming System Presets" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="游戏机预设" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The wizard includes presets for many gaming systems, automatically configuring write mode, sector size, subchannel handling, and other parameters:&#x0a;&#x0a;  • Sony: PlayStation 1, PS2, PS3, PS4/5, PSP (UMD)&#x0a;  • Sega: Saturn, Dreamcast, Mega CD / Sega CD&#x0a;  • Microsoft: Xbox, Xbox 360, Xbox One/Series&#x0a;  • Nintendo: GameCube, Wii, Wii U&#x0a;  • NEC: PC Engine CD / TurboGrafx-CD&#x0a;  • SNK: Neo Geo CD&#x0a;  • Panasonic: 3DO Interactive Multiplayer&#x0a;  • Philips: CD-i&#x0a;  • Atari: Jaguar CD&#x0a;  • Commodore: Amiga CD32, CDTV"/>
+                                   Text="向导内置多种游戏机预设，会自动配置写入模式、扇区大小、子通道处理及其他参数：&#x0a;&#x0a;  • Sony：PlayStation 1、PS2、PS3、PS4/5、PSP（UMD）&#x0a;  • Sega：Saturn、Dreamcast、Mega CD / Sega CD&#x0a;  • Microsoft：Xbox、Xbox 360、Xbox One/Series&#x0a;  • Nintendo：GameCube、Wii、Wii U&#x0a;  • NEC：PC Engine CD / TurboGrafx-CD&#x0a;  • SNK：Neo Geo CD&#x0a;  • Panasonic：3DO Interactive Multiplayer&#x0a;  • Philips：CD-i&#x0a;  • Atari：Jaguar CD&#x0a;  • Commodore：Amiga CD32、CDTV"/>
 
-                        <TextBlock Text="Gaming Patches" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="游戏补丁" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • LibCrypt patching (PS1) — Fixes copy protection for PS1 games using SBI files&#x0a;  • Dreamcast GDI patching — Applies format-specific patches for Dreamcast images&#x0a;  • Region-free patching — Removes regional lockout&#x0a;  • Boot sector patching — Patches boot sectors for compatibility with modified firmware&#x0a;  • ESR patch (PS2 DVD-R) — Injects DVD-Video structure for MechaCon bypass on PS2&#x0a;  • Master Disc patch (PS2) — Writes Master Disc identifier for MechaPwn DEX consoles&#x0a;  • PSX 80 Minute patch — Adds dummy sectors for 80-minute CD-R compatibility&#x0a;  • PSX Undither patch (PS1) — Removes GPU dithering from PS1 game images"/>
+                                   Text="  • LibCrypt 修补（PS1）— 使用 SBI 文件修正 PS1 游戏的复制保护&#x0a;  • Dreamcast GDI 修补 — 为 Dreamcast 镜像应用格式专用补丁&#x0a;  • 全区修补 — 移除区域锁定&#x0a;  • 引导扇区修补 — 修补引导扇区以兼容修改过固件的设备&#x0a;  • ESR 补丁（PS2 DVD-R）— 注入 DVD-Video 结构以在 PS2 上绕过 MechaCon&#x0a;  • Master Disc 补丁（PS2）— 为 MechaPwn DEX 主机写入 Master Disc 标识&#x0a;  • PSX 80 分钟补丁 — 添加空扇区以兼容 80 分钟 CD-R&#x0a;  • PSX 去抖动补丁（PS1）— 去除 PS1 游戏镜像中的 GPU 抖动"/>
 
-                        <TextBlock Text="PS3 Decryption" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="PS3 解密" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="When a PS3 game image is selected, the wizard offers to decrypt it before burning. Three key sources are supported:&#x0a;&#x0a;  • IRD File (.ird) — An ISO Rebuild Data file containing the disc key&#x0a;  • Disc Key File (.dkey) — A raw disc key file&#x0a;  • Hex Key — The 16-byte disc key entered directly as 32 hex characters"/>
+                                   Text="选择 PS3 游戏镜像后，向导会提示在刻录前解密。支持三种密钥来源：&#x0a;&#x0a;  • IRD 文件（.ird）— 包含光盘密钥的 ISO Rebuild Data 文件&#x0a;  • 光盘密钥文件（.dkey）— 原始光盘密钥文件&#x0a;  • 十六进制密钥 — 以 32 个十六进制字符直接输入的 16 字节光盘密钥"/>
                     </StackPanel>
                 </Border>
 
@@ -660,25 +484,21 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionCopyWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Copy Disc Wizard" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="💿 复制光盘向导" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Copy Disc Wizard guides you step-by-step through copying an optical disc to an image file. It simplifies drive selection, output configuration, and the read process."/>
+                                   Text="复制光盘向导分步引导你将光盘复制为镜像文件，简化了光驱选择、输出配置与读取过程。"/>
 
-                        <TextBlock Text="Step 1 — Select Source Drive" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 1 步 — 选择源光驱" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Choose the optical drive containing the disc you want to copy. The wizard displays drive details and media information. You can optionally select a gaming system preset to automatically configure optimal read settings for that platform."/>
+                                   Text="选择装有待复制光盘的光驱。向导会显示光驱详情与介质信息。你也可以选择一个游戏机预设，自动为该平台配置最佳读取设置。"/>
 
-                        <TextBlock Text="Step 2 — Output Settings" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 2 步 — 输出设置" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Configure the output format (ISO, BIN/CUE, etc.), file path, and read speed. Additional options include:&#x0a;&#x0a;  • Verify after copy — Re-read the disc and compare against the saved image&#x0a;  • Retry on errors — Automatically retry reading failed sectors (3 retries)&#x0a;  • Decrypt PS3 disc — Decrypt PS3 game discs during copy using an IRD file (.ird)"/>
+                                   Text="配置输出格式（ISO、BIN/CUE 等）、文件路径与读取速度。其他选项包括：&#x0a;&#x0a;  • 复制后校验 — 重新读取光盘并与已保存的镜像比对&#x0a;  • 出错重试 — 自动重试读取失败的扇区（重试 3 次）&#x0a;  • 解密 PS3 光盘 — 复制时使用 IRD 文件（.ird）解密 PS3 游戏光盘"/>
 
-                        <TextBlock Text="Step 3 — Copy" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 3 步 — 复制" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The disc is read sector-by-sector with a progress bar showing completion percentage, current read speed, and a real-time disc visualization. You can cancel the operation at any time."/>
+                                   Text="光盘将逐扇区读取，进度条会显示完成百分比、当前读取速度以及实时光盘可视化。操作可随时取消。"/>
                     </StackPanel>
                 </Border>
 
@@ -687,25 +507,21 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionBlankWizard" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
-                            <TextBlock Text="Blank / Erase Disc Wizard" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🧹 擦除光盘向导" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The Blank Disc Wizard guides you step-by-step through erasing rewritable discs or formatting blank media."/>
+                                   Text="擦除光盘向导分步引导你擦除可重写光盘或格式化空白介质。"/>
 
-                        <TextBlock Text="Step 1 — Select Drive" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 1 步 — 选择光驱" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Choose the optical drive containing the rewritable disc. The wizard displays drive and media details and warns you if the media is not compatible with erasing (e.g. write-once media like DVD-R or BD-R)."/>
+                                   Text="选择装有可重写光盘的光驱。向导会显示光驱与介质详情，并在介质不支持擦除时（如 DVD-R、BD-R 等一次写入介质）给出警告。"/>
 
-                        <TextBlock Text="Step 2 — Erase Options" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 2 步 — 擦除选项" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Select the erase method:&#x0a;&#x0a;  • Quick Erase — Erases the TOC/PMA only. Very fast (seconds), but old data remains on disc and may be recoverable.&#x0a;  • Full Erase — Writes zeros to the entire disc surface. Much slower (15–60+ minutes) but completely wipes all data.&#x0a;&#x0a;Compatible media: CD-RW, DVD-RW, DVD+RW, DVD-RAM, BD-RE, HD DVD-RW."/>
+                                   Text="选择擦除方式：&#x0a;&#x0a;  • 快速擦除 — 仅擦除 TOC/PMA。速度极快（数秒），但旧数据仍留在光盘上，可能被恢复。&#x0a;  • 完全擦除 — 向整个光盘表面写入零。速度慢得多（15–60 分钟以上），但会彻底清除所有数据。&#x0a;&#x0a;兼容介质：CD-RW、DVD-RW、DVD+RW、DVD-RAM、BD-RE、HD DVD-RW。"/>
 
-                        <TextBlock Text="Step 3 — Erase" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="第 3 步 — 擦除" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The erase operation runs with a progress indicator and log output. Quick erases complete in seconds; full erases may take considerably longer. You can cancel the operation at any time."/>
+                                   Text="擦除操作执行时会显示进度指示与日志输出。快速擦除数秒即可完成，完全擦除可能耗时较长。操作可随时取消。"/>
                     </StackPanel>
                 </Border>
 
@@ -714,47 +530,39 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionDiscTypes" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Disc Types Reference" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="📀 光盘类型参考" Classes="SectionHeader" FontSize="18"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="A comprehensive guide to all optical disc formats supported by Open Burning Suite."/>
+                                   Text="Open Burning Suite 支持的所有光盘格式的完整指南。"/>
 
-                        <TextBlock Text="CD (Compact Disc)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="CD（Compact Disc）" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • CD-ROM — Read-only, factory-pressed CDs. Capacity: 650–700 MB (74–80 min audio).&#x0a;  • CD-R (Recordable) — Write-once. Can be burned once and read many times. Most compatible.&#x0a;  • CD-RW (Rewritable) — Can be erased and re-recorded approximately 1,000 times. Slightly less compatible with older CD players.&#x0a;  • Mini CD — Smaller 8 cm diameter disc. Capacity: ~185 MB.&#x0a;&#x0a;CDs use a 780 nm infrared laser. Data is stored in a single spiral track from the inside outward. Standard sector size is 2,048 bytes (Mode 1 data) or 2,352 bytes (audio/raw)."/>
+                                   Text="  • CD-ROM — 只读的工厂压制光盘。容量：650–700 MB（74–80 分钟音频）。&#x0a;  • CD-R（可记录）— 一次写入，只能刻录一次、可多次读取，兼容性最好。&#x0a;  • CD-RW（可重写）— 可擦除并重新记录约 1,000 次，与较旧 CD 播放机的兼容性略差。&#x0a;  • 迷你 CD — 直径 8 cm 的小型光盘。容量：约 185 MB。&#x0a;&#x0a;CD 使用 780 nm 红外激光。数据以单条螺旋轨道由内向外存储。标准扇区大小为 2,048 字节（Mode 1 数据）或 2,352 字节（音频/原始）。"/>
 
-                        <TextBlock Text="DVD (Digital Versatile Disc)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="DVD（Digital Versatile Disc）" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • DVD-ROM — Read-only, factory-pressed.&#x0a;  • DVD-R — Write-once, minus format. Capacity: 4.7 GB (single layer), 8.5 GB (dual layer DL).&#x0a;  • DVD+R — Write-once, plus format. Same capacities as DVD-R. Slightly better error handling.&#x0a;  • DVD-RW — Rewritable, minus format. Can be erased and re-recorded ~1,000 times.&#x0a;  • DVD+RW — Rewritable, plus format. Can be overwritten without blanking first.&#x0a;  • DVD-RAM — Random-access rewritable. Very durable (~100,000 rewrites). Used in some camcorders and PVRs.&#x0a;&#x0a;DVDs use a 650 nm red laser. Dual-layer discs have two recording layers accessed by changing the laser focus."/>
+                                   Text="  • DVD-ROM — 只读的工厂压制光盘。&#x0a;  • DVD-R — 一次写入，减号格式。容量：4.7 GB（单层）、8.5 GB（双层 DL）。&#x0a;  • DVD+R — 一次写入，加号格式。容量与 DVD-R 相同，错误处理略好。&#x0a;  • DVD-RW — 可重写，减号格式。可擦除并重新记录约 1,000 次。&#x0a;  • DVD+RW — 可重写，加号格式。无需先擦除即可覆盖写入。&#x0a;  • DVD-RAM — 随机访问的可重写光盘。非常耐用（约 100,000 次重写），部分摄像机和 PVR 使用。&#x0a;&#x0a;DVD 使用 650 nm 红色激光。双层光盘具有两个记录层，通过改变激光焦距访问。"/>
 
-                        <TextBlock Text="HD DVD (High Definition DVD)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="HD DVD（High Definition DVD）" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • HD DVD-ROM — Read-only. Capacity: 15 GB (SL), 30 GB (DL).&#x0a;  • HD DVD-R — Write-once. Same capacities.&#x0a;  • HD DVD-RW — Rewritable.&#x0a;  • HD DVD-RAM — Random-access rewritable (4.7 GB).&#x0a;&#x0a;HD DVD used a 405 nm blue-violet laser (same as Blu-ray) but lost the format war to Blu-ray in 2008. Some older drives still support it."/>
+                                   Text="  • HD DVD-ROM — 只读。容量：15 GB（SL）、30 GB（DL）。&#x0a;  • HD DVD-R — 一次写入，容量相同。&#x0a;  • HD DVD-RW — 可重写。&#x0a;  • HD DVD-RAM — 随机访问的可重写光盘（4.7 GB）。&#x0a;&#x0a;HD DVD 使用 405 nm 蓝紫激光（与蓝光相同），但在 2008 年的格式之争中败给蓝光。部分较旧的光驱仍支持它。"/>
 
-                        <TextBlock Text="Blu-ray Disc (BD)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="蓝光光盘（BD）" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • BD-ROM — Read-only, factory-pressed. Capacity: 25 GB (SL), 50 GB (DL), 100 GB (TL BDXL), 128 GB (QL BDXL).&#x0a;  • BD-R (Recordable) — Write-once. Available in SL, DL, TL (BDXL), and QL (BDXL).&#x0a;  • BD-RE (Rewritable) — Can be erased and re-recorded. Available in SL, DL, TL (BDXL), and QL (BDXL).&#x0a;&#x0a;Blu-ray uses a 405 nm blue-violet laser with a tighter track pitch (0.32 µm) than DVD, enabling much higher data density. BD-R supports Sequential Recording Mode (SRM) and Random Recording Mode (RRM)."/>
+                                   Text="  • BD-ROM — 只读的工厂压制光盘。容量：25 GB（SL）、50 GB（DL）、100 GB（TL BDXL）、128 GB（QL BDXL）。&#x0a;  • BD-R（可记录）— 一次写入，提供 SL、DL、TL（BDXL）与 QL（BDXL）规格。&#x0a;  • BD-RE（可重写）— 可擦除并重新记录，提供 SL、DL、TL（BDXL）与 QL（BDXL）规格。&#x0a;&#x0a;蓝光使用 405 nm 蓝紫激光，轨道间距比 DVD 更密（0.32 µm），可实现更高的数据密度。BD-R 支持顺序记录模式（SRM）与随机记录模式（RRM）。"/>
 
-                        <TextBlock Text="UHD Blu-ray (Ultra HD Blu-ray)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="UHD 蓝光（Ultra HD Blu-ray）" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • UHD BD-66 — Dual-layer. Capacity: 66 GB.&#x0a;  • UHD BD-100 — Triple-layer. Capacity: 100 GB.&#x0a;&#x0a;UHD Blu-ray uses higher density pits and tighter tracks than standard Blu-ray. Video content requires HEVC (H.265) Main10 Profile with mandatory HDR10, BT.2020 wide color gamut, and up to 100 Mbps video bitrate. Uses the same 405 nm blue-violet laser as standard Blu-ray."/>
+                                   Text="  • UHD BD-66 — 双层，容量 66 GB。&#x0a;  • UHD BD-100 — 三层，容量 100 GB。&#x0a;&#x0a;UHD 蓝光相比标准蓝光具有更高密度的坑点与更紧密的轨道。视频内容要求 HEVC（H.265）Main10 Profile，强制 HDR10、BT.2020 广色域，视频码率最高 100 Mbps。使用与标准蓝光相同的 405 nm 蓝紫激光。"/>
 
-                        <TextBlock Text="M-DISC (Millennial Disc)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="M-DISC（Millennial Disc）" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="A special archival format that etches data into a rock-like layer instead of organic dye. Available in DVD (4.7 GB) and Blu-ray (25 GB, 50 GB, 100 GB) variants. Rated for 1,000+ years of data retention under normal storage conditions. Requires an M-DISC compatible burner drive."/>
+                                   Text="一种特殊的归档格式，将数据刻蚀到类岩石层而非有机染料层中。提供 DVD（4.7 GB）与蓝光（25 GB、50 GB、100 GB）规格。在正常存储条件下标称数据可保存 1,000 年以上。需要支持 M-DISC 的刻录机。"/>
 
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Technical Detail — Disc Profiles" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
-                                </StackPanel>
+                                <TextBlock Text="💡 技术细节 — 光盘配置文件" Foreground="#1E90FF" FontWeight="SemiBold" FontSize="11"/>
                                 <TextBlock TextWrapping="Wrap" Foreground="#8EAFC8" FontSize="11" LineHeight="16"
-                                           Text="Each media type is identified by a profile number in the MMC GET CONFIGURATION command. Examples: BD-RE = 0x0043, BD-RE DL = 0x0046, BD-RE TL BDXL = 0x004B, BD-RE QL BDXL = 0x004D, BD-R SRM = 0x0041, BD-R RRM = 0x0042, BD-R DL = 0x0045, BD-R TL BDXL = 0x004A, BD-R QL BDXL = 0x004C. All BD-RE variants support overwriting without blanking."/>
+                                           Text="每种介质类型在 MMC GET CONFIGURATION 指令中由配置文件编号标识。例如：BD-RE = 0x0043、BD-RE DL = 0x0046、BD-RE TL BDXL = 0x004B、BD-RE QL BDXL = 0x004D、BD-R SRM = 0x0041、BD-R RRM = 0x0042、BD-R DL = 0x0045、BD-R TL BDXL = 0x004A、BD-R QL BDXL = 0x004C。所有 BD-RE 规格均支持无需擦除的覆盖写入。"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -765,31 +573,27 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionFileSystems" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="File Systems Reference" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="📂 文件系统参考" Classes="SectionHeader" FontSize="18"/>
 
                         <TextBlock Text="ISO 9660" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The universal standard for CD-ROMs and data discs. Defined by ECMA-119 / ISO 9660.&#x0a;&#x0a;Limitations of base ISO 9660 Level 1:&#x0a;  • Filenames: 8.3 format (8 character name + 3 character extension), uppercase only&#x0a;  • Directory depth: Maximum 8 levels&#x0a;  • File size: Maximum 4 GB (limited by 32-bit sector addressing)&#x0a;&#x0a;ISO 9660 Level 2 allows longer filenames (up to 31 characters) and deeper directories. Level 3 adds multi-extent files (files split across non-contiguous regions)."/>
+                                   Text="CD-ROM 与数据光盘的通用标准，由 ECMA-119 / ISO 9660 定义。&#x0a;&#x0a;基础 ISO 9660 Level 1 的限制：&#x0a;  • 文件名：8.3 格式（8 字符名称 + 3 字符扩展名），仅限大写&#x0a;  • 目录深度：最多 8 层&#x0a;  • 文件大小：最大 4 GB（受 32 位扇区寻址限制）&#x0a;&#x0a;ISO 9660 Level 2 允许更长的文件名（最多 31 个字符）与更深的目录。Level 3 增加了多 extent 文件（文件可拆分到不连续的区域）。"/>
 
                         <TextBlock Text="Joliet" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="A Microsoft extension to ISO 9660 that adds:&#x0a;  • Unicode filenames (UCS-2 encoding)&#x0a;  • Long filenames up to 64 characters (or more with the 'Joliet long filenames' option)&#x0a;  • Mixed case filenames&#x0a;&#x0a;Joliet is stored as a Supplementary Volume Descriptor alongside the standard ISO 9660 PVD, so the disc remains readable on systems that don't support Joliet."/>
+                                   Text="Microsoft 对 ISO 9660 的扩展，新增：&#x0a;  • Unicode 文件名（UCS-2 编码）&#x0a;  • 最长 64 个字符的长文件名（启用“Joliet 长文件名”选项后可更长）&#x0a;  • 大小写混合的文件名&#x0a;&#x0a;Joliet 以补充卷描述符的形式与标准 ISO 9660 PVD 并存，因此在支持 Joliet 的系统上光盘仍可读取。"/>
 
                         <TextBlock Text="UDF (Universal Disc Format)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="A modern, feature-rich file system defined by ECMA-167 and the OSTA UDF specification.&#x0a;&#x0a;  • No 4 GB file size limit&#x0a;  • Full Unicode support&#x0a;  • Required for DVD-Video, Blu-ray, and large data discs&#x0a;  • Supports file permissions and extended attributes&#x0a;  • Versions: 1.02 (DVD-Video), 1.5 (DVD-RAM), 2.01 (DVD), 2.50 (BD), 2.60 (BD-R/RE, HD DVD, UHD BD)"/>
+                                   Text="由 ECMA-167 与 OSTA UDF 规范定义的现代、功能丰富的文件系统。&#x0a;&#x0a;  • 无 4 GB 文件大小限制&#x0a;  • 完整的 Unicode 支持&#x0a;  • DVD-Video、蓝光及大型数据光盘必需&#x0a;  • 支持文件权限与扩展属性&#x0a;  • 版本：1.02（DVD-Video）、1.5（DVD-RAM）、2.01（DVD）、2.50（BD）、2.60（BD-R/RE、HD DVD、UHD BD）"/>
 
                         <TextBlock Text="Rock Ridge" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="An extension to ISO 9660 for POSIX/Unix systems:&#x0a;  • Long filenames (up to 255 characters)&#x0a;  • File permissions (owner, group, world)&#x0a;  • Symbolic links&#x0a;  • Deep directory nesting beyond 8 levels&#x0a;  • Device files&#x0a;&#x0a;Commonly used on Linux bootable and installation discs."/>
+                                   Text="面向 POSIX/Unix 系统的 ISO 9660 扩展：&#x0a;  • 长文件名（最多 255 个字符）&#x0a;  • 文件权限（所有者、组、其他）&#x0a;  • 符号链接&#x0a;  • 超过 8 层的深层目录嵌套&#x0a;  • 设备文件&#x0a;&#x0a;常见于 Linux 可引导光盘与安装光盘。"/>
 
                         <TextBlock Text="HFS / HFS+" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Apple's file systems for macOS. HFS+ (Mac OS Extended) supports Unicode filenames, file permissions, and resource forks. Used for Mac-bootable discs and hybrid Mac/PC discs."/>
+                                   Text="Apple 为 macOS 提供的文件系统。HFS+（Mac OS Extended）支持 Unicode 文件名、文件权限与资源分支，用于 Mac 可引导光盘以及 Mac/PC 混合光盘。"/>
                     </StackPanel>
                 </Border>
 
@@ -798,47 +602,43 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionImageFormats" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Disc Image Formats Reference" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="💾 光盘镜像格式参考" Classes="SectionHeader" FontSize="18"/>
 
                         <TextBlock Text="ISO (.iso)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="The most common and universal disc image format. Contains a sector-by-sector copy of the data area at 2,048 bytes per sector. Does not include subchannel data or audio tracks in raw form. Suitable for data discs, DVD-Video, and Blu-ray. Can be mounted natively on Windows, Linux, and macOS."/>
+                                   Text="最常见、最通用的光盘镜像格式。包含数据区的逐扇区副本，每扇区 2,048 字节。不包含子通道数据，也不以原始形式保存音频轨道。适用于数据光盘、DVD-Video 与蓝光，可在 Windows、Linux 和 macOS 上原生挂载。"/>
 
                         <TextBlock Text="BIN/CUE (.bin + .cue)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="A raw disc image format. The .bin file contains raw sector data (2,352 bytes per sector, including sync, header, ECC, and EDC). The .cue file is a text file describing the disc layout (tracks, sessions, indices, pregaps). Essential for audio CDs, mixed-mode discs, and gaming disc images that need raw sector accuracy."/>
+                                   Text="一种原始光盘镜像格式。.bin 文件包含原始扇区数据（每扇区 2,352 字节，含同步码、头部、ECC 与 EDC）。.cue 文件是描述光盘布局的文本文件（轨道、区段、索引、预间隙）。音频 CD、混合模式光盘以及需要原始扇区精度的游戏光盘镜像都必须使用该格式。"/>
 
                         <TextBlock Text="BIN/CUE/SBI (.bin + .cue + .sbi)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="BIN/CUE format with an additional SBI (SubChannel Binary Image) file. The SBI file contains only subchannel-Q data for sectors with modified Q-channel CRC — specifically LibCrypt copy protection used on PlayStation 1 games. This is the recommended archival format for PS1 discs as it captures the protection data needed by emulators like DuckStation and Mednafen. Subchannel data is read in raw mode (RW_RAW) and post-processed to extract LibCrypt sectors."/>
+                                   Text="在 BIN/CUE 基础上附加 SBI（SubChannel Binary Image）文件的格式。SBI 文件仅包含 Q 通道 CRC 被修改的扇区的子通道 Q 数据——具体即 PlayStation 1 游戏使用的 LibCrypt 复制保护。这是 PS1 光盘推荐的归档格式，因为它保留了 DuckStation、Mednafen 等模拟器所需的保护数据。子通道数据以原始模式（RW_RAW）读取，再经后处理提取 LibCrypt 扇区。"/>
 
                         <TextBlock Text="MDF/MDS (.mdf + .mds)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Alcohol 120% format. MDF contains the raw disc data, MDS contains metadata about the disc structure. Supports subchannel data and multi-session discs."/>
+                                   Text="Alcohol 120% 格式。MDF 包含原始光盘数据，MDS 包含光盘结构的元数据。支持子通道数据与多区段光盘。"/>
 
                         <TextBlock Text="NRG (.nrg)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Nero Burning ROM's proprietary format. Contains disc data plus metadata in a chunked format at the end of the file. Supports audio, data, and mixed-mode discs."/>
+                                   Text="Nero Burning ROM 的专有格式。包含光盘数据，并在文件末尾以分块形式存放元数据。支持音频、数据与混合模式光盘。"/>
 
                         <TextBlock Text="CDI (.cdi)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="DiscJuggler format. Common for Sega Dreamcast game images. Contains raw disc data with metadata trailer."/>
+                                   Text="DiscJuggler 格式。常见于 Sega Dreamcast 游戏镜像，包含原始光盘数据以及末尾的元数据段。"/>
 
                         <TextBlock Text="CCD/IMG/SUB (.ccd + .img + .sub)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="CloneCD format. CCD is a text file with disc metadata, IMG contains the raw sector data, and SUB contains subchannel data. Excellent for preserving the complete disc structure including copy protection."/>
+                                   Text="CloneCD 格式。CCD 是包含光盘元数据的文本文件，IMG 包含原始扇区数据，SUB 包含子通道数据。非常适合完整保留光盘结构（包括复制保护信息）。"/>
 
                         <TextBlock Text="GDI (.gdi)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Sega Dreamcast GD-ROM image format. A text file listing track files with their types and sector sizes. Used specifically for Dreamcast game preservation."/>
+                                   Text="Sega Dreamcast GD-ROM 镜像格式。一个文本文件，列出各轨道文件及其类型与扇区大小，专门用于 Dreamcast 游戏保存。"/>
 
                         <TextBlock Text="TOC/BIN (.toc + .bin)" Foreground="#5BC0FF" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="cdrdao (CD Recording Disc At Once) format. The TOC file describes the disc layout in a cdrdao-specific text format, and BIN contains the raw data."/>
+                                   Text="cdrdao（CD Recording Disc At Once）格式。TOC 文件以 cdrdao 专用的文本格式描述光盘布局，BIN 包含原始数据。"/>
                     </StackPanel>
                 </Border>
 
@@ -847,68 +647,64 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionGlossary" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-book-2d-16.png"/>
-                            <TextBlock Text="Glossary" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
-                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" FontSize="11" LineHeight="18" xml:space="preserve"><Bold>Buffer Underrun</Bold> — When the drive's write buffer empties during burning, causing a failed burn. Modern drives have protection (BURN-Proof, SafeBurn) to pause and resume.
+                        <TextBlock Text="📘 术语表" Classes="SectionHeader" FontSize="18"/>
+                        <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" FontSize="11" LineHeight="18" xml:space="preserve"><Bold>缓存欠载</Bold> — 刻录过程中光驱的写缓存被耗尽，导致刻录失败。现代光驱具备保护机制（BURN-Proof、SafeBurn）可暂停并恢复。
 
-<Bold>CD-TEXT</Bold> — Metadata (artist, album, track titles) embedded in the subchannel of audio CDs. Displayed by compatible CD players.
+<Bold>CD-TEXT</Bold> — 嵌入音频 CD 子通道中的元数据（艺术家、专辑、轨道标题），由兼容的 CD 播放机显示。
 
-<Bold>CUE Sheet</Bold> — A text file describing the layout of a disc image: tracks, their types, indices, and pregaps.
+<Bold>CUE 索引文件</Bold> — 描述光盘镜像布局的文本文件：轨道、轨道类型、索引与预间隙。
 
-<Bold>DAO (Disc-At-Once)</Bold> — Writing mode where the entire disc is written in one continuous pass without stopping the laser.
+<Bold>DAO (Disc-At-Once)</Bold> — 一次连续写完整个光盘、过程中不停止激光的写入模式。
 
-<Bold>Disc State</Bold> — Empty (blank), Appendable (has sessions but can accept more), or Complete/Closed (finalized, no more writing possible).
+<Bold>光盘状态</Bold> — 空白（可写）、可追加（已有区段但还可继续写入）或已完成/已关闭（已封盘，无法再写入）。
 
-<Bold>DL (Dual Layer)</Bold> — A disc with two recording layers, roughly doubling capacity (e.g. DVD DL = 8.5 GB, BD DL = 50 GB).
+<Bold>DL（Dual Layer，双层）</Bold> — 具有两个记录层的光盘，容量约为单层的两倍（例如 DVD DL = 8.5 GB，BD DL = 50 GB）。
 
-<Bold>El Torito</Bold> — The standard for bootable CD/DVD-ROMs. Defines a boot catalog and boot images that the BIOS/UEFI loads.
+<Bold>El Torito</Bold> — 可引导 CD/DVD-ROM 的标准，定义了 BIOS/UEFI 加载的引导目录与引导镜像。
 
-<Bold>Finalization</Bold> — Closing the disc so it can be read by any compatible drive or player. A finalized disc cannot have more data appended.
+<Bold>封盘</Bold> — 关闭光盘，使其可被任何兼容的光驱或播放机读取。已封盘的光盘无法再追加数据。
 
-<Bold>ISO 9660</Bold> — The standard file system for CD-ROMs, defined by ECMA-119.
+<Bold>ISO 9660</Bold> — CD-ROM 的标准文件系统，由 ECMA-119 定义。
 
-<Bold>Joliet</Bold> — Microsoft's extension to ISO 9660 for Unicode and long filename support.
+<Bold>Joliet</Bold> — Microsoft 对 ISO 9660 的扩展，提供 Unicode 与长文件名支持。
 
-<Bold>LBA (Logical Block Address)</Bold> — Sequential numbering of sectors on a disc, starting from 0. Used to locate data on the disc.
+<Bold>LBA（Logical Block Address，逻辑块地址）</Bold> — 光盘上扇区的顺序编号，从 0 开始，用于定位光盘上的数据。
 
-<Bold>Lead-in / Lead-out</Bold> — Special areas at the beginning and end of each session on a disc. The lead-in contains the TOC.
+<Bold>导入区 / 导出区</Bold> — 光盘上每个区段开头与结尾的特殊区域。导入区包含 TOC。
 
-<Bold>LibCrypt</Bold> — A copy protection used on some PlayStation 1 games, stored in the subchannel data.
+<Bold>LibCrypt</Bold> — 部分 PlayStation 1 游戏使用的复制保护，存放在子通道数据中。
 
-<Bold>M-DISC</Bold> — Millennial Disc — archival media rated for 1,000+ years of data retention.
+<Bold>M-DISC</Bold> — M-DISC 归档盘——标称数据可保存 1,000 年以上的归档介质。
 
-<Bold>MMC (Multi-Media Commands)</Bold> — The SCSI command set used to control optical drives.
+<Bold>MMC (Multi-Media Commands)</Bold> — 用于控制光驱的 SCSI 指令集。
 
-<Bold>Multi-session</Bold> — A disc with multiple sessions. Each session has its own lead-in and lead-out, allowing data to be added incrementally.
+<Bold>多区段</Bold> — 包含多个区段的光盘。每个区段都有自己的导入区与导出区，因而可以分次追加数据。
 
-<Bold>Overburn</Bold> — Writing beyond the official rated capacity of a disc. Risky but sometimes possible.
+<Bold>超刻</Bold> — 写入超出光盘标称容量的数据。有风险，但有时可行。
 
-<Bold>PVD (Primary Volume Descriptor)</Bold> — The main metadata structure in an ISO 9660 file system, located at sector 16.
+<Bold>PVD（Primary Volume Descriptor，主卷描述符）</Bold> — ISO 9660 文件系统中的主要元数据结构，位于第 16 扇区。
 
-<Bold>Raw Sector</Bold> — A complete 2,352-byte sector including sync pattern, header, user data, ECC, and EDC.
+<Bold>原始扇区</Bold> — 完整的 2,352 字节扇区，包含同步模式、头部、用户数据、ECC 与 EDC。
 
-<Bold>Rock Ridge</Bold> — ISO 9660 extension for POSIX metadata (long names, permissions, symlinks).
+<Bold>Rock Ridge</Bold> — ISO 9660 的扩展，用于提供 POSIX 元数据（长文件名、权限、符号链接）。
 
-<Bold>SBI File</Bold> — SubChannel Binary Image — contains subchannel data for LibCrypt-protected PlayStation 1 games.
+<Bold>SBI 文件</Bold> — SubChannel Binary Image——包含受 LibCrypt 保护的 PlayStation 1 游戏的子通道数据。
 
-<Bold>SCSI</Bold> — Small Computer System Interface — the protocol used to communicate with optical drives.
+<Bold>SCSI</Bold> — Small Computer System Interface——与光驱通信所使用的协议。
 
-<Bold>Session</Bold> — A self-contained recording unit on a disc with its own lead-in, program area, and lead-out.
+<Bold>区段</Bold> — 光盘上一个独立的记录单元，具有自己的导入区、程序区与导出区。
 
-<Bold>Subchannel</Bold> — Additional data channels (P through W) alongside the main data on a CD. Used for timing, CD-TEXT, copy protection, and other metadata.
+<Bold>子通道</Bold> — CD 上与主数据并存的数据通道（P 至 W），用于计时、CD-TEXT 文本、复制保护及其他元数据。
 
-<Bold>TAO (Track-At-Once)</Bold> — Writing mode where each track is written individually with gaps between them.
+<Bold>TAO (Track-At-Once)</Bold> — 逐条写入轨道、轨道之间留有间隙的写入模式。
 
-<Bold>TOC (Table of Contents)</Bold> — Data in the lead-in area listing all tracks on the disc, their positions and types.
+<Bold>TOC（Table of Contents，目录）</Bold> — 导入区中的数据，列出光盘上所有轨道及其位置与类型。
 
-<Bold>Track</Bold> — A contiguous block of data on a disc. A disc can contain multiple tracks (e.g. audio tracks + a data track).
+<Bold>轨道</Bold> — 光盘上一段连续的数据。一张光盘可包含多条轨道（例如多条音频轨道 + 一条数据轨道）。
 
-<Bold>UDF (Universal Disc Format)</Bold> — Modern file system for optical media, required for DVD-Video and Blu-ray.
+<Bold>UDF (Universal Disc Format)</Bold> — 用于光盘介质的现代文件系统，DVD-Video 与蓝光必需。
 
-<Bold>VOBU (Video Object Unit)</Bold> — The smallest addressable unit in a DVD-Video stream, typically 0.4–1.0 seconds of video.</TextBlock>
+<Bold>VOBU（Video Object Unit，视频对象单元）</Bold> — DVD-Video 数据流中最小的可寻址单元，通常为 0.4–1.0 秒的视频。</TextBlock>
                     </StackPanel>
                 </Border>
 
@@ -917,39 +713,35 @@
                 <!-- ============================================================ -->
                 <Border x:Name="SectionTroubleshooting" Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Troubleshooting" Classes="SectionHeader" FontSize="18"/>
-                        </StackPanel>
+                        <TextBlock Text="🔧 故障排查" Classes="SectionHeader" FontSize="18"/>
 
-                        <TextBlock Text="No drives detected" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="未检测到光驱" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Ensure your optical drive is connected and powered on&#x0a;  • On Windows: Run the application as Administrator&#x0a;  • On Linux: Run with sudo or ensure your user is in the 'cdrom' and 'optical' groups&#x0a;  • On macOS: Run with sudo&#x0a;  • Try clicking Refresh Drives to rescan&#x0a;  • Check if the drive appears in your operating system's device manager"/>
+                                   Text="  • 确认光驱已连接并已通电&#x0a;  • Windows：以管理员身份运行本应用&#x0a;  • Linux：使用 sudo 运行，或确保当前用户属于“cdrom”和“optical”用户组&#x0a;  • macOS：使用 sudo 运行&#x0a;  • 尝试点击“刷新光驱”重新扫描&#x0a;  • 检查光驱是否出现在操作系统的设备管理器中"/>
 
-                        <TextBlock Text="Burn fails or produces coasters" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="刻录失败或产生废盘" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Lower the write speed — high speeds are more prone to errors&#x0a;  • Ensure buffer underrun protection is enabled&#x0a;  • Try different media brands — some drives work better with certain brands&#x0a;  • Close other applications that might interrupt the burn process&#x0a;  • Check that your disc is not damaged or expired (organic dyes degrade over time)&#x0a;  • For rewritable media, try a full blank before writing"/>
+                                   Text="  • 降低写入速度——高速更容易出错&#x0a;  • 确认已启用缓存欠载保护&#x0a;  • 尝试其他品牌的介质——某些光驱对特定品牌兼容性更好&#x0a;  • 关闭可能中断刻录过程的其他应用程序&#x0a;  • 检查光盘是否损坏或已过期（有机染料会随时间劣化）&#x0a;  • 对于可重写介质，写入前先尝试完全擦除"/>
 
-                        <TextBlock Text="'Not elevated' warning" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="“未提权”警告" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="Many operations require direct hardware access:&#x0a;  • Windows: Right-click the application → Run as Administrator&#x0a;  • Linux: Run with 'sudo' or configure udev rules for your optical drive&#x0a;  • macOS: Run with 'sudo' from Terminal"/>
+                                   Text="许多操作需要直接访问硬件：&#x0a;  • Windows：右键点击应用 → 以管理员身份运行&#x0a;  • Linux：使用“sudo”运行，或为光驱配置 udev 规则&#x0a;  • macOS：在终端中使用“sudo”运行"/>
 
-                        <TextBlock Text="Disc not recognized or wrong media type" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="光盘无法识别或介质类型错误" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Eject and reinsert the disc&#x0a;  • Click Refresh Drives and Probe Media again&#x0a;  • The disc may be damaged, dirty, or incompatible with your drive&#x0a;  • Try the 'Force Media Type' option in advanced settings if the drive misidentifies the media"/>
+                                   Text="  • 弹出并重新放入光盘&#x0a;  • 再次点击“刷新光驱”和“探测介质”&#x0a;  • 光盘可能已损坏、有污渍，或与光驱不兼容&#x0a;  • 如果光驱误判介质，可尝试高级设置中的“强制介质类型”选项"/>
 
-                        <TextBlock Text="Audio CD rip has glitches or clicks" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="音频 CD 抓取有爆音或杂音" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Enable Audio Paranoia Mode for maximum error correction&#x0a;  • Enable Jitter Correction&#x0a;  • Lower the read speed to 4x or 8x&#x0a;  • Increase the retry count to 10 or more&#x0a;  • Clean the disc surface gently from center to edge (never in circular motions)"/>
+                                   Text="  • 启用音频精确抓取模式以获得最强纠错&#x0a;  • 启用抖动校正&#x0a;  • 将读取速度降至 4x 或 8x&#x0a;  • 将重试次数提高到 10 次或更多&#x0a;  • 从中心向边缘轻轻清洁光盘表面（切勿做圆周擦拭）"/>
 
-                        <TextBlock Text="Verification fails after successful burn" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="刻录成功但校验失败" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • This may indicate marginal media quality — try a different disc&#x0a;  • Lower the write speed and burn again&#x0a;  • Some drives have slightly different read-back behavior — try verification on a different drive&#x0a;  • Ensure the disc was not removed and reinserted between burning and verification&#x0a;  • For mixed-mode CDs (e.g. PS1 games), ensure you are comparing with the original CUE sheet — the CUE layout is needed for correct pregap and track boundary handling&#x0a;  • Enable Audio Track Verification when verifying mixed-mode discs with audio tracks to include all sectors in the comparison"/>
+                                   Text="  • 这可能说明介质质量处于临界状态——请换一张光盘重试&#x0a;  • 降低写入速度后重新刻录&#x0a;  • 部分光驱的回读行为略有差异——可换一台光驱进行校验&#x0a;  • 确认在刻录与校验之间没有取出并重新放入光盘&#x0a;  • 对于混合模式 CD（如 PS1 游戏），确认使用原始 CUE 索引文件进行比对——正确处理预间隙与轨道边界需要 CUE 布局信息&#x0a;  • 校验带音轨的混合模式光盘时，启用音频轨道校验，以便将所有扇区纳入比对"/>
 
-                        <TextBlock Text="Gaming disc doesn't work on console" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
+                        <TextBlock Text="游戏光盘在主机上无法运行" Foreground="#FF8C00" FontWeight="SemiBold" FontSize="13"/>
                         <TextBlock TextWrapping="Wrap" Foreground="#C8D8E8" LineHeight="22"
-                                   Text="  • Ensure you selected the correct gaming system preset&#x0a;  • Use DAO (Disc-At-Once) write mode — TAO adds gaps that break many game formats&#x0a;  • PS1 games with LibCrypt protection need the correct .sbi file&#x0a;  • Dreamcast games in CDI/GDI format need specific patching enabled&#x0a;  • Use low write speeds (4x–8x) for maximum compatibility&#x0a;  • Verify the source image is a correct dump using the Verify view"/>
+                                   Text="  • 确认已选择正确的游戏机预设&#x0a;  • 使用 DAO（Disc-At-Once）写入模式——TAO 会引入间隙，破坏许多游戏格式&#x0a;  • 带 LibCrypt 保护的 PS1 游戏需要正确的 .sbi 文件&#x0a;  • CDI/GDI 格式的 Dreamcast 游戏需要启用相应的修补&#x0a;  • 使用较低的写入速度（4x–8x）以获得最佳兼容性&#x0a;  • 使用“校验”视图确认源镜像是正确的转储"/>
                     </StackPanel>
                 </Border>
 

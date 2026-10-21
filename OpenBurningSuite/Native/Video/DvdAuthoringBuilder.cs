@@ -118,7 +118,7 @@ public sealed class DvdAuthoringBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 2,
-            StatusMessage = "Building DVD-Video structure...",
+            StatusMessage = "正在构建 DVD-Video 结构…",
             LogLine = $"[Info] Creating VIDEO_TS directory: {videoTsDir}"
         });
 
@@ -128,7 +128,7 @@ public sealed class DvdAuthoringBuilder
         {
             progress.Report(new BuildProgress
             {
-                StatusMessage = "Transcoding video files for DVD...",
+                StatusMessage = "正在为 DVD 转码视频文件…",
                 LogLine = "[Info] Transcoding enabled — converting to DVD-compliant MPEG-2"
             });
 
@@ -162,7 +162,7 @@ public sealed class DvdAuthoringBuilder
                     progress.Report(new BuildProgress
                     {
                         PercentComplete = 2 + filesProcessed * 40 / totalFiles,
-                        StatusMessage = $"Transcoded {filesProcessed}/{totalFiles} video files"
+                        StatusMessage = $"已转码 {filesProcessed}/{totalFiles} 个视频文件"
                     });
                 }
             }
@@ -191,7 +191,7 @@ public sealed class DvdAuthoringBuilder
                         : title.VideoPath;
 
                     if (!File.Exists(sourcePath))
-                        throw new FileNotFoundException($"Video file not found: {sourcePath}");
+                        throw new FileNotFoundException($"未找到视频文件：{sourcePath}");
 
                     // Split source into VOB parts (max 1 GB each)
                     var vobParts = await SplitToVobFilesAsync(
@@ -225,7 +225,7 @@ public sealed class DvdAuthoringBuilder
                 progress.Report(new BuildProgress
                 {
                     PercentComplete = pct,
-                    StatusMessage = $"Created VOBs for title set {vtsNum}/{job.TitleSets.Count}",
+                    StatusMessage = $"已为第 {vtsNum}/{job.TitleSets.Count} 个标题集创建 VOB",
                     LogLine = $"[Info] VTS {vtsNum:D2}: {vtsInfo.VobParts.Count} VOB file(s)"
                 });
             }
@@ -234,7 +234,7 @@ public sealed class DvdAuthoringBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = 75,
-                StatusMessage = "Generating IFO navigation data...",
+                StatusMessage = "正在生成 IFO 导航数据…",
                 LogLine = "[Info] Writing VIDEO_TS.IFO (Video Manager)"
             });
 
@@ -286,7 +286,7 @@ public sealed class DvdAuthoringBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = 100,
-                StatusMessage = "DVD-Video structure complete.",
+                StatusMessage = "DVD-Video 结构构建完成。",
                 LogLine = $"[Info] DVD-Video structure built: {videoTsDir}"
             });
 
@@ -307,38 +307,38 @@ public sealed class DvdAuthoringBuilder
     private static void ValidateJob(DvdAuthoringJob job)
     {
         if (job.TitleSets.Count == 0)
-            throw new ArgumentException("At least one title set is required for DVD authoring.");
+            throw new ArgumentException("DVD 制作至少需要一个标题集。");
 
         if (job.TitleSets.Count > 99)
-            throw new ArgumentException("DVD-Video supports a maximum of 99 title sets.");
+            throw new ArgumentException("DVD-Video 最多支持 99 个标题集。");
 
         foreach (var ts in job.TitleSets)
         {
             if (ts.Titles.Count == 0)
-                throw new ArgumentException("Each title set must contain at least one title.");
+                throw new ArgumentException("每个标题集必须至少包含一个标题。");
 
             if (ts.Titles.Count > 99)
-                throw new ArgumentException("DVD-Video supports a maximum of 99 titles per title set.");
+                throw new ArgumentException("DVD-Video 每个标题集最多支持 99 个标题。");
 
             if (ts.AudioStreams.Count > 8)
-                throw new ArgumentException("DVD-Video supports a maximum of 8 audio streams per title set.");
+                throw new ArgumentException("DVD-Video 每个标题集最多支持 8 条音频流。");
 
             if (ts.SubtitleStreams.Count > 32)
-                throw new ArgumentException("DVD-Video supports a maximum of 32 subtitle streams per title set.");
+                throw new ArgumentException("DVD-Video 每个标题集最多支持 32 条字幕流。");
 
             foreach (var title in ts.Titles)
             {
                 if (string.IsNullOrWhiteSpace(title.VideoPath))
-                    throw new ArgumentException("Video path must not be empty for DVD titles.");
+                    throw new ArgumentException("DVD 标题的视频路径不能为空。");
 
                 if (title.Chapters.Count > 999)
-                    throw new ArgumentException("DVD-Video supports a maximum of 999 chapters per title.");
+                    throw new ArgumentException("DVD-Video 每个标题最多支持 999 个章节。");
             }
         }
 
         var std = job.VideoStandard.ToUpperInvariant();
         if (std != "NTSC" && std != "PAL")
-            throw new ArgumentException($"Unsupported video standard: {job.VideoStandard}. Use 'NTSC' or 'PAL'.");
+            throw new ArgumentException($"不支持视频制式：{job.VideoStandard}。请使用“NTSC”或“PAL”。");
     }
 
     /// <summary>
@@ -365,7 +365,7 @@ public sealed class DvdAuthoringBuilder
         long totalSize = sourceInfo.Length;
 
         if (totalSize == 0)
-            throw new InvalidOperationException($"Source video file is empty: {sourcePath}");
+            throw new InvalidOperationException($"源视频文件为空：{sourcePath}");
 
         // Calculate bytes per VOBU based on DVD mux rate and VOBU duration
         // 10.08 Mbps = 1,260,000 bytes/sec; 0.5 sec = 630,000 bytes per VOBU

@@ -56,7 +56,7 @@ public sealed class IsoBuilder
             catch (Exception ex)
             {
                 throw new InvalidOperationException(
-                    $"Cannot create output directory '{outputDir}': {ex.Message}");
+                    $"无法创建输出目录“{outputDir}”：{ex.Message}");
             }
         }
 
@@ -76,14 +76,14 @@ public sealed class IsoBuilder
 
         // Enumerate and add files from the source folder
         if (!Directory.Exists(job.SourceFolder))
-            throw new InvalidOperationException($"Source folder not found: {job.SourceFolder}");
+            throw new InvalidOperationException($"未找到源文件夹：{job.SourceFolder}");
 
         var startTime = DateTime.UtcNow;
 
         progress.Report(new BuildProgress
         {
             PercentComplete = 5,
-            StatusMessage = "Scanning source folder...",
+            StatusMessage = "正在扫描源文件夹…",
             LogLine = $"[Info] Source: {job.SourceFolder}"
         });
 
@@ -92,7 +92,7 @@ public sealed class IsoBuilder
 
         if (files.Length == 0)
             throw new InvalidOperationException(
-                $"Source folder is empty: {job.SourceFolder}. Add files before building an image.");
+                $"源文件夹为空：{job.SourceFolder}。请先添加文件再构建镜像。");
 
         // Add directories first
         // DiscUtils CDBuilder expects backslash-delimited paths on all platforms
@@ -190,7 +190,7 @@ public sealed class IsoBuilder
                     CurrentFile = relativePath,
                     Elapsed = elapsed,
                     Remaining = remaining,
-                    StatusMessage = $"Adding files: {i + 1}/{files.Length}",
+                    StatusMessage = $"正在添加文件：{i + 1}/{files.Length}",
                     LogLine = $"Added: {relativePath}"
                 });
             }
@@ -200,7 +200,7 @@ public sealed class IsoBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 80,
-            StatusMessage = "Writing ISO image...",
+            StatusMessage = "正在写入 ISO 镜像…",
             LogLine = $"[Info] Building image: {job.OutputImagePath}"
         });
 
@@ -261,7 +261,7 @@ public sealed class IsoBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = 88,
-                StatusMessage = "Adding HFS+ hybrid structures...",
+                StatusMessage = "正在添加 HFS+ 混合结构…",
                 LogLine = "[Info] Creating HFS+ hybrid image (Apple Partition Map + HFS+ volume)"
             });
 
@@ -290,7 +290,7 @@ public sealed class IsoBuilder
             PercentComplete = 100,
             BytesProcessed = imageSize,
             TotalBytes = imageSize,
-            StatusMessage = "Image build complete.",
+            StatusMessage = "镜像构建完成。",
             LogLine = $"[Info] Image created: {Helpers.FormatHelper.FormatBytes(imageSize)}"
         });
     }

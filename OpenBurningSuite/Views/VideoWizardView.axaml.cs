@@ -291,9 +291,9 @@ public partial class VideoWizardView : UserControl
         PrgVideoExec.Value = 0;
         TxtVideoExecPercent.Text = "0%";
         TxtVideoExecSpeed.Text = string.Empty;
-        TxtVideoExecStatus.Text = "Preparing...";
+        TxtVideoExecStatus.Text = "正在准备…";
         TxtVideoExecLog.Text = string.Empty;
-        TxtVideoStep4Title.Text = "Executing...";
+        TxtVideoStep4Title.Text = "正在执行…";
 
         // Reset disc visualization for a fresh operation
         DiscVizBorder.IsVisible = false;
@@ -355,13 +355,13 @@ public partial class VideoWizardView : UserControl
                     break;
             }
 
-            TxtVideoStep4Title.Text = "✅ Complete!";
-            TxtVideoExecStatus.Text = "Operation completed successfully.";
+            TxtVideoStep4Title.Text = "✅ 完成！";
+            TxtVideoExecStatus.Text = "操作已成功完成。";
         }
         catch (OperationCanceledException)
         {
-            TxtVideoStep4Title.Text = "⏹ Cancelled";
-            TxtVideoExecStatus.Text = "Operation was cancelled by user.";
+            TxtVideoStep4Title.Text = "⏹ 已取消";
+            TxtVideoExecStatus.Text = "操作已被用户取消。";
             AppendVideoLog("[Info] Operation cancelled.");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -369,8 +369,8 @@ public partial class VideoWizardView : UserControl
         }
         catch (Exception ex)
         {
-            TxtVideoStep4Title.Text = "❌ Failed";
-            TxtVideoExecStatus.Text = $"Error: {ex.Message}";
+            TxtVideoStep4Title.Text = "❌ 失败";
+            TxtVideoExecStatus.Text = $"错误：{ex.Message}";
             AppendVideoLog($"[Error] {ex.Message}");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -399,63 +399,63 @@ public partial class VideoWizardView : UserControl
         {
             case VideoWizardMode.DvdFromFolder:
                 if (string.IsNullOrWhiteSpace(TxtDvdSourceFolder.Text))
-                    return "Please specify the VIDEO_TS source folder.";
+                    return "请指定 VIDEO_TS 源文件夹。";
                 var dvdFolder = TxtDvdSourceFolder.Text!.Trim();
                 if (!IsValidDvdFolder(dvdFolder))
-                    return "The specified folder does not contain a valid VIDEO_TS structure.";
+                    return "指定的文件夹不包含有效的 VIDEO_TS 结构。";
                 if (string.IsNullOrWhiteSpace(TxtDvdOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtDvdOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
                         return $"Output directory does not exist: {outDir}";
                 }
                 if (ChkDvdBurnDisc.IsChecked == true && CmbDvdDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case VideoWizardMode.BlurayFromFolder:
                 if (string.IsNullOrWhiteSpace(TxtBdSourceFolder.Text))
-                    return "Please specify the BDMV source folder.";
+                    return "请指定 BDMV 源文件夹。";
                 var bdFolder = TxtBdSourceFolder.Text!.Trim();
                 if (!IsValidBdFolder(bdFolder))
-                    return "The specified folder does not contain a valid BDMV structure.";
+                    return "指定的文件夹不包含有效的 BDMV 结构。";
                 if (string.IsNullOrWhiteSpace(TxtBdOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtBdOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
                         return $"Output directory does not exist: {outDir}";
                 }
                 if (ChkBdBurnDisc.IsChecked == true && CmbBdDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case VideoWizardMode.BdavFromFolder:
                 if (string.IsNullOrWhiteSpace(TxtBdavSourceFolder.Text))
-                    return "Please specify the BDAV source folder.";
+                    return "请指定 BDAV 源文件夹。";
                 var bdavFolder = TxtBdavSourceFolder.Text!.Trim();
                 if (!IsValidBdavFolder(bdavFolder))
-                    return "The specified folder does not contain a valid BDAV structure (requires STREAM and CLIPINF or PLAYLIST directories under BDAV/).";
+                    return "指定的文件夹不包含有效的 BDAV 结构（需要 BDAV/ 下的 STREAM 以及 CLIPINF 或 PLAYLIST 目录）。";
                 if (string.IsNullOrWhiteSpace(TxtBdavOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtBdavOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
                         return $"Output directory does not exist: {outDir}";
                 }
                 if (ChkBdavBurnDisc.IsChecked == true && CmbBdavDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case VideoWizardMode.BluRay3DFromFolder:
                 if (string.IsNullOrWhiteSpace(TxtBd3dSourceFolder.Text))
-                    return "Please specify the BDMV 3D source folder.";
+                    return "请指定 BDMV 3D 源文件夹。";
                 var bd3dFolder = TxtBd3dSourceFolder.Text!.Trim();
                 if (!IsValidBdFolder(bd3dFolder))
-                    return "The specified folder does not contain a valid BDMV structure.";
+                    return "指定的文件夹不包含有效的 BDMV 结构。";
                 if (string.IsNullOrWhiteSpace(TxtBd3dOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtBd3dOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
@@ -464,75 +464,75 @@ public partial class VideoWizardView : UserControl
                 // Validate dependent view for Frame Packed mode
                 var mode3d = GetBd3dMode();
                 if (mode3d == "FramePacked" && string.IsNullOrWhiteSpace(TxtBd3dDependentViewPath.Text))
-                    return "Frame Packed (MVC) mode requires a dependent view (right-eye) video file.";
+                    return "帧封装（MVC）模式需要从属视图（右眼）视频文件。";
                 if (mode3d == "FramePacked" && !string.IsNullOrWhiteSpace(TxtBd3dDependentViewPath.Text)
                     && !File.Exists(TxtBd3dDependentViewPath.Text.Trim()))
-                    return "The dependent view (right-eye) video file was not found.";
+                    return "未找到从属视图（右眼）视频文件。";
                 if (ChkBd3dBurnDisc.IsChecked == true && CmbBd3dDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case VideoWizardMode.Vcd:
                 if (_vcdFiles.Count == 0)
-                    return "Please add at least one video file.";
+                    return "请至少添加一个视频文件。";
                 if (string.IsNullOrWhiteSpace(TxtVcdOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtVcdOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
                         return $"Output directory does not exist: {outDir}";
                 }
                 if (ChkVcdBurnDisc.IsChecked == true && CmbVcdDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case VideoWizardMode.Svcd:
                 if (_svcdFiles.Count == 0)
-                    return "Please add at least one video file.";
+                    return "请至少添加一个视频文件。";
                 if (string.IsNullOrWhiteSpace(TxtSvcdOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtSvcdOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
                         return $"Output directory does not exist: {outDir}";
                 }
                 if (ChkSvcdBurnDisc.IsChecked == true && CmbSvcdDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case VideoWizardMode.Xsvcd:
                 if (_xsvcdFiles.Count == 0)
-                    return "Please add at least one video file.";
+                    return "请至少添加一个视频文件。";
                 if (string.IsNullOrWhiteSpace(TxtXsvcdOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtXsvcdOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
                         return $"Output directory does not exist: {outDir}";
                 }
                 if (ChkXsvcdBurnDisc.IsChecked == true && CmbXsvcdDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             case VideoWizardMode.UhdBlurayFromFolder:
                 if (string.IsNullOrWhiteSpace(TxtUhdBdSourceFolder.Text))
-                    return "Please specify the BDMV source folder.";
+                    return "请指定 BDMV 源文件夹。";
                 var uhdFolder = TxtUhdBdSourceFolder.Text!.Trim();
                 if (!IsValidBdFolder(uhdFolder))
-                    return "The specified folder does not contain a valid BDMV structure.";
+                    return "指定的文件夹不包含有效的 BDMV 结构。";
                 if (string.IsNullOrWhiteSpace(TxtUhdBdOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 {
                     var outDir = Path.GetDirectoryName(TxtUhdBdOutputPath.Text.Trim());
                     if (!string.IsNullOrWhiteSpace(outDir) && !Directory.Exists(outDir))
                         return $"Output directory does not exist: {outDir}";
                 }
                 if (ChkUhdBdBurnDisc.IsChecked == true && CmbUhdBdDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             default:
-                return "Please choose a task first.";
+                return "请先选择一个任务。";
         }
     }
 
@@ -582,176 +582,176 @@ public partial class VideoWizardView : UserControl
         switch (_mode)
         {
             case VideoWizardMode.DvdFromFolder:
-                AddVideoSummaryLine("📀 Task", "DVD-Video from Folder");
-                AddVideoSummaryLine("📂 Source Folder", TxtDvdSourceFolder.Text ?? "(not set)");
-                AddVideoSummaryLine("🎬 Video Standard", GetSelectedText(CmbDvdVideoStandard, "NTSC"));
-                AddVideoSummaryLine("📐 Aspect Ratio", GetSelectedText(CmbDvdAspectRatio, "16:9"));
-                AddVideoSummaryLine("🏷 Volume Label",
+                AddVideoSummaryLine("📀 Task", "从文件夹创建 DVD-Video");
+                AddVideoSummaryLine("📂 源文件夹", TxtDvdSourceFolder.Text ?? "（未设置）");
+                AddVideoSummaryLine("🎬 视频制式", GetSelectedText(CmbDvdVideoStandard, "NTSC"));
+                AddVideoSummaryLine("📐 宽高比", GetSelectedText(CmbDvdAspectRatio, "16:9"));
+                AddVideoSummaryLine("🏷 卷标",
                     string.IsNullOrWhiteSpace(TxtDvdVolumeLabel.Text) ? "DVD_VIDEO" : TxtDvdVolumeLabel.Text!);
-                AddVideoSummaryLine("🌍 Region", GetSelectedText(CmbDvdRegion, "Region Free"));
-                AddVideoSummaryLine("💾 Output Image", TxtDvdOutputPath.Text ?? "(not set)");
+                AddVideoSummaryLine("🌍 区域", GetSelectedText(CmbDvdRegion, "Region Free"));
+                AddVideoSummaryLine("💾 输出镜像", TxtDvdOutputPath.Text ?? "（未设置）");
                 if (ChkDvdBurnDisc.IsChecked == true)
                 {
                     var drive = CmbDvdDrive.SelectedItem as DiscDrive;
-                    AddVideoSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddVideoSummaryLine("⚡ Write Speed", GetSelectedText(CmbDvdSpeed, "Auto"));
-                    AddVideoSummaryLine("📝 Write Mode", GetSelectedText(CmbDvdWriteMode, "DAO"));
-                    AddVideoSummaryLine("📦 Copies", ((int)(NumDvdCopies.Value ?? 1)).ToString());
+                    AddVideoSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddVideoSummaryLine("⚡ 写入速度", GetSelectedText(CmbDvdSpeed, "Auto"));
+                    AddVideoSummaryLine("📝 写入模式", GetSelectedText(CmbDvdWriteMode, "DAO"));
+                    AddVideoSummaryLine("📦 份数", ((int)(NumDvdCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddVideoSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddVideoSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
 
             case VideoWizardMode.BlurayFromFolder:
-                AddVideoSummaryLine("💿 Task", "Video Blu-ray from Folder");
-                AddVideoSummaryLine("📂 Source Folder", TxtBdSourceFolder.Text ?? "(not set)");
-                AddVideoSummaryLine("🏷 Volume Label",
+                AddVideoSummaryLine("💿 任务", "从文件夹创建视频蓝光");
+                AddVideoSummaryLine("📂 源文件夹", TxtBdSourceFolder.Text ?? "（未设置）");
+                AddVideoSummaryLine("🏷 卷标",
                     string.IsNullOrWhiteSpace(TxtBdVolumeLabel.Text) ? "BLURAY_DISC" : TxtBdVolumeLabel.Text!);
-                AddVideoSummaryLine("💾 Output Image", TxtBdOutputPath.Text ?? "(not set)");
+                AddVideoSummaryLine("💾 输出镜像", TxtBdOutputPath.Text ?? "（未设置）");
                 if (ChkBdBurnDisc.IsChecked == true)
                 {
                     var drive = CmbBdDrive.SelectedItem as DiscDrive;
-                    AddVideoSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddVideoSummaryLine("⚡ Write Speed", GetSelectedText(CmbBdSpeed, "Auto"));
-                    AddVideoSummaryLine("📦 Copies", ((int)(NumBdCopies.Value ?? 1)).ToString());
+                    AddVideoSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddVideoSummaryLine("⚡ 写入速度", GetSelectedText(CmbBdSpeed, "Auto"));
+                    AddVideoSummaryLine("📦 份数", ((int)(NumBdCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddVideoSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddVideoSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
 
             case VideoWizardMode.BdavFromFolder:
-                AddVideoSummaryLine("📹 Task", "BDAV Recording from Folder");
-                AddVideoSummaryLine("📂 Source Folder", TxtBdavSourceFolder.Text ?? "(not set)");
-                AddVideoSummaryLine("🏷 Volume Label",
+                AddVideoSummaryLine("📹 任务", "从文件夹创建 BDAV 录像");
+                AddVideoSummaryLine("📂 源文件夹", TxtBdavSourceFolder.Text ?? "（未设置）");
+                AddVideoSummaryLine("🏷 卷标",
                     string.IsNullOrWhiteSpace(TxtBdavVolumeLabel.Text) ? "BDAV_DISC" : TxtBdavVolumeLabel.Text!);
-                AddVideoSummaryLine("💿 Disc Size", GetSelectedText(CmbBdavDiscSize, "BD-25 (25 GB)"));
+                AddVideoSummaryLine("💿 光盘容量", GetSelectedText(CmbBdavDiscSize, "BD-25 (25 GB)"));
                 if (DpBdavRecordingDate.SelectedDate.HasValue)
-                    AddVideoSummaryLine("📅 Recording Date", DpBdavRecordingDate.SelectedDate.Value.ToString("yyyy-MM-dd"));
-                AddVideoSummaryLine("🌍 TZ Offset", $"{(int)(NumBdavTimezoneOffset.Value ?? 0)} min");
-                AddVideoSummaryLine("💾 Output Image", TxtBdavOutputPath.Text ?? "(not set)");
+                    AddVideoSummaryLine("📅 录制日期", DpBdavRecordingDate.SelectedDate.Value.ToString("yyyy-MM-dd"));
+                AddVideoSummaryLine("🌍 时区偏移", $"{(int)(NumBdavTimezoneOffset.Value ?? 0)} 分钟");
+                AddVideoSummaryLine("💾 输出镜像", TxtBdavOutputPath.Text ?? "（未设置）");
                 if (ChkBdavBurnDisc.IsChecked == true)
                 {
                     var drive = CmbBdavDrive.SelectedItem as DiscDrive;
-                    AddVideoSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddVideoSummaryLine("⚡ Write Speed", GetSelectedText(CmbBdavSpeed, "Auto"));
-                    AddVideoSummaryLine("📦 Copies", ((int)(NumBdavCopies.Value ?? 1)).ToString());
+                    AddVideoSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddVideoSummaryLine("⚡ 写入速度", GetSelectedText(CmbBdavSpeed, "Auto"));
+                    AddVideoSummaryLine("📦 份数", ((int)(NumBdavCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddVideoSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddVideoSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
 
             case VideoWizardMode.BluRay3DFromFolder:
-                AddVideoSummaryLine("🎥 Task", "3D Blu-ray from Folder");
-                AddVideoSummaryLine("📂 Source Folder", TxtBd3dSourceFolder.Text ?? "(not set)");
-                AddVideoSummaryLine("🏷 Volume Label",
+                AddVideoSummaryLine("🎥 任务", "从文件夹创建 3D 蓝光");
+                AddVideoSummaryLine("📂 源文件夹", TxtBd3dSourceFolder.Text ?? "（未设置）");
+                AddVideoSummaryLine("🏷 卷标",
                     string.IsNullOrWhiteSpace(TxtBd3dVolumeLabel.Text) ? "BLURAY3D_DISC" : TxtBd3dVolumeLabel.Text!);
-                AddVideoSummaryLine("💿 Disc Size", GetSelectedText(CmbBd3dDiscSize, "BD-50 (50 GB)"));
-                AddVideoSummaryLine("🎥 3D Mode", GetSelectedText(CmbBd3dMode, "Frame Packed (MVC)"));
-                AddVideoSummaryLine("🔧 Depth Offset", ((int)(NumBd3dDepthOffset.Value ?? 0)).ToString());
+                AddVideoSummaryLine("💿 光盘容量", GetSelectedText(CmbBd3dDiscSize, "BD-50 (50 GB)"));
+                AddVideoSummaryLine("🎥 3D 模式", GetSelectedText(CmbBd3dMode, "Frame Packed (MVC)"));
+                AddVideoSummaryLine("🔧 深度偏移", ((int)(NumBd3dDepthOffset.Value ?? 0)).ToString());
                 if (!string.IsNullOrWhiteSpace(TxtBd3dDependentViewPath.Text))
-                    AddVideoSummaryLine("👁 Dependent View", TxtBd3dDependentViewPath.Text!);
-                AddVideoSummaryLine("💾 Output Image", TxtBd3dOutputPath.Text ?? "(not set)");
+                    AddVideoSummaryLine("👁 从属视图", TxtBd3dDependentViewPath.Text!);
+                AddVideoSummaryLine("💾 输出镜像", TxtBd3dOutputPath.Text ?? "（未设置）");
                 if (ChkBd3dBurnDisc.IsChecked == true)
                 {
                     var drive = CmbBd3dDrive.SelectedItem as DiscDrive;
-                    AddVideoSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddVideoSummaryLine("⚡ Write Speed", GetSelectedText(CmbBd3dSpeed, "Auto"));
-                    AddVideoSummaryLine("📦 Copies", ((int)(NumBd3dCopies.Value ?? 1)).ToString());
+                    AddVideoSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddVideoSummaryLine("⚡ 写入速度", GetSelectedText(CmbBd3dSpeed, "Auto"));
+                    AddVideoSummaryLine("📦 份数", ((int)(NumBd3dCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddVideoSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddVideoSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
 
             case VideoWizardMode.Vcd:
-                AddVideoSummaryLine("📼 Task", "Video CD (VCD)");
-                AddVideoSummaryLine("🎬 Video Files", $"{_vcdFiles.Count} file(s)");
-                AddVideoSummaryLine("📺 Video Standard", GetSelectedText(CmbVcdVideoStandard, "NTSC"));
-                AddVideoSummaryLine("📀 VCD Version", GetSelectedText(CmbVcdVersion, "2.0"));
-                AddVideoSummaryLine("🏷 Disc Label",
+                AddVideoSummaryLine("📼 任务", "视频 CD（VCD）");
+                AddVideoSummaryLine("🎬 视频文件", $"{_vcdFiles.Count} 个文件");
+                AddVideoSummaryLine("📺 视频制式", GetSelectedText(CmbVcdVideoStandard, "NTSC"));
+                AddVideoSummaryLine("📀 VCD 版本", GetSelectedText(CmbVcdVersion, "2.0"));
+                AddVideoSummaryLine("🏷 光盘标签",
                     string.IsNullOrWhiteSpace(TxtVcdDiscLabel.Text) ? "VIDEOCD" : TxtVcdDiscLabel.Text!);
-                AddVideoSummaryLine("💾 Output Image", TxtVcdOutputPath.Text ?? "(not set)");
+                AddVideoSummaryLine("💾 输出镜像", TxtVcdOutputPath.Text ?? "（未设置）");
                 if (ChkVcdBurnDisc.IsChecked == true)
                 {
                     var drive = CmbVcdDrive.SelectedItem as DiscDrive;
-                    AddVideoSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddVideoSummaryLine("⚡ Write Speed", GetSelectedText(CmbVcdSpeed, "Auto"));
-                    AddVideoSummaryLine("📝 Write Mode", GetSelectedText(CmbVcdWriteMode, "DAO"));
-                    AddVideoSummaryLine("📦 Copies", ((int)(NumVcdCopies.Value ?? 1)).ToString());
+                    AddVideoSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddVideoSummaryLine("⚡ 写入速度", GetSelectedText(CmbVcdSpeed, "Auto"));
+                    AddVideoSummaryLine("📝 写入模式", GetSelectedText(CmbVcdWriteMode, "DAO"));
+                    AddVideoSummaryLine("📦 份数", ((int)(NumVcdCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddVideoSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddVideoSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
 
             case VideoWizardMode.Svcd:
-                AddVideoSummaryLine("📼 Task", "Super Video CD (SVCD)");
-                AddVideoSummaryLine("🎬 Video Files", $"{_svcdFiles.Count} file(s)");
-                AddVideoSummaryLine("📺 Video Standard", GetSelectedText(CmbSvcdVideoStandard, "NTSC"));
-                AddVideoSummaryLine("🏷 Disc Label",
+                AddVideoSummaryLine("📼 任务", "超级视频 CD（SVCD）");
+                AddVideoSummaryLine("🎬 视频文件", $"{_svcdFiles.Count} 个文件");
+                AddVideoSummaryLine("📺 视频制式", GetSelectedText(CmbSvcdVideoStandard, "NTSC"));
+                AddVideoSummaryLine("🏷 光盘标签",
                     string.IsNullOrWhiteSpace(TxtSvcdDiscLabel.Text) ? "SUPERVCD" : TxtSvcdDiscLabel.Text!);
-                AddVideoSummaryLine("💾 Output Image", TxtSvcdOutputPath.Text ?? "(not set)");
+                AddVideoSummaryLine("💾 输出镜像", TxtSvcdOutputPath.Text ?? "（未设置）");
                 if (ChkSvcdBurnDisc.IsChecked == true)
                 {
                     var drive = CmbSvcdDrive.SelectedItem as DiscDrive;
-                    AddVideoSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddVideoSummaryLine("⚡ Write Speed", GetSelectedText(CmbSvcdSpeed, "Auto"));
-                    AddVideoSummaryLine("📝 Write Mode", GetSelectedText(CmbSvcdWriteMode, "DAO"));
-                    AddVideoSummaryLine("📦 Copies", ((int)(NumSvcdCopies.Value ?? 1)).ToString());
+                    AddVideoSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddVideoSummaryLine("⚡ 写入速度", GetSelectedText(CmbSvcdSpeed, "Auto"));
+                    AddVideoSummaryLine("📝 写入模式", GetSelectedText(CmbSvcdWriteMode, "DAO"));
+                    AddVideoSummaryLine("📦 份数", ((int)(NumSvcdCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddVideoSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddVideoSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
 
             case VideoWizardMode.Xsvcd:
-                AddVideoSummaryLine("📼 Task", "eXtended Super Video CD (XSVCD)");
-                AddVideoSummaryLine("🎬 Video Files", $"{_xsvcdFiles.Count} file(s)");
-                AddVideoSummaryLine("📺 Video Standard", GetSelectedText(CmbXsvcdVideoStandard, "NTSC"));
-                AddVideoSummaryLine("🏷 Disc Label",
+                AddVideoSummaryLine("📼 任务", "扩展超级视频 CD（XSVCD）");
+                AddVideoSummaryLine("🎬 视频文件", $"{_xsvcdFiles.Count} 个文件");
+                AddVideoSummaryLine("📺 视频制式", GetSelectedText(CmbXsvcdVideoStandard, "NTSC"));
+                AddVideoSummaryLine("🏷 光盘标签",
                     string.IsNullOrWhiteSpace(TxtXsvcdDiscLabel.Text) ? "XSVCD" : TxtXsvcdDiscLabel.Text!);
-                AddVideoSummaryLine("💾 Output Image", TxtXsvcdOutputPath.Text ?? "(not set)");
+                AddVideoSummaryLine("💾 输出镜像", TxtXsvcdOutputPath.Text ?? "（未设置）");
                 if (ChkXsvcdBurnDisc.IsChecked == true)
                 {
                     var drive = CmbXsvcdDrive.SelectedItem as DiscDrive;
-                    AddVideoSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddVideoSummaryLine("⚡ Write Speed", GetSelectedText(CmbXsvcdSpeed, "Auto"));
-                    AddVideoSummaryLine("📝 Write Mode", GetSelectedText(CmbXsvcdWriteMode, "DAO"));
-                    AddVideoSummaryLine("📦 Copies", ((int)(NumXsvcdCopies.Value ?? 1)).ToString());
+                    AddVideoSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddVideoSummaryLine("⚡ 写入速度", GetSelectedText(CmbXsvcdSpeed, "Auto"));
+                    AddVideoSummaryLine("📝 写入模式", GetSelectedText(CmbXsvcdWriteMode, "DAO"));
+                    AddVideoSummaryLine("📦 份数", ((int)(NumXsvcdCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddVideoSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddVideoSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
 
             case VideoWizardMode.UhdBlurayFromFolder:
-                AddVideoSummaryLine("🎬 Task", "UHD Blu-ray from Folder");
-                AddVideoSummaryLine("📂 Source Folder", TxtUhdBdSourceFolder.Text ?? "(not set)");
-                AddVideoSummaryLine("🏷 Volume Label",
+                AddVideoSummaryLine("🎬 任务", "从文件夹创建 UHD 蓝光");
+                AddVideoSummaryLine("📂 源文件夹", TxtUhdBdSourceFolder.Text ?? "（未设置）");
+                AddVideoSummaryLine("🏷 卷标",
                     string.IsNullOrWhiteSpace(TxtUhdBdVolumeLabel.Text) ? "UHD_BLURAY" : TxtUhdBdVolumeLabel.Text!);
-                AddVideoSummaryLine("💿 Disc Size", GetSelectedText(CmbUhdBdDiscSize, "UHD BD-66 (66 GB)"));
-                AddVideoSummaryLine("🎨 HDR Mode", GetSelectedText(CmbUhdBdHdrMode, "HDR10"));
-                AddVideoSummaryLine("💾 Output Image", TxtUhdBdOutputPath.Text ?? "(not set)");
+                AddVideoSummaryLine("💿 光盘容量", GetSelectedText(CmbUhdBdDiscSize, "UHD BD-66 (66 GB)"));
+                AddVideoSummaryLine("🎨 HDR 模式", GetSelectedText(CmbUhdBdHdrMode, "HDR10"));
+                AddVideoSummaryLine("💾 输出镜像", TxtUhdBdOutputPath.Text ?? "（未设置）");
                 if (ChkUhdBdBurnDisc.IsChecked == true)
                 {
                     var drive = CmbUhdBdDrive.SelectedItem as DiscDrive;
-                    AddVideoSummaryLine("🔥 Burn to Drive", drive?.DisplayName ?? "(none)");
-                    AddVideoSummaryLine("⚡ Write Speed", GetSelectedText(CmbUhdBdSpeed, "Auto"));
-                    AddVideoSummaryLine("📦 Copies", ((int)(NumUhdBdCopies.Value ?? 1)).ToString());
+                    AddVideoSummaryLine("🔥 刻录到光驱", drive?.DisplayName ?? "（无）");
+                    AddVideoSummaryLine("⚡ 写入速度", GetSelectedText(CmbUhdBdSpeed, "Auto"));
+                    AddVideoSummaryLine("📦 份数", ((int)(NumUhdBdCopies.Value ?? 1)).ToString());
                 }
                 else
                 {
-                    AddVideoSummaryLine("🔥 Burn to Disc", "No (image only)");
+                    AddVideoSummaryLine("🔥 刻录到光盘", "否（仅镜像）");
                 }
                 break;
         }
@@ -783,7 +783,7 @@ public partial class VideoWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteDvdFromFolderAsync(CancellationToken ct)
     {
-        TxtVideoStep4Title.Text = "📀 Creating DVD-Video Image...";
+        TxtVideoStep4Title.Text = "📀 正在创建 DVD-Video 镜像…";
 
         var sourceFolder = TxtDvdSourceFolder.Text!.Trim();
         // If the user pointed at VIDEO_TS itself, use the parent folder
@@ -817,9 +817,9 @@ public partial class VideoWizardView : UserControl
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtVideoExecStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.LogLine))
                 AppendVideoLog(p.LogLine);
         });
@@ -852,7 +852,7 @@ public partial class VideoWizardView : UserControl
             };
 
             AppendVideoLog($"[Info] Burning to {drive.DisplayName}...");
-            TxtVideoExecStatus.Text = "Burning DVD-Video...";
+            TxtVideoExecStatus.Text = "正在刻录 DVD-Video…";
 
             var burnService = new BurnService();
             var burnProgress = new Progress<BurnProgress>(p =>
@@ -862,9 +862,9 @@ public partial class VideoWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtVideoExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtVideoExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -913,7 +913,7 @@ public partial class VideoWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteBlurayFromFolderAsync(CancellationToken ct)
     {
-        TxtVideoStep4Title.Text = "💿 Creating Blu-ray Image...";
+        TxtVideoStep4Title.Text = "💿 正在创建蓝光镜像…";
 
         var sourceFolder = TxtBdSourceFolder.Text!.Trim();
         // If the user pointed at BDMV itself, use the parent folder
@@ -947,9 +947,9 @@ public partial class VideoWizardView : UserControl
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtVideoExecStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.LogLine))
                 AppendVideoLog(p.LogLine);
         });
@@ -981,7 +981,7 @@ public partial class VideoWizardView : UserControl
             };
 
             AppendVideoLog($"[Info] Burning to {drive.DisplayName}...");
-            TxtVideoExecStatus.Text = "Burning Blu-ray...";
+            TxtVideoExecStatus.Text = "正在刻录蓝光…";
 
             var burnService = new BurnService();
             var burnProgress = new Progress<BurnProgress>(p =>
@@ -991,9 +991,9 @@ public partial class VideoWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtVideoExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtVideoExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -1042,7 +1042,7 @@ public partial class VideoWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteBdavFromFolderAsync(CancellationToken ct)
     {
-        TxtVideoStep4Title.Text = "📹 Creating BDAV Image...";
+        TxtVideoStep4Title.Text = "📹 正在创建 BDAV 镜像…";
 
         var sourceFolder = TxtBdavSourceFolder.Text!.Trim();
         // If the user pointed at BDAV itself, use the parent folder
@@ -1120,9 +1120,9 @@ public partial class VideoWizardView : UserControl
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtVideoExecStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.LogLine))
                 AppendVideoLog(p.LogLine);
         });
@@ -1154,7 +1154,7 @@ public partial class VideoWizardView : UserControl
             };
 
             AppendVideoLog($"[Info] Burning to {drive.DisplayName}...");
-            TxtVideoExecStatus.Text = "Burning BDAV...";
+            TxtVideoExecStatus.Text = "正在刻录 BDAV…";
 
             var burnService = new BurnService();
             var burnProgress = new Progress<BurnProgress>(p =>
@@ -1164,9 +1164,9 @@ public partial class VideoWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtVideoExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtVideoExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -1214,7 +1214,7 @@ public partial class VideoWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteBluRay3DFromFolderAsync(CancellationToken ct)
     {
-        TxtVideoStep4Title.Text = "🎥 Creating 3D Blu-ray Image...";
+        TxtVideoStep4Title.Text = "🎥 正在创建 3D 蓝光镜像…";
 
         var sourceFolder = TxtBd3dSourceFolder.Text!.Trim();
         // If the user pointed at BDMV itself, use the parent folder
@@ -1288,9 +1288,9 @@ public partial class VideoWizardView : UserControl
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtVideoExecStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.LogLine))
                 AppendVideoLog(p.LogLine);
         });
@@ -1322,7 +1322,7 @@ public partial class VideoWizardView : UserControl
             };
 
             AppendVideoLog($"[Info] Burning to {drive.DisplayName}...");
-            TxtVideoExecStatus.Text = "Burning 3D Blu-ray...";
+            TxtVideoExecStatus.Text = "正在刻录 3D 蓝光…";
 
             var burnService = new BurnService();
             var burnProgress = new Progress<BurnProgress>(p =>
@@ -1332,9 +1332,9 @@ public partial class VideoWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtVideoExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtVideoExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -1382,7 +1382,7 @@ public partial class VideoWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteVcdAsync(CancellationToken ct)
     {
-        TxtVideoStep4Title.Text = "📼 Creating Video CD Image...";
+        TxtVideoStep4Title.Text = "📼 正在创建视频 CD 镜像…";
 
         var outputPath = TxtVcdOutputPath.Text?.Trim() ?? "vcd.bin";
         var videoStandard = GetSelectedText(CmbVcdVideoStandard, "NTSC");
@@ -1478,9 +1478,9 @@ public partial class VideoWizardView : UserControl
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtVideoExecStatus.Text = p.StatusMessage;
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.LogLine))
                     AppendVideoLog(p.LogLine);
             });
@@ -1514,7 +1514,7 @@ public partial class VideoWizardView : UserControl
                 };
 
                 AppendVideoLog($"[Info] Burning to {drive.DisplayName}...");
-                TxtVideoExecStatus.Text = "Burning VCD...";
+                TxtVideoExecStatus.Text = "正在刻录 VCD…";
 
                 var burnService = new BurnService();
                 var burnProgress = new Progress<BurnProgress>(p =>
@@ -1524,9 +1524,9 @@ public partial class VideoWizardView : UserControl
                     if (p.CurrentSpeedX > 0)
                         TxtVideoExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                     if (p.Remaining.TotalSeconds > 0)
-                        TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                        TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                     else if (p.Elapsed.TotalSeconds > 0)
-                        TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                        TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                     if (!string.IsNullOrEmpty(p.StatusMessage))
                         TxtVideoExecStatus.Text = p.StatusMessage;
                     if (!string.IsNullOrEmpty(p.LogLine))
@@ -1582,7 +1582,7 @@ public partial class VideoWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteSvcdAsync(CancellationToken ct)
     {
-        TxtVideoStep4Title.Text = "📼 Creating Super Video CD Image...";
+        TxtVideoStep4Title.Text = "📼 正在创建超级视频 CD 镜像…";
 
         var outputPath = TxtSvcdOutputPath.Text?.Trim() ?? "svcd.bin";
         var videoStandard = GetSelectedText(CmbSvcdVideoStandard, "NTSC");
@@ -1668,9 +1668,9 @@ public partial class VideoWizardView : UserControl
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtVideoExecStatus.Text = p.StatusMessage;
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.LogLine))
                     AppendVideoLog(p.LogLine);
 
@@ -1705,7 +1705,7 @@ public partial class VideoWizardView : UserControl
                 };
 
                 AppendVideoLog($"[Info] Burning to {drive.DisplayName}...");
-                TxtVideoExecStatus.Text = "Burning SVCD...";
+                TxtVideoExecStatus.Text = "正在刻录 SVCD…";
 
                 var burnService = new BurnService();
                 var burnProgress = new Progress<BurnProgress>(p =>
@@ -1715,9 +1715,9 @@ public partial class VideoWizardView : UserControl
                     if (p.CurrentSpeedX > 0)
                         TxtVideoExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                     if (p.Remaining.TotalSeconds > 0)
-                        TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                        TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                     else if (p.Elapsed.TotalSeconds > 0)
-                        TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                        TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                     if (!string.IsNullOrEmpty(p.StatusMessage))
                         TxtVideoExecStatus.Text = p.StatusMessage;
                     if (!string.IsNullOrEmpty(p.LogLine))
@@ -1774,7 +1774,7 @@ public partial class VideoWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteXsvcdAsync(CancellationToken ct)
     {
-        TxtVideoStep4Title.Text = "📼 Creating eXtended Super Video CD Image...";
+        TxtVideoStep4Title.Text = "📼 正在创建扩展超级视频 CD 镜像…";
 
         var outputPath = TxtXsvcdOutputPath.Text?.Trim() ?? "xsvcd.bin";
         var videoStandard = GetSelectedText(CmbXsvcdVideoStandard, "NTSC");
@@ -1860,9 +1860,9 @@ public partial class VideoWizardView : UserControl
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtVideoExecStatus.Text = p.StatusMessage;
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.LogLine))
                     AppendVideoLog(p.LogLine);
 
@@ -1897,7 +1897,7 @@ public partial class VideoWizardView : UserControl
                 };
 
                 AppendVideoLog($"[Info] Burning XSVCD to {drive.DisplayName}...");
-                TxtVideoExecStatus.Text = "Burning XSVCD...";
+                TxtVideoExecStatus.Text = "正在刻录 XSVCD…";
 
                 var burnService = new BurnService();
                 var burnProgress = new Progress<BurnProgress>(p =>
@@ -1907,9 +1907,9 @@ public partial class VideoWizardView : UserControl
                     if (p.CurrentSpeedX > 0)
                         TxtVideoExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                     if (p.Remaining.TotalSeconds > 0)
-                        TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                        TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                     else if (p.Elapsed.TotalSeconds > 0)
-                        TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                        TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                     if (!string.IsNullOrEmpty(p.StatusMessage))
                         TxtVideoExecStatus.Text = p.StatusMessage;
                     if (!string.IsNullOrEmpty(p.LogLine))
@@ -1964,7 +1964,7 @@ public partial class VideoWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteUhdBlurayFromFolderAsync(CancellationToken ct)
     {
-        TxtVideoStep4Title.Text = "🎬 Creating UHD Blu-ray Image...";
+        TxtVideoStep4Title.Text = "🎬 正在创建 UHD 蓝光镜像…";
 
         var sourceFolder = TxtUhdBdSourceFolder.Text?.Trim() ?? "";
         var outputPath = TxtUhdBdOutputPath.Text?.Trim() ?? "uhd_bluray.iso";
@@ -2004,9 +2004,9 @@ public partial class VideoWizardView : UserControl
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtVideoExecStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.LogLine))
                 AppendVideoLog(p.LogLine);
         });
@@ -2038,7 +2038,7 @@ public partial class VideoWizardView : UserControl
             };
 
             AppendVideoLog($"[Info] Burning UHD Blu-ray to {drive.DisplayName}...");
-            TxtVideoExecStatus.Text = "Burning UHD Blu-ray...";
+            TxtVideoExecStatus.Text = "正在刻录 UHD 蓝光…";
 
             var burnService = new BurnService();
             var burnProgress = new Progress<BurnProgress>(p =>
@@ -2048,9 +2048,9 @@ public partial class VideoWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtVideoExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtVideoExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtVideoExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtVideoExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -2299,7 +2299,7 @@ public partial class VideoWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add VCD Video Files",
+            Title = "添加 VCD 视频文件",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -2388,7 +2388,7 @@ public partial class VideoWizardView : UserControl
 
     private void UpdateVcdFileInfo()
     {
-        TxtVcdFileCount.Text = $"({_vcdFiles.Count} file{(_vcdFiles.Count != 1 ? "s" : "")})";
+        TxtVcdFileCount.Text = $"（{_vcdFiles.Count} 个文件）";
     }
 
     // -----------------------------------------------------------------------
@@ -2401,7 +2401,7 @@ public partial class VideoWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add SVCD Video Files",
+            Title = "添加 SVCD 视频文件",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -2490,7 +2490,7 @@ public partial class VideoWizardView : UserControl
 
     private void UpdateSvcdFileInfo()
     {
-        TxtSvcdFileCount.Text = $"({_svcdFiles.Count} file{(_svcdFiles.Count != 1 ? "s" : "")})";
+        TxtSvcdFileCount.Text = $"（{_svcdFiles.Count} 个文件）";
     }
 
     // -----------------------------------------------------------------------
@@ -2503,7 +2503,7 @@ public partial class VideoWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add XSVCD Video Files",
+            Title = "添加 XSVCD 视频文件",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -2589,7 +2589,7 @@ public partial class VideoWizardView : UserControl
 
     private void UpdateXsvcdFileInfo()
     {
-        TxtXsvcdFileCount.Text = $"({_xsvcdFiles.Count} file{(_xsvcdFiles.Count != 1 ? "s" : "")})";
+        TxtXsvcdFileCount.Text = $"（{_xsvcdFiles.Count} 个文件）";
     }
 
     private void AddVideoFile(string filePath, ObservableCollection<VideoFileItem> collection)
@@ -2734,7 +2734,7 @@ public partial class VideoWizardView : UserControl
             _player.Play();
 
             nowPlaying.Text = $"🎵 {Path.GetFileName(filePath)}";
-            playPauseBtn.Content = "⏸ Pause";
+            playPauseBtn.Content = "⏸ 暂停";
             positionSlider.Maximum = _audioReader.TotalTime.TotalSeconds;
             positionSlider.IsEnabled = true;
 
@@ -2742,8 +2742,8 @@ public partial class VideoWizardView : UserControl
         }
         catch (Exception ex)
         {
-            nowPlaying.Text = $"⚠ Cannot preview: {ex.Message}";
-            playPauseBtn.Content = "▶ Play";
+            nowPlaying.Text = $"⚠ 无法预览：{ex.Message}";
+            playPauseBtn.Content = "▶ 播放";
         }
     }
 
@@ -2754,12 +2754,12 @@ public partial class VideoWizardView : UserControl
         if (_player.PlaybackState == PlaybackState.Playing)
         {
             _player.Pause();
-            playPauseBtn.Content = "▶ Play";
+            playPauseBtn.Content = "▶ 播放";
         }
         else
         {
             _player.Play();
-            playPauseBtn.Content = "⏸ Pause";
+            playPauseBtn.Content = "⏸ 暂停";
         }
     }
 
@@ -2803,7 +2803,7 @@ public partial class VideoWizardView : UserControl
         {
             _playbackTimer?.Stop();
             if (_activePlayPauseBtn != null)
-                _activePlayPauseBtn.Content = "▶ Play";
+                _activePlayPauseBtn.Content = "▶ 播放";
         }
     }
 
@@ -2812,8 +2812,8 @@ public partial class VideoWizardView : UserControl
     {
         if (stopped)
         {
-            nowPlaying.Text = "No file selected";
-            playPauseBtn.Content = "▶ Play";
+            nowPlaying.Text = "未选择文件";
+            playPauseBtn.Content = "▶ 播放";
             positionSlider.Value = 0;
             positionSlider.IsEnabled = false;
             playbackTime.Text = "00:00 / 00:00";
@@ -2830,7 +2830,7 @@ public partial class VideoWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select VIDEO_TS Folder",
+            Title = "选择 VIDEO_TS 文件夹",
             AllowMultiple = false
         });
 
@@ -2848,7 +2848,7 @@ public partial class VideoWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save DVD-Video Image",
+            Title = "保存 DVD-Video 镜像",
             SuggestedFileName = "DVD_VIDEO",
             FileTypeChoices = new[]
             {
@@ -2867,7 +2867,7 @@ public partial class VideoWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select BDMV Folder",
+            Title = "选择 BDMV 文件夹",
             AllowMultiple = false
         });
 
@@ -2885,7 +2885,7 @@ public partial class VideoWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save Blu-ray Image",
+            Title = "保存蓝光镜像",
             SuggestedFileName = "BLURAY_DISC",
             FileTypeChoices = new[]
             {
@@ -2904,7 +2904,7 @@ public partial class VideoWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select BDAV Folder",
+            Title = "选择 BDAV 文件夹",
             AllowMultiple = false
         });
 
@@ -2922,7 +2922,7 @@ public partial class VideoWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save BDAV Image",
+            Title = "保存 BDAV 镜像",
             SuggestedFileName = "BDAV_DISC",
             FileTypeChoices = new[]
             {
@@ -2941,7 +2941,7 @@ public partial class VideoWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select BDMV 3D Folder",
+            Title = "选择 BDMV 3D 文件夹",
             AllowMultiple = false
         });
 
@@ -2959,7 +2959,7 @@ public partial class VideoWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save 3D Blu-ray Image",
+            Title = "保存 3D 蓝光镜像",
             SuggestedFileName = "BLURAY3D_DISC",
             FileTypeChoices = new[]
             {
@@ -2978,7 +2978,7 @@ public partial class VideoWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select Dependent View (Right-Eye) Video File",
+            Title = "选择从属视图（右眼）视频文件",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
@@ -2998,7 +2998,7 @@ public partial class VideoWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save VCD Image",
+            Title = "保存 VCD 镜像",
             SuggestedFileName = "VideoCD",
             FileTypeChoices = new[]
             {
@@ -3017,7 +3017,7 @@ public partial class VideoWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save SVCD Image",
+            Title = "保存 SVCD 镜像",
             SuggestedFileName = "SuperVideoCD",
             FileTypeChoices = new[]
             {
@@ -3036,7 +3036,7 @@ public partial class VideoWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select UHD BDMV Folder",
+            Title = "选择 UHD BDMV 文件夹",
             AllowMultiple = false
         });
 
@@ -3054,7 +3054,7 @@ public partial class VideoWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save UHD Blu-ray Image",
+            Title = "保存 UHD 蓝光镜像",
             SuggestedFileName = "UHD_BLURAY",
             FileTypeChoices = new[]
             {
@@ -3073,7 +3073,7 @@ public partial class VideoWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save XSVCD Image",
+            Title = "保存 XSVCD 镜像",
             SuggestedFileName = "XSVCD",
             FileTypeChoices = new[]
             {

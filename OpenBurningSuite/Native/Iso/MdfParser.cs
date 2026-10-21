@@ -286,7 +286,7 @@ public static class MdfParser
         ArgumentNullException.ThrowIfNull(image);
 
         var dataTrack = image.LargestDataTrack
-            ?? throw new InvalidOperationException("MDF image contains no data tracks.");
+            ?? throw new InvalidOperationException("MDF 镜像不包含数据轨道。");
 
         ExtractTrackUserDataToFile(mdfFilePath, dataTrack, outputIsoPath, progress);
     }
@@ -323,7 +323,7 @@ public static class MdfParser
         ArgumentNullException.ThrowIfNull(image);
 
         var dataTrack = image.LargestDataTrack
-            ?? throw new InvalidOperationException("MDF image contains no data tracks.");
+            ?? throw new InvalidOperationException("MDF 镜像不包含数据轨道。");
 
         ExtractTrackRawDataToFile(mdfFilePath, dataTrack, outputImgPath, progress);
     }
@@ -570,7 +570,7 @@ public static class MdfParser
 
         var dataTracks = image.DataTracks.ToList();
         if (dataTracks.Count == 0)
-            throw new InvalidOperationException("MDF image contains no data tracks.");
+            throw new InvalidOperationException("MDF 镜像不包含数据轨道。");
 
         long totalBytes = dataTracks.Sum(t => (t.ExtraBlock?.Length ?? 0) * (long)t.UserDataSize);
         long bytesWritten = 0;

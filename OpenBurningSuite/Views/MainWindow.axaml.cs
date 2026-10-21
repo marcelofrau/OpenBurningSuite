@@ -4,8 +4,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using OpenBurningSuite.Helpers;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 
 namespace OpenBurningSuite.Views;
 
@@ -17,33 +15,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        // Set elevation icon and tooltip
-            if (PlatformHelper.IsElevated)
-            {
-                try
-                {
-                    var stream = AssetLoader.Open(new System.Uri("avares://OpenBurningSuite/Assets/Icons/16/icons8-admin-16.png"));
-                    ImgElevation.Source = new Bitmap(stream);
-                }
-                catch
-                {
-                }
-
-                ToolTip.SetTip(ImgElevation, "Elevated (Admin)");
-            }
-            else
-            {
-                try
-                {
-                    var stream = AssetLoader.Open(new System.Uri("avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"));
-                    ImgElevation.Source = new Bitmap(stream);
-                }
-                catch
-                {
-                }
-
-                ToolTip.SetTip(ImgElevation, "Not elevated");
-            }
+        TxtElevation.Text = PlatformHelper.IsElevated ? "✅ 已提升权限" : "⚠ 未提升权限";
 
         // Start on home screen — no nav button active
         BtnHome.Classes.Add("Active");
@@ -123,11 +95,8 @@ public partial class MainWindow : Window
         BtnHome.Classes.Add("Active");
         _activeNav = BtnHome;
 
-        TxtStatus.Text = "Ready — select an action to get started.";
+        TxtStatus.Text = "就绪 — 请选择一个操作开始。";
     }
-
-    private void OnDiscInfoClick(object? sender, RoutedEventArgs e) =>
-        SetActiveView(BtnDiscInfo, ViewDiscInfo, "Disc Information");
 
     private void OnDiscoverClick(object? sender, RoutedEventArgs e) =>
         SetActiveView(BtnDiscover, ViewDiscover, "Discover Drives & Media");
@@ -165,12 +134,6 @@ public partial class MainWindow : Window
     private void OnBlankWizardClick(object? sender, RoutedEventArgs e) =>
         SetActiveView(BtnBlankWizard, ViewBlankWizard, "Blank Disc Wizard");
 
-    private void OnAboutClick(object? sender, RoutedEventArgs e)
-    {
-        var about = new SplashWindow(showCloseButton: true);
-        about.ShowDialog(this);
-    }
-
     private void OnSettingsClick(object? sender, RoutedEventArgs e)
     {
         HideAllViews();
@@ -182,7 +145,7 @@ public partial class MainWindow : Window
         BtnSettingsNav.Classes.Add("Active");
         _activeNav = BtnSettingsNav;
 
-        TxtStatus.Text = "Viewing: Application Settings & Preferences";
+        TxtStatus.Text = "正在查看：应用设置与首选项";
     }
 
     private void OnHelpClick(object? sender, RoutedEventArgs e)
@@ -196,7 +159,7 @@ public partial class MainWindow : Window
         BtnHelpNav.Classes.Add("Active");
         _activeNav = BtnHelpNav;
 
-        TxtStatus.Text = "Viewing: Help & Documentation";
+        TxtStatus.Text = "正在查看：帮助与文档";
     }
 
     private void SetActiveView(Button navBtn, Control view, string viewName)
@@ -212,13 +175,12 @@ public partial class MainWindow : Window
         navBtn.Classes.Add("Active");
         _activeNav = navBtn;
 
-        TxtStatus.Text = $"Viewing: {viewName}";
+        TxtStatus.Text = $"正在查看：{viewName}";
     }
 
     private void HideAllViews()
     {
         HomeScreen.IsVisible   = false;
-        ViewDiscInfo.IsVisible = false;
         ViewDiscover.IsVisible = false;
         ViewRead.IsVisible     = false;
         ViewBuild.IsVisible    = false;

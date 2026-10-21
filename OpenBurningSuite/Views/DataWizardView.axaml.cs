@@ -216,9 +216,9 @@ public partial class DataWizardView : UserControl
         PrgDataExec.Value = 0;
         TxtDataExecPercent.Text = "0%";
         TxtDataExecSpeed.Text = string.Empty;
-        TxtDataExecStatus.Text = "Preparing...";
+        TxtDataExecStatus.Text = "正在准备…";
         TxtDataExecLog.Text = string.Empty;
-        TxtDataStep4Title.Text = "Executing...";
+        TxtDataStep4Title.Text = "正在执行…";
 
         // Reset disc visualization for a fresh operation
         DiscVizBorder.IsVisible = false;
@@ -254,13 +254,13 @@ public partial class DataWizardView : UserControl
                     break;
             }
 
-            TxtDataStep4Title.Text = "✅ Complete!";
-            TxtDataExecStatus.Text = "Operation completed successfully.";
+            TxtDataStep4Title.Text = "✅ 完成！";
+            TxtDataExecStatus.Text = "操作已成功完成。";
         }
         catch (OperationCanceledException)
         {
-            TxtDataStep4Title.Text = "⏹ Cancelled";
-            TxtDataExecStatus.Text = "Operation was cancelled by user.";
+            TxtDataStep4Title.Text = "⏹ 已取消";
+            TxtDataExecStatus.Text = "操作已被用户取消。";
             AppendLog("[Info] Operation cancelled.");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -268,8 +268,8 @@ public partial class DataWizardView : UserControl
         }
         catch (Exception ex)
         {
-            TxtDataStep4Title.Text = "❌ Failed";
-            TxtDataExecStatus.Text = $"Error: {ex.Message}";
+            TxtDataStep4Title.Text = "❌ 失败";
+            TxtDataExecStatus.Text = $"错误：{ex.Message}";
             AppendLog($"[Error] {ex.Message}");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -409,9 +409,9 @@ public partial class DataWizardView : UserControl
         {
             case DataWizardMode.BuildImage:
                 if (_buildFiles.Count == 0)
-                    return "Please add at least one file or folder.";
+                    return "请至少添加一个文件或文件夹。";
                 if (string.IsNullOrWhiteSpace(TxtBuildOutputPath.Text))
-                    return "Please specify an output image path.";
+                    return "请指定输出镜像路径。";
                 // Validate output directory exists
                 var buildOutputDir = Path.GetDirectoryName(TxtBuildOutputPath.Text.Trim());
                 if (!string.IsNullOrWhiteSpace(buildOutputDir) && !Directory.Exists(buildOutputDir))
@@ -428,9 +428,9 @@ public partial class DataWizardView : UserControl
 
             case DataWizardMode.BuildAndBurn:
                 if (_bbFiles.Count == 0)
-                    return "Please add at least one file or folder.";
+                    return "请至少添加一个文件或文件夹。";
                 if (CmbBBDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 // Warn if data size exceeds disc capacity
                 {
                     var totalSize = _bbFiles.Sum(f => f.Size);
@@ -443,15 +443,15 @@ public partial class DataWizardView : UserControl
 
             case DataWizardMode.BurnImage:
                 if (string.IsNullOrWhiteSpace(TxtBurnImagePath.Text))
-                    return "Please specify a disc image file.";
+                    return "请指定光盘镜像文件。";
                 if (!File.Exists(TxtBurnImagePath.Text.Trim()))
-                    return "The specified image file does not exist.";
+                    return "指定的镜像文件不存在。";
                 if (CmbBurnDrive.SelectedItem == null)
-                    return "Please select a target drive for burning.";
+                    return "请选择用于刻录的目标光驱。";
                 return null;
 
             default:
-                return "Please choose a task first.";
+                return "请先选择一个任务。";
         }
     }
 
@@ -465,54 +465,54 @@ public partial class DataWizardView : UserControl
         switch (_mode)
         {
             case DataWizardMode.BuildImage:
-                AddSummaryLine("🏗 Task", "Build Data Disc Image");
-                AddSummaryLine("📁 Source Items", $"{_buildFiles.Count} item(s), {GetTotalBuildSize()}");
-                AddSummaryLine("📀 Disc Type", GetSelectedText(CmbBuildDiscType, "CD"));
-                AddSummaryLine("📂 File System", GetSelectedText(CmbBuildFileSystem, "ISO 9660 + Joliet"));
-                AddSummaryLine("🏷 Volume Label", string.IsNullOrWhiteSpace(TxtBuildVolumeLabel.Text) ? "DATA_DISC" : TxtBuildVolumeLabel.Text!);
-                AddSummaryLine("💾 Output Image", TxtBuildOutputPath.Text ?? "(not set)");
+                AddSummaryLine("🏗 任务", "构建数据光盘镜像");
+                AddSummaryLine("📁 源项目", $"{_buildFiles.Count} 项，{GetTotalBuildSize()}");
+                AddSummaryLine("📀 光盘类型", GetSelectedText(CmbBuildDiscType, "CD"));
+                AddSummaryLine("📂 文件系统", GetSelectedText(CmbBuildFileSystem, "ISO 9660 + Joliet"));
+                AddSummaryLine("🏷 卷标", string.IsNullOrWhiteSpace(TxtBuildVolumeLabel.Text) ? "DATA_DISC" : TxtBuildVolumeLabel.Text!);
+                AddSummaryLine("💾 输出镜像", TxtBuildOutputPath.Text ?? "（未设置）");
                 if (ChkBuildBootable.IsChecked == true)
                 {
-                    AddSummaryLine("🖥 Bootable", "Yes (El Torito)");
-                    AddSummaryLine("  Boot Image", TxtBuildBootImage.Text ?? "(not set)");
-                    AddSummaryLine("  Emulation", GetSelectedText(CmbBuildBootEmulation, "No Emulation"));
-                    AddSummaryLine("  Platform", GetSelectedText(CmbBuildBootPlatform, "x86 (BIOS)"));
+                    AddSummaryLine("🖥 可启动", "是（El Torito 引导）");
+                    AddSummaryLine("  启动镜像", TxtBuildBootImage.Text ?? "（未设置）");
+                    AddSummaryLine("  模拟模式", GetSelectedText(CmbBuildBootEmulation, "No Emulation"));
+                    AddSummaryLine("  平台", GetSelectedText(CmbBuildBootPlatform, "x86 (BIOS)"));
                 }
                 break;
 
             case DataWizardMode.BuildAndBurn:
-                AddSummaryLine("🔥 Task", "Build Data Image & Burn to Disc");
-                AddSummaryLine("📁 Source Items", $"{_bbFiles.Count} item(s), {GetTotalBBSize()}");
-                AddSummaryLine("📀 Disc Type", GetSelectedText(CmbBBDiscType, "CD"));
-                AddSummaryLine("📂 File System", GetSelectedText(CmbBBFileSystem, "ISO 9660 + Joliet"));
-                AddSummaryLine("🏷 Volume Label", string.IsNullOrWhiteSpace(TxtBBVolumeLabel.Text) ? "DATA_DISC" : TxtBBVolumeLabel.Text!);
+                AddSummaryLine("🔥 Task", "构建数据镜像并刻录到光盘");
+                AddSummaryLine("📁 源项目", $"{_bbFiles.Count} 项，{GetTotalBBSize()}");
+                AddSummaryLine("📀 光盘类型", GetSelectedText(CmbBBDiscType, "CD"));
+                AddSummaryLine("📂 文件系统", GetSelectedText(CmbBBFileSystem, "ISO 9660 + Joliet"));
+                AddSummaryLine("🏷 卷标", string.IsNullOrWhiteSpace(TxtBBVolumeLabel.Text) ? "DATA_DISC" : TxtBBVolumeLabel.Text!);
                 var bbDrive = CmbBBDrive.SelectedItem as DiscDrive;
-                AddSummaryLine("💿 Target Drive", bbDrive?.DisplayName ?? "(none)");
-                AddSummaryLine("⚡ Write Speed", GetSelectedText(CmbBBSpeed, "Auto"));
-                AddSummaryLine("📦 Copies", ((int)(NumBBCopies.Value ?? 1)).ToString());
+                AddSummaryLine("💿 目标光驱", bbDrive?.DisplayName ?? "（无）");
+                AddSummaryLine("⚡ 写入速度", GetSelectedText(CmbBBSpeed, "Auto"));
+                AddSummaryLine("📦 份数", ((int)(NumBBCopies.Value ?? 1)).ToString());
                 if (ChkBBVerify.IsChecked == true)
-                    AddSummaryLine("✅ Verify After Burn", "Yes");
+                    AddSummaryLine("✅ 刻录后校验", "是");
                 if (ChkBBSimulate.IsChecked == true)
-                    AddSummaryLine("🔬 Simulation Mode", "Yes (no actual write)");
+                    AddSummaryLine("🔬 模拟模式", "是（不实际写入）");
                 break;
 
             case DataWizardMode.BurnImage:
-                AddSummaryLine("💿 Task", "Burn Existing Disc Image");
-                AddSummaryLine("📄 Image File", TxtBurnImagePath.Text ?? "(not set)");
+                AddSummaryLine("💿 任务", "刻录已有光盘镜像");
+                AddSummaryLine("📄 镜像文件", TxtBurnImagePath.Text ?? "（未设置）");
                 if (File.Exists(TxtBurnImagePath.Text?.Trim()))
                 {
                     var fi = new FileInfo(TxtBurnImagePath.Text!.Trim());
-                    AddSummaryLine("📏 Image Size", FormatHelper.FormatBytes(fi.Length));
+                    AddSummaryLine("📏 镜像大小", FormatHelper.FormatBytes(fi.Length));
                 }
                 var burnDrive = CmbBurnDrive.SelectedItem as DiscDrive;
-                AddSummaryLine("💿 Target Drive", burnDrive?.DisplayName ?? "(none)");
-                AddSummaryLine("⚡ Write Speed", GetSelectedText(CmbBurnSpeed, "Auto"));
-                AddSummaryLine("📝 Write Mode", GetSelectedText(CmbBurnWriteMode, "TAO"));
-                AddSummaryLine("📦 Copies", ((int)(NumBurnCopies.Value ?? 1)).ToString());
+                AddSummaryLine("💿 目标光驱", burnDrive?.DisplayName ?? "（无）");
+                AddSummaryLine("⚡ 写入速度", GetSelectedText(CmbBurnSpeed, "Auto"));
+                AddSummaryLine("📝 写入模式", GetSelectedText(CmbBurnWriteMode, "TAO"));
+                AddSummaryLine("📦 份数", ((int)(NumBurnCopies.Value ?? 1)).ToString());
                 if (ChkBurnVerify.IsChecked == true)
-                    AddSummaryLine("✅ Verify After Burn", "Yes");
+                    AddSummaryLine("✅ 刻录后校验", "是");
                 if (ChkBurnSimulate.IsChecked == true)
-                    AddSummaryLine("🔬 Simulation Mode", "Yes (no actual write)");
+                    AddSummaryLine("🔬 模拟模式", "是（不实际写入）");
                 break;
         }
     }
@@ -538,54 +538,12 @@ public partial class DataWizardView : UserControl
         DataSummaryContent.Children.Add(sp);
     }
 
-    private void AddSummaryLine(string iconKey, string label, string value)
-    {
-        var sp = new StackPanel { Orientation = Avalonia.Layout.Orientation.Horizontal, Spacing = 8 };
-
-        if (!string.IsNullOrEmpty(iconKey))
-        {
-            var uri = Helpers.IconHelper.GetUri(iconKey, 16);
-            if (uri != null)
-            {
-                try
-                {
-                    var bitmap = new Avalonia.Media.Imaging.Bitmap(Avalonia.Platform.AssetLoader.Open(new Uri(uri)));
-                    sp.Children.Add(new Image
-                    {
-                        Source = bitmap,
-                        Width = 16,
-                        Height = 16,
-                        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
-                    });
-                }
-                catch { }
-            }
-        }
-
-        sp.Children.Add(new TextBlock
-        {
-            Text = label + ":",
-            Foreground = Avalonia.Media.Brush.Parse("#8EAFC8"),
-            FontSize = 12,
-            FontWeight = Avalonia.Media.FontWeight.SemiBold,
-            Width = 180
-        });
-        sp.Children.Add(new TextBlock
-        {
-            Text = value,
-            Foreground = Avalonia.Media.Brush.Parse("#E8F0FE"),
-            FontSize = 12,
-            TextWrapping = Avalonia.Media.TextWrapping.Wrap
-        });
-        DataSummaryContent.Children.Add(sp);
-    }
-
     // -----------------------------------------------------------------------
     // EXECUTE: Build Data Image
     // -----------------------------------------------------------------------
     private async Task ExecuteBuildImageAsync(CancellationToken ct)
     {
-        TxtDataStep4Title.Text = "🏗 Building Data Disc Image...";
+        TxtDataStep4Title.Text = "🏗 正在构建数据光盘镜像…";
 
         // Stage source files to a temporary directory
         var tempDir = Path.Combine(Path.GetTempPath(),
@@ -595,7 +553,7 @@ public partial class DataWizardView : UserControl
         try
         {
             AppendLog("[Info] Staging source files...");
-            TxtDataExecStatus.Text = "Staging files...";
+            TxtDataExecStatus.Text = "正在暂存文件…";
 
             await Task.Run(() => StageFiles(_buildFiles, tempDir), ct);
 
@@ -637,9 +595,9 @@ public partial class DataWizardView : UserControl
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtDataExecStatus.Text = p.StatusMessage;
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtDataExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtDataExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtDataExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtDataExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.LogLine))
                     AppendLog(p.LogLine);
             });
@@ -664,11 +622,11 @@ public partial class DataWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteBuildAndBurnAsync(CancellationToken ct)
     {
-        TxtDataStep4Title.Text = "🔥 Building & Burning Data Disc...";
+        TxtDataStep4Title.Text = "🔥 正在构建并刻录数据光盘…";
 
         var drive = CmbBBDrive.SelectedItem as DiscDrive;
         if (drive == null)
-            throw new InvalidOperationException("No target drive selected.");
+            throw new InvalidOperationException("未选择目标光驱。");
 
         // Stage source files
         var tempDir = Path.Combine(Path.GetTempPath(),
@@ -680,7 +638,7 @@ public partial class DataWizardView : UserControl
         try
         {
             AppendLog("[Info] Staging source files...");
-            TxtDataExecStatus.Text = "Staging files...";
+            TxtDataExecStatus.Text = "正在暂存文件…";
 
             await Task.Run(() => StageFiles(_bbFiles, tempDir), ct);
 
@@ -696,7 +654,7 @@ public partial class DataWizardView : UserControl
 
             // Phase 1: Build ISO image
             AppendLog("[Info] Building data disc image...");
-            TxtDataExecStatus.Text = "Building disc image...";
+            TxtDataExecStatus.Text = "正在构建光盘镜像…";
 
             var buildJob = new BuildJob
             {
@@ -717,9 +675,9 @@ public partial class DataWizardView : UserControl
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtDataExecStatus.Text = p.StatusMessage;
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtDataExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtDataExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtDataExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtDataExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.LogLine))
                     AppendLog(p.LogLine);
             });
@@ -729,7 +687,7 @@ public partial class DataWizardView : UserControl
 
             // Phase 2: Burn to disc
             AppendLog($"[Info] Burning to {drive.DisplayName}...");
-            TxtDataExecStatus.Text = "Burning to disc...";
+            TxtDataExecStatus.Text = "正在刻录到光盘…";
 
             var burnJob = new BurnJob
             {
@@ -753,9 +711,9 @@ public partial class DataWizardView : UserControl
                 if (p.CurrentSpeedX > 0)
                     TxtDataExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
                 if (p.Remaining.TotalSeconds > 0)
-                    TxtDataExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                    TxtDataExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
                 else if (p.Elapsed.TotalSeconds > 0)
-                    TxtDataExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    TxtDataExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
                 if (!string.IsNullOrEmpty(p.StatusMessage))
                     TxtDataExecStatus.Text = p.StatusMessage;
                 if (!string.IsNullOrEmpty(p.LogLine))
@@ -809,11 +767,11 @@ public partial class DataWizardView : UserControl
     // -----------------------------------------------------------------------
     private async Task ExecuteBurnImageAsync(CancellationToken ct)
     {
-        TxtDataStep4Title.Text = "🔥 Burning Disc Image...";
+        TxtDataStep4Title.Text = "🔥 正在刻录光盘镜像…";
 
         var drive = CmbBurnDrive.SelectedItem as DiscDrive;
         if (drive == null)
-            throw new InvalidOperationException("No target drive selected.");
+            throw new InvalidOperationException("未选择目标光驱。");
 
         var imagePath = TxtBurnImagePath.Text!.Trim();
 
@@ -878,9 +836,9 @@ public partial class DataWizardView : UserControl
             if (p.CurrentSpeedX > 0)
                 TxtDataExecSpeed.Text = $"{p.CurrentSpeedX:F1}x";
             if (p.Remaining.TotalSeconds > 0)
-                TxtDataExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtDataExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtDataExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtDataExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtDataExecStatus.Text = p.StatusMessage;
             if (!string.IsNullOrEmpty(p.LogLine))
@@ -929,7 +887,7 @@ public partial class DataWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add Files to Disc",
+            Title = "向光盘添加文件",
             AllowMultiple = true
         });
 
@@ -945,7 +903,7 @@ public partial class DataWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Add Folder to Disc",
+            Title = "向光盘添加文件夹",
             AllowMultiple = false
         });
 
@@ -1000,7 +958,7 @@ public partial class DataWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add Files to Disc",
+            Title = "向光盘添加文件",
             AllowMultiple = true
         });
 
@@ -1016,7 +974,7 @@ public partial class DataWizardView : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Add Folder to Disc",
+            Title = "向光盘添加文件夹",
             AllowMultiple = false
         });
 
@@ -1098,7 +1056,7 @@ public partial class DataWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save Data Disc Image",
+            Title = "保存数据光盘镜像",
             SuggestedFileName = "DataDisc",
             FileTypeChoices = new[]
             {
@@ -1118,11 +1076,11 @@ public partial class DataWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select Disc Image File",
+            Title = "选择光盘镜像文件",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
-                new FilePickerFileType("Disc Images") { Patterns = new[] { "*.iso", "*.bin", "*.cue", "*.chd", "*.nrg", "*.mdf", "*.cdi", "*.img", "*.mds", "*.ccd", "*.obse" } },
+                new FilePickerFileType("Disc Images") { Patterns = new[] { "*.iso", "*.bin", "*.cue", "*.nrg", "*.mdf", "*.cdi", "*.img", "*.mds", "*.ccd", "*.obse" } },
                 new FilePickerFileType("All Files") { Patterns = new[] { "*.*" } }
             }
         });
@@ -1141,7 +1099,7 @@ public partial class DataWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select Boot Image File",
+            Title = "选择启动镜像文件",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
@@ -1161,7 +1119,7 @@ public partial class DataWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select EFI Boot Image File",
+            Title = "选择 EFI 启动镜像文件",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
@@ -1232,21 +1190,21 @@ public partial class DataWizardView : UserControl
     private void UpdateBuildFileCount()
     {
         var totalSize = _buildFiles.Sum(f => f.Size);
-        TxtBuildFileCount.Text = $"({_buildFiles.Count} item(s), {FormatHelper.FormatBytes(totalSize)})";
+        TxtBuildFileCount.Text = $"（{_buildFiles.Count} 项，{FormatHelper.FormatBytes(totalSize)}）";
 
         var discType = GetSelectedText(CmbBuildDiscType, "CD");
         var capacity = FormatHelper.GetCapacity(discType);
-        TxtBuildCapacityInfo.Text = $"{FormatHelper.FormatBytes(totalSize)} / {FormatHelper.FormatBytes(capacity)} ({discType})";
+        TxtBuildCapacityInfo.Text = $"{FormatHelper.FormatBytes(totalSize)} / {FormatHelper.FormatBytes(capacity)}（{discType}）";
     }
 
     private void UpdateBBFileCount()
     {
         var totalSize = _bbFiles.Sum(f => f.Size);
-        TxtBBFileCount.Text = $"({_bbFiles.Count} item(s), {FormatHelper.FormatBytes(totalSize)})";
+        TxtBBFileCount.Text = $"（{_bbFiles.Count} 项，{FormatHelper.FormatBytes(totalSize)}）";
 
         var discType = GetSelectedText(CmbBBDiscType, "CD");
         var capacity = FormatHelper.GetCapacity(discType);
-        TxtBBCapacityInfo.Text = $"{FormatHelper.FormatBytes(totalSize)} / {FormatHelper.FormatBytes(capacity)} ({discType})";
+        TxtBBCapacityInfo.Text = $"{FormatHelper.FormatBytes(totalSize)} / {FormatHelper.FormatBytes(capacity)}（{discType}）";
     }
 
     private void UpdateBurnImageInfo(string path)
@@ -1267,13 +1225,13 @@ public partial class DataWizardView : UserControl
                         totalBinSize += new FileInfo(binFile).Length;
                 }
                 if (totalBinSize > 0)
-                    TxtBurnImageInfo.Text = $"Size: {FormatHelper.FormatBytes(totalBinSize)} | Format: BIN/CUE ({binFiles.Count} file(s))";
+                    TxtBurnImageInfo.Text = $"大小：{FormatHelper.FormatBytes(totalBinSize)} | 格式：BIN/CUE（{binFiles.Count} 个文件）";
                 else
-                    TxtBurnImageInfo.Text = $"Size: {FormatHelper.FormatBytes(fi.Length)} | Format: {ext} (⚠ no BIN files found)";
+                    TxtBurnImageInfo.Text = $"大小：{FormatHelper.FormatBytes(fi.Length)} | 格式：{ext}（⚠ 未找到 BIN 文件）";
             }
             else
             {
-                TxtBurnImageInfo.Text = $"Size: {FormatHelper.FormatBytes(fi.Length)} | Format: {ext}";
+                TxtBurnImageInfo.Text = $"大小：{FormatHelper.FormatBytes(fi.Length)} | 格式：{ext}";
             }
         }
         else
@@ -1390,10 +1348,9 @@ public partial class DataWizardView : UserControl
 
     private void AppendLogCore(string line)
     {
-        var timestampedLine = $"[{DateTime.Now:HH:mm:ss.fff}] {line}";
         TxtDataExecLog.Text = string.IsNullOrEmpty(TxtDataExecLog.Text)
-            ? timestampedLine
-            : TxtDataExecLog.Text + Environment.NewLine + timestampedLine;
+            ? line
+            : TxtDataExecLog.Text + Environment.NewLine + line;
 
         // Trim log to prevent unbounded memory growth (keep last ~20 KB)
         var text = TxtDataExecLog.Text;

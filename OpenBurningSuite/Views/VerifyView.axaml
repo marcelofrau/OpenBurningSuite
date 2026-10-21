@@ -8,57 +8,53 @@
         <StackPanel Margin="24" Spacing="16">
 
             <!-- Header -->
-            <TextBlock Text="Verify / Check" Classes="PageTitle"/>
-            <TextBlock Text="Verify disc integrity, compare a disc to an image file, or check image checksums."
+            <TextBlock Text="校验 / 检查" Classes="PageTitle"/>
+            <TextBlock Text="校验光盘完整性、将光盘与镜像文件对比，或检查镜像校验和。"
                        Classes="PageSubtitle"/>
 
             <!-- Mode & Source -->
             <Border Classes="Card">
                 <StackPanel Spacing="12">
-                    <TextBlock Text="Verification Mode" Classes="SectionHeader"/>
+                    <TextBlock Text="校验模式" Classes="SectionHeader"/>
                     <ComboBox x:Name="CmbVerifyMode" HorizontalAlignment="Stretch"
                               SelectionChanged="OnVerifyModeChanged"
-                              ToolTip.Tip="Choose verification method">
-                        <ComboBoxItem Content="Verify Disc"/>
-                        <ComboBoxItem Content="Compare Disc to Image"/>
-                        <ComboBoxItem Content="Check Image Integrity"/>
+                              ToolTip.Tip="选择校验方式">
+                        <ComboBoxItem Content="校验光盘"/>
+                        <ComboBoxItem Content="将光盘与镜像对比"/>
+                        <ComboBoxItem Content="检查镜像完整性"/>
                     </ComboBox>
 
                     <!-- Drive selector (shown for disc modes) -->
                     <StackPanel x:Name="PnlDrive" Spacing="6">
-                        <TextBlock Text="Drive:" Classes="FieldLabel"/>
+                        <TextBlock Text="光驱：" Classes="FieldLabel"/>
                         <Grid ColumnDefinitions="*,Auto">
                             <ComboBox x:Name="CmbDrive" HorizontalAlignment="Stretch"
-                                      PlaceholderText="Select optical drive..."
-                                      ToolTip.Tip="Select the drive containing the disc to verify"/>
+                                      PlaceholderText="选择光驱…"
+                                      ToolTip.Tip="选择装有待校验光盘的光驱"/>
                             <Button x:Name="BtnRefreshDrives" Grid.Column="1"
-                                    Classes="ActionBtn"
+                                    Content="🔄" Classes="ActionBtn"
                                     Margin="6,0,0,0" Click="OnRefreshDrivesClick"
-                                    ToolTip.Tip="Refresh the list of available drives" MinWidth="32" MinHeight="32">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Button>
+                                    ToolTip.Tip="刷新可用光驱列表"/>
                         </Grid>
                     </StackPanel>
 
                     <!-- Image file selector -->
                     <StackPanel x:Name="PnlImage" Spacing="6">
-                        <TextBlock Text="Image File:" Classes="FieldLabel"/>
+                        <TextBlock Text="镜像文件：" Classes="FieldLabel"/>
                         <Grid ColumnDefinitions="*,Auto">
                             <TextBox x:Name="TxtImagePath"
-                                     Watermark="Path to disc image file..."
+                                     Watermark="光盘镜像文件路径…"
                                      Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="Path to the disc image file to compare or check"
+                                     ToolTip.Tip="要对比或检查的光盘镜像文件路径"
                                      DragDrop.AllowDrop="True"
                                      DragDrop.DragOver="OnImageDragOver"
                                      DragDrop.Drop="OnImageDrop"/>
                             <Button x:Name="BtnBrowseImage" Grid.Column="1"
-                                    Content="Browse…" Classes="ActionBtn"
+                                    Content="浏览…" Classes="ActionBtn"
                                     Margin="6,0,0,0" Click="OnBrowseImageClick"
-                                    ToolTip.Tip="Browse for a disc image file"/>
+                                    ToolTip.Tip="浏览并选择光盘镜像文件"/>
                         </Grid>
-                        <TextBlock Text="Drag and drop a disc image file here" Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
+                        <TextBlock Text="💡 将光盘镜像文件拖放到此处" Foreground="#5A7A9A" FontSize="10" Margin="0,2,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -66,7 +62,7 @@
             <!-- Detected Content -->
             <Border x:Name="PnlDetectedContent" Classes="Card" IsVisible="False">
                 <StackPanel Spacing="6">
-                    <TextBlock Text="Detected Content" Classes="SectionHeader"/>
+                    <TextBlock Text="检测到的内容" Classes="SectionHeader"/>
                     <TextBlock x:Name="TxtDetectedContent" Text="—" Foreground="#E8F0FE"
                                FontSize="14" TextWrapping="Wrap"/>
                     <TextBlock x:Name="TxtDetectedPreset" Text=""
@@ -78,13 +74,13 @@
             <!-- Verification Options -->
             <Border Classes="Card">
                 <StackPanel Spacing="10">
-                    <TextBlock Text="Verification Options" Classes="SectionHeader"/>
+                    <TextBlock Text="校验选项" Classes="SectionHeader"/>
 
                     <Grid ColumnDefinitions="*,*">
                         <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                            <TextBlock Text="Checksum Type:" Classes="FieldLabel"/>
+                            <TextBlock Text="校验和类型：" Classes="FieldLabel"/>
                             <ComboBox x:Name="CmbChecksumType" HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Checksum algorithm — SHA256 is strongest, CRC32 is fastest">
+                                      ToolTip.Tip="校验和算法 — SHA256 最安全，CRC32 最快">
                                 <ComboBoxItem Content="SHA256"/>
                                 <ComboBoxItem Content="SHA1"/>
                                 <ComboBoxItem Content="MD5"/>
@@ -94,17 +90,17 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" Spacing="6" Margin="0,20,0,0">
                             <CheckBox x:Name="ChkSectorBySector"
-                                      Content="Sector-by-sector comparison"
+                                      Content="逐扇区比对"
                                       IsChecked="True" Foreground="#E8F0FE"
-                                      ToolTip.Tip="Compare every sector individually (thorough but slower)"/>
+                                      ToolTip.Tip="逐个比对每个扇区（更彻底但较慢）"/>
                             <CheckBox x:Name="ChkVerifySubchannel"
-                                      Content="Verify subchannel data"
+                                      Content="校验子通道数据"
                                       Foreground="#E8F0FE"
-                                      ToolTip.Tip="Also verify subchannel data stored alongside main sectors"/>
+                                      ToolTip.Tip="同时校验与主扇区一起存储的子通道数据"/>
                             <CheckBox x:Name="ChkAudioVerify"
-                                      Content="Audio track verification"
+                                      Content="音轨校验"
                                       Foreground="#E8F0FE"
-                                      ToolTip.Tip="Also read and verify audio track data from disc. When disabled, only data tracks are compared. Enable for complete verification of mixed-mode CDs (e.g. PS1 games with audio tracks)."/>
+                                      ToolTip.Tip="同时读取并校验光盘中的音轨数据。禁用时仅比对数据轨道。对混合模式 CD（例如带音轨的 PS1 游戏）进行完整校验时请启用。"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
@@ -113,27 +109,27 @@
             <!-- Results Panel -->
             <Border Classes="Card">
                 <StackPanel Spacing="10">
-                    <TextBlock Text="Results" Classes="SectionHeader"/>
+                    <TextBlock Text="结果" Classes="SectionHeader"/>
 
                     <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                         <Border Grid.Column="0" Grid.Row="0" Classes="InfoCard" Margin="0,0,6,6"
-                                ToolTip.Tip="Total number of sectors scanned on the disc or image">
+                                ToolTip.Tip="光盘或镜像上扫描的扇区总数">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="TOTAL SECTORS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock Text="扇区总数" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
                                 <TextBlock x:Name="TxtTotalSectors" Text="—" Foreground="#E8F0FE" FontSize="14"/>
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="1" Grid.Row="0" Classes="InfoCard" Margin="0,0,6,6"
-                                ToolTip.Tip="Sectors that passed verification without errors">
+                                ToolTip.Tip="通过校验且无错误的扇区">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="GOOD SECTORS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock Text="正常扇区" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
                                 <TextBlock x:Name="TxtGoodSectors" Text="—" Foreground="#1E90FF" FontSize="14"/>
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="2" Grid.Row="0" Classes="InfoCard" Margin="0,0,0,6"
-                                ToolTip.Tip="Sectors with read errors or mismatches">
+                                ToolTip.Tip="存在读取错误或不匹配的扇区">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="BAD SECTORS" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock Text="坏扇区" Foreground="#5A7A9A" FontSize="10" FontWeight="Bold"/>
                                 <TextBlock x:Name="TxtBadSectors" Text="—" Foreground="#FF6B5E" FontSize="14"/>
                             </StackPanel>
                         </Border>
@@ -142,17 +138,12 @@
                                 Classes="InfoCard">
                             <StackPanel Spacing="6">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <TextBlock Text="CHECKSUM RESULT" Foreground="#5A7A9A"
+                                    <TextBlock Text="校验和结果" Foreground="#5A7A9A"
                                                FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
                                     <Button x:Name="BtnCopyChecksum" Grid.Column="1"
-                                            Classes="ActionBtn"
+                                            Content="📋 复制" Classes="ActionBtn"
                                             Click="OnCopyChecksumClick"
-                                            ToolTip.Tip="Copy the checksum value to clipboard">
-                                        <StackPanel Orientation="Horizontal" Spacing="6">
-                                            <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-clipboard-16.png"/>
-                                            <TextBlock Text="Copy" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
+                                            ToolTip.Tip="将校验和值复制到剪贴板"/>
                                 </Grid>
                                 <TextBlock x:Name="TxtChecksum" Text="—"
                                            Foreground="#E8F0FE" FontSize="11"
@@ -170,32 +161,22 @@
             <Border Classes="Card">
                 <StackPanel Spacing="10">
                     <Grid ColumnDefinitions="*,Auto,Auto">
-                        <TextBlock Text="Progress" Classes="SectionHeader"
+                        <TextBlock Text="进度" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnVerify" Grid.Column="1"
-                                Classes="PrimaryBtn"
+                                Content="✅  开始校验" Classes="PrimaryBtn"
                                 Margin="0,0,8,0" Click="OnVerifyClick"
-                                ToolTip.Tip="Start the verification process">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
-                                <TextBlock Text="Start Verification" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="开始校验过程"/>
                         <Button x:Name="BtnCancel" Grid.Column="2"
-                                Classes="DangerBtn"
+                                Content="⏹  取消" Classes="DangerBtn"
                                 IsEnabled="False" Click="OnCancelClick"
-                                ToolTip.Tip="Cancel the verification">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="取消校验"/>
                     </Grid>
 
                     <ProgressBar x:Name="VerifyProgressBar" Classes="BurnProgress" Value="0"/>
 
                     <Grid ColumnDefinitions="*,Auto,Auto">
-                        <TextBlock x:Name="TxtVerifyStatus" Text="Ready."
+                        <TextBlock x:Name="TxtVerifyStatus" Text="就绪。"
                                    Foreground="#5A7A9A" FontSize="11" VerticalAlignment="Center"/>
                         <TextBlock x:Name="TxtETA" Grid.Column="1"
                                    Text="" Foreground="#5A7A9A" FontSize="11"
@@ -208,21 +189,16 @@
                     <!-- Disc Visualization -->
                     <Border x:Name="DiscVizBorder" Background="#0A1520" CornerRadius="8"
                             Padding="8" IsVisible="False"
-                            ToolTip.Tip="Real-time disc verification visualization — shows LBA position on the physical disc spiral">
+                            ToolTip.Tip="实时校验可视化 — 显示光盘物理螺旋上的 LBA 位置">
                         <views:DiscVisualizationControl x:Name="DiscViz" Height="200"/>
                     </Border>
 
                     <Grid ColumnDefinitions="Auto,*">
-                        <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
+                        <TextBlock Text="日志" Classes="SectionHeader" VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Classes="ActionBtn"
+                                Content="🧹 清除" Classes="ActionBtn"
                                 HorizontalAlignment="Right" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the log output">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
-                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="清除日志输出"/>
                     </Grid>
 
                     <TextBox x:Name="TxtLog" Classes="LogBox" Height="180"/>

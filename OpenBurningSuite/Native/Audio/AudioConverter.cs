@@ -40,11 +40,11 @@ public static class AudioConverter
         CancellationToken ct = default)
     {
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Audio file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到音频文件：{inputPath}");
 
         var fi = new FileInfo(inputPath);
         if (fi.Length == 0)
-            throw new InvalidOperationException($"Audio file is empty (0 bytes): {inputPath}");
+            throw new InvalidOperationException($"音频文件为空（0 字节）：{inputPath}");
 
         // Ensure output directory exists
         var outputDir = Path.GetDirectoryName(outputPath);
@@ -54,7 +54,7 @@ public static class AudioConverter
             catch (Exception ex)
             {
                 throw new InvalidOperationException(
-                    $"Cannot create output directory '{outputDir}': {ex.Message}");
+                    $"无法创建输出目录“{outputDir}”：{ex.Message}");
             }
         }
 
@@ -73,7 +73,7 @@ public static class AudioConverter
 
         progress?.Report(new BuildProgress
         {
-            StatusMessage = $"Converting {Path.GetFileName(inputPath)} to WAV...",
+            StatusMessage = $"正在将 {Path.GetFileName(inputPath)} 转换为 WAV…",
             LogLine = $"[Info] Converting: {inputPath} → {outputPath}"
         });
 
@@ -216,7 +216,7 @@ internal sealed class ResamplingWaveProvider : IWaveProvider, IDisposable
         _source = source;
         _targetFormat = targetFormat;
         if (targetFormat.SampleRate <= 0)
-            throw new ArgumentException("Target sample rate must be positive.", nameof(targetFormat));
+            throw new ArgumentException("目标采样率必须为正数。", nameof(targetFormat));
         _ratio = (double)source.WaveFormat.SampleRate / targetFormat.SampleRate;
         // Allocate enough for 2 seconds of source audio, capped at 16 MB to prevent memory exhaustion.
         // Minimum 4096 bytes ensures at least one frame of audio data can be buffered.

@@ -1053,7 +1053,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 5,
                 AudioParanoia = true,
-                Description = "2352-byte raw sectors with RW_RAW subchannel for LibCrypt & copy-protection support."
+                Description = "使用 2352 字节原始扇区并带 RW_RAW 子通道，支持 LibCrypt 与防复制。"
             },
             ["PlayStation 2"] = new GamingPreset
             {
@@ -1066,7 +1066,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "ISO",
-                Description = "2048-byte sectors. DVD titles may require protection bypass at drive level."
+                Description = "使用 2048 字节扇区。DVD 游戏可能需要在光驱层面绕过保护。"
             },
             ["PlayStation 3"] = new GamingPreset
             {
@@ -1077,7 +1077,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "ISO",
-                Description = "Blu-ray. Encrypted titles cannot be backed up with standard tools."
+                Description = "蓝光。加密的游戏无法使用标准工具备份。"
             },
             ["PlayStation 4/5"] = new GamingPreset
             {
@@ -1088,7 +1088,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "ISO",
-                Description = "Blu-ray encrypted discs. For preservation use only."
+                Description = "蓝光加密光盘。仅供存档研究使用。"
             },
             ["Sega Saturn"] = new GamingPreset
             {
@@ -1100,8 +1100,8 @@ public static class FormatHelper
                 WriteMode = "DAO (Disc At Once)",
                 ErrorRecovery = "Yes",
                 Retries = 5,
-                Description = "Mixed-mode CD. First track is data (Mode 1), rest are audio. " +
-                    "Raw 2352-byte sectors preserve complete disc structure."
+                Description = "混合模式 CD。第一条轨道为数据（Mode 1），其余为音频。" +
+                    "使用 2352 字节原始扇区可保留完整的光盘结构。"
             },
             ["Sega Dreamcast"] = new GamingPreset
             {
@@ -1113,7 +1113,7 @@ public static class FormatHelper
                 WriteMode = "DAO (Disc At Once)",
                 ErrorRecovery = "Yes",
                 Retries = 5,
-                Description = "GD-ROM (~1.2 GB usable). Use 2352-byte raw sectors for full preservation."
+                Description = "GD-ROM（可用约 1.2 GB）。使用 2352 字节原始扇区以完整保存。"
             },
             ["Sega Mega CD"] = new GamingPreset
             {
@@ -1126,7 +1126,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 AudioParanoia = true,
-                Description = "Mixed-mode audio+data disc requiring 2352-byte sectors."
+                Description = "需要 2352 字节扇区的音频+数据混合模式光盘。"
             },
             ["Xbox"] = new GamingPreset
             {
@@ -1139,7 +1139,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "XISO (Xbox)",
-                Description = "DVD-5/DVD-9. Security Sector (SS) region requires compatible drive."
+                Description = "DVD-5/DVD-9。安全扇区（SS）区域需要兼容的光驱。"
             },
             ["Xbox 360"] = new GamingPreset
             {
@@ -1152,8 +1152,8 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "XISO (Xbox)",
-                Description = "Dual-layer DVD with security sectors. Requires Kreon-compatible drive " +
-                    "or unlocked firmware for full disc access."
+                Description = "带安全扇区的双层 DVD。需要兼容 Kreon 的光驱" +
+                    "或已解锁的固件才能完整访问光盘。"
             },
             ["GameCube"] = new GamingPreset
             {
@@ -1166,7 +1166,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "ISO",
-                Description = "Nintendo miniDVD (1.46 GB). Requires compatible drive or Wii with GC mode."
+                Description = "任天堂 miniDVD（1.46 GB）。需要兼容的光驱或支持 GC 模式的 Wii。"
             },
             ["Wii"] = new GamingPreset
             {
@@ -1179,7 +1179,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "ISO",
-                Description = "Wii optical disc. Use Wii with Homebrew or compatible drive."
+                Description = "Wii 光盘。请使用装有 Homebrew 的 Wii 或兼容光驱。"
             },
             ["3DO"] = new GamingPreset
             {
@@ -1191,7 +1191,7 @@ public static class FormatHelper
                 WriteMode = "DAO (Disc At Once)",
                 ErrorRecovery = "Yes",
                 Retries = 3,
-                Description = "Standard CD-ROM Mode 1 data disc. Use 2352-byte raw sectors for full preservation."
+                Description = "标准 CD-ROM Mode 1 数据光盘。使用 2352 字节原始扇区以完整保存。"
             },
             ["PC Engine / TurboGrafx-CD"] = new GamingPreset
             {
@@ -1204,7 +1204,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 AudioParanoia = true,
-                Description = "Mixed-mode CD with data track 1 followed by audio tracks."
+                Description = "数据轨道 1 后接音轨的混合模式 CD。"
             },
             ["Neo Geo CD"] = new GamingPreset
             {
@@ -1216,7 +1216,7 @@ public static class FormatHelper
                 WriteMode = "DAO (Disc At Once)",
                 ErrorRecovery = "Yes",
                 Retries = 3,
-                Description = "ISO 9660 data disc. Use 2352-byte raw sectors with subchannel for full preservation."
+                Description = "ISO 9660 数据光盘。使用带子通道的 2352 字节原始扇区以完整保存。"
             },
             ["Atari Jaguar CD"] = new GamingPreset
             {
@@ -1229,7 +1229,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 AudioParanoia = true,
-                Description = "Mixed-mode CD. Boot track is audio. Use 2352-byte raw sectors to preserve audio tracks."
+                Description = "混合模式 CD，引导轨道为音频。使用 2352 字节原始扇区以保留音轨。"
             },
             ["PSP (UMD)"] = new GamingPreset
             {
@@ -1240,8 +1240,8 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "ISO",
-                Description = "Universal Media Disc (UMD). Requires compatible USB drive or dumped via PSP homebrew. " +
-                    "ISO 9660 format, up to 1.8 GB dual-layer."
+                Description = "通用媒体光盘（UMD）。需要兼容的 USB 光驱，或通过 PSP homebrew 导出。" +
+                    "ISO 9660 格式，双层最大 1.8 GB。"
             },
             ["Wii U"] = new GamingPreset
             {
@@ -1252,8 +1252,8 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "ISO",
-                Description = "Wii U proprietary 25 GB optical disc. Requires compatible drive for raw dumping. " +
-                    "Standard Blu-ray drives cannot read these discs."
+                Description = "Wii U 专有 25 GB 光盘。需要兼容光驱才能原始转储。" +
+                    "标准蓝光光驱无法读取此类光盘。"
             },
             ["CD-i (Philips)"] = new GamingPreset
             {
@@ -1265,7 +1265,7 @@ public static class FormatHelper
                 WriteMode = "DAO (Disc At Once)",
                 ErrorRecovery = "Yes",
                 Retries = 3,
-                Description = "CD-i uses Mode 2 Form 1/Form 2 sectors. Use 2352-byte raw sectors for full preservation."
+                Description = "CD-i 使用 Mode 2 Form 1/Form 2 扇区。使用 2352 字节原始扇区以完整保存。"
             },
             ["Amiga CD32"] = new GamingPreset
             {
@@ -1277,8 +1277,8 @@ public static class FormatHelper
                 WriteMode = "DAO (Disc At Once)",
                 ErrorRecovery = "Yes",
                 Retries = 3,
-                Description = "Amiga CD32 console disc. Standard CD-ROM Mode 1 with Amiga filesystem (ISO 9660 + " +
-                    "custom boot block). Use 2352-byte raw sectors with RW subchannel for full preservation."
+                Description = "Amiga CD32 主机光盘。标准 CD-ROM Mode 1，使用 Amiga 文件系统（ISO 9660 +" +
+                    "自定义引导块）。使用带 RW 子通道的 2352 字节原始扇区以完整保存。"
             },
             ["Amiga CDTV"] = new GamingPreset
             {
@@ -1290,8 +1290,8 @@ public static class FormatHelper
                 WriteMode = "DAO (Disc At Once)",
                 ErrorRecovery = "Yes",
                 Retries = 3,
-                Description = "Commodore CDTV (1991) disc. Standard CD-ROM with Amiga filesystem. " +
-                    "Use 2352-byte raw sectors with RW subchannel for full preservation."
+                Description = "Commodore CDTV（1991）光盘。标准 CD-ROM，使用 Amiga 文件系统。" +
+                    "使用带 RW 子通道的 2352 字节原始扇区以完整保存。"
             },
             ["Xbox One/Series"] = new GamingPreset
             {
@@ -1302,7 +1302,7 @@ public static class FormatHelper
                 ErrorRecovery = "Yes",
                 Retries = 3,
                 OutputFormat = "ISO",
-                Description = "Blu-ray encrypted discs (50 GB). For preservation reference only."
+                Description = "蓝光加密光盘（50 GB）。仅供存档参考。"
             },
         };
 

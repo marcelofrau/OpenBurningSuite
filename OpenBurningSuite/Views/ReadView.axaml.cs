@@ -163,7 +163,7 @@ public partial class ReadView : UserControl
                 CmbDrive.Items.Clear();
                 foreach (var d in _drives) CmbDrive.Items.Add(d.DisplayName);
                 if (_drives.Count > 0) CmbDrive.SelectedIndex = 0;
-                else CmbDrive.Items.Add("No drives found");
+                else CmbDrive.Items.Add("未找到光驱");
             });
         });
     }
@@ -197,7 +197,7 @@ public partial class ReadView : UserControl
         }
 
         PnlDetectedContent.IsVisible = true;
-        TxtDetectedContentType.Text = "Detecting...";
+        TxtDetectedContentType.Text = "正在检测…";
         TxtDetectedVolumeLabel.Text = string.Empty;
         TxtDetectedMediaType.Text = string.Empty;
         TxtDetectedTracks.Text = string.Empty;
@@ -228,7 +228,7 @@ public partial class ReadView : UserControl
                 // so the UI can display it without crashing
                 System.Diagnostics.Debug.WriteLine(
                     $"[ReadView] Content detection error: {ex.Message}");
-                return new DiscContentInfo { ContentLabel = $"Error: {ex.Message}" };
+                return new DiscContentInfo { ContentLabel = $"错误：{ex.Message}" };
             }
         }).ContinueWith(t =>
         {
@@ -261,20 +261,20 @@ public partial class ReadView : UserControl
         // Update the detection info panel
         TxtDetectedContentType.Text = info.ContentLabel;
         TxtDetectedVolumeLabel.Text = !string.IsNullOrEmpty(info.VolumeLabel)
-            ? info.VolumeLabel : "(none)";
+            ? info.VolumeLabel : "（无）";
         TxtDetectedMediaType.Text = !string.IsNullOrEmpty(info.MediaType)
-            ? info.MediaType : "(unknown)";
+            ? info.MediaType : "（未知）";
 
         // Track info
         var trackParts = new List<string>();
-        if (info.AudioTrackCount > 0) trackParts.Add($"{info.AudioTrackCount} audio");
-        if (info.DataTrackCount > 0) trackParts.Add($"{info.DataTrackCount} data");
+        if (info.AudioTrackCount > 0) trackParts.Add($"{info.AudioTrackCount} 条音频");
+        if (info.DataTrackCount > 0) trackParts.Add($"{info.DataTrackCount} 条数据");
         if (trackParts.Count > 0)
-            TxtDetectedTracks.Text = $"{info.TrackCount} ({string.Join(" + ", trackParts)})";
+            TxtDetectedTracks.Text = $"{info.TrackCount} 条（{string.Join(" + ", trackParts)}）";
         else if (info.TrackCount > 0)
             TxtDetectedTracks.Text = info.TrackCount.ToString();
         else
-            TxtDetectedTracks.Text = "(unknown)";
+            TxtDetectedTracks.Text = "（未知）";
 
         // Auto-configure optimal copy settings based on content type
         var recFormat = DiscContentDetectionService.GetRecommendedOutputFormat(info.ContentType);
@@ -313,7 +313,7 @@ public partial class ReadView : UserControl
     private void ClearDetectedContent()
     {
         _detectedContent = null;
-        TxtDetectedContentType.Text = "Not detected";
+        TxtDetectedContentType.Text = "未检测";
         TxtDetectedVolumeLabel.Text = string.Empty;
         TxtDetectedMediaType.Text = string.Empty;
         TxtDetectedTracks.Text = string.Empty;
@@ -348,7 +348,7 @@ public partial class ReadView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save Image As",
+            Title = "镜像另存为",
             DefaultExtension = ext,
             SuggestedFileName = $"disc_image.{ext}"
         });
@@ -400,7 +400,7 @@ public partial class ReadView : UserControl
         // Reset progress UI for a fresh operation
         ReadProgress.Value = 0;
         TxtReadPct.Text = "0%";
-        TxtReadStatus.Text = "Starting...";
+        TxtReadStatus.Text = "正在开始…";
         TxtReadSpeed.Text = string.Empty;
         TxtReadElapsed.Text = string.Empty;
         DiscVizBorder.IsVisible = false;
@@ -443,7 +443,7 @@ public partial class ReadView : UserControl
             if (p.Elapsed.TotalSeconds > 0)
                 TxtReadElapsed.Text = p.Remaining.TotalSeconds > 0
                     ? $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}  ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}"
-                    : $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                    : $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrWhiteSpace(p.LogLine)) Log(p.LogLine);
 
             // Update disc visualization
@@ -468,7 +468,7 @@ public partial class ReadView : UserControl
             Log($"✅ Read complete: {job.OutputPath}");
             ReadProgress.Value = 100;
             TxtReadPct.Text = "100%";
-            TxtReadStatus.Text = "Read complete.";
+            TxtReadStatus.Text = "读取完成。";
             DiscViz.PercentComplete = 100;
             DiscViz.IsCompleted = true;
             DiscViz.IsActive = false;
@@ -488,7 +488,7 @@ public partial class ReadView : UserControl
                 {
                     var encryptedPath = job.OutputPath + ".obse";
                     Log($"🔒 Encrypting output image: {encryptedPath}");
-                    TxtReadStatus.Text = "Encrypting...";
+                    TxtReadStatus.Text = "正在加密…";
                     ReadProgress.Value = 0;
 
                     var encProgress = new Progress<DiscEncryptionService.EncryptionProgress>(ep =>
@@ -505,14 +505,14 @@ public partial class ReadView : UserControl
                     if (encResult == null)
                     {
                         Log($"✅ Encryption complete: {encryptedPath}");
-                        TxtReadStatus.Text = "Read & encryption complete.";
+                        TxtReadStatus.Text = "读取与加密完成。";
                         ReadProgress.Value = 100;
                         TxtReadPct.Text = "100%";
                     }
                     else
                     {
                         Log($"⚠ Encryption failed: {encResult}");
-                        TxtReadStatus.Text = "Read complete, encryption failed.";
+                        TxtReadStatus.Text = "读取完成，但加密失败。";
                     }
                 }
             }
@@ -520,7 +520,7 @@ public partial class ReadView : UserControl
         catch (OperationCanceledException)
         {
             Log("⏹ Read cancelled.");
-            TxtReadStatus.Text = "Cancelled.";
+            TxtReadStatus.Text = "已取消。";
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
             DiscViz.UpdateVisualization();
@@ -528,7 +528,7 @@ public partial class ReadView : UserControl
         catch (Exception ex)
         {
             Log($"❌ Read failed: {ex.Message}");
-            TxtReadStatus.Text = "Failed.";
+            TxtReadStatus.Text = "失败。";
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
             DiscViz.UpdateVisualization();
@@ -635,7 +635,7 @@ public partial class ReadView : UserControl
         NumRetries.Value = preset.Retries;
         ChkAudioParanoia.IsChecked = preset.AudioParanoia;
 
-        TxtPresetDesc.Text = $"{preset.Name}: {preset.Description}";
+        TxtPresetDesc.Text = $"{preset.Name}：{preset.Description}";
         Log($"✅ Applied preset: {preset.Name}");
     }
 
@@ -659,7 +659,7 @@ public partial class ReadView : UserControl
 
     private void LogCore(string msg)
     {
-        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n";
+        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss}] {msg}\n";
         var text = TxtLog.Text;
         // Trim log to prevent unbounded memory growth (keep last ~20 KB)
         if (text != null && text.Length > 30_000)

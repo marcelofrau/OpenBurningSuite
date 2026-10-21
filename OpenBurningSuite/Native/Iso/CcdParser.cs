@@ -136,11 +136,11 @@ public static class CcdParser
     {
         var track = image.LargestDataTrack;
         if (track == null)
-            throw new InvalidOperationException("No data tracks found in the CCD image.");
+            throw new InvalidOperationException("CCD 镜像中未找到数据轨道。");
 
         var trackLength = image.GetTrackLength(track.TrackNumber);
         if (trackLength <= 0)
-            throw new InvalidOperationException($"Track {track.TrackNumber} has no data.");
+            throw new InvalidOperationException($"轨道 {track.TrackNumber} 没有数据。");
 
         int userDataSize, userDataOffset;
         DetermineUserDataLayout(track.Mode, imgFilePath, track.StartLba, out userDataSize, out userDataOffset);
@@ -278,7 +278,7 @@ public static class CcdParser
     {
         var dataTracks = image.Tracks.Where(t => t.IsData).OrderBy(t => t.TrackNumber).ToList();
         if (dataTracks.Count == 0)
-            throw new InvalidOperationException("No data tracks found.");
+            throw new InvalidOperationException("未找到数据轨道。");
 
         long totalSectors = dataTracks.Sum(t => (long)image.GetTrackLength(t.TrackNumber));
         long sectorsProcessed = 0;
@@ -334,11 +334,11 @@ public static class CcdParser
     {
         var track = image.GetTrackByNumber(trackNumber);
         if (track == null)
-            throw new ArgumentException($"Track {trackNumber} not found.", nameof(trackNumber));
+            throw new ArgumentException($"未找到轨道 {trackNumber}。", nameof(trackNumber));
 
         var trackLength = image.GetTrackLength(trackNumber);
         if (trackLength <= 0)
-            throw new InvalidOperationException($"Track {trackNumber} has no data.");
+            throw new InvalidOperationException($"轨道 {trackNumber} 没有数据。");
 
         using var imgStream = new FileStream(imgFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         var sectorBuffer = new byte[RawSectorSize];
@@ -380,11 +380,11 @@ public static class CcdParser
     {
         var track = image.GetTrackByNumber(trackNumber);
         if (track == null)
-            throw new ArgumentException($"Track {trackNumber} not found.", nameof(trackNumber));
+            throw new ArgumentException($"未找到轨道 {trackNumber}。", nameof(trackNumber));
 
         var trackLength = image.GetTrackLength(trackNumber);
         if (trackLength <= 0)
-            throw new InvalidOperationException($"Track {trackNumber} has no data.");
+            throw new InvalidOperationException($"轨道 {trackNumber} 没有数据。");
 
         int userDataSize, userDataOffset;
         DetermineUserDataLayout(track.Mode, imgFilePath, track.StartLba, out userDataSize, out userDataOffset);

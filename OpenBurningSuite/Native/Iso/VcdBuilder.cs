@@ -76,7 +76,7 @@ public sealed class VcdBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 2,
-            StatusMessage = $"Building {formatName} image...",
+            StatusMessage = $"正在构建 {formatName} 镜像…",
             LogLine = $"[Info] {formatName} build started — {job.VideoFiles.Count} video file(s)"
         });
 
@@ -92,7 +92,7 @@ public sealed class VcdBuilder
             catch (Exception ex)
             {
                 throw new InvalidOperationException(
-                    $"Cannot create output directory '{outputDir}': {ex.Message}");
+                    $"无法创建输出目录“{outputDir}”：{ex.Message}");
             }
         }
 
@@ -103,7 +103,7 @@ public sealed class VcdBuilder
             ct.ThrowIfCancellationRequested();
             var videoPath = job.VideoFiles[i];
             if (!File.Exists(videoPath))
-                throw new FileNotFoundException($"Video file not found: {videoPath}");
+                throw new FileNotFoundException($"未找到视频文件：{videoPath}");
 
             var mpegInfo = AnalyzeMpegFile(videoPath, svcdCompatible);
             mpegFiles.Add(mpegInfo);
@@ -122,7 +122,7 @@ public sealed class VcdBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 12,
-            StatusMessage = $"Disc layout: {layout.TotalSectors} sectors ({layout.TrackCount} tracks)",
+            StatusMessage = $"光盘布局：{layout.TotalSectors} 个扇区（{layout.TrackCount} 条轨道）",
             LogLine = $"[Info] Track 1 (data): {layout.DataTrackSectors} sectors, " +
                       $"Tracks 2-{layout.TrackCount}: MPEG A/V data"
         });
@@ -147,7 +147,7 @@ public sealed class VcdBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 15,
-            StatusMessage = "Writing data track (Track 1)...",
+            StatusMessage = "正在写入数据轨道（轨道 1）…",
             LogLine = "[Info] Writing ISO 9660 filesystem structure (Track 1)"
         });
         await WriteDataTrackAsync(binStream, layout, job, svcdCompatible, mpegFiles, ct);
@@ -165,7 +165,7 @@ public sealed class VcdBuilder
             progress.Report(new BuildProgress
             {
                 PercentComplete = progressBase,
-                StatusMessage = $"Writing Track {trackNum} ({Path.GetFileName(mpegInfo.FilePath)})...",
+                StatusMessage = $"正在写入轨道 {trackNum}（{Path.GetFileName(mpegInfo.FilePath)}）…",
                 LogLine = $"[Info] Track {trackNum}: {Path.GetFileName(mpegInfo.FilePath)} — " +
                           $"{mpegInfo.SectorCount} sectors"
             });
@@ -177,7 +177,7 @@ public sealed class VcdBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 92,
-            StatusMessage = "Writing CUE sheet...",
+            StatusMessage = "正在写入 CUE 索引文件…",
             LogLine = $"[Info] Writing CUE sheet: {cuePath}"
         });
 
@@ -188,7 +188,7 @@ public sealed class VcdBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 100,
-            StatusMessage = $"{formatName} image build complete.",
+            StatusMessage = $"{formatName} 镜像构建完成。",
             LogLine = $"[Info] {formatName} image: {FormatHelper.FormatBytes(finalSize)} — " +
                       $"{binPath}"
         });
@@ -203,21 +203,21 @@ public sealed class VcdBuilder
         string formatName = isSvcd ? "SVCD" : "VCD";
 
         if (job.VideoFiles.Count == 0)
-            throw new ArgumentException($"At least one MPEG video file is required for {formatName} build.");
+            throw new ArgumentException($"{formatName} 构建至少需要一个 MPEG 视频文件。");
 
         if (job.VideoFiles.Count > FormatHelper.VcdMaxPlaybackItems)
             throw new ArgumentException(
-                $"{formatName} supports a maximum of {FormatHelper.VcdMaxPlaybackItems} video tracks, " +
-                $"but {job.VideoFiles.Count} were specified.");
+                $"{formatName} 最多支持 {FormatHelper.VcdMaxPlaybackItems} 条视频轨道，" +
+                $"但指定了 {job.VideoFiles.Count} 条。");
 
         if (string.IsNullOrWhiteSpace(job.OutputImagePath))
-            throw new ArgumentException("Output image path must not be empty.");
+            throw new ArgumentException("输出镜像路径不能为空。");
 
         // Validate video standard
         var standard = job.VideoStandard?.ToUpperInvariant() ?? "NTSC";
         if (standard is not ("NTSC" or "PAL" or "SECAM" or "FILM" or "FILM (24FPS)"))
             throw new ArgumentException(
-                $"Invalid video standard '{job.VideoStandard}'. Use NTSC, PAL, SECAM, or Film.");
+                $"无效的视频制式“{job.VideoStandard}”。请使用 NTSC、PAL、SECAM 或 Film。");
     }
 
     // -----------------------------------------------------------------------
@@ -232,7 +232,7 @@ public sealed class VcdBuilder
     {
         var fi = new FileInfo(filePath);
         if (fi.Length == 0)
-            throw new InvalidOperationException($"MPEG file is empty: {filePath}");
+            throw new InvalidOperationException($"MPEG 文件为空：{filePath}");
 
         // Read and validate MPEG header
         using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read,
@@ -253,8 +253,8 @@ public sealed class VcdBuilder
         if (!hasPackHeader && !hasSystemHeader)
         {
             throw new InvalidOperationException(
-                $"File does not appear to be a valid MPEG program stream: {filePath}. " +
-                $"Expected MPEG pack header (0x000001BA) at start of file.");
+                $"文件似乎不是有效的 MPEG 节目流：{filePath}。" +
+                $"文件开头应为 MPEG 包头（0x000001BA）。");
         }
 
         // Determine MPEG version from pack header
@@ -650,7 +650,7 @@ public sealed class VcdBuilder
                     PercentComplete = Math.Min(pct, progressEnd),
                     BytesProcessed = totalRead,
                     TotalBytes = mpegInfo.FileSize,
-                    StatusMessage = $"Track {trackNumber}: {FormatHelper.FormatBytes(totalRead)} / " +
+                    StatusMessage = $"轨道 {trackNumber}：{FormatHelper.FormatBytes(totalRead)} / " +
                                    $"{FormatHelper.FormatBytes(mpegInfo.FileSize)}"
                 });
             }
@@ -670,7 +670,7 @@ public sealed class VcdBuilder
     private static void WriteMode2Form1Sector(Stream output, byte[] userData, int sectorNumber)
     {
         if (userData.Length > Mode2Form1UserData)
-            throw new ArgumentException($"Mode 2 Form 1 user data must be ≤ {Mode2Form1UserData} bytes.");
+            throw new ArgumentException($"Mode 2 Form 1 用户数据不能超过 {Mode2Form1UserData} 字节。");
 
         var sector = new byte[RawSectorSize];
 

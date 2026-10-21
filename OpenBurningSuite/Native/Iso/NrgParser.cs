@@ -75,7 +75,7 @@ public static class NrgParser
         IProgress<int>? progress = null)
     {
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG image is not valid: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 镜像无效：{image.ErrorMessage}");
 
         using var input = new FileStream(nrgFilePath, FileMode.Open, FileAccess.Read,
             FileShare.Read, 65536, false);
@@ -86,14 +86,14 @@ public static class NrgParser
         {
             var track = image.LargestDaoDataTrack ?? image.DaoTracks.FirstOrDefault();
             if (track == null)
-                throw new InvalidOperationException("No data track found in NRG image.");
+                throw new InvalidOperationException("NRG 镜像中未找到数据轨道。");
             ExtractDaoTrackUserData(input, output, track, progress);
         }
         else
         {
             var track = image.LargestTaoDataTrack ?? image.TaoTracks.FirstOrDefault();
             if (track == null)
-                throw new InvalidOperationException("No data track found in NRG image.");
+                throw new InvalidOperationException("NRG 镜像中未找到数据轨道。");
             ExtractTaoTrackUserData(input, output, track, progress);
         }
     }
@@ -113,7 +113,7 @@ public static class NrgParser
         string outputBinPath, string outputCuePath, IProgress<int>? progress = null)
     {
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG image is not valid: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 镜像无效：{image.ErrorMessage}");
 
         using var input = new FileStream(nrgFilePath, FileMode.Open, FileAccess.Read,
             FileShare.Read, 65536, false);
@@ -147,7 +147,7 @@ public static class NrgParser
         Stream outputStream, IProgress<int>? progress = null)
     {
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG image is not valid: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 镜像无效：{image.ErrorMessage}");
 
         using var input = new FileStream(nrgFilePath, FileMode.Open, FileAccess.Read,
             FileShare.Read, 65536, false);

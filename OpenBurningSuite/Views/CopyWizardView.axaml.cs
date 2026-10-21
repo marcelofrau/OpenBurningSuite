@@ -116,7 +116,7 @@ public partial class CopyWizardView : UserControl
         var idx = CmbCopyDrive.SelectedIndex;
         if (idx < 0 || idx >= _drives.Count) return;
         var drive = _drives[idx];
-        TxtCopyDriveInfo.Text = $"📀 {drive.DriveModel} ({drive.DriveType})";
+        TxtCopyDriveInfo.Text = $"📀 {drive.DriveModel}（{drive.DriveType}）";
         TxtCopyMediaInfo.Text = drive.CurrentMedia != null
             ? $"Media: {drive.CurrentMedia.MediaType} — {drive.CurrentMedia.CapacityFormatted}"
             : "No media detected — insert a disc and click Refresh";
@@ -213,37 +213,15 @@ public partial class CopyWizardView : UserControl
         PnlCopyStep3.IsVisible = step == 3;
         BtnCopyBack.IsVisible = step > 1;
         BtnCopyCancel.IsVisible = step == 3;
-        BtnCopyNext.Content = step == 2 ? "Start Copy →" : "Next →";
+        BtnCopyNext.Content = step == 2 ? "开始复制 →" : "下一步 →";
         BtnCopyNext.IsVisible = step < 3;
 
-        SetStepIndicator(CopyStepInd1, CopyStepLbl1, step >= 1, step == 1);
-        SetStepIndicator(CopyStepInd2, CopyStepLbl2, step >= 2, step == 2);
-        SetStepIndicator(CopyStepInd3, CopyStepLbl3, step >= 3, step == 3);
-    }
-
-    private static void SetStepIndicator(Border indicator, TextBlock label, bool reached, bool current)
-    {
-        indicator.Background = current
-            ? Avalonia.Media.Brush.Parse("#1E90FF")
-            : reached
-                ? Avalonia.Media.Brush.Parse("#2A5A8A")
-                : Avalonia.Media.Brush.Parse("#1E3450");
-
-        var textChild = indicator.Child as TextBlock;
-        if (textChild != null)
-            textChild.Foreground = reached
-                ? Avalonia.Media.Brush.Parse("#FFFFFF")
-                : Avalonia.Media.Brush.Parse("#5A7A9A");
-
-        label.Foreground = current
-            ? Avalonia.Media.Brush.Parse("#E8F0FE")
-            : reached
-                ? Avalonia.Media.Brush.Parse("#E8F0FE")
-                : Avalonia.Media.Brush.Parse("#5A7A9A");
-
-        label.FontWeight = current
-            ? Avalonia.Media.FontWeight.SemiBold
-            : Avalonia.Media.FontWeight.Normal;
+        TxtCopyStep1Ind.Foreground = new Avalonia.Media.SolidColorBrush(
+            step >= 1 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
+        TxtCopyStep2Ind.Foreground = new Avalonia.Media.SolidColorBrush(
+            step >= 2 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
+        TxtCopyStep3Ind.Foreground = new Avalonia.Media.SolidColorBrush(
+            step >= 3 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
     }
 
     private void OnCopyBackClick(object? sender, RoutedEventArgs e)
@@ -316,7 +294,7 @@ public partial class CopyWizardView : UserControl
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save Disc Image As",
+            Title = "光盘镜像另存为",
             DefaultExtension = ext,
             SuggestedFileName = $"disc_copy.{ext}"
         });
@@ -331,7 +309,7 @@ public partial class CopyWizardView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select IRD Key File",
+            Title = "选择 IRD 密钥文件",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
@@ -360,7 +338,7 @@ public partial class CopyWizardView : UserControl
         PrgCopyExec.Value = 0;
         TxtCopyExecPercent.Text = "0%";
         TxtCopyExecSpeed.Text = string.Empty;
-        TxtCopyExecStatus.Text = "Preparing...";
+        TxtCopyExecStatus.Text = "正在准备…";
         TxtCopyExecETA.Text = string.Empty;
         TxtCopyExecLog.Text = string.Empty;
 
@@ -413,9 +391,9 @@ public partial class CopyWizardView : UserControl
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtCopyExecStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtCopyExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtCopyExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtCopyExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtCopyExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.LogLine))
                 AppendLog(p.LogLine);
 
@@ -438,7 +416,7 @@ public partial class CopyWizardView : UserControl
         {
             await Task.Run(() => _readService.ReadDiscAsync(job, progress, ct));
             AppendLog("✅ Disc copy complete!");
-            TxtCopyExecStatus.Text = "Copy complete! 🎉";
+            TxtCopyExecStatus.Text = "复制完成！🎉";
             PrgCopyExec.Value = 100;
             TxtCopyExecPercent.Text = "100%";
 
@@ -451,7 +429,7 @@ public partial class CopyWizardView : UserControl
             if (ChkCopyVerify.IsChecked == true && File.Exists(job.OutputPath))
             {
                 AppendLog("[Info] Verifying copied image...");
-                TxtCopyExecStatus.Text = "Verifying...";
+                TxtCopyExecStatus.Text = "正在校验…";
                 var verifyService = new VerifyService();
                 var verifyJob = new VerifyJob
                 {
@@ -472,19 +450,19 @@ public partial class CopyWizardView : UserControl
                 if (verifyJob.Result is { Passed: true })
                 {
                     AppendLog("✅ Verification passed — disc matches image.");
-                    TxtCopyExecStatus.Text = "Copy & verify complete! ✅";
+                    TxtCopyExecStatus.Text = "复制并校验完成！✅";
                 }
                 else
                 {
                     AppendLog($"❌ Verification FAILED: {verifyJob.Result?.ErrorSummary ?? "Unknown error"}");
-                    TxtCopyExecStatus.Text = "Copy done, verification FAILED! ❌";
+                    TxtCopyExecStatus.Text = "复制完成，但校验失败！❌";
                 }
             }
         }
         catch (OperationCanceledException)
         {
             AppendLog("⏹ Copy cancelled.");
-            TxtCopyExecStatus.Text = "Cancelled.";
+            TxtCopyExecStatus.Text = "已取消。";
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
             DiscViz.UpdateVisualization();
@@ -492,7 +470,7 @@ public partial class CopyWizardView : UserControl
         catch (Exception ex)
         {
             AppendLog($"❌ Copy failed: {ex.Message}");
-            TxtCopyExecStatus.Text = "Copy failed.";
+            TxtCopyExecStatus.Text = "复制失败。";
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
             DiscViz.UpdateVisualization();
@@ -522,7 +500,7 @@ public partial class CopyWizardView : UserControl
     private void AppendLogCore(string message)
     {
         var existing = TxtCopyExecLog.Text ?? string.Empty;
-        TxtCopyExecLog.Text = existing + $"[{DateTime.Now:HH:mm:ss.fff}] {message}\n";
+        TxtCopyExecLog.Text = existing + $"[{DateTime.Now:HH:mm:ss}] {message}\n";
         var text = TxtCopyExecLog.Text;
         if (text != null && text.Length > 30_000)
         {

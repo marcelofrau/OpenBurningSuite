@@ -581,20 +581,20 @@ public sealed class MacOsScsiTransport : IScsiTransport
     private static IntPtr GetVtableSlot(IntPtr interfacePtr, int slotIndex)
     {
         if (interfacePtr == IntPtr.Zero)
-            throw new InvalidOperationException("Cannot read vtable slot: interface pointer is null.");
+            throw new InvalidOperationException("无法读取 vtable 槽：接口指针为 null。");
         if (slotIndex < 0)
-            throw new ArgumentOutOfRangeException(nameof(slotIndex), "Vtable slot index must be non-negative.");
+            throw new ArgumentOutOfRangeException(nameof(slotIndex), "Vtable 槽索引不能为负数。");
 
         // Guard against integer overflow in offset calculation (slotIndex * IntPtr.Size)
         const int maxReasonableSlot = 64; // IOKit COM vtables never exceed ~30 slots
         if (slotIndex > maxReasonableSlot)
             throw new ArgumentOutOfRangeException(nameof(slotIndex),
-                $"Vtable slot index {slotIndex} exceeds maximum expected value ({maxReasonableSlot}).");
+                $"Vtable 槽索引 {slotIndex} 超出预期最大值（{maxReasonableSlot}）。");
 
         // interfacePtr → vtable pointer
         var vtable = Marshal.ReadIntPtr(interfacePtr);
         if (vtable == IntPtr.Zero)
-            throw new InvalidOperationException("Cannot read vtable slot: vtable pointer is null.");
+            throw new InvalidOperationException("无法读取 vtable 槽：vtable 指针为 null。");
 
         // vtable[slotIndex]
         return Marshal.ReadIntPtr(vtable, slotIndex * IntPtr.Size);
@@ -649,8 +649,8 @@ public sealed class MacOsScsiTransport : IScsiTransport
             if (service == 0)
             {
                 throw new InvalidOperationException(
-                    $"Could not find IORegistry entry for path '{devicePath}'. " +
-                    "The optical drive may have been disconnected.");
+                    $"无法找到路径“{devicePath}”的 IORegistry 条目。" +
+                    "光驱可能已断开连接。");
             }
 
             // Verify this is an optical drive (IOSCSIPeripheralDeviceType05)
@@ -669,7 +669,7 @@ public sealed class MacOsScsiTransport : IScsiTransport
                 {
                     IOObjectRelease(service);
                     throw new InvalidOperationException(
-                        $"IORegistry path '{devicePath}' does not correspond to an optical drive.");
+                        $"IORegistry 路径“{devicePath}”不是光驱。");
                 }
                 // If type05Service == service, it's already the right one
             }
@@ -705,8 +705,8 @@ public sealed class MacOsScsiTransport : IScsiTransport
             if (service == 0)
             {
                 throw new InvalidOperationException(
-                    $"Could not find SCSI task service for device '{devicePath}'. " +
-                    "Ensure the device is an optical drive and is connected.");
+                    $"无法找到设备“{devicePath}”的 SCSI 任务服务。" +
+                    "请确认该设备是光驱且已连接。");
             }
         }
 
@@ -959,7 +959,7 @@ public sealed class MacOsScsiTransport : IScsiTransport
                       "device may not support the requested user client. " +
                       "Ensure Full Disk Access is granted and try running with sudo.";
             throw new InvalidOperationException(
-                $"IOCreatePlugInInterfaceForService failed for '{devicePath}': {errorDetail}");
+                $"IOCreatePlugInInterfaceForService 对“{devicePath}”失败：{errorDetail}");
         }
 
         // ---------------------------------------------------------------
@@ -1036,10 +1036,10 @@ public sealed class MacOsScsiTransport : IScsiTransport
         {
             throw new InvalidOperationException(
                 kr == kIOReturnExclusiveAccess
-                    ? $"Device '{devicePath}' is in use by another process. " +
-                      "Automatic unmount was attempted but the device is still busy. " +
-                      "Close any applications using the disc (including Finder) and try again. " +
-                      "If the problem persists, run 'diskutil unmountDisk /dev/diskN' manually."
+                    ? $"设备“{devicePath}”正被其他进程占用。" +
+                      "已尝试自动卸载，但设备仍处于忙碌状态。" +
+                      "请关闭使用该光盘的所有应用程序（包括访达）后重试。" +
+                      "如果问题仍然存在，请手动运行“diskutil unmountDisk /dev/diskN”。"
                     : $"ObtainExclusiveAccess failed for '{devicePath}': 0x{kr:X8}. " +
                       "The device may be in use by another process or the system " +
                       "may not permit exclusive access to this optical drive. " +
@@ -1357,7 +1357,7 @@ public sealed class MacOsScsiTransport : IScsiTransport
     public unsafe ScsiResult Execute(ScsiCommand command)
     {
         if (!IsOpen)
-            throw new InvalidOperationException("SCSI transport is not open.");
+            throw new InvalidOperationException("SCSI 传输未打开。");
 
         // Validate the SCSI task device interface is still accessible.
         // On macOS, if the IOKit user client was torn down (e.g., due to

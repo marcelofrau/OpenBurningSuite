@@ -184,14 +184,14 @@ public sealed class WindowsScsiTransport : IScsiTransport
         {
             var error = Marshal.GetLastWin32Error();
             throw new InvalidOperationException(
-                $"Failed to open SCSI device '{devicePath}': Win32 error={error}");
+                $"无法打开 SCSI 设备“{devicePath}”：Win32 错误={error}");
         }
     }
 
     public ScsiResult Execute(ScsiCommand command)
     {
         if (!IsOpen)
-            throw new InvalidOperationException("SCSI transport is not open.");
+            throw new InvalidOperationException("SCSI 传输未打开。");
 
         var buffer = new byte[SptdOffsets.TotalSize];
 
@@ -217,7 +217,7 @@ public sealed class WindowsScsiTransport : IScsiTransport
         // Copy CDB — SCSI_PASS_THROUGH_DIRECT supports up to 16-byte CDBs
         if (command.Cdb.Length > 16)
             throw new InvalidOperationException(
-                $"CDB length {command.Cdb.Length} exceeds the 16-byte limit of Windows SCSI_PASS_THROUGH_DIRECT.");
+                $"CDB 长度 {command.Cdb.Length} 超出 Windows SCSI_PASS_THROUGH_DIRECT 的 16 字节限制。");
 
         Array.Copy(command.Cdb, 0, buffer, SptdOffsets.CdbStart, command.Cdb.Length);
 

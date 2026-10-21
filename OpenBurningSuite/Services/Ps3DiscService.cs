@@ -659,7 +659,7 @@ public static class Ps3DiscService
     public static byte[] DeriveDiscKeyFromData1(byte[] data1)
     {
         if (data1 == null || data1.Length != 16)
-            throw new ArgumentException("Data1 must be exactly 16 bytes.", nameof(data1));
+            throw new ArgumentException("Data1 必须正好为 16 字节。", nameof(data1));
 
         using var aes = Aes.Create();
         aes.Key = D1AesKey;
@@ -678,7 +678,7 @@ public static class Ps3DiscService
     public static byte[] DeriveData1FromDiscKey(byte[] discKey)
     {
         if (discKey == null || discKey.Length != 16)
-            throw new ArgumentException("Disc key must be exactly 16 bytes.", nameof(discKey));
+            throw new ArgumentException("光盘密钥必须正好为 16 字节。", nameof(discKey));
 
         using var aes = Aes.Create();
         aes.Key = D1AesKey;
@@ -716,9 +716,9 @@ public static class Ps3DiscService
     public static byte[] DecryptSector(byte[] discKey, byte[] sectorData, long sectorNumber)
     {
         if (discKey == null || discKey.Length != 16)
-            throw new ArgumentException("Disc key must be exactly 16 bytes.", nameof(discKey));
+            throw new ArgumentException("光盘密钥必须正好为 16 字节。", nameof(discKey));
         if (sectorData == null || sectorData.Length != SectorSize)
-            throw new ArgumentException($"Sector data must be exactly {SectorSize} bytes.", nameof(sectorData));
+            throw new ArgumentException($"扇区数据必须正好为 {SectorSize} 字节。", nameof(sectorData));
 
         var iv = GetSectorIV(sectorNumber);
 
@@ -739,9 +739,9 @@ public static class Ps3DiscService
     public static byte[] EncryptSector(byte[] discKey, byte[] sectorData, long sectorNumber)
     {
         if (discKey == null || discKey.Length != 16)
-            throw new ArgumentException("Disc key must be exactly 16 bytes.", nameof(discKey));
+            throw new ArgumentException("光盘密钥必须正好为 16 字节。", nameof(discKey));
         if (sectorData == null || sectorData.Length != SectorSize)
-            throw new ArgumentException($"Sector data must be exactly {SectorSize} bytes.", nameof(sectorData));
+            throw new ArgumentException($"扇区数据必须正好为 {SectorSize} 字节。", nameof(sectorData));
 
         var iv = GetSectorIV(sectorNumber);
 
@@ -978,7 +978,7 @@ public static class Ps3DiscService
         if (!File.Exists(inputIsoPath))
             return $"Input ISO not found: {inputIsoPath}";
         if (discKey == null || discKey.Length != 16)
-            return "Invalid disc key (must be 16 bytes).";
+            return "光盘密钥无效（必须为 16 字节）。";
 
         try
         {
@@ -988,7 +988,7 @@ public static class Ps3DiscService
             // Parse region map
             var regions = ParseRegionMapFromStream(inputStream);
             if (regions.Count == 0)
-                return "Could not parse PS3 disc region map from ISO.";
+                return "无法从 ISO 中解析 PS3 光盘区域映射。";
 
             long totalSectors = inputStream.Length / SectorSize;
             long decryptedCount = 0;
@@ -1060,7 +1060,7 @@ public static class Ps3DiscService
                     CurrentSector = currentSector,
                     TotalSectors = totalSectors,
                     DecryptedSectors = decryptedCount,
-                    StatusMessage = $"Decrypting: sector {currentSector:N0} / {totalSectors:N0} " +
+                    StatusMessage = $"正在解密：扇区 {currentSector:N0} / {totalSectors:N0} " +
                                     $"({decryptedCount:N0} encrypted sectors processed)"
                 });
             }
@@ -1081,7 +1081,7 @@ public static class Ps3DiscService
                 CurrentSector = totalSectors,
                 TotalSectors = totalSectors,
                 DecryptedSectors = decryptedCount,
-                StatusMessage = $"Decryption complete. {decryptedCount:N0} encrypted sectors decrypted."
+                StatusMessage = $"解密完成。已解密 {decryptedCount:N0} 个加密扇区。"
             });
 
             return null; // Success
@@ -1090,7 +1090,7 @@ public static class Ps3DiscService
         {
             // Clean up partial output on cancellation
             try { if (File.Exists(outputIsoPath)) File.Delete(outputIsoPath); } catch { }
-            return "Decryption cancelled.";
+            return "解密已取消。";
         }
         catch (Exception ex)
         {

@@ -7,7 +7,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Avalonia.Threading;
 using OpenBurningSuite.Views;
 
 namespace OpenBurningSuite;
@@ -23,51 +22,16 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        try
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                var splash = new SplashWindow();
-                splash.Topmost = true;
-                var splashTime = DateTime.UtcNow;
-                splash.Show();
+            _mainWindow = new MainWindow();
+            desktop.MainWindow = _mainWindow;
 
-                _mainWindow = new MainWindow();
-                desktop.MainWindow = _mainWindow;
-
-                Helpers.Logger.Info("MainWindow created successfully");
-
-                BuildNativeMenu();
-
-                var elapsed = (int)(DateTime.UtcNow - splashTime).TotalMilliseconds;
-                var remaining = 1500 - elapsed;
-
-                if (remaining <= 0)
-                {
-                    splash.Close();
-                    _mainWindow.Show();
-                }
-                else
-                {
-                    var timer = new DispatcherTimer(
-                        TimeSpan.FromMilliseconds(remaining),
-                        DispatcherPriority.Normal,
-                        (_, _) =>
-                        {
-                            splash.Close();
-                            _mainWindow.Show();
-                        });
-                    timer.Start();
-                }
-            }
-
-            base.OnFrameworkInitializationCompleted();
+            // Set up the native menu (macOS menu bar & supported Linux desktops)
+            BuildNativeMenu();
         }
-        catch (Exception ex)
-        {
-            Helpers.Logger.Error(ex, "Failed to initialize application");
-            throw;
-        }
+
+        base.OnFrameworkInitializationCompleted();
     }
 
     // -----------------------------------------------------------------------
@@ -79,40 +43,40 @@ public partial class App : Application
         var nativeMenu = new NativeMenu();
 
         // ── File ──
-        var fileMenu = new NativeMenuItem("File") { Menu = new NativeMenu() };
-        var exitItem = new NativeMenuItem("Exit");
+        var fileMenu = new NativeMenuItem("文件") { Menu = new NativeMenu() };
+        var exitItem = new NativeMenuItem("退出");
         exitItem.Click += (_, _) => ShutdownApp();
         fileMenu.Menu!.Items.Add(exitItem);
         nativeMenu.Items.Add(fileMenu);
 
         // ── Main ──
-        AddNavSubmenu(nativeMenu, "Main",
-            ("home", "Home"),
-            ("discover", "Discover Drives & Media"),
-            ("read", "Copy Disc to Image"),
-            ("build", "Build Disc Image"),
-            ("write", "Burn / Write Disc"),
-            ("verify", "Verify / Check"),
-            ("advanced", "Advanced Utilities"));
+        AddNavSubmenu(nativeMenu, "主菜单",
+            ("home", "主页"),
+            ("discover", "发现光驱与介质"),
+            ("read", "将光盘复制为镜像"),
+            ("build", "构建光盘镜像"),
+            ("write", "写入 / 刻录光盘"),
+            ("verify", "校验 / 检查"),
+            ("advanced", "高级工具"));
 
         // ── Wizards ──
-        AddNavSubmenu(nativeMenu, "Wizards",
-            ("audiowizard", "Audio & Music Wizard"),
-            ("videowizard", "Video Disc Wizard"),
-            ("datawizard", "Data Disc Wizard"),
-            ("gamewizard", "Game Disc Wizard"),
-            ("copywizard", "Copy Disc Wizard"),
-            ("blankwizard", "Blank / Erase Disc Wizard"));
+        AddNavSubmenu(nativeMenu, "向导",
+            ("audiowizard", "音频与音乐向导"),
+            ("videowizard", "视频光盘向导"),
+            ("datawizard", "数据光盘向导"),
+            ("gamewizard", "游戏光盘向导"),
+            ("copywizard", "复制光盘向导"),
+            ("blankwizard", "擦除光盘向导"));
 
         // ── Help ──
-        var helpMenu = new NativeMenuItem("Help") { Menu = new NativeMenu() };
-        var settingsItem = new NativeMenuItem("Settings");
+        var helpMenu = new NativeMenuItem("帮助") { Menu = new NativeMenu() };
+        var settingsItem = new NativeMenuItem("设置");
         settingsItem.Click += (_, _) => _mainWindow?.NavigateToView("settings");
         helpMenu.Menu!.Items.Add(settingsItem);
 
         helpMenu.Menu!.Items.Add(new NativeMenuItemSeparator());
 
-        var helpItem = new NativeMenuItem("Help & Documentation");
+        var helpItem = new NativeMenuItem("帮助与文档");
         helpItem.Click += (_, _) => _mainWindow?.NavigateToView("help");
         helpMenu.Menu!.Items.Add(helpItem);
 

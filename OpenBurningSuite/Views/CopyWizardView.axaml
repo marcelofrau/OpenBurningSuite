@@ -8,50 +8,20 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="Copy Disc Wizard"
+                <TextBlock Text="💿  复制光盘向导"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
-                <TextBlock Text="Copy a disc to an image file — guided step by step."
+                <TextBlock Text="将光盘复制为镜像文件 — 分步引导。"
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
             </StackPanel>
 
             <!-- Step indicators -->
             <Border Classes="Card">
                 <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <Border x:Name="CopyStepInd1" Background="#1E90FF" CornerRadius="12"
-                                Width="24" Height="24" Padding="0">
-                            <TextBlock Text="1" Foreground="White" FontSize="12"
-                                       FontWeight="Bold" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                        <TextBlock x:Name="CopyStepLbl1" Text="Source Drive"
-                                   Foreground="#E8F0FE" FontSize="12"
-                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
-                    </StackPanel>
-                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <Border x:Name="CopyStepInd2" Background="#1E3450" CornerRadius="12"
-                                Width="24" Height="24" Padding="0">
-                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
-                                       FontWeight="Bold" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                        <TextBlock x:Name="CopyStepLbl2" Text="Output Settings"
-                                   Foreground="#5A7A9A" FontSize="12"
-                                   VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <Border x:Name="CopyStepInd3" Background="#1E3450" CornerRadius="12"
-                                Width="24" Height="24" Padding="0">
-                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
-                                       FontWeight="Bold" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                        <TextBlock x:Name="CopyStepLbl3" Text="Copy"
-                                   Foreground="#5A7A9A" FontSize="12"
-                                   VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <TextBlock x:Name="TxtCopyStep1Ind" Text="① 源光驱" Foreground="#5BC0FF" FontWeight="Bold"/>
+                    <TextBlock Text="→" Foreground="#5A7A9A"/>
+                    <TextBlock x:Name="TxtCopyStep2Ind" Text="② 输出设置" Foreground="#5A7A9A"/>
+                    <TextBlock Text="→" Foreground="#5A7A9A"/>
+                    <TextBlock x:Name="TxtCopyStep3Ind" Text="③ 复制" Foreground="#5A7A9A"/>
                 </StackPanel>
             </Border>
 
@@ -59,28 +29,23 @@
             <!-- Step 1: Source Drive Selection                                -->
             <!-- ============================================================ -->
             <StackPanel x:Name="PnlCopyStep1" Spacing="12">
-                <TextBlock Text="Select Source Drive" Classes="SectionHeader"/>
+                <TextBlock Text="选择源光驱" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="Choose the optical drive containing the disc you want to copy:"
+                        <TextBlock Text="选择装有要复制光盘的光驱："
                                    Foreground="#8EAFC8" TextWrapping="Wrap"/>
                         <Grid ColumnDefinitions="*,Auto">
-                            <ComboBox x:Name="CmbCopyDrive" PlaceholderText="Select drive..."
-                                      ToolTip.Tip="Select the drive containing the disc to copy"/>
-                            <Button x:Name="BtnCopyRefreshDrives" Grid.Column="1"
-                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnCopyRefreshDrivesClick">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
-                                    <TextBlock Text="Refresh" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                            <ComboBox x:Name="CmbCopyDrive" PlaceholderText="选择光驱…"
+                                      ToolTip.Tip="选择装有所需复制光盘的光驱"/>
+                            <Button x:Name="BtnCopyRefreshDrives" Grid.Column="1" Content="🔄 刷新"
+                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnCopyRefreshDrivesClick"/>
                         </Grid>
 
                         <!-- Drive info -->
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock x:Name="TxtCopyDriveInfo" Text="No drive selected"
+                                <TextBlock x:Name="TxtCopyDriveInfo" Text="未选择光驱"
                                            Foreground="#8EAFC8" TextWrapping="Wrap"/>
                                 <TextBlock x:Name="TxtCopyMediaInfo" Text=""
                                            Foreground="#5A7A9A" TextWrapping="Wrap"/>
@@ -100,11 +65,11 @@
 
                         <!-- Gaming preset -->
                         <Grid ColumnDefinitions="Auto,*">
-                            <TextBlock Text="Gaming Preset:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                            <TextBlock Text="游戏机预设：" Foreground="#8EAFC8" VerticalAlignment="Center"
                                        Margin="0,0,8,0"/>
                             <ComboBox x:Name="CmbCopyGamingPreset" Grid.Column="1"
-                                      PlaceholderText="None (standard copy)"
-                                      ToolTip.Tip="Optional: select a gaming system preset for optimized read settings"/>
+                                      PlaceholderText="无（标准复制）"
+                                      ToolTip.Tip="可选：选择游戏机预设以使用优化的读取设置"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -114,54 +79,50 @@
             <!-- Step 2: Output Settings                                      -->
             <!-- ============================================================ -->
             <StackPanel x:Name="PnlCopyStep2" Spacing="12" IsVisible="False">
-                <TextBlock Text="Output Settings" Classes="SectionHeader"/>
+                <TextBlock Text="输出设置" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
-                            <TextBlock Text="Format:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                            <TextBlock Text="格式：" Foreground="#8EAFC8" VerticalAlignment="Center"
                                        Margin="0,0,8,0"/>
                             <ComboBox x:Name="CmbCopyFormat" Grid.Column="1"
-                                      ToolTip.Tip="Output image format"/>
+                                      ToolTip.Tip="输出镜像格式"/>
 
-                            <TextBlock Text="Output:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                            <TextBlock Text="输出：" Foreground="#8EAFC8" VerticalAlignment="Center"
                                        Grid.Row="1" Margin="0,8,8,0"/>
                             <TextBox x:Name="TxtCopyOutputPath" Grid.Row="1" Grid.Column="1"
-                                     Watermark="Output file path..." Margin="0,8,0,0"/>
-                            <Button Grid.Row="1" Grid.Column="2" Classes="ActionBtn"
-                                    Margin="8,8,0,0" Click="OnCopyBrowseOutputClick">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-open-file-folder-16.png"/>
-                            </Button>
+                                     Watermark="输出文件路径…" Margin="0,8,0,0"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content="📂" Classes="ActionBtn"
+                                    Margin="8,8,0,0" Click="OnCopyBrowseOutputClick"/>
 
-                            <TextBlock Text="Speed:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                            <TextBlock Text="速度：" Foreground="#8EAFC8" VerticalAlignment="Center"
                                        Grid.Row="2" Margin="0,8,8,0"/>
                             <ComboBox x:Name="CmbCopySpeed" Grid.Row="2" Grid.Column="1"
-                                      Margin="0,8,0,0" ToolTip.Tip="Read speed"/>
+                                      Margin="0,8,0,0" ToolTip.Tip="读取速度"/>
                         </Grid>
 
                         <!-- Options -->
                         <StackPanel Spacing="6" Margin="0,8,0,0">
-                            <CheckBox x:Name="ChkCopyVerify" Content="Verify after copy"
+                            <CheckBox x:Name="ChkCopyVerify" Content="复制后校验"
                                       Foreground="#E8F0FE"
-                                      ToolTip.Tip="Verify the copied image against the disc after copying"/>
-                            <CheckBox x:Name="ChkCopyRetry" Content="Retry on errors (3 retries)"
+                                      ToolTip.Tip="复制后将镜像与光盘进行校验"/>
+                            <CheckBox x:Name="ChkCopyRetry" Content="出错重试（重试 3 次）"
                                       IsChecked="True" Foreground="#E8F0FE"
-                                      ToolTip.Tip="Automatically retry reading sectors that fail on first attempt"/>
-                            <CheckBox x:Name="ChkCopyDecryptPs3" Content="Decrypt PS3 disc (requires IRD file)"
+                                      ToolTip.Tip="自动重试首次读取失败的扇区"/>
+                            <CheckBox x:Name="ChkCopyDecryptPs3" Content="解密 PS3 光盘（需要 IRD 文件）"
                                       Foreground="#E8F0FE"
-                                      ToolTip.Tip="Decrypt PS3 game disc during copy using an IRD key file"/>
+                                      ToolTip.Tip="复制过程中使用 IRD 密钥文件解密 PS3 游戏光盘"/>
                         </StackPanel>
 
                         <!-- IRD file path (for PS3 decryption) -->
                         <Grid x:Name="PnlCopyIrd" ColumnDefinitions="Auto,*,Auto" IsVisible="False">
-                            <TextBlock Text="IRD File:" Foreground="#8EAFC8" VerticalAlignment="Center"
+                            <TextBlock Text="IRD 文件：" Foreground="#8EAFC8" VerticalAlignment="Center"
                                        Margin="0,0,8,0"/>
                             <TextBox x:Name="TxtCopyIrdPath" Grid.Column="1"
-                                     Watermark="Path to .ird file..."/>
-                            <Button Grid.Column="2" Classes="ActionBtn"
-                                    Margin="8,0,0,0" Click="OnCopyBrowseIrdClick">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-open-file-folder-16.png"/>
-                            </Button>
+                                     Watermark=".ird 文件路径…"/>
+                            <Button Grid.Column="2" Content="📂" Classes="ActionBtn"
+                                    Margin="8,0,0,0" Click="OnCopyBrowseIrdClick"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -171,13 +132,13 @@
             <!-- Step 3: Execute                                              -->
             <!-- ============================================================ -->
             <StackPanel x:Name="PnlCopyStep3" Spacing="12" IsVisible="False">
-                <TextBlock Text="Copying Disc..." Classes="SectionHeader"/>
+                <TextBlock Text="正在复制光盘…" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <ProgressBar x:Name="PrgCopyExec" Classes="BurnProgress" Value="0"/>
                         <Grid ColumnDefinitions="*,Auto,Auto,Auto">
-                            <TextBlock x:Name="TxtCopyExecStatus" Text="Preparing..."
+                            <TextBlock x:Name="TxtCopyExecStatus" Text="正在准备…"
                                        Foreground="#8EAFC8" FontSize="12"
                                        VerticalAlignment="Center"/>
                             <TextBlock x:Name="TxtCopyExecETA" Text=""
@@ -208,18 +169,18 @@
             <!-- ============================================================ -->
             <Border Classes="InfoCard" Margin="0,8,0,0">
                 <Grid ColumnDefinitions="Auto,*,Auto,Auto">
-                    <Button x:Name="BtnCopyBack" Content="← Back"
+                    <Button x:Name="BtnCopyBack" Content="← 上一步"
                             Classes="ActionBtn" Click="OnCopyBackClick"
                             IsVisible="False"
-                            ToolTip.Tip="Go back to the previous step"/>
+                            ToolTip.Tip="返回上一步"/>
                     <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
-                        <Button x:Name="BtnCopyCancel" Content="Cancel"
+                        <Button x:Name="BtnCopyCancel" Content="取消"
                                 Classes="ActionBtn" Click="OnCopyCancelClick"
                                 IsVisible="False"
-                                ToolTip.Tip="Cancel the current operation"/>
-                        <Button x:Name="BtnCopyNext" Content="Next →"
+                                ToolTip.Tip="取消当前操作"/>
+                        <Button x:Name="BtnCopyNext" Content="下一步 →"
                                 Classes="ActionBtn" Click="OnCopyNextClick"
-                                ToolTip.Tip="Proceed to the next step"/>
+                                ToolTip.Tip="进入下一步"/>
                     </StackPanel>
                 </Grid>
             </Border>

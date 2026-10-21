@@ -33,12 +33,12 @@ public static class ImgWriter
         int sectorSize = 2048, IProgress<int>? progress = null)
     {
         if (!File.Exists(isoPath))
-            throw new FileNotFoundException($"Source ISO file not found: {isoPath}");
+            throw new FileNotFoundException($"未找到源 ISO 文件：{isoPath}");
 
         long fileSize = new FileInfo(isoPath).Length;
         long sectorCount = fileSize / sectorSize;
         if (sectorCount <= 0)
-            throw new InvalidOperationException("Source file is empty or smaller than one sector.");
+            throw new InvalidOperationException("源文件为空或小于一个扇区。");
 
         using var input = new FileStream(isoPath, FileMode.Open, FileAccess.Read,
             FileShare.Read, 65536, false);
@@ -98,12 +98,12 @@ public static class ImgWriter
         IProgress<int>? progress = null)
     {
         if (!File.Exists(isoPath))
-            throw new FileNotFoundException($"Source ISO file not found: {isoPath}");
+            throw new FileNotFoundException($"未找到源 ISO 文件：{isoPath}");
 
         long fileSize = new FileInfo(isoPath).Length;
         long sectorCount = fileSize / 2048;
         if (sectorCount <= 0)
-            throw new InvalidOperationException("Source file is empty.");
+            throw new InvalidOperationException("源文件为空。");
 
         using var input = new FileStream(isoPath, FileMode.Open, FileAccess.Read,
             FileShare.Read, 65536, false);
