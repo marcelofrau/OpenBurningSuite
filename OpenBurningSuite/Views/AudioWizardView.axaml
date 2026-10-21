@@ -8,9 +8,9 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="Audio &amp; Music Wizard"
+                <TextBlock Text="🎵  音频与音乐向导"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
-                <TextBlock Text="Create audio CDs, copy music files to disc, or rip audio CDs — guided step by step."
+                <TextBlock Text="创建音频 CD、将音乐文件复制到光盘或抓取音频 CD — 分步引导。"
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
             </StackPanel>
 
@@ -24,7 +24,7 @@
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-                        <TextBlock x:Name="StepLbl1" Text="Choose Task"
+                        <TextBlock x:Name="StepLbl1" Text="选择任务"
                                    Foreground="#E8F0FE" FontSize="12"
                                    VerticalAlignment="Center" FontWeight="SemiBold"/>
                     </StackPanel>
@@ -36,7 +36,7 @@
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-                        <TextBlock x:Name="StepLbl2" Text="Configure"
+                        <TextBlock x:Name="StepLbl2" Text="配置"
                                    Foreground="#5A7A9A" FontSize="12"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
@@ -48,7 +48,7 @@
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-                        <TextBlock x:Name="StepLbl3" Text="Summary"
+                        <TextBlock x:Name="StepLbl3" Text="摘要"
                                    Foreground="#5A7A9A" FontSize="12"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
@@ -60,7 +60,7 @@
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-                        <TextBlock x:Name="StepLbl4" Text="Execute"
+                        <TextBlock x:Name="StepLbl4" Text="执行"
                                    Foreground="#5A7A9A" FontSize="12"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
@@ -71,7 +71,7 @@
             <!-- STEP 1: Choose Task                                          -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step1Panel" Spacing="16">
-                <TextBlock Text="What would you like to do?" Classes="SectionHeader"/>
+                <TextBlock Text="您想执行什么操作？" Classes="SectionHeader"/>
 
                 <WrapPanel Orientation="Horizontal">
                     <!-- Create Audio CD -->
@@ -79,13 +79,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeCreateAudioCd"
-                            ToolTip.Tip="Add audio tracks, set metadata, and burn a Red Book audio CD">
+                            ToolTip.Tip="添加音轨、设置元数据并刻录红皮书音频 CD">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-audio-50.png"/>
-                            <TextBlock Text="Create Audio CD" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="创建音频 CD" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Build &amp; burn a Red Book audio CD from audio files"
+                            <TextBlock Text="从音频文件构建并刻录红皮书音频 CD"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -97,13 +96,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeCopyMusic"
-                            ToolTip.Tip="Copy MP3, WMA, FLAC, WAV and other music files to a data disc">
+                            ToolTip.Tip="将 MP3、WMA、FLAC、WAV 等音乐文件复制到数据光盘">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-music-audio-50.png"/>
-                            <TextBlock Text="Copy Music to Disc" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="🎶" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="将音乐复制到光盘" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Burn music files as data to CD, DVD, or Blu-ray"
+                            <TextBlock Text="将音乐文件作为数据刻录到 CD、DVD 或蓝光光盘"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -115,13 +113,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeRipAudioCd"
-                            ToolTip.Tip="Extract audio tracks from an Audio CD to WAV files or a raw BIN/CUE image">
+                            ToolTip.Tip="将音频 CD 中的音轨提取为 WAV 文件或原始 BIN/CUE 镜像">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-headphones-2d-50.png"/>
-                            <TextBlock Text="Rip Audio CD" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="🎧" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="抓取音频 CD" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Rip tracks from an audio CD to WAV or BIN/CUE"
+                            <TextBlock Text="将音频 CD 中的音轨抓取为 WAV 或 BIN/CUE"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -134,62 +131,34 @@
             <!-- STEP 2A: Create Audio CD                                     -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2CreatePanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="Create Audio CD — Add Tracks &amp; Configure" Classes="SectionHeader"/>
+                <TextBlock Text="创建音频 CD — 添加音轨并配置" Classes="SectionHeader"/>
 
                 <!-- Audio Tracks -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                                <TextBlock Text="Audio Tracks" Classes="SectionHeader"/>
-                            </StackPanel>
-                            <TextBlock x:Name="TxtCreateTrackCount" Text="(0 tracks, 00:00 total)"
+                            <TextBlock Text="🎵 音轨" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtCreateTrackCount" Text="（0 条音轨，总时长 00:00）"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button x:Name="BtnAddTracks"
+                            <Button x:Name="BtnAddTracks" Content="➕ 添加音轨"
                                     Classes="PrimaryBtn" Click="OnAddTracksClick"
-                                    ToolTip.Tip="Add WAV, MP3, WMA, or AIFF audio files">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
-                                    <TextBlock Text="Add Tracks" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="ActionBtn"
+                                    ToolTip.Tip="添加 WAV、MP3、WMA 或 AIFF 音频文件"/>
+                            <Button Content="📋 导入播放列表" Classes="ActionBtn"
                                     Click="OnImportPlaylistCreateClick"
-                                    ToolTip.Tip="Import tracks from a playlist file (M3U, M3U8, PLS, WPL, ASX)">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Import Playlist" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="ActionBtn"
+                                    ToolTip.Tip="从播放列表文件导入音轨（M3U、M3U8、PLS、WPL、ASX）"/>
+                            <Button Content="💾 导出播放列表" Classes="ActionBtn"
                                     Click="OnExportPlaylistCreateClick"
-                                    ToolTip.Tip="Export the current track list to a playlist file">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                                    <TextBlock Text="Export Playlist" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="DangerBtn"
+                                    ToolTip.Tip="将当前音轨列表导出为播放列表文件"/>
+                            <Button Content="🗑 移除所选" Classes="DangerBtn"
                                     Click="OnRemoveTrackClick"
-                                    ToolTip.Tip="Remove the selected track from the list">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
-                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="从列表中移除选中的音轨"/>
                             <Button Content="⬆" Classes="ActionBtn" Click="OnMoveTrackUpClick"
-                                    ToolTip.Tip="Move selected track up"/>
+                                    ToolTip.Tip="上移选中的音轨"/>
                             <Button Content="⬇" Classes="ActionBtn" Click="OnMoveTrackDownClick"
-                                    ToolTip.Tip="Move selected track down"/>
+                                    ToolTip.Tip="下移选中的音轨"/>
                         </StackPanel>
 
                         <Border Classes="DropZone" DragDrop.AllowDrop="True"
@@ -221,7 +190,7 @@
                                                     Classes="ActionBtn" Padding="6,4"
                                                     Click="OnPreviewTrackClick"
                                                     Tag="{Binding FilePath}"
-                                                    ToolTip.Tip="Preview this track"/>
+                                                    ToolTip.Tip="预览此音轨"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -231,28 +200,16 @@
                         <!-- Audio Player -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnPlayPause"
+                                <Button x:Name="BtnPlayPause" Content="▶ 播放"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected track">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
-                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Classes="ActionBtn"
+                                        ToolTip.Tip="播放或暂停选中的音轨"/>
+                                <Button Content="⏹ 停止" Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnStopClick"
-                                        ToolTip.Tip="Stop playback">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                        ToolTip.Tip="停止播放"/>
                                 <TextBlock x:Name="TxtNowPlaying"
-                                           Text="No track selected"
+                                           Text="未选择音轨"
                                            Foreground="#5A7A9A" FontSize="11"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" Margin="12,0,0,0"/>
@@ -260,7 +217,7 @@
                                         Grid.Column="3" Minimum="0" Maximum="100"
                                         Margin="12,0" VerticalAlignment="Center"
                                         IsEnabled="False"
-                                        ToolTip.Tip="Playback position"/>
+                                        ToolTip.Tip="播放位置"/>
                                 <TextBlock x:Name="TxtPlaybackTime"
                                            Text="00:00 / 00:00" Foreground="#8EAFC8"
                                            FontSize="11" Grid.Column="4"
@@ -271,47 +228,41 @@
                 </Border>
 
                 <!-- CD-TEXT Metadata -->
-                <Expander Classes="SettingsExpander" IsExpanded="False">
-                    <Expander.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="CD-TEXT Metadata (optional)" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Expander.Header>
+                <Expander Classes="SettingsExpander" Header="📝 CD-TEXT 文本元数据（可选）"
+                          IsExpanded="False">
                     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto"
                           Margin="0,12,0,0">
                         <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                            <TextBlock Text="Album Title" Classes="FieldLabel"/>
-                            <TextBox x:Name="TxtCdAlbum" Watermark="Album title"/>
+                            <TextBlock Text="专辑标题" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdAlbum" Watermark="专辑标题"/>
                         </StackPanel>
                         <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                            <TextBlock Text="Artist / Performer" Classes="FieldLabel"/>
-                            <TextBox x:Name="TxtCdArtist" Watermark="Artist or performer"/>
+                            <TextBlock Text="艺术家 / 表演者" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdArtist" Watermark="艺术家或表演者"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                            <TextBlock Text="Songwriter" Classes="FieldLabel"/>
-                            <TextBox x:Name="TxtCdSongwriter" Watermark="Songwriter"/>
+                            <TextBlock Text="词作者" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdSongwriter" Watermark="词作者"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                            <TextBlock Text="Composer" Classes="FieldLabel"/>
-                            <TextBox x:Name="TxtCdComposer" Watermark="Composer"/>
+                            <TextBlock Text="作曲" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdComposer" Watermark="作曲"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                            <TextBlock Text="Arranger" Classes="FieldLabel"/>
-                            <TextBox x:Name="TxtCdArranger" Watermark="Arranger"/>
+                            <TextBlock Text="编曲" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdArranger" Watermark="编曲"/>
                         </StackPanel>
                         <StackPanel Grid.Row="2" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                            <TextBlock Text="Genre" Classes="FieldLabel"/>
-                            <TextBox x:Name="TxtCdGenre" Watermark="Genre"/>
+                            <TextBlock Text="流派" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdGenre" Watermark="流派"/>
                         </StackPanel>
                         <StackPanel Grid.Row="3" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                            <TextBlock Text="Disc Message" Classes="FieldLabel"/>
-                            <TextBox x:Name="TxtCdMessage" Watermark="Disc message"/>
+                            <TextBlock Text="光盘信息" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdMessage" Watermark="光盘信息"/>
                         </StackPanel>
                         <StackPanel Grid.Row="3" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                            <TextBlock Text="Media Catalog Number (MCN)" Classes="FieldLabel"/>
-                            <TextBox x:Name="TxtCdMcn" Watermark="13-digit barcode (optional)"
+                            <TextBlock Text="介质目录编号（MCN）" Classes="FieldLabel"/>
+                            <TextBox x:Name="TxtCdMcn" Watermark="13 位条码（可选）"
                                      MaxLength="13"/>
                         </StackPanel>
                     </Grid>
@@ -320,21 +271,17 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-audio-16.png"/>
-                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🔥 刻录设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <TextBlock Text="目标光驱" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbCreateDrive" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Select the burner drive"/>
+                                          ToolTip.Tip="选择刻录机"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="写入速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbCreateSpeed" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write speed for burning">
+                                          ToolTip.Tip="刻录的写入速度">
                                     <ComboBoxItem Content="Auto" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
                                     <ComboBoxItem Content="2x"/>
@@ -351,9 +298,9 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <TextBlock Text="写入模式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbCreateWriteMode" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write strategy for audio CDs">
+                                          ToolTip.Tip="音频 CD 的写入策略">
                                     <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
                                     <ComboBoxItem Content="SAO (Session At Once)"/>
                                     <ComboBoxItem Content="TAO (Track At Once)"/>
@@ -362,29 +309,29 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <TextBlock Text="份数" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumCreateCopies" Minimum="1" Maximum="99"
                                                Value="1" FormatString="0"
-                                               ToolTip.Tip="Number of disc copies to burn"/>
+                                               ToolTip.Tip="要刻录的光盘份数"/>
                             </StackPanel>
                         </Grid>
                         <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <CheckBox x:Name="ChkCreateEject" Content="Eject after burn"
+                            <CheckBox x:Name="ChkCreateEject" Content="刻录后弹出"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Eject the disc when burning is complete"/>
-                            <CheckBox x:Name="ChkCreateVerify" Content="Verify after burn"
+                                      ToolTip.Tip="刻录完成时弹出光盘"/>
+                            <CheckBox x:Name="ChkCreateVerify" Content="刻录后校验"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Verify disc integrity after burning"/>
-                            <CheckBox x:Name="ChkCreateSimulate" Content="Simulate (test write)"
+                                      ToolTip.Tip="刻录后校验光盘完整性"/>
+                            <CheckBox x:Name="ChkCreateSimulate" Content="模拟（测试写入）"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
-                            <CheckBox x:Name="ChkCreateBup" Content="Buffer underrun protection"
+                                      ToolTip.Tip="模拟刻录而不实际写入光盘"/>
+                            <CheckBox x:Name="ChkCreateBup" Content="缓存欠载保护"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                                      ToolTip.Tip="防止刻录过程中出现缓存欠载错误"/>
                             <CheckBox x:Name="ChkCreateBurnImage"
-                                      Content="Also burn to disc (not just build image)"
+                                      Content="同时刻录到光盘（不仅构建镜像）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Uncheck to only create a BIN/CUE image without burning"/>
+                                      ToolTip.Tip="取消勾选则仅创建 BIN/CUE 镜像而不刻录"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -392,27 +339,17 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="The audio CD image (BIN/CUE) will be saved to this location."
+                        <TextBlock Text="💾 输出镜像" Classes="SectionHeader"/>
+                        <TextBlock Text="音频 CD 镜像（BIN/CUE）将保存到此位置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtCreateOutputPath"
-                                     Watermark="Path to save the audio CD image..."
+                                     Watermark="音频 CD 镜像的保存路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseCreateOutputClick"
-                                    ToolTip.Tip="Choose where to save the output BIN/CUE image">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出 BIN/CUE 镜像的保存位置"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -422,67 +359,33 @@
             <!-- STEP 2B: Copy Music to Disc                                  -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2CopyPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="Copy Music to Disc — Select Files" Classes="SectionHeader"/>
+                <TextBlock Text="将音乐复制到光盘 — 选择文件" Classes="SectionHeader"/>
 
                 <!-- Music Files -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                                <TextBlock Text="Music Files" Classes="SectionHeader"/>
-                            </StackPanel>
-                            <TextBlock x:Name="TxtCopyFileCount" Text="(0 files, 0 MB)"
+                            <TextBlock Text="🎶 音乐文件" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtCopyFileCount" Text="（0 个文件，0 MB）"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Classes="PrimaryBtn"
+                            <Button Content="➕ 添加文件" Classes="PrimaryBtn"
                                     Click="OnAddCopyFilesClick"
-                                    ToolTip.Tip="Add music files to copy (MP3, FLAC, WAV, OGG, AIFF, AAC, WMA, M4A)">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
-                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="ActionBtn"
+                                    ToolTip.Tip="添加要复制的音乐文件（MP3、FLAC、WAV、OGG、AIFF、AAC、WMA、M4A）"/>
+                            <Button Content="📁 添加文件夹" Classes="ActionBtn"
                                     Click="OnAddCopyFolderClick"
-                                    ToolTip.Tip="Add all music files from a folder">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-folder-16.png"/>
-                                    <TextBlock Text="Add Folder" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="ActionBtn"
+                                    ToolTip.Tip="添加文件夹中的所有音乐文件"/>
+                            <Button Content="📋 导入播放列表" Classes="ActionBtn"
                                     Click="OnImportPlaylistCopyClick"
-                                    ToolTip.Tip="Import files from a playlist file (M3U, M3U8, PLS, WPL, ASX)">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Import Playlist" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="ActionBtn"
+                                    ToolTip.Tip="从播放列表文件导入文件（M3U、M3U8、PLS、WPL、ASX）"/>
+                            <Button Content="💾 导出播放列表" Classes="ActionBtn"
                                     Click="OnExportPlaylistCopyClick"
-                                    ToolTip.Tip="Export the current file list to a playlist file">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                                    <TextBlock Text="Export Playlist" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="DangerBtn"
+                                    ToolTip.Tip="将当前文件列表导出为播放列表文件"/>
+                            <Button Content="🗑 移除所选" Classes="DangerBtn"
                                     Click="OnRemoveCopyFileClick"
-                                    ToolTip.Tip="Remove the selected file from the list">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
-                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="从列表中移除选中的文件"/>
                         </StackPanel>
 
                         <Border Classes="DropZone" DragDrop.AllowDrop="True"
@@ -510,7 +413,7 @@
                                                     Classes="ActionBtn" Padding="6,4"
                                                     Click="OnPreviewCopyFileClick"
                                                     Tag="{Binding FilePath}"
-                                                    ToolTip.Tip="Preview this file"/>
+                                                    ToolTip.Tip="预览此文件"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -520,26 +423,14 @@
                         <!-- Audio Player -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnCopyPlayPause"
+                                <Button x:Name="BtnCopyPlayPause" Content="▶ 播放"
                                         Classes="ActionBtn" Grid.Column="0"
-                                        Click="OnCopyPlayPauseClick">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
-                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Classes="ActionBtn"
+                                        Click="OnCopyPlayPauseClick"/>
+                                <Button Content="⏹ 停止" Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
-                                        Click="OnCopyStopClick">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                        Click="OnCopyStopClick"/>
                                 <TextBlock x:Name="TxtCopyNowPlaying"
-                                           Text="No file selected"
+                                           Text="未选择文件"
                                            Foreground="#5A7A9A" FontSize="11"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" Margin="12,0,0,0"/>
@@ -559,20 +450,16 @@
                 <!-- Disc Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-audio-16.png"/>
-                            <TextBlock Text="Disc Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="💿 光盘设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <TextBlock Text="目标光驱" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbCopyDrive" HorizontalAlignment="Stretch"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Disc Type" Classes="FieldLabel"/>
+                                <TextBlock Text="光盘类型" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbCopyDiscType" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Disc format for the data disc">
+                                          ToolTip.Tip="数据光盘的光盘格式">
                                     <ComboBoxItem Content="CD" IsSelected="True"/>
                                     <ComboBoxItem Content="DVD-5"/>
                                     <ComboBoxItem Content="DVD+R"/>
@@ -581,9 +468,9 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Filesystem" Classes="FieldLabel"/>
+                                <TextBlock Text="文件系统" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbCopyFilesystem" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Filesystem for the data disc">
+                                          ToolTip.Tip="数据光盘的文件系统">
                                     <ComboBoxItem Content="ISO 9660 + Joliet" IsSelected="True"/>
                                     <ComboBoxItem Content="ISO 9660"/>
                                     <ComboBoxItem Content="UDF 1.02"/>
@@ -592,7 +479,7 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="写入速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbCopySpeed" HorizontalAlignment="Stretch">
                                     <ComboBoxItem Content="Auto" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
@@ -607,15 +494,15 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBlock Text="卷标" Classes="FieldLabel"/>
                                 <TextBox x:Name="TxtCopyVolumeLabel" Watermark="MUSIC_DISC"
                                          MaxLength="32"/>
                             </StackPanel>
                         </Grid>
                         <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <CheckBox x:Name="ChkCopyEject" Content="Eject after burn"
+                            <CheckBox x:Name="ChkCopyEject" Content="刻录后弹出"
                                       IsChecked="True" Margin="0,0,16,6"/>
-                            <CheckBox x:Name="ChkCopyVerify" Content="Verify after burn"
+                            <CheckBox x:Name="ChkCopyVerify" Content="刻录后校验"
                                       Margin="0,0,16,6"/>
                         </WrapPanel>
                     </StackPanel>
@@ -626,51 +513,37 @@
             <!-- STEP 2C: Rip Audio CD                                        -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2RipPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="Rip Audio CD — Configure Ripping" Classes="SectionHeader"/>
+                <TextBlock Text="抓取音频 CD — 配置抓取" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-audio-16.png"/>
-                            <TextBlock Text="Source Drive" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="💿 源光驱" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,Auto">
                             <ComboBox x:Name="CmbRipDrive" HorizontalAlignment="Stretch"
                                       Grid.Column="0"
-                                      ToolTip.Tip="Select the drive containing the audio CD"/>
-                            <Button Classes="ActionBtn"
+                                      ToolTip.Tip="选择装有音频 CD 的光驱"/>
+                            <Button Content="🔄 刷新" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnRefreshRipDrivesClick"
-                                    ToolTip.Tip="Rescan for optical drives">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
-                                    <TextBlock Text="Refresh" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="重新扫描光驱"/>
                         </Grid>
                     </StackPanel>
                 </Border>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                            <TextBlock Text="Output Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🎵 输出设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Output Format" Classes="FieldLabel"/>
+                                <TextBlock Text="输出格式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbRipFormat" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Audio format for the ripped tracks">
+                                          ToolTip.Tip="抓取音轨的音频格式">
                                     <ComboBoxItem Content="WAV (Lossless, CD Quality)" IsSelected="True"/>
                                     <ComboBoxItem Content="BIN/CUE (Raw Audio Image)"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Read Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="读取速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbRipSpeed" HorizontalAlignment="Stretch">
                                     <ComboBoxItem Content="Max" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
@@ -689,47 +562,35 @@
                         </Grid>
 
                         <StackPanel Spacing="4">
-                            <TextBlock Text="Output Folder" Classes="FieldLabel"/>
+                            <TextBlock Text="输出文件夹" Classes="FieldLabel"/>
                             <Grid ColumnDefinitions="*,Auto">
                                 <TextBox x:Name="TxtRipOutputFolder"
-                                         Watermark="Folder to save ripped tracks..."
+                                         Watermark="保存抓取音轨的文件夹…"
                                          Grid.Column="0"/>
-                                <Button Classes="ActionBtn"
+                                <Button Content="📂 浏览" Classes="ActionBtn"
                                         Grid.Column="1" Margin="8,0,0,0"
-                                        Click="OnBrowseRipOutputClick">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                        <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                        Click="OnBrowseRipOutputClick"/>
                             </Grid>
                         </StackPanel>
                     </StackPanel>
                 </Border>
 
-                <Expander Classes="SettingsExpander" IsExpanded="False">
-                    <Expander.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Advanced Ripping Options" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Expander.Header>
+                <Expander Classes="SettingsExpander" Header="⚙️ 高级抓取选项"
+                          IsExpanded="False">
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <WrapPanel Orientation="Horizontal">
                             <CheckBox x:Name="ChkRipParanoia"
-                                      Content="Audio paranoia mode (jitter correction &amp; retries)"
+                                      Content="音频精确抓取模式（抖动校正与重试）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Use audio paranoia error correction for maximum accuracy"/>
+                                      ToolTip.Tip="使用音频精确级纠错以获得最高准确性"/>
                             <CheckBox x:Name="ChkRipJitter"
-                                      Content="Jitter correction"
+                                      Content="抖动校正"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Correct jitter errors during ripping"/>
+                                      ToolTip.Tip="抓取过程中校正抖动错误"/>
                         </WrapPanel>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
                             <StackPanel Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Error Recovery" Classes="FieldLabel"/>
+                                <TextBlock Text="错误恢复" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbRipErrorRecovery" HorizontalAlignment="Stretch">
                                     <ComboBoxItem Content="Yes (Skip &amp; Retry)" IsSelected="True"/>
                                     <ComboBoxItem Content="No (Ignore Errors)"/>
@@ -737,7 +598,7 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Spacing="4" Margin="0,0,0,0">
-                                <TextBlock Text="Retry Count" Classes="FieldLabel"/>
+                                <TextBlock Text="重试次数" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumRipRetries" Minimum="0" Maximum="20"
                                                Value="3" FormatString="0"/>
                             </StackPanel>
@@ -750,7 +611,7 @@
             <!-- STEP 3: Summary                                              -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step3Panel" IsVisible="False" Spacing="16">
-                <TextBlock Text="Summary — Review Before Executing" Classes="SectionHeader"/>
+                <TextBlock Text="摘要 — 执行前确认" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel x:Name="SummaryContent" Spacing="8">
@@ -763,13 +624,13 @@
             <!-- STEP 4: Progress                                             -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step4Panel" IsVisible="False" Spacing="16">
-                <TextBlock x:Name="TxtStep4Title" Text="Executing..." Classes="SectionHeader"/>
+                <TextBlock x:Name="TxtStep4Title" Text="正在执行…" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <ProgressBar x:Name="PrgExec" Classes="BurnProgress" Value="0"/>
                         <Grid ColumnDefinitions="*,Auto,Auto,Auto">
-                            <TextBlock x:Name="TxtExecStatus" Text="Preparing..."
+                            <TextBlock x:Name="TxtExecStatus" Text="正在准备…"
                                        Foreground="#8EAFC8" FontSize="12"
                                        VerticalAlignment="Center"/>
                             <TextBlock x:Name="TxtExecETA" Text=""
@@ -800,55 +661,27 @@
             <!-- ============================================================ -->
             <Border Classes="InfoCard" Margin="0,8,0,0">
                 <Grid ColumnDefinitions="Auto,*,Auto,Auto">
-                    <Button x:Name="BtnBack"
+                    <Button x:Name="BtnBack" Content="← 上一步"
                             Classes="ActionBtn" Click="OnBackClick"
                             IsVisible="False"
-                            ToolTip.Tip="Go back to the previous step">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBlock Text="←" VerticalAlignment="Center"/>
-                            <TextBlock Text="Back" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="BtnNext"
+                            ToolTip.Tip="返回上一步"/>
+                    <Button x:Name="BtnNext" Content="下一步 →"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnNextClick" IsVisible="False"
-                            ToolTip.Tip="Proceed to the next step">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBlock Text="Next" VerticalAlignment="Center"/>
-                            <TextBlock Text="→" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="BtnExecute"
+                            ToolTip.Tip="进入下一步"/>
+                    <Button x:Name="BtnExecute" Content="🔥 开始"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnExecuteClick" IsVisible="False"
-                            ToolTip.Tip="Start the operation">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-audio-16.png"/>
-                            <TextBlock Text="Start" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="BtnCancel"
+                            ToolTip.Tip="开始操作"/>
+                    <Button x:Name="BtnCancel" Content="⏹ 取消"
                             Classes="DangerBtn" Grid.Column="3"
                             Margin="8,0,0,0" Click="OnCancelClick"
                             IsVisible="False"
-                            ToolTip.Tip="Cancel the current operation">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                            <TextBlock Text="Cancel" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="BtnFinish"
+                            ToolTip.Tip="取消当前操作"/>
+                    <Button x:Name="BtnFinish" Content="✅ 完成 — 返回主页"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnFinishClick" IsVisible="False"
-                            ToolTip.Tip="Operation complete — return to the home screen">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
-                            <TextBlock Text="Done — Return Home" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                            ToolTip.Tip="操作完成 — 返回主界面"/>
                 </Grid>
             </Border>
 

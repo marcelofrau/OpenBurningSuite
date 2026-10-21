@@ -96,11 +96,11 @@ public static class ImgParser
         IProgress<int>? progress = null)
     {
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG image is not valid: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 镜像无效：{image.ErrorMessage}");
 
         var track = image.LargestDataTrack ?? image.Tracks.FirstOrDefault();
         if (track == null)
-            throw new InvalidOperationException("No tracks found in IMG image.");
+            throw new InvalidOperationException("IMG 镜像中未找到轨道。");
 
         using var input = new FileStream(imgFilePath, FileMode.Open, FileAccess.Read,
             FileShare.Read, 65536, false);
@@ -127,7 +127,7 @@ public static class ImgParser
         string outputBinPath, string outputCuePath, IProgress<int>? progress = null)
     {
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG image is not valid: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 镜像无效：{image.ErrorMessage}");
 
         using var input = new FileStream(imgFilePath, FileMode.Open, FileAccess.Read,
             FileShare.Read, 65536, false);
@@ -232,7 +232,7 @@ public static class ImgParser
         Stream outputStream, IProgress<int>? progress = null)
     {
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG image is not valid: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 镜像无效：{image.ErrorMessage}");
 
         using var input = new FileStream(imgFilePath, FileMode.Open, FileAccess.Read,
             FileShare.Read, 65536, false);

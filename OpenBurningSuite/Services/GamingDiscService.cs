@@ -1368,15 +1368,15 @@ public class GamingDiscService
     public static string? ApplyEsrPatch(string isoPath)
     {
         if (!File.Exists(isoPath))
-            return "ISO file not found.";
+            return "未找到 ISO 文件。";
 
         const int sectorSize = 2048;
 
         if (!HasUdfDescriptor(isoPath))
-            return "No UDF descriptor found. The ISO must be a PS2 DVD image with UDF filesystem.";
+            return "未找到 UDF 描述符。ISO 必须是带 UDF 文件系统的 PS2 DVD 镜像。";
 
         if (IsEsrPatched(isoPath))
-            return "Cannot apply ESR patch: ISO is already patched.";
+            return "无法应用 ESR 补丁：ISO 镜像已打过补丁。";
 
         try
         {
@@ -1386,21 +1386,21 @@ public class GamingDiscService
             var sector = new byte[sectorSize];
             stream.Seek(34L * sectorSize, SeekOrigin.Begin);
             if (stream.Read(sector, 0, sectorSize) != sectorSize)
-                return "Failed to read sector 34.";
+                return "无法读取扇区 34。";
             stream.Seek(14L * sectorSize, SeekOrigin.Begin);
             stream.Write(sector, 0, sectorSize);
 
             // Backup sector 50 into sector 15
             stream.Seek(50L * sectorSize, SeekOrigin.Begin);
             if (stream.Read(sector, 0, sectorSize) != sectorSize)
-                return "Failed to read sector 50.";
+                return "无法读取扇区 50。";
             stream.Seek(15L * sectorSize, SeekOrigin.Begin);
             stream.Write(sector, 0, sectorSize);
 
             // Modify sector 34: set ICB allocation descriptor to point to DVD_VIDEO at sector 128
             stream.Seek(34L * sectorSize, SeekOrigin.Begin);
             if (stream.Read(sector, 0, sectorSize) != sectorSize)
-                return "Failed to re-read sector 34.";
+                return "无法重新读取扇区 34。";
             sector[0xBC] = 0x80; // sector 128 (LE)
             sector[0xBD] = 0x00;
             RecalculateUdfTagChecksum(sector);
@@ -1410,7 +1410,7 @@ public class GamingDiscService
             // Modify sector 50: same modification
             stream.Seek(50L * sectorSize, SeekOrigin.Begin);
             if (stream.Read(sector, 0, sectorSize) != sectorSize)
-                return "Failed to re-read sector 50.";
+                return "无法重新读取扇区 50。";
             sector[0xBC] = 0x80;
             sector[0xBD] = 0x00;
             RecalculateUdfTagChecksum(sector);
@@ -1435,12 +1435,12 @@ public class GamingDiscService
     public static string? RemoveEsrPatch(string isoPath)
     {
         if (!File.Exists(isoPath))
-            return "ISO file not found.";
+            return "未找到 ISO 文件。";
 
         const int sectorSize = 2048;
 
         if (!IsEsrPatched(isoPath))
-            return "ISO is not ESR-patched.";
+            return "ISO 镜像未应用 ESR 补丁。";
 
         try
         {
@@ -1450,14 +1450,14 @@ public class GamingDiscService
             // Restore sector 14 backup into sector 34
             stream.Seek(14L * sectorSize, SeekOrigin.Begin);
             if (stream.Read(sector, 0, sectorSize) != sectorSize)
-                return "Failed to read backup sector 14.";
+                return "无法读取备份扇区 14。";
             stream.Seek(34L * sectorSize, SeekOrigin.Begin);
             stream.Write(sector, 0, sectorSize);
 
             // Restore sector 15 backup into sector 50
             stream.Seek(15L * sectorSize, SeekOrigin.Begin);
             if (stream.Read(sector, 0, sectorSize) != sectorSize)
-                return "Failed to read backup sector 15.";
+                return "无法读取备份扇区 15。";
             stream.Seek(50L * sectorSize, SeekOrigin.Begin);
             stream.Write(sector, 0, sectorSize);
 
@@ -1717,10 +1717,10 @@ public class GamingDiscService
     public static string? ApplyMasterDiscPatch(string imagePath, string region = "NTSC-U")
     {
         if (!File.Exists(imagePath))
-            return "Image file not found.";
+            return "未找到镜像文件。";
 
         if (IsMasterDiscPatched(imagePath))
-            return "Cannot apply Master Disc patch: image is already patched.";
+            return "无法应用 Master Disc 补丁：镜像已打过补丁。";
 
         try
         {
@@ -1785,10 +1785,10 @@ public class GamingDiscService
     public static string? RemoveMasterDiscPatch(string imagePath)
     {
         if (!File.Exists(imagePath))
-            return "Image file not found.";
+            return "未找到镜像文件。";
 
         if (!IsMasterDiscPatched(imagePath))
-            return "Image does not have Master Disc patch applied.";
+            return "镜像未应用 Master Disc 补丁。";
 
         try
         {
@@ -1858,13 +1858,13 @@ public class GamingDiscService
     public static string? ApplyPsx80MinutePatch(string binPath)
     {
         if (!File.Exists(binPath))
-            return "BIN file not found.";
+            return "未找到 BIN 文件。";
 
         try
         {
             var fi = new FileInfo(binPath);
             if (fi.Length % 2352 != 0)
-                return "File size is not aligned to 2352-byte sectors. Expected raw CD image.";
+                return "文件大小未按 2352 字节扇区对齐。需要原始 CD 镜像。";
 
             long sectorCount = fi.Length / 2352;
             if (sectorCount > PsxMaxSectorCount)
@@ -1908,7 +1908,7 @@ public class GamingDiscService
     public static (string? Error, int MatchCount) ApplyPsxUndither(string binPath)
     {
         if (!File.Exists(binPath))
-            return ("BIN file not found.", 0);
+            return ("未找到 BIN 文件。", 0);
 
         try
         {

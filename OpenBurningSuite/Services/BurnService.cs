@@ -56,7 +56,7 @@ public class BurnService
                 // BurnEngine natively handles ISO (2048-byte sectors) and BIN/CUE
                 // (raw 2352-byte sectors). All other formats must be converted first.
                 var ext = Path.GetExtension(job.ImagePath).ToUpperInvariant();
-                if (ext is ".MDS" or ".MDF" or ".CDI" or ".CCD" or ".NRG" or ".CHD")
+                if (ext is ".MDS" or ".MDF" or ".CDI" or ".CCD" or ".NRG")
                 {
                     (tempBinPath, tempCuePath) = await ConvertToBurnableFormatAsync(
                         job, ext, progress, cancellationToken);
@@ -209,7 +209,7 @@ public class BurnService
                         {
                             var missing = cueBinFiles.Where(f => !File.Exists(f)).Select(Path.GetFileName);
                             throw new FileNotFoundException(
-                                $"Multi-file CUE sheet references missing BIN files: {string.Join(", ", missing)}");
+                                $"多文件 CUE 索引文件引用了缺失的 BIN 文件：{string.Join("、", missing)}");
                         }
 
                         progress.Report(new BurnProgress
@@ -266,7 +266,7 @@ public class BurnService
                         else
                         {
                             throw new FileNotFoundException(
-                                $"Could not find companion BIN file(s) for CUE sheet: {cuePath}");
+                                $"未找到 CUE 索引文件对应的 BIN 文件：{cuePath}");
                         }
                     }
                 }
@@ -296,7 +296,7 @@ public class BurnService
                         {
                             var missing = cueBinFiles.Where(f => !File.Exists(f)).Select(Path.GetFileName);
                             throw new FileNotFoundException(
-                                $"TOC file references missing BIN files: {string.Join(", ", missing)}");
+                                $"TOC 文件引用了缺失的 BIN 文件：{string.Join("、", missing)}");
                         }
 
                         // Multi-file: concatenate all BIN files into a single temp file
@@ -334,7 +334,7 @@ public class BurnService
                         else
                         {
                             throw new FileNotFoundException(
-                                $"Could not find companion BIN file(s) for TOC file: {tocPath}");
+                                $"未找到 TOC 文件对应的 BIN 文件：{tocPath}");
                         }
                     }
                 }
@@ -354,7 +354,7 @@ public class BurnService
                     {
                         progress.Report(new BurnProgress
                         {
-                            StatusMessage = "⚠ Encrypted PS3 ISO detected",
+                            StatusMessage = "⚠ 检测到加密的 PS3 ISO 镜像",
                             LogLine = "[Warning] This PS3 ISO appears to be encrypted. " +
                                       "Encrypted PS3 discs will not work on consoles. " +
                                       "Please decrypt the ISO using an IRD file before burning."
@@ -384,7 +384,7 @@ public class BurnService
                     $"obs_patched_{Guid.NewGuid():N}{safeExt}");
                 progress.Report(new BurnProgress
                 {
-                    StatusMessage = "Preparing image for gaming patches...",
+                    StatusMessage = "正在准备镜像以应用游戏补丁…",
                     LogLine = "[Info] Copying image for patching (original file will not be modified)"
                 });
 
@@ -395,8 +395,8 @@ public class BurnService
                 catch (Exception ex) when (ex is not OperationCanceledException)
                 {
                     throw new IOException(
-                        $"Failed to copy image for patching: {ex.Message}. " +
-                        "Check that there is enough disk space and that the file is not locked.", ex);
+                        $"为应用补丁复制镜像失败：{ex.Message}。" +
+                        "请检查磁盘空间是否充足以及文件是否被锁定。", ex);
                 }
 
                 originalImagePath ??= job.ImagePath;
@@ -406,7 +406,7 @@ public class BurnService
                 {
                     progress.Report(new BurnProgress
                     {
-                        StatusMessage = "Applying ESR patch...",
+                        StatusMessage = "正在应用 ESR 补丁…",
                         LogLine = "[Info] Applying ESR patch (PS2 DVD-R MechaCon bypass)"
                     });
                     var esrError = await Task.Run(() => GamingDiscService.ApplyEsrPatch(tempPatchedImage), cancellationToken);
@@ -420,7 +420,7 @@ public class BurnService
                 {
                     progress.Report(new BurnProgress
                     {
-                        StatusMessage = "Applying Master Disc patch...",
+                        StatusMessage = "正在应用 Master Disc 补丁…",
                         LogLine = $"[Info] Applying Master Disc patch (region: {job.MasterDiscRegion})"
                     });
                     var mdError = await Task.Run(() => GamingDiscService.ApplyMasterDiscPatch(tempPatchedImage, job.MasterDiscRegion), cancellationToken);
@@ -434,7 +434,7 @@ public class BurnService
                 {
                     progress.Report(new BurnProgress
                     {
-                        StatusMessage = "Applying PSX 80 Minute patch...",
+                        StatusMessage = "正在应用 PSX 80 分钟补丁…",
                         LogLine = "[Info] Applying PSX 80 Minute patch (appending dummy sectors)"
                     });
                     var psx80Error = await Task.Run(() => GamingDiscService.ApplyPsx80MinutePatch(tempPatchedImage), cancellationToken);
@@ -448,7 +448,7 @@ public class BurnService
                 {
                     progress.Report(new BurnProgress
                     {
-                        StatusMessage = "Applying PSX Undither patch...",
+                        StatusMessage = "正在应用 PSX 去抖动补丁…",
                         LogLine = "[Info] Applying PSX Undither patch (removing GPU dithering)"
                     });
                     var (undError, matchCount) = await Task.Run(() => GamingDiscService.ApplyPsxUndither(tempPatchedImage), cancellationToken);
@@ -465,7 +465,7 @@ public class BurnService
                 if (copies > 1)
                     progress.Report(new BurnProgress
                     {
-                        StatusMessage = $"Burning copy {copy} of {copies}...",
+                        StatusMessage = $"正在刻录第 {copy}/{copies} 份…",
                         LogLine = $"--- Copy {copy}/{copies} ---"
                     });
 
@@ -489,7 +489,7 @@ public class BurnService
 
                     progress.Report(new BurnProgress
                     {
-                        StatusMessage = $"Copy {copy} complete. Please insert a new disc for copy {copy + 1}...",
+                        StatusMessage = $"第 {copy} 份已完成。请插入新光盘以刻录第 {copy + 1} 份…",
                         LogLine = $"[Info] Waiting for new disc (copy {copy + 1}/{copies})..."
                     });
 
@@ -498,7 +498,7 @@ public class BurnService
 
                     progress.Report(new BurnProgress
                     {
-                        StatusMessage = $"New disc detected. Starting copy {copy + 1}...",
+                        StatusMessage = $"检测到新光盘。正在开始刻录第 {copy + 1} 份…",
                         LogLine = $"[Info] New disc detected, proceeding with copy {copy + 1}."
                     });
                 }
@@ -564,11 +564,11 @@ public class BurnService
 
         if (!hasSourceFolder && !hasSourceFiles)
             throw new ArgumentException(
-                "On-the-fly mode requires a source folder or at least one source file/folder.");
+                "即时构建模式需要源文件夹或至少一个源文件/文件夹。");
 
         if (hasSourceFolder && !Directory.Exists(job.SourceFolder))
             throw new DirectoryNotFoundException(
-                $"Source folder not found: {job.SourceFolder}");
+                $"未找到源文件夹：{job.SourceFolder}");
 
         if (hasSourceFiles)
         {
@@ -576,13 +576,13 @@ public class BurnService
             {
                 if (!File.Exists(path) && !Directory.Exists(path))
                     throw new FileNotFoundException(
-                        $"Source path not found: {path}");
+                        $"未找到源路径：{path}");
             }
         }
 
         progress.Report(new BurnProgress
         {
-            StatusMessage = "Building disc image from files...",
+            StatusMessage = "正在从文件构建光盘镜像…",
             LogLine = "[Info] On-the-fly mode — building temporary ISO image from source files/folders"
         });
 
@@ -672,13 +672,13 @@ public class BurnService
 
             if (!File.Exists(tempIsoPath))
                 throw new InvalidOperationException(
-                    "Failed to build temporary ISO image — output file was not created.");
+                    "构建临时 ISO 镜像失败 — 未创建输出文件。");
 
             var isoSize = new FileInfo(tempIsoPath).Length;
             progress.Report(new BurnProgress
             {
                 PercentComplete = BuildPhaseMaxPercent,
-                StatusMessage = "Image built — starting burn...",
+                StatusMessage = "镜像已构建 — 正在开始刻录…",
                 LogLine = $"[Info] Temporary ISO built: {FormatHelper.FormatBytes(isoSize)} → {tempIsoPath}"
             });
 
@@ -854,9 +854,6 @@ public class BurnService
             case ".IMG":
                 return await PrepareImgForBurnAsync(job, tempCue, progress, ct);
 
-            case ".CHD":
-                return await ConvertChdForBurnAsync(job.ImagePath, tempBin, tempCue, progress, ct);
-
             default:
                 return (null, null);
         }
@@ -895,15 +892,15 @@ public class BurnService
 
         if (!File.Exists(mdsPath))
             throw new FileNotFoundException(
-                $"MDS descriptor file not found: {mdsPath}. Both .mds and .mdf files are required.");
+                $"未找到 MDS 描述符文件：{mdsPath}。需要同时提供 .mds 和 .mdf 文件。");
         if (!File.Exists(mdfPath))
             throw new FileNotFoundException(
-                $"MDF data file not found: {mdfPath}. Both .mds and .mdf files are required.");
+                $"未找到 MDF 数据文件：{mdfPath}。需要同时提供 .mds 和 .mdf 文件。");
 
         var image = await MdfParser.ParseAsync(mdsPath, ct);
         if (!image.IsValid)
             throw new InvalidOperationException(
-                $"Failed to parse MDS file: {image.ErrorMessage}");
+                $"解析 MDS 文件失败：{image.ErrorMessage}");
 
         progress.Report(new BurnProgress
         {
@@ -948,7 +945,7 @@ public class BurnService
 
             progress.Report(new BurnProgress
             {
-                StatusMessage = "MDF/MDS ready for direct burning",
+                StatusMessage = "MDF/MDS 已就绪，可直接刻录",
                 LogLine = $"[Info] MDF/MDS direct burn — using {Path.GetFileName(mdfPath)} directly " +
                           $"(offset: {startOffset}, no data copy needed)"
             });
@@ -960,7 +957,7 @@ public class BurnService
             // Fallback: full conversion needed due to mixed sector sizes or non-contiguous layout
             progress.Report(new BurnProgress
             {
-                StatusMessage = "Converting MDF/MDS image for burning...",
+                StatusMessage = "正在转换 MDF/MDS 镜像以供刻录…",
                 LogLine = "[Info] MDF/MDS layout requires conversion — extracting to BIN/CUE"
             });
 
@@ -972,7 +969,7 @@ public class BurnService
                 new Progress<int>(pct => progress.Report(new BurnProgress
                 {
                     PercentComplete = pct / 10,
-                    StatusMessage = $"Converting MDF/MDS: {pct}%..."
+                    StatusMessage = $"正在转换 MDF/MDS：{pct}%…"
                 })), ct);
 
             progress.Report(new BurnProgress
@@ -1000,12 +997,12 @@ public class BurnService
         var cdiPath = job.ImagePath;
 
         if (!File.Exists(cdiPath))
-            throw new FileNotFoundException($"CDI file not found: {cdiPath}");
+            throw new FileNotFoundException($"未找到 CDI 文件：{cdiPath}");
 
         var image = await CdiParser.ParseAsync(cdiPath, ct);
         if (!image.IsValid)
             throw new InvalidOperationException(
-                $"Failed to parse CDI file: {image.ErrorMessage}");
+                $"解析 CDI 文件失败：{image.ErrorMessage}");
 
         progress.Report(new BurnProgress
         {
@@ -1041,7 +1038,7 @@ public class BurnService
 
             progress.Report(new BurnProgress
             {
-                StatusMessage = "CDI ready for direct burning",
+                StatusMessage = "CDI 已就绪，可直接刻录",
                 LogLine = $"[Info] CDI direct burn — using {Path.GetFileName(cdiPath)} directly " +
                           $"(offset: {firstTrackOffset}, no data copy needed)"
             });
@@ -1053,7 +1050,7 @@ public class BurnService
             // Fallback: full conversion needed due to non-contiguous tracks
             progress.Report(new BurnProgress
             {
-                StatusMessage = "Converting CDI image for burning...",
+                StatusMessage = "正在转换 CDI 镜像以供刻录…",
                 LogLine = "[Info] CDI layout requires conversion — extracting to BIN/CUE"
             });
 
@@ -1061,7 +1058,7 @@ public class BurnService
                 new Progress<int>(pct => progress.Report(new BurnProgress
                 {
                     PercentComplete = pct / 10,
-                    StatusMessage = $"Converting CDI: {pct}%..."
+                    StatusMessage = $"正在转换 CDI：{pct}%…"
                 })), ct);
 
             progress.Report(new BurnProgress
@@ -1105,15 +1102,15 @@ public class BurnService
 
         if (!File.Exists(ccdPath))
             throw new FileNotFoundException(
-                $"CCD descriptor file not found: {ccdPath}. Both .ccd and .img files are required.");
+                $"未找到 CCD 描述符文件：{ccdPath}。需要同时提供 .ccd 和 .img 文件。");
         if (!File.Exists(imgPath))
             throw new FileNotFoundException(
-                $"IMG data file not found: {imgPath}. Both .ccd and .img files are required.");
+                $"未找到 IMG 数据文件：{imgPath}。需要同时提供 .ccd 和 .img 文件。");
 
         var image = await CcdParser.ParseAsync(ccdPath, ct);
         if (!image.IsValid)
             throw new InvalidOperationException(
-                $"Failed to parse CCD file: {image.ErrorMessage}");
+                $"解析 CCD 文件失败：{image.ErrorMessage}");
 
         progress.Report(new BurnProgress
         {
@@ -1128,7 +1125,7 @@ public class BurnService
 
         progress.Report(new BurnProgress
         {
-            StatusMessage = "CCD/IMG ready for direct burning",
+            StatusMessage = "CCD/IMG 已就绪，可直接刻录",
             LogLine = $"[Info] CCD/IMG direct burn — using {Path.GetFileName(imgPath)} directly " +
                       $"({FormatHelper.FormatBytes(new FileInfo(imgPath).Length)}, no data copy needed)"
         });
@@ -1151,17 +1148,17 @@ public class BurnService
     {
         progress.Report(new BurnProgress
         {
-            StatusMessage = "Converting NRG image for burning...",
+            StatusMessage = "正在转换 NRG 镜像以供刻录…",
             LogLine = "[Info] NRG format detected — converting to BIN/CUE for native burning"
         });
 
         if (!File.Exists(nrgPath))
-            throw new FileNotFoundException($"NRG file not found: {nrgPath}");
+            throw new FileNotFoundException($"未找到 NRG 文件：{nrgPath}");
 
         var image = await NrgParser.ParseAsync(nrgPath, ct);
         if (!image.IsValid)
             throw new InvalidOperationException(
-                $"Failed to parse NRG file: {image.ErrorMessage}");
+                $"解析 NRG 文件失败：{image.ErrorMessage}");
 
         progress.Report(new BurnProgress
         {
@@ -1173,7 +1170,7 @@ public class BurnService
             new Progress<int>(pct => progress.Report(new BurnProgress
             {
                 PercentComplete = pct / 10,
-                StatusMessage = $"Converting NRG: {pct}%..."
+                StatusMessage = $"正在转换 NRG：{pct}%…"
             })), ct);
 
         progress.Report(new BurnProgress
@@ -1182,122 +1179,6 @@ public class BurnService
         });
 
         return (tempBin, tempCue);
-    }
-
-    /// <summary>
-    /// Extracts a MAME CHD image to BIN/CUE using chdman.
-    /// </summary>
-    private static async Task<(string? BinPath, string? CuePath)> ConvertChdForBurnAsync(
-        string chdPath,
-        string tempBin,
-        string tempCue,
-        IProgress<BurnProgress> progress,
-        CancellationToken ct)
-    {
-        if (!File.Exists(chdPath))
-            throw new FileNotFoundException($"CHD file not found: {chdPath}");
-
-        if (!ChdHelper.IsAvailable())
-            throw new InvalidOperationException(
-                "chdman is not installed or not found in PATH. Please install MAME tools (chdman).");
-
-        var chdVer = ChdHelper.GetVersionString();
-        var chdVersion = ChdHelper.GetVersion();
-        var chdVerMsg = chdVer != null ? chdVer : "(unknown version)";
-
-        // Detect disc type first so we can report it in the status message
-        var discType = await ChdHelper.GetDiscTypeAsync(chdPath, ct);
-        var discTypeName = discType switch
-        {
-            ChdDiscType.Cd => "CD",
-            ChdDiscType.Dvd => "DVD",
-            ChdDiscType.Hdd => "HDD",
-            ChdDiscType.Laserdisc => "Laserdisc",
-            ChdDiscType.Raw => "raw data",
-            _ => "unknown"
-        };
-
-        var (outputCmd, outputExt) = discType switch
-        {
-            ChdDiscType.Cd => ("extractcd", ".bin"),
-            ChdDiscType.Dvd => ("extractdvd", ".iso"),
-            _ => throw new NotSupportedException(
-                $"CHD disc type '{discType}' is not supported for burning (only CD and DVD are supported).")
-        };
-
-        if (discType == ChdDiscType.Unknown)
-            throw new InvalidOperationException(
-                $"Could not determine the disc type of CHD file: {chdPath}");
-
-        progress.Report(new BurnProgress
-        {
-            StatusMessage = "Converting CHD image for burning...",
-            LogLine = $"[Info] CHD format detected ({discTypeName}) — extracting via chdman v{chdVerMsg} (minimum tested: v{ChdHelper.MinimumVersion})"
-        });
-
-        if (chdVersion != null && chdVersion < ChdHelper.MinimumVersion)
-        {
-            progress.Report(new BurnProgress
-            {
-                LogLine = $"[Warning] chdman v{chdVerMsg} is older than minimum tested v{ChdHelper.MinimumVersion}. " +
-                    "Update MAME tools if issues occur."
-            });
-        }
-
-        // Wrap progress to report CHD extraction progress via BurnProgress
-        var chdProgress = new Progress<int>(pct =>
-        {
-            progress.Report(new BurnProgress
-            {
-                PercentComplete = pct,
-                StatusMessage = $"Extracting CHD... {pct}%"
-            });
-        });
-
-        try
-        {
-            if (discType == ChdDiscType.Cd)
-            {
-                await ChdHelper.ExtractAsync(chdPath, tempBin, tempCue,
-                    ChdDiscType.Cd, chdProgress, ct);
-            }
-            else
-            {
-                await ChdHelper.ExtractAsync(chdPath, tempBin, null,
-                    ChdDiscType.Dvd, chdProgress, ct);
-            }
-        }
-        catch (OperationCanceledException)
-        {
-            throw;
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"chdman {outputCmd} failed: {ex.Message}", ex);
-        }
-
-        if (discType == ChdDiscType.Cd)
-        {
-            if (!File.Exists(tempBin) || !File.Exists(tempCue))
-                throw new InvalidOperationException("chdman did not produce expected BIN/CUE output.");
-
-            progress.Report(new BurnProgress
-            {
-                LogLine = $"[Info] CHD extracted to BIN/CUE: {FormatHelper.FormatBytes(new FileInfo(tempBin).Length)}"
-            });
-        }
-        else
-        {
-            if (!File.Exists(tempBin))
-                throw new InvalidOperationException($"chdman did not produce expected ISO output at: {tempBin}");
-
-            progress.Report(new BurnProgress
-            {
-                LogLine = $"[Info] CHD extracted to ISO: {FormatHelper.FormatBytes(new FileInfo(tempBin).Length)}"
-            });
-        }
-
-        return (tempBin, discType == ChdDiscType.Cd ? tempCue : null);
     }
 
     /// <summary>
@@ -1314,12 +1195,12 @@ public class BurnService
         var imgPath = job.ImagePath;
 
         if (!File.Exists(imgPath))
-            throw new FileNotFoundException($"IMG file not found: {imgPath}");
+            throw new FileNotFoundException($"未找到 IMG 文件：{imgPath}");
 
         var image = await ImgParser.ParseAsync(imgPath, ct);
         if (!image.IsValid)
             throw new InvalidOperationException(
-                $"Failed to parse IMG file: {image.ErrorMessage}");
+                $"解析 IMG 文件失败：{image.ErrorMessage}");
 
         progress.Report(new BurnProgress
         {
@@ -1346,7 +1227,7 @@ public class BurnService
 
             progress.Report(new BurnProgress
             {
-                StatusMessage = "IMG ready for direct burning",
+                StatusMessage = "IMG 已就绪，可直接刻录",
                 LogLine = $"[Info] IMG direct burn — using {Path.GetFileName(imgPath)} directly " +
                           $"({FormatHelper.FormatBytes(new FileInfo(imgPath).Length)}, no data copy needed)"
             });
@@ -1357,7 +1238,7 @@ public class BurnService
         // Fallback: convert to BIN/CUE for other sector formats
         progress.Report(new BurnProgress
         {
-            StatusMessage = "Converting IMG image for burning...",
+            StatusMessage = "正在转换 IMG 镜像以供刻录…",
             LogLine = "[Info] IMG format requires conversion — extracting to BIN/CUE"
         });
 
@@ -1369,7 +1250,7 @@ public class BurnService
             new Progress<int>(pct => progress.Report(new BurnProgress
             {
                 PercentComplete = pct / 10,
-                StatusMessage = $"Converting IMG: {pct}%..."
+                StatusMessage = $"正在转换 IMG：{pct}%…"
             })), ct);
 
         progress.Report(new BurnProgress
@@ -1428,14 +1309,14 @@ public class BurnService
             if (elapsed.TotalMinutes >= maxWaitMinutes)
             {
                 throw new TimeoutException(
-                    $"Timed out after {maxWaitMinutes} minutes waiting for writable media in {devicePath}.");
+                    $"等待 {devicePath} 中出现可写介质超时（{maxWaitMinutes} 分钟）。");
             }
             if ((DateTime.UtcNow - lastReportTime).TotalSeconds >= 5)
             {
                 lastReportTime = DateTime.UtcNow;
                 progress.Report(new BurnProgress
                 {
-                    StatusMessage = $"Insert new disc... ({elapsed.TotalSeconds:F0}s)",
+                    StatusMessage = $"请插入新光盘…（{elapsed.TotalSeconds:F0} 秒）",
                     LogLine = "[Info] Still waiting for disc..."
                 });
             }
@@ -1477,7 +1358,7 @@ public class BurnService
     public static void EjectDisc(string devicePath)
     {
         if (!Native.Platform.NativeEject.EjectDisc(devicePath))
-            throw new InvalidOperationException($"Failed to eject disc in {devicePath}.");
+            throw new InvalidOperationException($"无法在 {devicePath} 中弹出光盘。");
     }
 
     /// <summary>
@@ -1488,7 +1369,7 @@ public class BurnService
     public static void LoadTray(string devicePath)
     {
         if (!Native.Platform.NativeEject.LoadTray(devicePath))
-            throw new InvalidOperationException($"Failed to load tray in {devicePath}.");
+            throw new InvalidOperationException($"无法在 {devicePath} 中载入托盘。");
     }
 
     /// <summary>
@@ -1536,7 +1417,7 @@ public class BurnService
     {
         var image = NrgParser.Parse(nrgFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         NrgParser.ExtractToIso(nrgFilePath, image, outputIsoPath, progress);
     }
@@ -1549,7 +1430,7 @@ public class BurnService
     {
         var image = await NrgParser.ParseAsync(nrgFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         await NrgParser.ExtractToIsoAsync(nrgFilePath, image, outputIsoPath, progress, ct)
             .ConfigureAwait(false);
@@ -1563,7 +1444,7 @@ public class BurnService
     {
         var image = NrgParser.Parse(nrgFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         NrgParser.ConvertToBinCue(nrgFilePath, image, outputBinPath, outputCuePath, progress);
     }
@@ -1576,7 +1457,7 @@ public class BurnService
     {
         var image = await NrgParser.ParseAsync(nrgFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"NRG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"NRG 解析错误：{image.ErrorMessage}");
 
         await NrgParser.ConvertToBinCueAsync(nrgFilePath, image, outputBinPath, outputCuePath,
             progress, ct).ConfigureAwait(false);
@@ -1636,7 +1517,7 @@ public class BurnService
     {
         var image = ImgParser.Parse(imgFilePath);
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 解析错误：{image.ErrorMessage}");
 
         ImgParser.ExtractToIso(imgFilePath, image, outputIsoPath, progress);
     }
@@ -1649,7 +1530,7 @@ public class BurnService
     {
         var image = await ImgParser.ParseAsync(imgFilePath, ct).ConfigureAwait(false);
         if (!image.IsValid)
-            throw new InvalidOperationException($"IMG parse error: {image.ErrorMessage}");
+            throw new InvalidOperationException($"IMG 解析错误：{image.ErrorMessage}");
 
         await ImgParser.ExtractToIsoAsync(imgFilePath, image, outputIsoPath, progress, ct)
             .ConfigureAwait(false);

@@ -147,7 +147,7 @@ public static class CdiParser
         using var fs = new FileStream(cdiFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         if (track.FileOffset + track.TotalLength > fs.Length)
             throw new IOException(
-                $"Track data extends beyond file (offset {track.FileOffset}, length {track.TotalLength}, file size {fs.Length}).");
+                $"轨道数据超出文件范围（偏移 {track.FileOffset}，长度 {track.TotalLength}，文件大小 {fs.Length}）。");
 
         fs.Seek(track.FileOffset, SeekOrigin.Begin);
         CopyBytes(fs, outputStream, track.TotalLength);
@@ -168,7 +168,7 @@ public static class CdiParser
 
         using var fs = new FileStream(cdiFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         if (track.FileOffset + track.TotalLength > fs.Length)
-            throw new IOException("Track data extends beyond file bounds.");
+            throw new IOException("轨道数据超出文件范围。");
 
         fs.Seek(track.FileOffset, SeekOrigin.Begin);
 
@@ -211,7 +211,7 @@ public static class CdiParser
         using var fs = new FileStream(cdiFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         if (track.FileOffset + track.TotalLength > fs.Length)
             throw new IOException(
-                $"Track data extends beyond file (offset {track.FileOffset}, length {track.TotalLength}, file size {fs.Length}).");
+                $"轨道数据超出文件范围（偏移 {track.FileOffset}，长度 {track.TotalLength}，文件大小 {fs.Length}）。");
 
         fs.Seek(track.FileOffset, SeekOrigin.Begin);
         CopyBytesWithProgress(fs, outputStream, track.TotalLength, progress);
@@ -232,7 +232,7 @@ public static class CdiParser
 
         using var fs = new FileStream(cdiFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         if (track.FileOffset + track.TotalLength > fs.Length)
-            throw new IOException("Track data extends beyond file bounds.");
+            throw new IOException("轨道数据超出文件范围。");
 
         fs.Seek(track.FileOffset, SeekOrigin.Begin);
 
@@ -279,13 +279,13 @@ public static class CdiParser
         var dataTrack = image.DataTracks
             .OrderByDescending(t => t.TotalLength)
             .FirstOrDefault()
-            ?? throw new InvalidOperationException("CDI image contains no data tracks.");
+            ?? throw new InvalidOperationException("CDI 镜像不包含数据轨道。");
 
         using var inStream = new FileStream(cdiFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         using var outStream = new FileStream(outputIsoPath, FileMode.Create, FileAccess.Write);
 
         if (dataTrack.FileOffset + dataTrack.TotalLength > inStream.Length)
-            throw new IOException("Data track extends beyond file bounds.");
+            throw new IOException("数据轨道超出文件范围。");
 
         inStream.Seek(dataTrack.FileOffset, SeekOrigin.Begin);
 
@@ -478,7 +478,7 @@ public static class CdiParser
 
         var dataTracks = image.DataTracks.ToList();
         if (dataTracks.Count == 0)
-            throw new InvalidOperationException("CDI image contains no data tracks.");
+            throw new InvalidOperationException("CDI 镜像不包含数据轨道。");
 
         long totalBytes = dataTracks.Sum(t => (long)t.SectorCount * t.UserDataSize);
         long bytesWritten = 0;
@@ -488,7 +488,7 @@ public static class CdiParser
         foreach (var track in dataTracks)
         {
             if (track.FileOffset + track.TotalLength > fs.Length)
-                throw new IOException($"Track {track.TrackNumber} data extends beyond file bounds.");
+                throw new IOException($"轨道 {track.TrackNumber} 的数据超出文件范围。");
 
             fs.Seek(track.FileOffset, SeekOrigin.Begin);
 
@@ -548,7 +548,7 @@ public static class CdiParser
 
         var session = image.Sessions.FirstOrDefault(s => s.SessionNumber == sessionNumber)
             ?? throw new ArgumentException(
-                $"Session {sessionNumber} not found in CDI image.", nameof(sessionNumber));
+                $"CDI 镜像中未找到区段 {sessionNumber}。", nameof(sessionNumber));
 
         using var inStream = new FileStream(cdiFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         using var binStream = new FileStream(outputBinPath, FileMode.Create, FileAccess.Write);

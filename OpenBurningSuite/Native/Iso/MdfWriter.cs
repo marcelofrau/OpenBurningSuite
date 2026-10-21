@@ -76,7 +76,7 @@ public static class MdfWriter
         ArgumentNullException.ThrowIfNull(tracks);
 
         if (tracks.Count == 0)
-            throw new ArgumentException("At least one track is required.", nameof(tracks));
+            throw new ArgumentException("至少需要一条轨道。", nameof(tracks));
 
         // Write MDF file — copy all sector data from the input stream
         long mdfSize;

@@ -7,50 +7,20 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="Blank / Erase Disc Wizard"
+                <TextBlock Text="🧹  擦除光盘向导"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
-                <TextBlock Text="Erase rewritable discs or format blank BD-R/DVD+RW media — guided step by step."
+                <TextBlock Text="擦除可重写光盘或格式化空白 BD-R/DVD+RW 光盘 — 分步引导。"
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
             </StackPanel>
 
             <!-- Step indicators -->
             <Border Classes="Card">
                 <StackPanel Orientation="Horizontal" Spacing="16" HorizontalAlignment="Center">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <Border x:Name="BlankStepInd1" Background="#1E90FF" CornerRadius="12"
-                                Width="24" Height="24" Padding="0">
-                            <TextBlock Text="1" Foreground="White" FontSize="12"
-                                       FontWeight="Bold" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                        <TextBlock x:Name="BlankStepLbl1" Text="Select Drive"
-                                   Foreground="#E8F0FE" FontSize="12"
-                                   VerticalAlignment="Center" FontWeight="SemiBold"/>
-                    </StackPanel>
-                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <Border x:Name="BlankStepInd2" Background="#1E3450" CornerRadius="12"
-                                Width="24" Height="24" Padding="0">
-                            <TextBlock Text="2" Foreground="#5A7A9A" FontSize="12"
-                                       FontWeight="Bold" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                        <TextBlock x:Name="BlankStepLbl2" Text="Options"
-                                   Foreground="#5A7A9A" FontSize="12"
-                                   VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <TextBlock Text="→" Foreground="#5A7A9A" VerticalAlignment="Center"/>
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <Border x:Name="BlankStepInd3" Background="#1E3450" CornerRadius="12"
-                                Width="24" Height="24" Padding="0">
-                            <TextBlock Text="3" Foreground="#5A7A9A" FontSize="12"
-                                       FontWeight="Bold" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                        <TextBlock x:Name="BlankStepLbl3" Text="Erase"
-                                   Foreground="#5A7A9A" FontSize="12"
-                                   VerticalAlignment="Center"/>
-                    </StackPanel>
+                    <TextBlock x:Name="TxtBlankStep1Ind" Text="① 选择光驱" Foreground="#5BC0FF" FontWeight="Bold"/>
+                    <TextBlock Text="→" Foreground="#5A7A9A"/>
+                    <TextBlock x:Name="TxtBlankStep2Ind" Text="② 选项" Foreground="#5A7A9A"/>
+                    <TextBlock Text="→" Foreground="#5A7A9A"/>
+                    <TextBlock x:Name="TxtBlankStep3Ind" Text="③ 擦除" Foreground="#5A7A9A"/>
                 </StackPanel>
             </Border>
 
@@ -58,29 +28,24 @@
             <!-- Step 1: Drive Selection                                      -->
             <!-- ============================================================ -->
             <StackPanel x:Name="PnlBlankStep1" Spacing="12">
-                <TextBlock Text="Select Drive" Classes="SectionHeader"/>
+                <TextBlock Text="选择光驱" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="Choose the optical drive containing the rewritable disc:"
+                        <TextBlock Text="选择装有可重写光盘的光驱："
                                    Foreground="#8EAFC8" TextWrapping="Wrap"/>
                         <Grid ColumnDefinitions="*,Auto">
-                            <ComboBox x:Name="CmbBlankDrive" PlaceholderText="Select drive..."
+                            <ComboBox x:Name="CmbBlankDrive" PlaceholderText="选择光驱…"
                                       SelectionChanged="OnBlankDriveSelChanged"
-                                      ToolTip.Tip="Select the drive with the disc to erase"/>
-                            <Button x:Name="BtnBlankRefresh" Grid.Column="1"
-                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnBlankRefreshClick">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-16.png"/>
-                                    <TextBlock Text="Refresh" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                      ToolTip.Tip="选择装有待擦除光盘的光驱"/>
+                            <Button x:Name="BtnBlankRefresh" Grid.Column="1" Content="🔄 刷新"
+                                    Classes="ActionBtn" Margin="8,0,0,0" Click="OnBlankRefreshClick"/>
                         </Grid>
 
                         <!-- Drive & media info -->
                         <Border Classes="InfoCard" Padding="12">
                             <StackPanel Spacing="4">
-                                <TextBlock x:Name="TxtBlankDriveInfo" Text="No drive selected"
+                                <TextBlock x:Name="TxtBlankDriveInfo" Text="未选择光驱"
                                            Foreground="#8EAFC8" TextWrapping="Wrap"/>
                                 <TextBlock x:Name="TxtBlankMediaInfo" Text=""
                                            Foreground="#5A7A9A" TextWrapping="Wrap"/>
@@ -98,31 +63,31 @@
             <!-- Step 2: Erase Options                                        -->
             <!-- ============================================================ -->
             <StackPanel x:Name="PnlBlankStep2" Spacing="12" IsVisible="False">
-                <TextBlock Text="Erase Options" Classes="SectionHeader"/>
+                <TextBlock Text="擦除选项" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <TextBlock Text="Select how you want to erase the disc:"
+                        <TextBlock Text="选择擦除光盘的方式："
                                    Foreground="#8EAFC8" TextWrapping="Wrap"/>
 
-                        <RadioButton x:Name="RdoQuickBlank" Content="Quick Erase (fast — erases TOC/PMA only)"
+                        <RadioButton x:Name="RdoQuickBlank" Content="快速擦除（快 — 仅擦除 TOC/PMA）"
                                      IsChecked="True" Foreground="#E8F0FE" GroupName="BlankMode"
-                                     ToolTip.Tip="Erases the table of contents only — much faster but data remains on disc"/>
-                        <RadioButton x:Name="RdoFullBlank" Content="Full Erase (slow — erases entire disc surface)"
+                                     ToolTip.Tip="仅擦除目录区 — 快得多，但数据仍留在光盘上"/>
+                        <RadioButton x:Name="RdoFullBlank" Content="完全擦除（慢 — 擦除整张光盘表面）"
                                      Foreground="#E8F0FE" GroupName="BlankMode"
-                                     ToolTip.Tip="Writes zeros to the entire disc — very slow but completely wipes all data"/>
+                                     ToolTip.Tip="向整张光盘写入零 — 非常慢但会彻底清除所有数据"/>
 
                         <Border Classes="InfoCard" Padding="12" Margin="0,8,0,0">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="ℹ Quick vs Full Erase" Foreground="#5BC0FF" FontWeight="Bold" FontSize="12"/>
-                                <TextBlock Text="Quick erase takes seconds and makes the disc writable again, but old data remains on disc (not readable without special tools). Full erase overwrites all sectors with zeros — this can take 15-60+ minutes depending on disc type and speed."
+                                <TextBlock Text="ℹ 快速擦除与完全擦除" Foreground="#5BC0FF" FontWeight="Bold" FontSize="12"/>
+                                <TextBlock Text="快速擦除只需几秒即可让光盘重新可写，但旧数据仍留在光盘上（不使用特殊工具无法读取）。完全擦除会用零覆写所有扇区 — 根据光盘类型和速度，可能需要 15-60 分钟以上。"
                                            Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
                             </StackPanel>
                         </Border>
 
-                        <TextBlock Text="Compatible media types: CD-RW, DVD-RW, DVD+RW, DVD-RAM, BD-RE, HD DVD-RW"
+                        <TextBlock Text="兼容介质类型：CD-RW、DVD-RW、DVD+RW、DVD-RAM、BD-RE、HD DVD-RW"
                                    Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap" Margin="0,4,0,0"/>
-                        <TextBlock Text="BD-R and DVD+R/DVD-R are write-once media and can be formatted but not erased."
+                        <TextBlock Text="BD-R 和 DVD+R/DVD-R 是一次性写入介质，可以格式化但不能擦除。"
                                    Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
                     </StackPanel>
                 </Border>
@@ -132,14 +97,14 @@
             <!-- Step 3: Execute                                              -->
             <!-- ============================================================ -->
             <StackPanel x:Name="PnlBlankStep3" Spacing="12" IsVisible="False">
-                <TextBlock Text="Erasing Disc..." Classes="SectionHeader"/>
+                <TextBlock Text="正在擦除光盘…" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <ProgressBar x:Name="PrgBlankExec" Classes="BurnProgress" Value="0"
                                      IsIndeterminate="True"/>
                         <Grid ColumnDefinitions="*,Auto,Auto">
-                            <TextBlock x:Name="TxtBlankExecStatus" Text="Erasing..."
+                            <TextBlock x:Name="TxtBlankExecStatus" Text="正在擦除…"
                                        Foreground="#8EAFC8" FontSize="12"
                                        VerticalAlignment="Center"/>
                             <TextBlock x:Name="TxtBlankExecETA" Text=""
@@ -161,18 +126,18 @@
             <!-- ============================================================ -->
             <Border Classes="InfoCard" Margin="0,8,0,0">
                 <Grid ColumnDefinitions="Auto,*,Auto,Auto">
-                    <Button x:Name="BtnBlankBack" Content="← Back"
+                    <Button x:Name="BtnBlankBack" Content="← 上一步"
                             Classes="ActionBtn" Click="OnBlankBackClick"
                             IsVisible="False"
-                            ToolTip.Tip="Go back to the previous step"/>
+                            ToolTip.Tip="返回上一步"/>
                     <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
-                        <Button x:Name="BtnBlankCancel" Content="Cancel"
+                        <Button x:Name="BtnBlankCancel" Content="取消"
                                 Classes="ActionBtn" Click="OnBlankCancelClick"
                                 IsVisible="False"
-                                ToolTip.Tip="Cancel the erase operation"/>
-                        <Button x:Name="BtnBlankNext" Content="Next →"
+                                ToolTip.Tip="取消擦除操作"/>
+                        <Button x:Name="BtnBlankNext" Content="下一步 →"
                                 Classes="ActionBtn" Click="OnBlankNextClick"
-                                ToolTip.Tip="Proceed to the next step"/>
+                                ToolTip.Tip="进入下一步"/>
                     </StackPanel>
                 </Grid>
             </Border>

@@ -70,14 +70,14 @@ public static class CdiWriter
         ArgumentNullException.ThrowIfNull(toc);
 
         if (!File.Exists(binFilePath))
-            throw new FileNotFoundException("BIN file not found.", binFilePath);
+            throw new FileNotFoundException("未找到 BIN 文件。", binFilePath);
 
         var trackEntries = toc.Entries.Where(e => e.TrackNumber != 0xAA).OrderBy(e => e.TrackNumber).ToList();
         var leadOut = toc.Entries.FirstOrDefault(e => e.TrackNumber == 0xAA);
         uint totalSectors = leadOut?.StartLba ?? 0;
 
         if (trackEntries.Count == 0)
-            throw new InvalidOperationException("No tracks found in TOC.");
+            throw new InvalidOperationException("TOC 中未找到轨道。");
 
         using var binStream = new FileStream(binFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
         using var cdiStream = new FileStream(cdiOutputPath, FileMode.Create, FileAccess.Write, FileShare.None, BufferSize);
@@ -159,7 +159,7 @@ public static class CdiWriter
         IProgress<int>? progress = null)
     {
         if (!File.Exists(isoFilePath))
-            throw new FileNotFoundException("ISO file not found.", isoFilePath);
+            throw new FileNotFoundException("未找到 ISO 文件。", isoFilePath);
 
         var isoSize = new FileInfo(isoFilePath).Length;
         uint sectorCount = (uint)(isoSize / CookedSectorSize);

@@ -35,12 +35,12 @@ public static class NrgWriter
         int sectorSize = 2048, bool isAudio = false)
     {
         if (!File.Exists(isoPath))
-            throw new FileNotFoundException($"Source ISO file not found: {isoPath}");
+            throw new FileNotFoundException($"未找到源 ISO 文件：{isoPath}");
 
         long isoSize = new FileInfo(isoPath).Length;
         long sectorCount = isoSize / sectorSize;
         if (sectorCount <= 0)
-            throw new InvalidOperationException("Source file is empty or smaller than one sector.");
+            throw new InvalidOperationException("源文件为空或小于一个扇区。");
 
         using var output = new FileStream(nrgPath, FileMode.Create, FileAccess.Write,
             FileShare.None, 65536, false);
@@ -110,7 +110,7 @@ public static class NrgWriter
     public static void WriteFromBinCue(string binPath, NrgDaoTrack[] tracks, string nrgPath)
     {
         if (!File.Exists(binPath))
-            throw new FileNotFoundException($"Source BIN file not found: {binPath}");
+            throw new FileNotFoundException($"未找到源 BIN 文件：{binPath}");
 
         long binSize = new FileInfo(binPath).Length;
 
@@ -258,7 +258,7 @@ public static class NrgWriter
         long chunkChainOffset = output.Position;
 
         if (tracks.Length == 0)
-            throw new ArgumentException("At least one track is required.");
+            throw new ArgumentException("至少需要一条轨道。");
 
         // Determine overall TOC type from first track
         bool hasData = false;

@@ -74,7 +74,7 @@ public static class TocCueConverter
     public static void TocToCue(string tocFilePath, string cueFilePath)
     {
         if (!File.Exists(tocFilePath))
-            throw new FileNotFoundException($"TOC file not found: {tocFilePath}");
+            throw new FileNotFoundException($"未找到 TOC 文件：{tocFilePath}");
 
         var tocContent = File.ReadAllText(tocFilePath);
         var cueContent = ConvertTocToCue(tocContent, tocFilePath);
@@ -105,7 +105,7 @@ public static class TocCueConverter
     public static void CueToToc(string cueFilePath, string tocFilePath)
     {
         if (!File.Exists(cueFilePath))
-            throw new FileNotFoundException($"CUE file not found: {cueFilePath}");
+            throw new FileNotFoundException($"未找到 CUE 文件：{cueFilePath}");
 
         var cueContent = File.ReadAllText(cueFilePath);
         var tocContent = ConvertCueToToc(cueContent);

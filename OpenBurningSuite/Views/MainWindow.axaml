@@ -20,7 +20,7 @@
                         <TextBlock Text="Open Burning Suite"
                                    FontSize="18" FontWeight="Bold"
                                    Foreground="#5BC0FF"/>
-                        <TextBlock Text="Professional Disc Authoring &amp; Burning"
+                        <TextBlock Text="专业光盘制作与刻录"
                                    FontSize="10" Foreground="#5A7A9A" Margin="0,-1,0,0"/>
                     </StackPanel>
                 </StackPanel>
@@ -28,31 +28,19 @@
                 <!-- Quick action buttons in title bar -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="6"
                             VerticalAlignment="Center">
-                    <Button x:Name="BtnHomeNav" Classes="NavBtn" Click="OnHomeClick"
-                             ToolTip.Tip="Return to the Home screen" MinWidth="40" MinHeight="32">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-home-16.png"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button x:Name="BtnHomeNav" Content="🏠" FontSize="16"
+                            Classes="NavBtn" Click="OnHomeClick"
+                            ToolTip.Tip="返回主界面"/>
+                    <Button x:Name="BtnSettingsNav" FontSize="16"
+                            Classes="NavBtn" Click="OnSettingsClick"
+                            ToolTip.Tip="应用设置与首选项"
+                            MinWidth="40" MinHeight="32">
+                        <TextBlock Text="⚙&#xFE0F;" FontSize="16"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
-                    <Button x:Name="BtnAboutNav" Classes="NavBtn" Click="OnAboutClick"
-                             ToolTip.Tip="About Open Burning Suite" MinWidth="40" MinHeight="32">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-information-16.png"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
-                    <Button x:Name="BtnSettingsNav" Classes="NavBtn" Click="OnSettingsClick"
-                             ToolTip.Tip="Application settings and preferences"
-                             MinWidth="40" MinHeight="32">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
-                    <Button x:Name="BtnHelpNav" Classes="NavBtn" Click="OnHelpClick"
-                             ToolTip.Tip="Help and documentation" MinWidth="40" MinHeight="32">
-                        <Image Width="16" Height="16"
-                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-help-16.png"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Button>
+                    <Button x:Name="BtnHelpNav" Content="❓" FontSize="16"
+                            Classes="NavBtn" Click="OnHelpClick"
+                            ToolTip.Tip="帮助与文档"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -65,116 +53,59 @@
                     BorderBrush="#1E3450" BorderThickness="0,0,1,0">
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Margin="10,16,10,0" Spacing="2">
-                        <TextBlock Text="MAIN"
+                        <TextBlock Text="主菜单"
                                    Foreground="#5A7A9A" FontSize="10"
                                    FontWeight="Bold" Margin="8,0,0,6"/>
 
-                        <Button x:Name="BtnHome" Classes="NavBtn" Click="OnHomeClick"
-                                ToolTip.Tip="Home screen — quick access to all features">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-home-16.png"/>
-                                <TextBlock Text="Home" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnDiscInfo" Classes="NavBtn" Click="OnDiscInfoClick"
-                                ToolTip.Tip="Detailed disc and drive information — MID, ATIP, physical format, speeds">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-info-2d-16.png"/>
-                                    <TextBlock Text="Disc Info" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnDiscover" Classes="NavBtn" Click="OnDiscoverClick"
-                                ToolTip.Tip="Scan for optical drives and probe inserted media">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-discover-2d-16.png"/>
-                                <TextBlock Text="Discover" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnRead" Classes="NavBtn" Click="OnReadClick"
-                                ToolTip.Tip="Copy optical discs to image files (ISO, BIN/CUE, MDF, etc.)">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-copy-2d-16.png"/>
-                                <TextBlock Text="Copy Disc" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnBuild" Classes="NavBtn" Click="OnBuildClick"
-                                ToolTip.Tip="Create disc images from files (data, audio, video, gaming)">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-create-16.png"/>
-                                <TextBlock Text="Build Image" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnWrite" Classes="NavBtn" Click="OnWriteClick"
-                                ToolTip.Tip="Burn disc images to CD, DVD, HD DVD, or Blu-ray">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                                <TextBlock Text="Burn / Write" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnVerify" Classes="NavBtn" Click="OnVerifyClick"
-                                ToolTip.Tip="Verify disc integrity or compare disc to image">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
-                                <TextBlock Text="Verify" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnAdvanced" Classes="NavBtn" Click="OnAdvancedClick"
-                                ToolTip.Tip="Advanced disc utilities — blank/erase rewritable media">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-wizard-3d-16.png"/>
-                                    <TextBlock Text="Advanced" VerticalAlignment="Center"/>
-                            </StackPanel>
+                        <Button x:Name="BtnHome" Content="🏠  主页"
+                                Classes="NavBtn" Click="OnHomeClick"
+                                ToolTip.Tip="主界面 — 快速访问所有功能"/>
+                        <Button x:Name="BtnDiscover" Content="🔍  发现"
+                                Classes="NavBtn" Click="OnDiscoverClick"
+                                ToolTip.Tip="扫描光驱并检测已插入的光盘"/>
+                        <Button x:Name="BtnRead" Content="💿  复制光盘"
+                                Classes="NavBtn" Click="OnReadClick"
+                                ToolTip.Tip="将光盘复制为镜像文件（ISO、BIN/CUE、MDF 等）"/>
+                        <Button x:Name="BtnBuild" Content="🏗  构建镜像"
+                                Classes="NavBtn" Click="OnBuildClick"
+                                ToolTip.Tip="从文件创建光盘镜像（数据、音频、视频、游戏）"/>
+                        <Button x:Name="BtnWrite" Content="🔥  刻录 / 写入"
+                                Classes="NavBtn" Click="OnWriteClick"
+                                ToolTip.Tip="将光盘镜像刻录到 CD、DVD、HD DVD 或蓝光光盘"/>
+                        <Button x:Name="BtnVerify" Content="✅  校验"
+                                Classes="NavBtn" Click="OnVerifyClick"
+                                ToolTip.Tip="校验光盘完整性或将光盘与镜像对比"/>
+                        <Button x:Name="BtnAdvanced"
+                                Classes="NavBtn" Click="OnAdvancedClick"
+                                ToolTip.Tip="高级光盘工具 — 擦除可重写光盘">
+                            <TextBlock Text="⚙️  高级" FontSize="13"/>
                         </Button>
 
-                        <TextBlock Text="QUICK START"
+                        <TextBlock Text="快速开始"
                                    Foreground="#5A7A9A" FontSize="10"
                                    FontWeight="Bold" Margin="8,16,0,6"/>
 
-                        <Button x:Name="BtnAudioWizard" Classes="NavBtn" Click="OnAudioWizardClick"
-                                ToolTip.Tip="Guided wizard to create audio CDs, copy music to disc, or rip audio CDs">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                                <TextBlock Text="Audio &amp; Music Wizard" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                        <Button x:Name="BtnAudioWizard" Content="🎵  音频与音乐向导"
+                                Classes="NavBtn" Click="OnAudioWizardClick"
+                                ToolTip.Tip="创建音频 CD、将音乐刻录到光盘或抓取音频 CD 的分步向导"/>
 
-                        <Button x:Name="BtnVideoWizard" Classes="NavBtn" Click="OnVideoWizardClick"
-                                ToolTip.Tip="Guided wizard to create DVD-Video, Blu-ray, VCD, or SVCD discs">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                                <TextBlock Text="Video Disc Wizard" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                        <Button x:Name="BtnVideoWizard" Content="🎬  视频光盘向导"
+                                Classes="NavBtn" Click="OnVideoWizardClick"
+                                ToolTip.Tip="创建 DVD-Video、蓝光、VCD 或 SVCD 光盘的分步向导"/>
 
-                        <Button x:Name="BtnDataWizard" Classes="NavBtn" Click="OnDataWizardClick"
-                                ToolTip.Tip="Guided wizard to create and burn data discs from files and folders">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                <TextBlock Text="Data Disc Wizard" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                        <Button x:Name="BtnDataWizard" Content="📁  数据光盘向导"
+                                Classes="NavBtn" Click="OnDataWizardClick"
+                                ToolTip.Tip="从文件和文件夹创建并刻录数据光盘的分步向导"/>
 
-                        <Button x:Name="BtnGameWizard" Classes="NavBtn" Click="OnGameWizardClick"
-                                ToolTip.Tip="Guided wizard to create and burn game discs from image files or folders">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
-                                <TextBlock Text="Game Disc Wizard" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnCopyWizard" Classes="NavBtn" Click="OnCopyWizardClick"
-                                ToolTip.Tip="Guided wizard to copy a disc to an image file">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-duplicate-2d-16.png"/>
-                                    <TextBlock Text="Copy Disc Wizard" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnBlankWizard" Classes="NavBtn" Click="OnBlankWizardClick"
-                                ToolTip.Tip="Guided wizard to erase rewritable discs">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Image Width="16" Height="16" Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
-                                <TextBlock Text="Blank Disc Wizard" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                        <Button x:Name="BtnGameWizard" Content="🎮  游戏光盘向导"
+                                Classes="NavBtn" Click="OnGameWizardClick"
+                                ToolTip.Tip="从镜像文件或文件夹创建并刻录游戏光盘的分步向导"/>
+                        <Button x:Name="BtnCopyWizard" Content="💿  复制光盘向导"
+                                Classes="NavBtn" Click="OnCopyWizardClick"
+                                ToolTip.Tip="将光盘复制为镜像文件的分步向导"/>
+                        <Button x:Name="BtnBlankWizard" Content="🧹  擦除光盘向导"
+                                Classes="NavBtn" Click="OnBlankWizardClick"
+                                ToolTip.Tip="擦除可重写光盘的分步向导"/>
 
                     </StackPanel>
                 </DockPanel>
@@ -189,14 +120,14 @@
 
                         <!-- Welcome header -->
                         <StackPanel Spacing="4">
-                            <TextBlock Text="Welcome to Open Burning Suite"
+                            <TextBlock Text="欢迎使用 Open Burning Suite"
                                        FontSize="26" FontWeight="Bold" Foreground="#5BC0FF"/>
-                            <TextBlock Text="Professional disc authoring, burning, reading, and verification."
+                            <TextBlock Text="专业的光盘制作、刻录、读取与校验工具。"
                                        FontSize="13" Foreground="#5A7A9A" TextWrapping="Wrap"/>
                         </StackPanel>
 
                         <!-- Quick Start Category Tiles -->
-                        <TextBlock Text="QUICK START" Foreground="#5A7A9A" FontSize="11"
+                        <TextBlock Text="快速开始" Foreground="#5A7A9A" FontSize="11"
                                    FontWeight="Bold" Margin="0,4,0,0"/>
 
                         <WrapPanel Orientation="Horizontal">
@@ -205,11 +136,10 @@
                                     Width="190" Height="100"
                                     HorizontalContentAlignment="Center"
                                     Click="OnWriteClick"
-                                    ToolTip.Tip="Burn a disc image file to CD, DVD, or Blu-ray media">
+                                    ToolTip.Tip="将光盘镜像文件刻录到 CD、DVD 或蓝光光盘">
                                 <StackPanel HorizontalAlignment="Center" Spacing="6">
-                                    <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
-                                    <TextBlock Text="Burn Image" FontSize="13" FontWeight="SemiBold"
+                                    <TextBlock Text="🔥" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="刻录镜像" FontSize="13" FontWeight="SemiBold"
                                                HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                                 </StackPanel>
                             </Button>
@@ -219,11 +149,10 @@
                                     Width="190" Height="100"
                                     HorizontalContentAlignment="Center"
                                     Click="OnBuildClick"
-                                    ToolTip.Tip="Create a new disc image from files and folders">
+                                    ToolTip.Tip="从文件和文件夹创建新的光盘镜像">
                                 <StackPanel HorizontalAlignment="Center" Spacing="6">
-                                    <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-create-50.png"/>
-                                    <TextBlock Text="Build Image" FontSize="13" FontWeight="SemiBold"
+                                    <TextBlock Text="🏗" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="构建镜像" FontSize="13" FontWeight="SemiBold"
                                                HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                                 </StackPanel>
                             </Button>
@@ -233,11 +162,10 @@
                                     Width="190" Height="100"
                                     HorizontalContentAlignment="Center"
                                     Click="OnReadClick"
-                                    ToolTip.Tip="Copy a disc to an image file for backup or archiving">
+                                    ToolTip.Tip="将光盘复制为镜像文件以备份或归档">
                                 <StackPanel HorizontalAlignment="Center" Spacing="6">
-                                    <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-copy-2d-50.png"/>
-                                    <TextBlock Text="Copy Disc" FontSize="13" FontWeight="SemiBold"
+                                    <TextBlock Text="💿" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="复制光盘" FontSize="13" FontWeight="SemiBold"
                                                HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                                 </StackPanel>
                             </Button>
@@ -247,11 +175,10 @@
                                     Width="190" Height="100"
                                     HorizontalContentAlignment="Center"
                                     Click="OnVerifyClick"
-                                    ToolTip.Tip="Verify disc integrity or compare disc to image file">
+                                    ToolTip.Tip="校验光盘完整性或将光盘与镜像文件对比">
                                 <StackPanel HorizontalAlignment="Center" Spacing="6">
-                                    <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/fluentui-check-mark-button-50.png"/>
-                                    <TextBlock Text="Verify Disc" FontSize="13" FontWeight="SemiBold"
+                                    <TextBlock Text="✅" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="校验光盘" FontSize="13" FontWeight="SemiBold"
                                                HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                                 </StackPanel>
                             </Button>
@@ -261,25 +188,10 @@
                                     Width="190" Height="100"
                                     HorizontalContentAlignment="Center"
                                     Click="OnDiscoverClick"
-                                    ToolTip.Tip="Scan for optical drives and inspect media">
+                                    ToolTip.Tip="扫描光驱并检查光盘信息">
                                 <StackPanel HorizontalAlignment="Center" Spacing="6">
-                                    <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-discover-2d-50.png"/>
-                                    <TextBlock Text="Discover Drives" FontSize="13" FontWeight="SemiBold"
-                                               HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                                </StackPanel>
-                            </Button>
-
-                            <!-- Disc Info -->
-                            <Button Classes="NavBtn" Margin="0,0,10,10"
-                                    Width="190" Height="100"
-                                    HorizontalContentAlignment="Center"
-                                    Click="OnDiscInfoClick"
-                                    ToolTip.Tip="Detailed disc and drive information — MID, ATIP, physical format, speeds">
-                                <StackPanel HorizontalAlignment="Center" Spacing="6">
-                                    <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-info-main-50.png"/>
-                                    <TextBlock Text="Disc Info" FontSize="13" FontWeight="SemiBold"
+                                    <TextBlock Text="🔍" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="发现光驱" FontSize="13" FontWeight="SemiBold"
                                                HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                                 </StackPanel>
                             </Button>
@@ -289,11 +201,10 @@
                                     Width="190" Height="100"
                                     HorizontalContentAlignment="Center"
                                     Click="OnCopyWizardClick"
-                                    ToolTip.Tip="Guided wizard to copy a disc to an image file">
+                                    ToolTip.Tip="将光盘复制为镜像文件的分步向导">
                                 <StackPanel HorizontalAlignment="Center" Spacing="6">
-                                    <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-duplicate-2d-50.png"/>
-                                    <TextBlock Text="Copy Disc Wizard" FontSize="13" FontWeight="SemiBold"
+                                    <TextBlock Text="📀" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="复制光盘向导" FontSize="13" FontWeight="SemiBold"
                                                HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                                 </StackPanel>
                             </Button>
@@ -303,18 +214,17 @@
                                     Width="190" Height="100"
                                     HorizontalContentAlignment="Center"
                                     Click="OnBlankWizardClick"
-                                    ToolTip.Tip="Guided wizard to erase rewritable discs">
+                                    ToolTip.Tip="擦除可重写光盘的分步向导">
                                 <StackPanel HorizontalAlignment="Center" Spacing="6">
-                                    <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-erase-50.png"/>
-                                    <TextBlock Text="Blank Disc" FontSize="13" FontWeight="SemiBold"
+                                    <TextBlock Text="🧹" FontSize="32" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="擦除光盘" FontSize="13" FontWeight="SemiBold"
                                                HorizontalAlignment="Center" Foreground="#E8F0FE"/>
                                 </StackPanel>
                             </Button>
                         </WrapPanel>
 
                         <!-- Feature Categories -->
-                        <TextBlock Text="FEATURES" Foreground="#5A7A9A" FontSize="11"
+                        <TextBlock Text="功能特性" Foreground="#5A7A9A" FontSize="11"
                                    FontWeight="Bold" Margin="0,4,0,0"/>
 
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto">
@@ -323,14 +233,14 @@
                             <Border Grid.Row="0" Grid.Column="0" Classes="Card" Margin="0,0,8,8">
                                 <StackPanel Spacing="8">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Image Width="18" Height="18" Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-cd-3d-50.png"/>
-                                        <TextBlock Text="Burn &amp; Write" Classes="SectionHeader"/>
+                                        <TextBlock Text="🔥" FontSize="18"/>
+                                        <TextBlock Text="刻录与写入" Classes="SectionHeader"/>
                                     </StackPanel>
-                                    <TextBlock Text="Write ISO, BIN/CUE, CHD, NRG, MDF, CDI images to CD-R/RW, DVD±R/RW, HD DVD, and Blu-ray media. Supports DAO, TAO, SAO modes, multi-session, overburn, buffer underrun protection, and M-DISC archival."
+                                    <TextBlock Text="将 ISO、BIN/CUE、NRG、MDF、CDI 镜像写入 CD-R/RW、DVD±R/RW、HD DVD 和蓝光光盘。支持 DAO、TAO、SAO 写入模式、多区段、超刻、缓存欠载保护以及 M-DISC 归档盘。"
                                                Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
-                                    <Button Content="Open Burn View →" Classes="ActionBtn"
+                                    <Button Content="打开刻录视图 →" Classes="ActionBtn"
                                             Click="OnWriteClick"
-                                            ToolTip.Tip="Navigate to the burn/write view"/>
+                                            ToolTip.Tip="跳转到刻录/写入视图"/>
                                 </StackPanel>
                             </Border>
 
@@ -338,14 +248,14 @@
                             <Border Grid.Row="0" Grid.Column="1" Classes="Card" Margin="0,0,0,8">
                                 <StackPanel Spacing="8">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Image Width="18" Height="18" Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-create-50.png"/>
-                                        <TextBlock Text="Build Disc Images" Classes="SectionHeader"/>
+                                        <TextBlock Text="🏗" FontSize="18"/>
+                                        <TextBlock Text="构建光盘镜像" Classes="SectionHeader"/>
                                     </StackPanel>
-                                    <TextBlock Text="Create data discs (ISO 9660, Joliet, UDF, Rock Ridge, HFS+), audio CDs with CD-TEXT, Video CDs (VCD/SVCD), DVD-Video, Blu-ray, and bootable discs with El Torito."
+                                    <TextBlock Text="创建数据光盘（ISO 9660、Joliet、UDF、Rock Ridge、HFS+）、带 CD-TEXT 文本的音频 CD、视频 CD（VCD/SVCD）、DVD-Video、蓝光，以及采用 El Torito 引导的可启动光盘。"
                                                Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
-                                    <Button Content="Open Build View →" Classes="ActionBtn"
+                                    <Button Content="打开构建视图 →" Classes="ActionBtn"
                                             Click="OnBuildClick"
-                                            ToolTip.Tip="Navigate to the build image view"/>
+                                            ToolTip.Tip="跳转到构建镜像视图"/>
                                 </StackPanel>
                             </Border>
 
@@ -353,14 +263,14 @@
                             <Border Grid.Row="1" Grid.Column="0" Classes="Card" Margin="0,0,8,8">
                                 <StackPanel Spacing="8">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Image Width="18" Height="18" Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-copy-2d-50.png"/>
-                                        <TextBlock Text="Copy &amp; Dump" Classes="SectionHeader"/>
+                                        <TextBlock Text="💿" FontSize="18"/>
+                                        <TextBlock Text="复制与转储" Classes="SectionHeader"/>
                                     </StackPanel>
-                                    <TextBlock Text="Copy discs to ISO, BIN/CUE, MDF/MDS, NRG, CDI, CCD, TOC/BIN formats. Raw 2352-byte sector dumping, subchannel extraction, audio paranoia mode, and gaming system presets."
+                                    <TextBlock Text="将光盘复制为 ISO、BIN/CUE、MDF/MDS、NRG、CDI、CCD、TOC/BIN 格式。支持 2352 字节原始扇区转储、子通道提取、精确抓取模式以及游戏机预设。"
                                                Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
-                                    <Button Content="Open Copy View →" Classes="ActionBtn"
+                                    <Button Content="打开复制视图 →" Classes="ActionBtn"
                                             Click="OnReadClick"
-                                            ToolTip.Tip="Navigate to the copy disc view"/>
+                                            ToolTip.Tip="跳转到复制光盘视图"/>
                                 </StackPanel>
                             </Border>
 
@@ -368,14 +278,14 @@
                             <Border Grid.Row="1" Grid.Column="1" Classes="Card" Margin="0,0,0,8">
                                 <StackPanel Spacing="8">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Image Width="18" Height="18" Source="avares://OpenBurningSuite/Assets/Icons/50/fluentui-check-mark-button-50.png"/>
-                                        <TextBlock Text="Verify &amp; Check" Classes="SectionHeader"/>
+                                        <TextBlock Text="✅" FontSize="18"/>
+                                        <TextBlock Text="校验与检查" Classes="SectionHeader"/>
                                     </StackPanel>
-                                    <TextBlock Text="Verify disc integrity with SHA256, SHA1, MD5, SHA512, or CRC32 checksums. Sector-by-sector comparison, subchannel verification, and audio track validation."
+                                    <TextBlock Text="使用 SHA256、SHA1、MD5、SHA512 或 CRC32 校验和验证光盘完整性。支持逐扇区比对、子通道校验和音轨验证。"
                                                Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
-                                    <Button Content="Open Verify View →" Classes="ActionBtn"
+                                    <Button Content="打开校验视图 →" Classes="ActionBtn"
                                             Click="OnVerifyClick"
-                                            ToolTip.Tip="Navigate to the verification view"/>
+                                            ToolTip.Tip="跳转到校验视图"/>
                                 </StackPanel>
                             </Border>
 
@@ -383,14 +293,14 @@
                             <Border Grid.Row="2" Grid.Column="0" Classes="Card" Margin="0,0,8,0">
                                 <StackPanel Spacing="8">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Image Width="18" Height="18" Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-game-controller-50.png"/>
-                                        <TextBlock Text="Gaming Disc Support" Classes="SectionHeader"/>
+                                        <TextBlock Text="🎮" FontSize="18"/>
+                                        <TextBlock Text="游戏光盘支持" Classes="SectionHeader"/>
                                     </StackPanel>
-                                    <TextBlock Text="Built-in presets for PlayStation 1-5, Sega Saturn/Dreamcast/Mega CD, Xbox/360, GameCube/Wii, Neo Geo CD, 3DO, PC Engine, Atari Jaguar, Amiga CD32/CDTV, and more."
+                                    <TextBlock Text="内置 PlayStation 1-5、Sega Saturn/Dreamcast/Mega CD、Xbox/360、GameCube/Wii、Neo Geo CD、3DO、PC Engine、Atari Jaguar、Amiga CD32/CDTV 等预设。"
                                                Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
-                                    <Button Content="Open Build View →" Classes="ActionBtn"
+                                    <Button Content="打开构建视图 →" Classes="ActionBtn"
                                             Click="OnBuildClick"
-                                            ToolTip.Tip="Build gaming disc images with system-specific presets"/>
+                                            ToolTip.Tip="使用针对各游戏机的预设构建游戏光盘镜像"/>
                                 </StackPanel>
                             </Border>
 
@@ -398,14 +308,14 @@
                             <Border Grid.Row="2" Grid.Column="1" Classes="Card" Margin="0,0,0,0">
                                 <StackPanel Spacing="8">
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Image Width="18" Height="18" Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-settings-main-50.png"/>
-                                        <TextBlock Text="Advanced Functions" Classes="SectionHeader"/>
+                                        <TextBlock Text="⚙&#xFE0F;" FontSize="18"/>
+                                        <TextBlock Text="高级功能" Classes="SectionHeader"/>
                                     </StackPanel>
-                                    <TextBlock Text="Erase rewritable discs (quick/full blank), disc finalization, M-DISC archival, LibCrypt/region-free patching, raw sector I/O, and cross-platform SCSI/MMC access."
+                                    <TextBlock Text="擦除可重写光盘（快速/完全擦除）、封盘、M-DISC 归档盘、LibCrypt/全区补丁、原始扇区 I/O 以及跨平台 SCSI/MMC 指令访问。"
                                                Foreground="#8EAFC8" FontSize="11" TextWrapping="Wrap"/>
-                                    <Button Content="Open Advanced View →" Classes="ActionBtn"
+                                    <Button Content="打开高级视图 →" Classes="ActionBtn"
                                             Click="OnAdvancedClick"
-                                            ToolTip.Tip="Access advanced disc functions like blanking and finalization"/>
+                                            ToolTip.Tip="访问擦除、封盘等高级光盘功能"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -413,7 +323,6 @@
                 </ScrollViewer>
 
                 <!-- Actual views (hidden by default, shown on nav) -->
-                <views:DiscInfoView x:Name="ViewDiscInfo" IsVisible="False"/>
                 <views:DiscoverView x:Name="ViewDiscover" IsVisible="False"/>
                 <views:ReadView     x:Name="ViewRead"     IsVisible="False"/>
                 <views:BuildView    x:Name="ViewBuild"    IsVisible="False"/>
@@ -437,12 +346,13 @@
                 Padding="12,6">
             <Grid ColumnDefinitions="*,Auto">
                 <TextBlock x:Name="TxtStatus"
-                           Text="Ready — select an action to get started."
+                           Text="就绪 — 请选择一个操作开始。"
                            Foreground="#5A7A9A" FontSize="11"
                            VerticalAlignment="Center"/>
-                <Image x:Name="ImgElevation" Grid.Column="1" Width="16" Height="16"
-                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-lock-3d-16.png"
-                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="TxtElevation"
+                           Grid.Column="1"
+                           Foreground="#5A7A9A" FontSize="11"
+                           VerticalAlignment="Center"/>
             </Grid>
         </Border>
     </Grid>

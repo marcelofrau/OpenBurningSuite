@@ -8,9 +8,9 @@
 
             <!-- Page header -->
             <StackPanel Spacing="4">
-                <TextBlock Text="Video Disc Wizard"
+                <TextBlock Text="🎬  视频光盘向导"
                            Classes="PageTitle" Foreground="#5BC0FF"/>
-                <TextBlock Text="Create DVD-Video, Blu-ray, BDAV, 3D Blu-ray, VCD, or SVCD discs from video folders and files — guided step by step."
+                <TextBlock Text="从视频文件夹和文件创建 DVD-Video、蓝光、BDAV、3D 蓝光、VCD 或 SVCD 光盘 — 分步引导。"
                            Classes="PageSubtitle" TextWrapping="Wrap"/>
             </StackPanel>
 
@@ -24,7 +24,7 @@
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-                        <TextBlock x:Name="VStepLbl1" Text="Choose Task"
+                        <TextBlock x:Name="VStepLbl1" Text="选择任务"
                                    Foreground="#E8F0FE" FontSize="12"
                                    VerticalAlignment="Center" FontWeight="SemiBold"/>
                     </StackPanel>
@@ -36,7 +36,7 @@
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-                        <TextBlock x:Name="VStepLbl2" Text="Configure"
+                        <TextBlock x:Name="VStepLbl2" Text="配置"
                                    Foreground="#5A7A9A" FontSize="12"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
@@ -48,7 +48,7 @@
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-                        <TextBlock x:Name="VStepLbl3" Text="Summary"
+                        <TextBlock x:Name="VStepLbl3" Text="摘要"
                                    Foreground="#5A7A9A" FontSize="12"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
@@ -60,7 +60,7 @@
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-                        <TextBlock x:Name="VStepLbl4" Text="Execute"
+                        <TextBlock x:Name="VStepLbl4" Text="执行"
                                    Foreground="#5A7A9A" FontSize="12"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
@@ -71,7 +71,7 @@
             <!-- STEP 1: Choose Task                                          -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step1Panel" Spacing="16">
-                <TextBlock Text="What would you like to do?" Classes="SectionHeader"/>
+                <TextBlock Text="您想执行什么操作？" Classes="SectionHeader"/>
 
                 <WrapPanel Orientation="Horizontal">
                     <!-- Video DVD from Folder -->
@@ -79,13 +79,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeDvd"
-                            ToolTip.Tip="Create and burn a DVD-Video disc from a VIDEO_TS folder">
+                            ToolTip.Tip="从 VIDEO_TS 文件夹创建并刻录 DVD-Video 光盘">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-dvd-video-50.png"/>
-                            <TextBlock Text="Video DVD from Folder" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="📀" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="从文件夹创建视频 DVD" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Create &amp; burn a DVD-Video disc from a VIDEO_TS folder"
+                            <TextBlock Text="从 VIDEO_TS 文件夹创建并刻录 DVD-Video 光盘"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -97,13 +96,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeBluray"
-                            ToolTip.Tip="Create and burn a Blu-ray disc from a BDMV folder">
+                            ToolTip.Tip="从 BDMV 文件夹创建并刻录蓝光光盘">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-bluray-video-50.png"/>
-                            <TextBlock Text="Video Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="💿" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="从文件夹创建视频蓝光" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Create &amp; burn a Blu-ray disc from a BDMV folder"
+                            <TextBlock Text="从 BDMV 文件夹创建并刻录蓝光光盘"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -115,13 +113,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeBdav"
-                            ToolTip.Tip="Create and burn a BDAV recording disc from a BDAV folder">
+                            ToolTip.Tip="从 BDAV 文件夹创建并刻录 BDAV 录像光盘">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-bdav-50.png"/>
-                            <TextBlock Text="BDAV Recording from Folder" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="📹" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="从文件夹创建 BDAV 录像" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Create &amp; burn a BDAV disc from a BDAV recording folder"
+                            <TextBlock Text="从 BDAV 录像文件夹创建并刻录 BDAV 光盘"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -133,13 +130,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeBd3d"
-                            ToolTip.Tip="Create and burn a 3D Blu-ray disc from a BDMV 3D folder">
+                            ToolTip.Tip="从 BDMV 3D 文件夹创建并刻录 3D 蓝光光盘">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-bd3d-50.png"/>
-                            <TextBlock Text="3D Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="🎥" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="从文件夹创建 3D 蓝光" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Create &amp; burn a 3D Blu-ray disc from a BDMV 3D folder"
+                            <TextBlock Text="从 BDMV 3D 文件夹创建并刻录 3D 蓝光光盘"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -151,13 +147,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeUhdBluray"
-                            ToolTip.Tip="Create and burn a UHD (4K HDR) Blu-ray disc from a BDMV folder">
+                            ToolTip.Tip="从 BDMV 文件夹创建并刻录 UHD（4K HDR）蓝光光盘">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-video-uhd-50.png"/>
-                            <TextBlock Text="UHD Blu-ray from Folder" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="🎬" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="从文件夹创建 UHD 蓝光" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Create &amp; burn a UHD 4K HDR Blu-ray disc from BDMV"
+                            <TextBlock Text="从 BDMV 创建并刻录 UHD 4K HDR 蓝光光盘"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -169,13 +164,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeVcd"
-                            ToolTip.Tip="Create and burn a Video CD from MPEG-1 video files">
+                            ToolTip.Tip="从 MPEG-1 视频文件创建并刻录视频 CD">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-tape-drive-2d-50.png"/>
-                            <TextBlock Text="Video CD (VCD)" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="视频 CD（VCD）" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Create &amp; burn a Video CD from MPEG-1 video files"
+                            <TextBlock Text="从 MPEG-1 视频文件创建并刻录视频 CD"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -187,13 +181,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeSvcd"
-                            ToolTip.Tip="Create and burn a Super Video CD from MPEG-2 video files">
+                            ToolTip.Tip="从 MPEG-2 视频文件创建并刻录超级视频 CD">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-tape-drive-2d-50.png"/>
-                            <TextBlock Text="Super Video CD (SVCD)" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="超级视频 CD（SVCD）" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Create &amp; burn a Super Video CD from MPEG-2 video files"
+                            <TextBlock Text="从 MPEG-2 视频文件创建并刻录超级视频 CD"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -205,13 +198,12 @@
                             Width="260" Height="130"
                             HorizontalContentAlignment="Center"
                             Click="OnModeXsvcd"
-                            ToolTip.Tip="Create and burn an eXtended Super Video CD with non-standard MPEG-2 parameters">
+                            ToolTip.Tip="使用非标准 MPEG-2 参数创建并刻录扩展超级视频 CD">
                         <StackPanel HorizontalAlignment="Center" Spacing="8">
-                            <Image Width="50" Height="50" HorizontalAlignment="Center"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/50/icons8-tape-drive-2d-50.png"/>
-                            <TextBlock Text="XSVCD (eXtended SVCD)" FontSize="15" FontWeight="SemiBold"
+                            <TextBlock Text="📼" FontSize="36" HorizontalAlignment="Center"/>
+                            <TextBlock Text="XSVCD（扩展 SVCD）" FontSize="15" FontWeight="SemiBold"
                                        HorizontalAlignment="Center" Foreground="#E8F0FE"/>
-                            <TextBlock Text="Create &amp; burn XSVCD with extended bitrate &amp; resolution"
+                            <TextBlock Text="以扩展码率和分辨率创建并刻录 XSVCD"
                                        FontSize="11" Foreground="#5A7A9A"
                                        HorizontalAlignment="Center" TextWrapping="Wrap"
                                        TextAlignment="Center" MaxWidth="220"/>
@@ -224,32 +216,22 @@
             <!-- STEP 2A: DVD-Video from Folder                               -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2DvdPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="DVD-Video from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+                <TextBlock Text="从文件夹创建 DVD-Video — 配置并刻录" Classes="SectionHeader"/>
 
                 <!-- Source VIDEO_TS Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Source VIDEO_TS Folder" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="Select the folder containing VIDEO_TS (with VOB, IFO, and BUP files)."
+                        <TextBlock Text="📂 源 VIDEO_TS 文件夹" Classes="SectionHeader"/>
+                        <TextBlock Text="选择包含 VIDEO_TS 的文件夹（内含 VOB、IFO 和 BUP 文件）。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtDvdSourceFolder"
-                                     Watermark="Path to VIDEO_TS folder..."
+                                     Watermark="VIDEO_TS 文件夹路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseDvdSourceClick"
-                                    ToolTip.Tip="Browse for VIDEO_TS folder">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="浏览并选择 VIDEO_TS 文件夹"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -257,37 +239,33 @@
                 <!-- DVD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="DVD Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="📀 DVD 设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Video Standard" Classes="FieldLabel"/>
+                                <TextBlock Text="视频制式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbDvdVideoStandard" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Video standard for the DVD">
+                                          ToolTip.Tip="DVD 的视频制式">
                                     <ComboBoxItem Content="NTSC (720×480, 29.97fps)" IsSelected="True"/>
                                     <ComboBoxItem Content="PAL (720×576, 25fps)"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Aspect Ratio" Classes="FieldLabel"/>
+                                <TextBlock Text="宽高比" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbDvdAspectRatio" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Display aspect ratio for the DVD">
+                                          ToolTip.Tip="DVD 的显示宽高比">
                                     <ComboBoxItem Content="16:9" IsSelected="True"/>
                                     <ComboBoxItem Content="4:3"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBlock Text="卷标" Classes="FieldLabel"/>
                                 <TextBox x:Name="TxtDvdVolumeLabel" Watermark="DVD_VIDEO"
                                          MaxLength="32"/>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,0">
-                                <TextBlock Text="Region" Classes="FieldLabel"/>
+                                <TextBlock Text="区域" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbDvdRegion" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="DVD region code">
+                                          ToolTip.Tip="DVD 区域码">
                                     <ComboBoxItem Content="Region Free" IsSelected="True"/>
                                     <ComboBoxItem Content="Region 1 (USA, Canada)"/>
                                     <ComboBoxItem Content="Region 2 (Europe, Japan)"/>
@@ -306,27 +284,17 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="The DVD image (ISO) will be saved to this location."
+                        <TextBlock Text="💾 输出镜像" Classes="SectionHeader"/>
+                        <TextBlock Text="DVD 镜像（ISO）将保存到此位置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtDvdOutputPath"
-                                     Watermark="Path to save the DVD image..."
+                                     Watermark="DVD 镜像的保存路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseDvdOutputClick"
-                                    ToolTip.Tip="Choose where to save the output DVD image">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出 DVD 镜像的保存位置"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -334,11 +302,7 @@
                 <!-- Video Preview -->
                 <Border Classes="InfoCard">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                            <TextBlock Text="Video Preview" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🎬 视频预览" Classes="SectionHeader"/>
 
                         <Border Classes="DropZone">
                             <ListBox x:Name="LstDvdFiles"
@@ -363,7 +327,7 @@
                                                     Classes="ActionBtn" Padding="6,4"
                                                     Click="OnPreviewDvdFileClick"
                                                     Tag="{Binding FilePath}"
-                                                    ToolTip.Tip="Preview this file"/>
+                                                    ToolTip.Tip="预览此文件"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -373,28 +337,16 @@
                         <!-- Player Controls -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnDvdPlayPause"
+                                <Button x:Name="BtnDvdPlayPause" Content="▶ 播放"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnDvdPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
-                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Classes="ActionBtn"
+                                        ToolTip.Tip="播放或暂停选中的视频"/>
+                                <Button Content="⏹ 停止" Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnDvdStopClick"
-                                        ToolTip.Tip="Stop playback">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                        ToolTip.Tip="停止播放"/>
                                 <TextBlock x:Name="TxtDvdNowPlaying"
-                                           Text="No file selected"
+                                           Text="未选择文件"
                                            Foreground="#5A7A9A" FontSize="11"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" Margin="12,0,0,0"/>
@@ -402,7 +354,7 @@
                                         Grid.Column="3" Minimum="0" Maximum="100"
                                         Margin="12,0" VerticalAlignment="Center"
                                         IsEnabled="False"
-                                        ToolTip.Tip="Playback position"/>
+                                        ToolTip.Tip="播放位置"/>
                                 <TextBlock x:Name="TxtDvdPlaybackTime"
                                            Text="00:00 / 00:00" Foreground="#8EAFC8"
                                            FontSize="11" Grid.Column="4"
@@ -415,21 +367,17 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🔥 刻录设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <TextBlock Text="目标光驱" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbDvdDrive" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Select the burner drive"/>
+                                          ToolTip.Tip="选择刻录机"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="写入速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbDvdSpeed" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write speed for burning">
+                                          ToolTip.Tip="刻录的写入速度">
                                     <ComboBoxItem Content="Auto" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
                                     <ComboBoxItem Content="2x"/>
@@ -441,38 +389,38 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <TextBlock Text="写入模式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbDvdWriteMode" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write strategy for DVD burning">
+                                          ToolTip.Tip="DVD 刻录的写入策略">
                                     <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
                                     <ComboBoxItem Content="SAO (Session At Once)"/>
                                     <ComboBoxItem Content="TAO (Track At Once)"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <TextBlock Text="份数" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumDvdCopies" Minimum="1" Maximum="99"
                                                Value="1" FormatString="0"
-                                               ToolTip.Tip="Number of disc copies to burn"/>
+                                               ToolTip.Tip="要刻录的光盘份数"/>
                             </StackPanel>
                         </Grid>
                         <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <CheckBox x:Name="ChkDvdEject" Content="Eject after burn"
+                            <CheckBox x:Name="ChkDvdEject" Content="刻录后弹出"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Eject the disc when burning is complete"/>
-                            <CheckBox x:Name="ChkDvdVerify" Content="Verify after burn"
+                                      ToolTip.Tip="刻录完成时弹出光盘"/>
+                            <CheckBox x:Name="ChkDvdVerify" Content="刻录后校验"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Verify disc integrity after burning"/>
-                            <CheckBox x:Name="ChkDvdSimulate" Content="Simulate (test write)"
+                                      ToolTip.Tip="刻录后校验光盘完整性"/>
+                            <CheckBox x:Name="ChkDvdSimulate" Content="模拟（测试写入）"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
-                            <CheckBox x:Name="ChkDvdBup" Content="Buffer underrun protection"
+                                      ToolTip.Tip="模拟刻录而不实际写入光盘"/>
+                            <CheckBox x:Name="ChkDvdBup" Content="缓存欠载保护"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                                      ToolTip.Tip="防止刻录过程中出现缓存欠载错误"/>
                             <CheckBox x:Name="ChkDvdBurnDisc"
-                                      Content="Also burn to disc (not just build image)"
+                                      Content="同时刻录到光盘（不仅构建镜像）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Uncheck to only create an ISO image without burning"/>
+                                      ToolTip.Tip="取消勾选则仅创建 ISO 镜像而不刻录"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -482,32 +430,22 @@
             <!-- STEP 2B: Video Blu-ray from Folder                           -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2BdPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="Video Blu-ray from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+                <TextBlock Text="从文件夹创建视频蓝光 — 配置并刻录" Classes="SectionHeader"/>
 
                 <!-- Source BDMV Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Source BDMV Folder" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="Select the folder containing BDMV (with STREAM, CLIPINF, and PLAYLIST folders)."
+                        <TextBlock Text="📂 源 BDMV 文件夹" Classes="SectionHeader"/>
+                        <TextBlock Text="选择包含 BDMV 的文件夹（内含 STREAM、CLIPINF 和 PLAYLIST 文件夹）。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBdSourceFolder"
-                                     Watermark="Path to BDMV folder..."
+                                     Watermark="BDMV 文件夹路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBdSourceClick"
-                                    ToolTip.Tip="Browse for BDMV folder">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="浏览并选择 BDMV 文件夹"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -515,13 +453,9 @@
                 <!-- Blu-ray Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Blu-ray Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="💿 蓝光设置" Classes="SectionHeader"/>
                         <StackPanel Spacing="4">
-                            <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                            <TextBlock Text="卷标" Classes="FieldLabel"/>
                             <TextBox x:Name="TxtBdVolumeLabel" Watermark="BLURAY_DISC"
                                      MaxLength="32"/>
                         </StackPanel>
@@ -531,27 +465,17 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="The Blu-ray image (ISO) will be saved to this location."
+                        <TextBlock Text="💾 输出镜像" Classes="SectionHeader"/>
+                        <TextBlock Text="蓝光镜像（ISO）将保存到此位置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBdOutputPath"
-                                     Watermark="Path to save the Blu-ray image..."
+                                     Watermark="蓝光镜像的保存路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBdOutputClick"
-                                    ToolTip.Tip="Choose where to save the output Blu-ray image">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出蓝光镜像的保存位置"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -559,11 +483,7 @@
                 <!-- Video Preview -->
                 <Border Classes="InfoCard">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                            <TextBlock Text="Video Preview" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🎬 视频预览" Classes="SectionHeader"/>
 
                         <ListBox x:Name="LstBdFiles"
                                  Background="Transparent"
@@ -587,7 +507,7 @@
                                                 Classes="ActionBtn" Padding="6,4"
                                                 Click="OnPreviewBdFileClick"
                                                 Tag="{Binding FilePath}"
-                                                ToolTip.Tip="Preview this file"/>
+                                                ToolTip.Tip="预览此文件"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -596,16 +516,16 @@
                         <!-- Player Controls -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnBdPlayPause" Content="▶ Play"
+                                <Button x:Name="BtnBdPlayPause" Content="▶ 播放"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnBdPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video"/>
-                                <Button Content="⏹ Stop" Classes="ActionBtn"
+                                        ToolTip.Tip="播放或暂停选中的视频"/>
+                                <Button Content="⏹ 停止" Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnBdStopClick"
-                                        ToolTip.Tip="Stop playback"/>
+                                        ToolTip.Tip="停止播放"/>
                                 <TextBlock x:Name="TxtBdNowPlaying"
-                                           Text="No file selected"
+                                           Text="未选择文件"
                                            Foreground="#5A7A9A" FontSize="11"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" Margin="12,0,0,0"/>
@@ -613,7 +533,7 @@
                                         Grid.Column="3" Minimum="0" Maximum="100"
                                         Margin="12,0" VerticalAlignment="Center"
                                         IsEnabled="False"
-                                        ToolTip.Tip="Playback position"/>
+                                        ToolTip.Tip="播放位置"/>
                                 <TextBlock x:Name="TxtBdPlaybackTime"
                                            Text="00:00 / 00:00" Foreground="#8EAFC8"
                                            FontSize="11" Grid.Column="4"
@@ -626,21 +546,17 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🔥 刻录设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <TextBlock Text="目标光驱" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBdDrive" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Select the burner drive"/>
+                                          ToolTip.Tip="选择刻录机"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="写入速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBdSpeed" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write speed for burning">
+                                          ToolTip.Tip="刻录的写入速度">
                                     <ComboBoxItem Content="Auto" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
                                     <ComboBoxItem Content="2x"/>
@@ -651,29 +567,29 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <TextBlock Text="份数" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumBdCopies" Minimum="1" Maximum="99"
                                                Value="1" FormatString="0"
-                                               ToolTip.Tip="Number of disc copies to burn"/>
+                                               ToolTip.Tip="要刻录的光盘份数"/>
                             </StackPanel>
                         </Grid>
                         <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <CheckBox x:Name="ChkBdEject" Content="Eject after burn"
+                            <CheckBox x:Name="ChkBdEject" Content="刻录后弹出"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Eject the disc when burning is complete"/>
-                            <CheckBox x:Name="ChkBdVerify" Content="Verify after burn"
+                                      ToolTip.Tip="刻录完成时弹出光盘"/>
+                            <CheckBox x:Name="ChkBdVerify" Content="刻录后校验"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Verify disc integrity after burning"/>
-                            <CheckBox x:Name="ChkBdSimulate" Content="Simulate (test write)"
+                                      ToolTip.Tip="刻录后校验光盘完整性"/>
+                            <CheckBox x:Name="ChkBdSimulate" Content="模拟（测试写入）"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
-                            <CheckBox x:Name="ChkBdBup" Content="Buffer underrun protection"
+                                      ToolTip.Tip="模拟刻录而不实际写入光盘"/>
+                            <CheckBox x:Name="ChkBdBup" Content="缓存欠载保护"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                                      ToolTip.Tip="防止刻录过程中出现缓存欠载错误"/>
                             <CheckBox x:Name="ChkBdBurnDisc"
-                                      Content="Also burn to disc (not just build image)"
+                                      Content="同时刻录到光盘（不仅构建镜像）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Uncheck to only create an ISO image without burning"/>
+                                      ToolTip.Tip="取消勾选则仅创建 ISO 镜像而不刻录"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -683,32 +599,22 @@
             <!-- STEP 2E: BDAV (Blu-ray Recording) from Folder               -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2BdavPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="BDAV Recording from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+                <TextBlock Text="从文件夹创建 BDAV 录像 — 配置并刻录" Classes="SectionHeader"/>
 
                 <!-- Source BDAV Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Source BDAV Folder" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="Select the folder containing BDAV (with STREAM, CLIPINF, and PLAYLIST folders)."
+                        <TextBlock Text="📂 源 BDAV 文件夹" Classes="SectionHeader"/>
+                        <TextBlock Text="选择包含 BDAV 的文件夹（内含 STREAM、CLIPINF 和 PLAYLIST 文件夹）。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBdavSourceFolder"
-                                     Watermark="Path to BDAV folder..."
+                                     Watermark="BDAV 文件夹路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBdavSourceClick"
-                                    ToolTip.Tip="Browse for BDAV folder">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="浏览并选择 BDAV 文件夹"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -716,21 +622,17 @@
                 <!-- BDAV Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                            <TextBlock Text="BDAV Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="📹 BDAV 设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBlock Text="卷标" Classes="FieldLabel"/>
                                 <TextBox x:Name="TxtBdavVolumeLabel" Watermark="BDAV_DISC"
                                          MaxLength="32"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Disc Size" Classes="FieldLabel"/>
+                                <TextBlock Text="光盘容量" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBdavDiscSize" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Target disc capacity for BDAV recording">
+                                          ToolTip.Tip="BDAV 录像的目标光盘容量">
                                     <ComboBoxItem Content="BD-25 (25 GB)" IsSelected="True"/>
                                     <ComboBoxItem Content="BD-50 (50 GB)"/>
                                     <ComboBoxItem Content="BD-100 (BDXL 100 GB)"/>
@@ -742,28 +644,22 @@
                 </Border>
 
                 <!-- BDAV Recording Metadata -->
-                <Expander Classes="SettingsExpander" IsExpanded="False">
-                    <Expander.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="BDAV Recording Metadata"/>
-                        </StackPanel>
-                    </Expander.Header>
+                <Expander Classes="SettingsExpander" Header="⚙️ BDAV 录像元数据"
+                          IsExpanded="False">
                     <StackPanel Spacing="8" Margin="0,12,0,0">
-                        <TextBlock Text="Optional metadata for BDAV recording. Leave defaults for standard recording."
+                        <TextBlock Text="BDAV 录像的可选元数据。标准录像请保留默认值。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Recording Date" Classes="FieldLabel"/>
+                                <TextBlock Text="录制日期" Classes="FieldLabel"/>
                                 <DatePicker x:Name="DpBdavRecordingDate"
-                                            ToolTip.Tip="BDAV recording timestamp date"/>
+                                            ToolTip.Tip="BDAV 录像时间戳日期"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,0">
-                                <TextBlock Text="Time Zone Offset (minutes from UTC)" Classes="FieldLabel"/>
+                                <TextBlock Text="时区偏移（距 UTC 的分钟数）" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumBdavTimezoneOffset" Minimum="-720" Maximum="840"
                                                Value="0" FormatString="0"
-                                               ToolTip.Tip="UTC time zone offset in minutes (-720 to +840)"/>
+                                               ToolTip.Tip="UTC 时区偏移（分钟，-720 到 +840）"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -772,27 +668,17 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="The BDAV image (ISO) will be saved to this location."
+                        <TextBlock Text="💾 输出镜像" Classes="SectionHeader"/>
+                        <TextBlock Text="BDAV 镜像（ISO）将保存到此位置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBdavOutputPath"
-                                     Watermark="Path to save the BDAV image..."
+                                     Watermark="BDAV 镜像的保存路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBdavOutputClick"
-                                    ToolTip.Tip="Choose where to save the output BDAV image">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出 BDAV 镜像的保存位置"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -800,11 +686,7 @@
                 <!-- Video Preview -->
                 <Border Classes="InfoCard">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                            <TextBlock Text="Video Preview" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🎬 视频预览" Classes="SectionHeader"/>
 
                         <ListBox x:Name="LstBdavFiles"
                                  Background="Transparent"
@@ -828,7 +710,7 @@
                                                 Classes="ActionBtn" Padding="6,4"
                                                 Click="OnPreviewBdavFileClick"
                                                 Tag="{Binding FilePath}"
-                                                ToolTip.Tip="Preview this file"/>
+                                                ToolTip.Tip="预览此文件"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -837,28 +719,16 @@
                         <!-- Player Controls -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnBdavPlayPause"
+                                <Button x:Name="BtnBdavPlayPause" Content="▶ 播放"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnBdavPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
-                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Classes="ActionBtn"
+                                        ToolTip.Tip="播放或暂停选中的视频"/>
+                                <Button Content="⏹ 停止" Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnBdavStopClick"
-                                        ToolTip.Tip="Stop playback">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                        ToolTip.Tip="停止播放"/>
                                 <TextBlock x:Name="TxtBdavNowPlaying"
-                                           Text="No file selected"
+                                           Text="未选择文件"
                                            Foreground="#5A7A9A" FontSize="11"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" Margin="12,0,0,0"/>
@@ -866,7 +736,7 @@
                                         Grid.Column="3" Minimum="0" Maximum="100"
                                         Margin="12,0" VerticalAlignment="Center"
                                         IsEnabled="False"
-                                        ToolTip.Tip="Playback position"/>
+                                        ToolTip.Tip="播放位置"/>
                                 <TextBlock x:Name="TxtBdavPlaybackTime"
                                            Text="00:00 / 00:00" Foreground="#8EAFC8"
                                            FontSize="11" Grid.Column="4"
@@ -879,21 +749,17 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🔥 刻录设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <TextBlock Text="目标光驱" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBdavDrive" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Select the burner drive"/>
+                                          ToolTip.Tip="选择刻录机"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="写入速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBdavSpeed" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write speed for burning">
+                                          ToolTip.Tip="刻录的写入速度">
                                     <ComboBoxItem Content="Auto" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
                                     <ComboBoxItem Content="2x"/>
@@ -904,29 +770,29 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <TextBlock Text="份数" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumBdavCopies" Minimum="1" Maximum="99"
                                                Value="1" FormatString="0"
-                                               ToolTip.Tip="Number of disc copies to burn"/>
+                                               ToolTip.Tip="要刻录的光盘份数"/>
                             </StackPanel>
                         </Grid>
                         <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <CheckBox x:Name="ChkBdavEject" Content="Eject after burn"
+                            <CheckBox x:Name="ChkBdavEject" Content="刻录后弹出"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Eject the disc when burning is complete"/>
-                            <CheckBox x:Name="ChkBdavVerify" Content="Verify after burn"
+                                      ToolTip.Tip="刻录完成时弹出光盘"/>
+                            <CheckBox x:Name="ChkBdavVerify" Content="刻录后校验"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Verify disc integrity after burning"/>
-                            <CheckBox x:Name="ChkBdavSimulate" Content="Simulate (test write)"
+                                      ToolTip.Tip="刻录后校验光盘完整性"/>
+                            <CheckBox x:Name="ChkBdavSimulate" Content="模拟（测试写入）"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
-                            <CheckBox x:Name="ChkBdavBup" Content="Buffer underrun protection"
+                                      ToolTip.Tip="模拟刻录而不实际写入光盘"/>
+                            <CheckBox x:Name="ChkBdavBup" Content="缓存欠载保护"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                                      ToolTip.Tip="防止刻录过程中出现缓存欠载错误"/>
                             <CheckBox x:Name="ChkBdavBurnDisc"
-                                      Content="Also burn to disc (not just build image)"
+                                      Content="同时刻录到光盘（不仅构建镜像）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Uncheck to only create an ISO image without burning"/>
+                                      ToolTip.Tip="取消勾选则仅创建 ISO 镜像而不刻录"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -936,32 +802,22 @@
             <!-- STEP 2F: 3D Blu-ray from Folder                             -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2Bd3dPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="3D Blu-ray from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+                <TextBlock Text="从文件夹创建 3D 蓝光 — 配置并刻录" Classes="SectionHeader"/>
 
                 <!-- Source BDMV 3D Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Source BDMV 3D Folder" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="Select the folder containing BDMV with 3D content (STREAM, CLIPINF, PLAYLIST, and SSIF folders)."
+                        <TextBlock Text="📂 源 BDMV 3D 文件夹" Classes="SectionHeader"/>
+                        <TextBlock Text="选择包含 3D 内容的 BDMV 文件夹（内含 STREAM、CLIPINF、PLAYLIST 和 SSIF 文件夹）。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBd3dSourceFolder"
-                                     Watermark="Path to BDMV 3D folder..."
+                                     Watermark="BDMV 3D 文件夹路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBd3dSourceClick"
-                                    ToolTip.Tip="Browse for BDMV 3D folder">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="浏览并选择 BDMV 3D 文件夹"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -969,21 +825,17 @@
                 <!-- 3D Blu-ray Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                            <TextBlock Text="3D Blu-ray Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🎥 3D 蓝光设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Volume Label" Classes="FieldLabel"/>
+                                <TextBlock Text="卷标" Classes="FieldLabel"/>
                                 <TextBox x:Name="TxtBd3dVolumeLabel" Watermark="BLURAY3D_DISC"
                                          MaxLength="32"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Disc Size" Classes="FieldLabel"/>
+                                <TextBlock Text="光盘容量" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBd3dDiscSize" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Target disc capacity for 3D Blu-ray">
+                                          ToolTip.Tip="3D 蓝光的目标光盘容量">
                                     <ComboBoxItem Content="BD-50 (50 GB)" IsSelected="True"/>
                                     <ComboBoxItem Content="BD-25 (25 GB)"/>
                                     <ComboBoxItem Content="BD-100 (BDXL 100 GB)"/>
@@ -991,19 +843,19 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="3D Mode" Classes="FieldLabel"/>
+                                <TextBlock Text="3D 模式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBd3dMode" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Stereoscopic 3D encoding mode per Blu-ray 3D Profile 5.0">
+                                          ToolTip.Tip="按照蓝光 3D Profile 5.0 的立体 3D 编码模式">
                                     <ComboBoxItem Content="Frame Packed (MVC, full resolution)" IsSelected="True"/>
                                     <ComboBoxItem Content="Side by Side (half horizontal)"/>
                                     <ComboBoxItem Content="Top and Bottom (half vertical)"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="1" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="3D Depth Offset" Classes="FieldLabel"/>
+                                <TextBlock Text="3D 深度偏移" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumBd3dDepthOffset" Minimum="-2048" Maximum="2047"
                                                Value="0" FormatString="0"
-                                               ToolTip.Tip="Convergence distance in 1/10th pixel units. 0 = screen depth. Positive = behind screen, negative = in front."/>
+                                               ToolTip.Tip="以 1/10 像素为单位的会聚距离。0 = 屏幕深度；正值 = 屏幕之后，负值 = 屏幕之前。"/>
                             </StackPanel>
                         </Grid>
                     </StackPanel>
@@ -1012,27 +864,17 @@
                 <!-- Dependent View (right eye) for Frame Packed mode -->
                 <Border x:Name="Bd3dDependentViewCard" Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-view-3d-16.png"/>
-                            <TextBlock Text="Dependent View (Right Eye) — Frame Packed Mode" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="For Frame Packed (MVC) 3D, provide the dependent view (right-eye) video file. For Side by Side / Top and Bottom modes, the 3D content is encoded within the base view."
+                        <TextBlock Text="👁 从属视图（右眼）— 帧封装模式" Classes="SectionHeader"/>
+                        <TextBlock Text="帧封装（MVC）3D 需要提供从属视图（右眼）视频文件。左右并排 / 上下模式则在基础视图中编码 3D 内容。"
                                    Foreground="#5A7A9A" FontSize="11" TextWrapping="Wrap"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBd3dDependentViewPath"
-                                     Watermark="Path to right-eye (dependent view) video..."
+                                     Watermark="右眼（从属视图）视频路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBd3dDependentViewClick"
-                                    ToolTip.Tip="Browse for dependent view (right-eye) video file">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="浏览并选择从属视图（右眼）视频文件"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -1040,27 +882,17 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="The 3D Blu-ray image (ISO) will be saved to this location."
+                        <TextBlock Text="💾 输出镜像" Classes="SectionHeader"/>
+                        <TextBlock Text="3D 蓝光镜像（ISO）将保存到此位置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtBd3dOutputPath"
-                                     Watermark="Path to save the 3D Blu-ray image..."
+                                     Watermark="3D 蓝光镜像的保存路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseBd3dOutputClick"
-                                    ToolTip.Tip="Choose where to save the output 3D Blu-ray image">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出 3D 蓝光镜像的保存位置"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -1068,11 +900,7 @@
                 <!-- Video Preview -->
                 <Border Classes="InfoCard">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-video-editing-3d-16.png"/>
-                            <TextBlock Text="Video Preview" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🎬 视频预览" Classes="SectionHeader"/>
 
                         <ListBox x:Name="LstBd3dFiles"
                                  Background="Transparent"
@@ -1096,7 +924,7 @@
                                                 Classes="ActionBtn" Padding="6,4"
                                                 Click="OnPreviewBd3dFileClick"
                                                 Tag="{Binding FilePath}"
-                                                ToolTip.Tip="Preview this file"/>
+                                                ToolTip.Tip="预览此文件"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -1105,28 +933,16 @@
                         <!-- Player Controls -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnBd3dPlayPause"
+                                <Button x:Name="BtnBd3dPlayPause" Content="▶ 播放"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnBd3dPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
-                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Classes="ActionBtn"
+                                        ToolTip.Tip="播放或暂停选中的视频"/>
+                                <Button Content="⏹ 停止" Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnBd3dStopClick"
-                                        ToolTip.Tip="Stop playback">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                        ToolTip.Tip="停止播放"/>
                                 <TextBlock x:Name="TxtBd3dNowPlaying"
-                                           Text="No file selected"
+                                           Text="未选择文件"
                                            Foreground="#5A7A9A" FontSize="11"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" Margin="12,0,0,0"/>
@@ -1134,7 +950,7 @@
                                         Grid.Column="3" Minimum="0" Maximum="100"
                                         Margin="12,0" VerticalAlignment="Center"
                                         IsEnabled="False"
-                                        ToolTip.Tip="Playback position"/>
+                                        ToolTip.Tip="播放位置"/>
                                 <TextBlock x:Name="TxtBd3dPlaybackTime"
                                            Text="00:00 / 00:00" Foreground="#8EAFC8"
                                            FontSize="11" Grid.Column="4"
@@ -1147,21 +963,17 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🔥 刻录设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <TextBlock Text="目标光驱" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBd3dDrive" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Select the burner drive"/>
+                                          ToolTip.Tip="选择刻录机"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="写入速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbBd3dSpeed" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write speed for burning">
+                                          ToolTip.Tip="刻录的写入速度">
                                     <ComboBoxItem Content="Auto" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
                                     <ComboBoxItem Content="2x"/>
@@ -1172,29 +984,29 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <TextBlock Text="份数" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumBd3dCopies" Minimum="1" Maximum="99"
                                                Value="1" FormatString="0"
-                                               ToolTip.Tip="Number of disc copies to burn"/>
+                                               ToolTip.Tip="要刻录的光盘份数"/>
                             </StackPanel>
                         </Grid>
                         <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <CheckBox x:Name="ChkBd3dEject" Content="Eject after burn"
+                            <CheckBox x:Name="ChkBd3dEject" Content="刻录后弹出"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Eject the disc when burning is complete"/>
-                            <CheckBox x:Name="ChkBd3dVerify" Content="Verify after burn"
+                                      ToolTip.Tip="刻录完成时弹出光盘"/>
+                            <CheckBox x:Name="ChkBd3dVerify" Content="刻录后校验"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Verify disc integrity after burning"/>
-                            <CheckBox x:Name="ChkBd3dSimulate" Content="Simulate (test write)"
+                                      ToolTip.Tip="刻录后校验光盘完整性"/>
+                            <CheckBox x:Name="ChkBd3dSimulate" Content="模拟（测试写入）"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
-                            <CheckBox x:Name="ChkBd3dBup" Content="Buffer underrun protection"
+                                      ToolTip.Tip="模拟刻录而不实际写入光盘"/>
+                            <CheckBox x:Name="ChkBd3dBup" Content="缓存欠载保护"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                                      ToolTip.Tip="防止刻录过程中出现缓存欠载错误"/>
                             <CheckBox x:Name="ChkBd3dBurnDisc"
-                                      Content="Also burn to disc (not just build image)"
+                                      Content="同时刻录到光盘（不仅构建镜像）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Uncheck to only create an ISO image without burning"/>
+                                      ToolTip.Tip="取消勾选则仅创建 ISO 镜像而不刻录"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -1204,42 +1016,28 @@
             <!-- STEP 2C: Video CD (VCD)                                      -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2VcdPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="Video CD (VCD) — Add Files &amp; Configure" Classes="SectionHeader"/>
+                <TextBlock Text="视频 CD（VCD）— 添加文件并配置" Classes="SectionHeader"/>
 
                 <!-- Video Files -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
-                            <TextBlock Text="Video Files" Classes="SectionHeader"/>
-                            <TextBlock x:Name="TxtVcdFileCount" Text="(0 files)"
+                            <TextBlock Text="📼 视频文件" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtVcdFileCount" Text="（0 个文件）"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Classes="PrimaryBtn"
+                            <Button Content="➕ 添加文件" Classes="PrimaryBtn"
                                     Click="OnAddVcdFilesClick"
-                                    ToolTip.Tip="Add MPEG-1 video files">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
-                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="DangerBtn"
+                                    ToolTip.Tip="添加 MPEG-1 视频文件"/>
+                            <Button Content="🗑 移除所选" Classes="DangerBtn"
                                     Click="OnRemoveVcdFileClick"
-                                    ToolTip.Tip="Remove the selected file from the list">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
-                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="从列表中移除选中的文件"/>
                             <Button Content="⬆" Classes="ActionBtn" Click="OnMoveVcdUpClick"
-                                    ToolTip.Tip="Move selected file up"/>
+                                    ToolTip.Tip="上移选中的文件"/>
                             <Button Content="⬇" Classes="ActionBtn" Click="OnMoveVcdDownClick"
-                                    ToolTip.Tip="Move selected file down"/>
+                                    ToolTip.Tip="下移选中的文件"/>
                         </StackPanel>
 
                         <Border Classes="DropZone" DragDrop.AllowDrop="True"
@@ -1271,7 +1069,7 @@
                                                     Classes="ActionBtn" Padding="6,4"
                                                     Click="OnPreviewVcdFileClick"
                                                     Tag="{Binding FilePath}"
-                                                    ToolTip.Tip="Preview this file"/>
+                                                    ToolTip.Tip="预览此文件"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -1281,28 +1079,16 @@
                         <!-- Video Player -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnVcdPlayPause"
+                                <Button x:Name="BtnVcdPlayPause" Content="▶ 播放"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnVcdPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
-                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Classes="ActionBtn"
+                                        ToolTip.Tip="播放或暂停选中的视频"/>
+                                <Button Content="⏹ 停止" Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnVcdStopClick"
-                                        ToolTip.Tip="Stop playback">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                        ToolTip.Tip="停止播放"/>
                                 <TextBlock x:Name="TxtVcdNowPlaying"
-                                           Text="No file selected"
+                                           Text="未选择文件"
                                            Foreground="#5A7A9A" FontSize="11"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" Margin="12,0,0,0"/>
@@ -1310,7 +1096,7 @@
                                         Grid.Column="3" Minimum="0" Maximum="100"
                                         Margin="12,0" VerticalAlignment="Center"
                                         IsEnabled="False"
-                                        ToolTip.Tip="Playback position"/>
+                                        ToolTip.Tip="播放位置"/>
                                 <TextBlock x:Name="TxtVcdPlaybackTime"
                                            Text="00:00 / 00:00" Foreground="#8EAFC8"
                                            FontSize="11" Grid.Column="4"
@@ -1323,30 +1109,26 @@
                 <!-- VCD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
-                            <TextBlock Text="VCD Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="📼 VCD 设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Video Standard" Classes="FieldLabel"/>
+                                <TextBlock Text="视频制式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbVcdVideoStandard" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Video standard for the VCD">
+                                          ToolTip.Tip="VCD 的视频制式">
                                     <ComboBoxItem Content="NTSC" IsSelected="True"/>
                                     <ComboBoxItem Content="PAL"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="VCD Version" Classes="FieldLabel"/>
+                                <TextBlock Text="VCD 版本" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbVcdVersion" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="VCD specification version">
+                                          ToolTip.Tip="VCD 规范版本">
                                     <ComboBoxItem Content="2.0 (with PBC)" IsSelected="True"/>
                                     <ComboBoxItem Content="1.1 (basic)"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,0">
-                                <TextBlock Text="Disc Label" Classes="FieldLabel"/>
+                                <TextBlock Text="光盘标签" Classes="FieldLabel"/>
                                 <TextBox x:Name="TxtVcdDiscLabel" Watermark="VIDEOCD"/>
                             </StackPanel>
                         </Grid>
@@ -1354,32 +1136,26 @@
                 </Border>
 
                 <!-- Advanced VCD Options -->
-                <Expander Classes="SettingsExpander" IsExpanded="False">
-                    <Expander.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Advanced VCD Options"/>
-                        </StackPanel>
-                    </Expander.Header>
+                <Expander Classes="SettingsExpander" Header="⚙️ 高级 VCD 选项"
+                          IsExpanded="False">
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <WrapPanel Orientation="Horizontal">
                             <CheckBox x:Name="ChkVcdPbc"
-                                      Content="Playback Control (PBC)"
+                                      Content="播放控制（PBC）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Enable PBC menus and navigation on the VCD"/>
+                                      ToolTip.Tip="在 VCD 上启用 PBC 菜单和导航"/>
                             <CheckBox x:Name="ChkVcdScanData"
-                                      Content="Create Scan Data"
+                                      Content="创建扫描数据"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Include scan data for fast forward/rewind"/>
+                                      ToolTip.Tip="包含扫描数据以支持快进/快退"/>
                             <CheckBox x:Name="ChkVcdSearchData"
-                                      Content="Create Search Data"
+                                      Content="创建搜索数据"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Include search data for chapter seeking"/>
+                                      ToolTip.Tip="包含搜索数据以支持章节定位"/>
                             <CheckBox x:Name="ChkVcdCdi"
-                                      Content="Include CD-i application"
+                                      Content="包含 CD-i 应用程序"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Include a CD-i application for Philips CD-i players"/>
+                                      ToolTip.Tip="包含用于飞利浦 CD-i 播放机的 CD-i 应用程序"/>
                         </WrapPanel>
                     </StackPanel>
                 </Expander>
@@ -1387,27 +1163,17 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="The VCD image (BIN/CUE) will be saved to this location."
+                        <TextBlock Text="💾 输出镜像" Classes="SectionHeader"/>
+                        <TextBlock Text="VCD 镜像（BIN/CUE）将保存到此位置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtVcdOutputPath"
-                                     Watermark="Path to save the VCD image..."
+                                     Watermark="VCD 镜像的保存路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseVcdOutputClick"
-                                    ToolTip.Tip="Choose where to save the output VCD image">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出 VCD 镜像的保存位置"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -1415,21 +1181,17 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🔥 刻录设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <TextBlock Text="目标光驱" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbVcdDrive" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Select the burner drive"/>
+                                          ToolTip.Tip="选择刻录机"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="写入速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbVcdSpeed" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write speed for burning">
+                                          ToolTip.Tip="刻录的写入速度">
                                     <ComboBoxItem Content="Auto" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
                                     <ComboBoxItem Content="2x"/>
@@ -1442,38 +1204,38 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <TextBlock Text="写入模式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbVcdWriteMode" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write strategy for VCD burning">
+                                          ToolTip.Tip="VCD 刻录的写入策略">
                                     <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
                                     <ComboBoxItem Content="SAO (Session At Once)"/>
                                     <ComboBoxItem Content="TAO (Track At Once)"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <TextBlock Text="份数" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumVcdCopies" Minimum="1" Maximum="99"
                                                Value="1" FormatString="0"
-                                               ToolTip.Tip="Number of disc copies to burn"/>
+                                               ToolTip.Tip="要刻录的光盘份数"/>
                             </StackPanel>
                         </Grid>
                         <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <CheckBox x:Name="ChkVcdEject" Content="Eject after burn"
+                            <CheckBox x:Name="ChkVcdEject" Content="刻录后弹出"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Eject the disc when burning is complete"/>
-                            <CheckBox x:Name="ChkVcdVerify" Content="Verify after burn"
+                                      ToolTip.Tip="刻录完成时弹出光盘"/>
+                            <CheckBox x:Name="ChkVcdVerify" Content="刻录后校验"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Verify disc integrity after burning"/>
-                            <CheckBox x:Name="ChkVcdSimulate" Content="Simulate (test write)"
+                                      ToolTip.Tip="刻录后校验光盘完整性"/>
+                            <CheckBox x:Name="ChkVcdSimulate" Content="模拟（测试写入）"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
-                            <CheckBox x:Name="ChkVcdBup" Content="Buffer underrun protection"
+                                      ToolTip.Tip="模拟刻录而不实际写入光盘"/>
+                            <CheckBox x:Name="ChkVcdBup" Content="缓存欠载保护"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                                      ToolTip.Tip="防止刻录过程中出现缓存欠载错误"/>
                             <CheckBox x:Name="ChkVcdBurnDisc"
-                                      Content="Also burn to disc (not just build image)"
+                                      Content="同时刻录到光盘（不仅构建镜像）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Uncheck to only create a BIN/CUE image without burning"/>
+                                      ToolTip.Tip="取消勾选则仅创建 BIN/CUE 镜像而不刻录"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -1483,42 +1245,28 @@
             <!-- STEP 2D: Super Video CD (SVCD)                               -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2SvcdPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="Super Video CD (SVCD) — Add Files &amp; Configure" Classes="SectionHeader"/>
+                <TextBlock Text="超级视频 CD（SVCD）— 添加文件并配置" Classes="SectionHeader"/>
 
                 <!-- Video Files -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
-                            <TextBlock Text="Video Files" Classes="SectionHeader"/>
-                            <TextBlock x:Name="TxtSvcdFileCount" Text="(0 files)"
+                            <TextBlock Text="📼 视频文件" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtSvcdFileCount" Text="（0 个文件）"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Classes="PrimaryBtn"
+                            <Button Content="➕ 添加文件" Classes="PrimaryBtn"
                                     Click="OnAddSvcdFilesClick"
-                                    ToolTip.Tip="Add MPEG-2 video files">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
-                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="DangerBtn"
+                                    ToolTip.Tip="添加 MPEG-2 视频文件"/>
+                            <Button Content="🗑 移除所选" Classes="DangerBtn"
                                     Click="OnRemoveSvcdFileClick"
-                                    ToolTip.Tip="Remove the selected file from the list">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
-                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="从列表中移除选中的文件"/>
                             <Button Content="⬆" Classes="ActionBtn" Click="OnMoveSvcdUpClick"
-                                    ToolTip.Tip="Move selected file up"/>
+                                    ToolTip.Tip="上移选中的文件"/>
                             <Button Content="⬇" Classes="ActionBtn" Click="OnMoveSvcdDownClick"
-                                    ToolTip.Tip="Move selected file down"/>
+                                    ToolTip.Tip="下移选中的文件"/>
                         </StackPanel>
 
                         <Border Classes="DropZone" DragDrop.AllowDrop="True"
@@ -1550,7 +1298,7 @@
                                                     Classes="ActionBtn" Padding="6,4"
                                                     Click="OnPreviewSvcdFileClick"
                                                     Tag="{Binding FilePath}"
-                                                    ToolTip.Tip="Preview this file"/>
+                                                    ToolTip.Tip="预览此文件"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -1560,28 +1308,16 @@
                         <!-- Video Player -->
                         <Border Classes="InfoCard">
                             <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto">
-                                <Button x:Name="BtnSvcdPlayPause"
+                                <Button x:Name="BtnSvcdPlayPause" Content="▶ 播放"
                                         Classes="ActionBtn" Grid.Column="0"
                                         Click="OnSvcdPlayPauseClick"
-                                        ToolTip.Tip="Play or pause the selected video">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-play-16.png"/>
-                                        <TextBlock Text="Play" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Classes="ActionBtn"
+                                        ToolTip.Tip="播放或暂停选中的视频"/>
+                                <Button Content="⏹ 停止" Classes="ActionBtn"
                                         Grid.Column="1" Margin="6,0,0,0"
                                         Click="OnSvcdStopClick"
-                                        ToolTip.Tip="Stop playback">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <Image Width="16" Height="16"
-                                               Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                        <TextBlock Text="Stop" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
+                                        ToolTip.Tip="停止播放"/>
                                 <TextBlock x:Name="TxtSvcdNowPlaying"
-                                           Text="No file selected"
+                                           Text="未选择文件"
                                            Foreground="#5A7A9A" FontSize="11"
                                            VerticalAlignment="Center"
                                            Grid.Column="2" Margin="12,0,0,0"/>
@@ -1589,7 +1325,7 @@
                                         Grid.Column="3" Minimum="0" Maximum="100"
                                         Margin="12,0" VerticalAlignment="Center"
                                         IsEnabled="False"
-                                        ToolTip.Tip="Playback position"/>
+                                        ToolTip.Tip="播放位置"/>
                                 <TextBlock x:Name="TxtSvcdPlaybackTime"
                                            Text="00:00 / 00:00" Foreground="#8EAFC8"
                                            FontSize="11" Grid.Column="4"
@@ -1602,22 +1338,18 @@
                 <!-- SVCD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
-                            <TextBlock Text="SVCD Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="📼 SVCD 设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Video Standard" Classes="FieldLabel"/>
+                                <TextBlock Text="视频制式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbSvcdVideoStandard" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Video standard for the SVCD">
+                                          ToolTip.Tip="SVCD 的视频制式">
                                     <ComboBoxItem Content="NTSC" IsSelected="True"/>
                                     <ComboBoxItem Content="PAL"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,0,0">
-                                <TextBlock Text="Disc Label" Classes="FieldLabel"/>
+                                <TextBlock Text="光盘标签" Classes="FieldLabel"/>
                                 <TextBox x:Name="TxtSvcdDiscLabel" Watermark="SUPERVCD"/>
                             </StackPanel>
                         </Grid>
@@ -1625,28 +1357,22 @@
                 </Border>
 
                 <!-- Advanced SVCD Options -->
-                <Expander Classes="SettingsExpander" IsExpanded="False">
-                    <Expander.Header>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Advanced SVCD Options"/>
-                        </StackPanel>
-                    </Expander.Header>
+                <Expander Classes="SettingsExpander" Header="⚙️ 高级 SVCD 选项"
+                          IsExpanded="False">
                     <StackPanel Spacing="8" Margin="0,12,0,0">
                         <WrapPanel Orientation="Horizontal">
                             <CheckBox x:Name="ChkSvcdPbc"
-                                      Content="Playback Control (PBC)"
+                                      Content="播放控制（PBC）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Enable PBC menus and navigation on the SVCD"/>
+                                      ToolTip.Tip="在 SVCD 上启用 PBC 菜单和导航"/>
                             <CheckBox x:Name="ChkSvcdScanData"
-                                      Content="Create Scan Data"
+                                      Content="创建扫描数据"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Include scan data for fast forward/rewind"/>
+                                      ToolTip.Tip="包含扫描数据以支持快进/快退"/>
                             <CheckBox x:Name="ChkSvcdSearchData"
-                                      Content="Create Search Data"
+                                      Content="创建搜索数据"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Include search data for chapter seeking"/>
+                                      ToolTip.Tip="包含搜索数据以支持章节定位"/>
                         </WrapPanel>
                     </StackPanel>
                 </Expander>
@@ -1654,27 +1380,17 @@
                 <!-- Output Image Path -->
                 <Border Classes="Card">
                     <StackPanel Spacing="8">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output Image" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <TextBlock Text="The SVCD image (BIN/CUE) will be saved to this location."
+                        <TextBlock Text="💾 输出镜像" Classes="SectionHeader"/>
+                        <TextBlock Text="SVCD 镜像（BIN/CUE）将保存到此位置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
                         <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,0">
                             <TextBox x:Name="TxtSvcdOutputPath"
-                                     Watermark="Path to save the SVCD image..."
+                                     Watermark="SVCD 镜像的保存路径…"
                                      Grid.Column="0"/>
-                            <Button Classes="ActionBtn"
+                            <Button Content="📂 浏览" Classes="ActionBtn"
                                     Grid.Column="1" Margin="8,0,0,0"
                                     Click="OnBrowseSvcdOutputClick"
-                                    ToolTip.Tip="Choose where to save the output SVCD image">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出 SVCD 镜像的保存位置"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -1682,21 +1398,17 @@
                 <!-- Burn Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="🔥 刻录设置" Classes="SectionHeader"/>
                         <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto">
                             <StackPanel Grid.Row="0" Grid.Column="0" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Target Drive" Classes="FieldLabel"/>
+                                <TextBlock Text="目标光驱" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbSvcdDrive" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Select the burner drive"/>
+                                          ToolTip.Tip="选择刻录机"/>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="1" Spacing="4" Margin="0,0,8,8">
-                                <TextBlock Text="Write Speed" Classes="FieldLabel"/>
+                                <TextBlock Text="写入速度" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbSvcdSpeed" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write speed for burning">
+                                          ToolTip.Tip="刻录的写入速度">
                                     <ComboBoxItem Content="Auto" IsSelected="True"/>
                                     <ComboBoxItem Content="1x"/>
                                     <ComboBoxItem Content="2x"/>
@@ -1709,38 +1421,38 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="0" Grid.Column="2" Spacing="4" Margin="0,0,0,8">
-                                <TextBlock Text="Write Mode" Classes="FieldLabel"/>
+                                <TextBlock Text="写入模式" Classes="FieldLabel"/>
                                 <ComboBox x:Name="CmbSvcdWriteMode" HorizontalAlignment="Stretch"
-                                          ToolTip.Tip="Write strategy for SVCD burning">
+                                          ToolTip.Tip="SVCD 刻录的写入策略">
                                     <ComboBoxItem Content="DAO (Disc At Once)" IsSelected="True"/>
                                     <ComboBoxItem Content="SAO (Session At Once)"/>
                                     <ComboBoxItem Content="TAO (Track At Once)"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Grid.Column="0" Spacing="4" Margin="0,0,8,0">
-                                <TextBlock Text="Number of Copies" Classes="FieldLabel"/>
+                                <TextBlock Text="份数" Classes="FieldLabel"/>
                                 <NumericUpDown x:Name="NumSvcdCopies" Minimum="1" Maximum="99"
                                                Value="1" FormatString="0"
-                                               ToolTip.Tip="Number of disc copies to burn"/>
+                                               ToolTip.Tip="要刻录的光盘份数"/>
                             </StackPanel>
                         </Grid>
                         <WrapPanel Orientation="Horizontal" Margin="0,4,0,0">
-                            <CheckBox x:Name="ChkSvcdEject" Content="Eject after burn"
+                            <CheckBox x:Name="ChkSvcdEject" Content="刻录后弹出"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Eject the disc when burning is complete"/>
-                            <CheckBox x:Name="ChkSvcdVerify" Content="Verify after burn"
+                                      ToolTip.Tip="刻录完成时弹出光盘"/>
+                            <CheckBox x:Name="ChkSvcdVerify" Content="刻录后校验"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Verify disc integrity after burning"/>
-                            <CheckBox x:Name="ChkSvcdSimulate" Content="Simulate (test write)"
+                                      ToolTip.Tip="刻录后校验光盘完整性"/>
+                            <CheckBox x:Name="ChkSvcdSimulate" Content="模拟（测试写入）"
                                       Margin="0,0,16,6"
-                                      ToolTip.Tip="Simulate the burn without actually writing to disc"/>
-                            <CheckBox x:Name="ChkSvcdBup" Content="Buffer underrun protection"
+                                      ToolTip.Tip="模拟刻录而不实际写入光盘"/>
+                            <CheckBox x:Name="ChkSvcdBup" Content="缓存欠载保护"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Prevent buffer underrun errors during burning"/>
+                                      ToolTip.Tip="防止刻录过程中出现缓存欠载错误"/>
                             <CheckBox x:Name="ChkSvcdBurnDisc"
-                                      Content="Also burn to disc (not just build image)"
+                                      Content="同时刻录到光盘（不仅构建镜像）"
                                       IsChecked="True" Margin="0,0,16,6"
-                                      ToolTip.Tip="Uncheck to only create a BIN/CUE image without burning"/>
+                                      ToolTip.Tip="取消勾选则仅创建 BIN/CUE 镜像而不刻录"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -1750,28 +1462,18 @@
             <!-- STEP 2G: UHD Blu-ray from Folder                            -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2UhdBdPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="UHD Blu-ray (4K HDR) from Folder — Configure &amp; Burn" Classes="SectionHeader"/>
+                <TextBlock Text="从文件夹创建 UHD 蓝光（4K HDR）— 配置并刻录" Classes="SectionHeader"/>
 
                 <!-- Source Folder -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
+                        <TextBlock Text="📂 源文件夹（BDMV）" Classes="SectionHeader"/>
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Source Folder (BDMV)" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBox x:Name="TxtUhdBdSourceFolder" Watermark="Path to BDMV folder..."
+                            <TextBox x:Name="TxtUhdBdSourceFolder" Watermark="BDMV 文件夹路径…"
                                      Width="520"/>
-                            <Button Classes="PrimaryBtn"
+                            <Button Content="📁 浏览…" Classes="PrimaryBtn"
                                     Click="OnBrowseUhdBdSourceClick"
-                                    ToolTip.Tip="Select BDMV source folder">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse..." VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择 BDMV 源文件夹"/>
                         </StackPanel>
 
                         <!-- Files list -->
@@ -1803,25 +1505,21 @@
                 <!-- UHD BD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="UHD BD Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="⚙️ UHD BD 设置" Classes="SectionHeader"/>
                         <WrapPanel Orientation="Horizontal">
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Volume Label" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="卷标" Foreground="#8EAFC8" FontSize="11"/>
                                 <TextBox x:Name="TxtUhdBdVolumeLabel" Watermark="UHD_BLURAY" Width="180"/>
                             </StackPanel>
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Disc Size" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="光盘容量" Foreground="#8EAFC8" FontSize="11"/>
                                 <ComboBox x:Name="CmbUhdBdDiscSize" Width="200" SelectedIndex="0">
                                     <ComboBoxItem Content="UHD BD-66 (66 GB)"/>
                                     <ComboBoxItem Content="UHD BD-100 (100 GB)"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="HDR Mode" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="HDR 模式" Foreground="#8EAFC8" FontSize="11"/>
                                 <ComboBox x:Name="CmbUhdBdHdrMode" Width="200" SelectedIndex="0">
                                     <ComboBoxItem Content="HDR10"/>
                                     <ComboBoxItem Content="Dolby Vision"/>
@@ -1836,42 +1534,32 @@
                 <!-- Output & Burning -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
+                        <TextBlock Text="💾 输出与刻录" Classes="SectionHeader"/>
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output &amp; Burning" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBox x:Name="TxtUhdBdOutputPath" Watermark="Output ISO image path..."
+                            <TextBox x:Name="TxtUhdBdOutputPath" Watermark="输出 ISO 镜像路径…"
                                      Width="520"/>
-                            <Button Classes="PrimaryBtn"
+                            <Button Content="📁 浏览…" Classes="PrimaryBtn"
                                     Click="OnBrowseUhdBdOutputClick"
-                                    ToolTip.Tip="Select output ISO image path">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse..." VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出 ISO 镜像路径"/>
                         </StackPanel>
 
                         <WrapPanel Orientation="Horizontal">
-                            <CheckBox x:Name="ChkUhdBdBurnDisc" Content="Burn to Disc" Margin="0,0,16,8"
-                                      ToolTip.Tip="Burn the UHD Blu-ray ISO after creation"/>
-                            <CheckBox x:Name="ChkUhdBdEject" Content="Eject After" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkUhdBdVerify" Content="Verify After" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkUhdBdSimulate" Content="Simulate" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkUhdBdBup" Content="Buffer Underrun Protection"
+                            <CheckBox x:Name="ChkUhdBdBurnDisc" Content="🔥 刻录到光盘" Margin="0,0,16,8"
+                                      ToolTip.Tip="创建后刻录 UHD 蓝光 ISO 镜像"/>
+                            <CheckBox x:Name="ChkUhdBdEject" Content="⏏️ 完成后弹出" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdVerify" Content="✅ 完成后校验" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdSimulate" Content="🧪 模拟" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkUhdBdBup" Content="🛡 缓存欠载保护"
                                       Margin="0,0,16,8" IsChecked="True"/>
                         </WrapPanel>
 
                         <WrapPanel Orientation="Horizontal">
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Target Drive" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="目标光驱" Foreground="#8EAFC8" FontSize="11"/>
                                 <ComboBox x:Name="CmbUhdBdDrive" Width="260"/>
                             </StackPanel>
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Write Speed" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="写入速度" Foreground="#8EAFC8" FontSize="11"/>
                                 <ComboBox x:Name="CmbUhdBdSpeed" Width="120" SelectedIndex="0">
                                     <ComboBoxItem Content="Auto"/>
                                     <ComboBoxItem Content="2x"/>
@@ -1881,7 +1569,7 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Copies" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="份数" Foreground="#8EAFC8" FontSize="11"/>
                                 <NumericUpDown x:Name="NumUhdBdCopies" Minimum="1" Maximum="99" Value="1"
                                                Width="80"/>
                             </StackPanel>
@@ -1894,42 +1582,28 @@
             <!-- STEP 2H: XSVCD (eXtended Super Video CD)                    -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step2XsvcdPanel" IsVisible="False" Spacing="16">
-                <TextBlock Text="eXtended Super Video CD (XSVCD) — Add Files &amp; Configure" Classes="SectionHeader"/>
+                <TextBlock Text="扩展超级视频 CD（XSVCD）— 添加文件并配置" Classes="SectionHeader"/>
 
                 <!-- Video Files -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-tape-drive-2d-16.png"/>
-                            <TextBlock Text="Video Files" Classes="SectionHeader"/>
-                            <TextBlock x:Name="TxtXsvcdFileCount" Text="(0 files)"
+                            <TextBlock Text="📼 视频文件" Classes="SectionHeader"/>
+                            <TextBlock x:Name="TxtXsvcdFileCount" Text="（0 个文件）"
                                        Foreground="#5A7A9A" FontSize="12" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button Classes="PrimaryBtn"
+                            <Button Content="➕ 添加文件" Classes="PrimaryBtn"
                                     Click="OnAddXsvcdFilesClick"
-                                    ToolTip.Tip="Add MPEG-2 video files">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-add-16.png"/>
-                                    <TextBlock Text="Add Files" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                            <Button Classes="DangerBtn"
+                                    ToolTip.Tip="添加 MPEG-2 视频文件"/>
+                            <Button Content="🗑 移除所选" Classes="DangerBtn"
                                     Click="OnRemoveXsvcdFileClick"
-                                    ToolTip.Tip="Remove the selected file from the list">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-delete-2d-16.png"/>
-                                    <TextBlock Text="Remove Selected" VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="从列表中移除选中的文件"/>
                             <Button Content="⬆" Classes="ActionBtn" Click="OnMoveXsvcdUpClick"
-                                    ToolTip.Tip="Move selected file up"/>
+                                    ToolTip.Tip="上移选中的文件"/>
                             <Button Content="⬇" Classes="ActionBtn" Click="OnMoveXsvcdDownClick"
-                                    ToolTip.Tip="Move selected file down"/>
+                                    ToolTip.Tip="下移选中的文件"/>
                         </StackPanel>
 
                         <Border Classes="DropZone" DragDrop.AllowDrop="True"
@@ -1968,34 +1642,30 @@
                 <!-- XSVCD Settings -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="XSVCD Settings" Classes="SectionHeader"/>
-                        </StackPanel>
+                        <TextBlock Text="⚙️ XSVCD 设置" Classes="SectionHeader"/>
                         <WrapPanel Orientation="Horizontal">
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Video Standard" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="视频制式" Foreground="#8EAFC8" FontSize="11"/>
                                 <ComboBox x:Name="CmbXsvcdVideoStandard" Width="120" SelectedIndex="0">
                                     <ComboBoxItem Content="NTSC"/>
                                     <ComboBoxItem Content="PAL"/>
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Disc Label" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="光盘标签" Foreground="#8EAFC8" FontSize="11"/>
                                 <TextBox x:Name="TxtXsvcdDiscLabel" Watermark="XSVCD" Width="180"/>
                             </StackPanel>
                         </WrapPanel>
                         <WrapPanel Orientation="Horizontal">
-                            <CheckBox x:Name="ChkXsvcdPbc" Content="Playback Control (PBC)"
+                            <CheckBox x:Name="ChkXsvcdPbc" Content="🎮 播放控制（PBC）"
                                       Margin="0,0,16,8" IsChecked="True"
-                                      ToolTip.Tip="Enable interactive navigation menus"/>
-                            <CheckBox x:Name="ChkXsvcdScanData" Content="Scan Data"
+                                      ToolTip.Tip="启用交互式导航菜单"/>
+                            <CheckBox x:Name="ChkXsvcdScanData" Content="📡 扫描数据"
                                       Margin="0,0,16,8" IsChecked="True"
-                                      ToolTip.Tip="Include SCANDATA.DAT for fast-forward/rewind support"/>
-                            <CheckBox x:Name="ChkXsvcdSearchData" Content="Search Data"
+                                      ToolTip.Tip="包含 SCANDATA.DAT 以支持快进/快退"/>
+                            <CheckBox x:Name="ChkXsvcdSearchData" Content="🔍 搜索数据"
                                       Margin="0,0,16,8" IsChecked="True"
-                                      ToolTip.Tip="Include SEARCH.DAT for chapter/track seeking"/>
+                                      ToolTip.Tip="包含 SEARCH.DAT 以支持章节/轨道定位"/>
                         </WrapPanel>
                     </StackPanel>
                 </Border>
@@ -2003,42 +1673,32 @@
                 <!-- Output & Burning -->
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
+                        <TextBlock Text="💾 输出与刻录" Classes="SectionHeader"/>
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                            <TextBlock Text="Output &amp; Burning" Classes="SectionHeader"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBox x:Name="TxtXsvcdOutputPath" Watermark="Output image path (.bin)..."
+                            <TextBox x:Name="TxtXsvcdOutputPath" Watermark="输出镜像路径（.bin）…"
                                      Width="520"/>
-                            <Button Classes="PrimaryBtn"
+                            <Button Content="📁 浏览…" Classes="PrimaryBtn"
                                     Click="OnBrowseXsvcdOutputClick"
-                                    ToolTip.Tip="Select output BIN/CUE image path">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <Image Width="16" Height="16"
-                                           Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                                    <TextBlock Text="Browse..." VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
+                                    ToolTip.Tip="选择输出 BIN/CUE 镜像路径"/>
                         </StackPanel>
 
                         <WrapPanel Orientation="Horizontal">
-                            <CheckBox x:Name="ChkXsvcdBurnDisc" Content="Burn to Disc" Margin="0,0,16,8"
-                                      ToolTip.Tip="Burn the XSVCD image after creation"/>
-                            <CheckBox x:Name="ChkXsvcdEject" Content="Eject After" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkXsvcdVerify" Content="Verify After" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkXsvcdSimulate" Content="Simulate" Margin="0,0,16,8"/>
-                            <CheckBox x:Name="ChkXsvcdBup" Content="Buffer Underrun Protection"
+                            <CheckBox x:Name="ChkXsvcdBurnDisc" Content="🔥 刻录到光盘" Margin="0,0,16,8"
+                                      ToolTip.Tip="创建后刻录 XSVCD 镜像"/>
+                            <CheckBox x:Name="ChkXsvcdEject" Content="⏏️ 完成后弹出" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdVerify" Content="✅ 完成后校验" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdSimulate" Content="🧪 模拟" Margin="0,0,16,8"/>
+                            <CheckBox x:Name="ChkXsvcdBup" Content="🛡 缓存欠载保护"
                                       Margin="0,0,16,8" IsChecked="True"/>
                         </WrapPanel>
 
                         <WrapPanel Orientation="Horizontal">
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Target Drive" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="目标光驱" Foreground="#8EAFC8" FontSize="11"/>
                                 <ComboBox x:Name="CmbXsvcdDrive" Width="260"/>
                             </StackPanel>
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Write Speed" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="写入速度" Foreground="#8EAFC8" FontSize="11"/>
                                 <ComboBox x:Name="CmbXsvcdSpeed" Width="120" SelectedIndex="0">
                                     <ComboBoxItem Content="Auto"/>
                                     <ComboBoxItem Content="1x"/>
@@ -2047,7 +1707,7 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Write Mode" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="写入模式" Foreground="#8EAFC8" FontSize="11"/>
                                 <ComboBox x:Name="CmbXsvcdWriteMode" Width="200" SelectedIndex="0">
                                     <ComboBoxItem Content="DAO (Disc At Once)"/>
                                     <ComboBoxItem Content="TAO (Track At Once)"/>
@@ -2055,7 +1715,7 @@
                                 </ComboBox>
                             </StackPanel>
                             <StackPanel Spacing="4" Margin="0,0,16,8">
-                                <TextBlock Text="Copies" Foreground="#8EAFC8" FontSize="11"/>
+                                <TextBlock Text="份数" Foreground="#8EAFC8" FontSize="11"/>
                                 <NumericUpDown x:Name="NumXsvcdCopies" Minimum="1" Maximum="99" Value="1"
                                                Width="80"/>
                             </StackPanel>
@@ -2068,7 +1728,7 @@
             <!-- STEP 3: Summary                                              -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step3Panel" IsVisible="False" Spacing="16">
-                <TextBlock Text="Summary — Review Before Executing" Classes="SectionHeader"/>
+                <TextBlock Text="摘要 — 执行前确认" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel x:Name="VideoSummaryContent" Spacing="8">
@@ -2081,13 +1741,13 @@
             <!-- STEP 4: Progress                                             -->
             <!-- ============================================================ -->
             <StackPanel x:Name="Step4Panel" IsVisible="False" Spacing="16">
-                <TextBlock x:Name="TxtVideoStep4Title" Text="Executing..." Classes="SectionHeader"/>
+                <TextBlock x:Name="TxtVideoStep4Title" Text="正在执行…" Classes="SectionHeader"/>
 
                 <Border Classes="Card">
                     <StackPanel Spacing="12">
                         <ProgressBar x:Name="PrgVideoExec" Classes="BurnProgress" Value="0"/>
                         <Grid ColumnDefinitions="*,Auto,Auto,Auto">
-                            <TextBlock x:Name="TxtVideoExecStatus" Text="Preparing..."
+                            <TextBlock x:Name="TxtVideoExecStatus" Text="正在准备…"
                                        Foreground="#8EAFC8" FontSize="12"
                                        VerticalAlignment="Center"/>
                             <TextBlock x:Name="TxtVideoExecETA" Text=""
@@ -2118,45 +1778,27 @@
             <!-- ============================================================ -->
             <Border Classes="InfoCard" Margin="0,8,0,0">
                 <Grid ColumnDefinitions="Auto,*,Auto,Auto">
-                    <Button x:Name="BtnVideoBack" Content="← Back"
+                    <Button x:Name="BtnVideoBack" Content="← 上一步"
                             Classes="ActionBtn" Click="OnVideoBackClick"
                             IsVisible="False"
-                            ToolTip.Tip="Go back to the previous step"/>
-                    <Button x:Name="BtnVideoNext" Content="Next →"
+                            ToolTip.Tip="返回上一步"/>
+                    <Button x:Name="BtnVideoNext" Content="下一步 →"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnVideoNextClick" IsVisible="False"
-                            ToolTip.Tip="Proceed to the next step"/>
-                    <Button x:Name="BtnVideoExecute"
+                            ToolTip.Tip="进入下一步"/>
+                    <Button x:Name="BtnVideoExecute" Content="🔥 开始"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnVideoExecuteClick" IsVisible="False"
-                            ToolTip.Tip="Start the operation">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Start" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="BtnVideoCancel"
+                            ToolTip.Tip="开始操作"/>
+                    <Button x:Name="BtnVideoCancel" Content="⏹ 取消"
                             Classes="DangerBtn" Grid.Column="3"
                             Margin="8,0,0,0" Click="OnVideoCancelClick"
                             IsVisible="False"
-                            ToolTip.Tip="Cancel the current operation">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                            <TextBlock Text="Cancel" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="BtnVideoFinish"
+                            ToolTip.Tip="取消当前操作"/>
+                    <Button x:Name="BtnVideoFinish" Content="✅ 完成 — 返回主页"
                             Classes="PrimaryBtn" Grid.Column="2"
                             Click="OnVideoFinishClick" IsVisible="False"
-                            ToolTip.Tip="Operation complete — return to the home screen">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
-                            <TextBlock Text="Done — Return Home" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                            ToolTip.Tip="操作完成 — 返回主界面"/>
                 </Grid>
             </Border>
 

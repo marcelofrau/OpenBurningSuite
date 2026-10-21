@@ -82,7 +82,7 @@ public static class DiscContentDetectionService
 
             if (profile == 0)
             {
-                info.ContentLabel = "No media";
+                info.ContentLabel = "无光盘";
                 return info;
             }
 
@@ -107,7 +107,7 @@ public static class DiscContentDetectionService
             if (info.ContentType == DiscContentType.Unknown && info.TrackCount > 0)
             {
                 info.ContentType = DiscContentType.Data;
-                info.ContentLabel = "💿 Data Disc";
+                info.ContentLabel = "💿 数据光盘";
             }
         }
         catch (Exception ex)
@@ -226,12 +226,12 @@ public static class DiscContentDetectionService
                     if (vcdType == "SVCD")
                     {
                         info.ContentType = DiscContentType.SuperVideoCd;
-                        info.ContentLabel = "📀 Super Video CD (SVCD)";
+                        info.ContentLabel = "📀 超级视频 CD（SVCD）";
                     }
                     else
                     {
                         info.ContentType = DiscContentType.VideoCd;
-                        info.ContentLabel = "📀 Video CD (VCD)";
+                        info.ContentLabel = "📀 视频 CD（VCD）";
                     }
                 }
             }
@@ -240,7 +240,7 @@ public static class DiscContentDetectionService
             if (info.ContentType == DiscContentType.Unknown && stream.Length > 0)
             {
                 info.ContentType = DiscContentType.Data;
-                info.ContentLabel = "💿 Data Disc";
+                info.ContentLabel = "💿 数据光盘";
             }
         }
         catch (Exception ex)
@@ -300,7 +300,7 @@ public static class DiscContentDetectionService
         if (info.ContentType == DiscContentType.Unknown && info.DataTrackCount > 0)
         {
             info.ContentType = DiscContentType.DataCd;
-            info.ContentLabel = "💿 Data CD";
+            info.ContentLabel = "💿 数据 CD";
         }
     }
 
@@ -342,7 +342,7 @@ public static class DiscContentDetectionService
         {
             // Pure audio CD (Red Book / CD-DA per IEC 60908)
             info.ContentType = DiscContentType.AudioCd;
-            info.ContentLabel = "🎵 Audio CD";
+            info.ContentLabel = "🎵 音频 CD";
         }
         else if (dataTracks > 0 && audioTracks > 0)
         {
@@ -355,7 +355,7 @@ public static class DiscContentDetectionService
                 if (session1AllAudio)
                 {
                     info.ContentType = DiscContentType.EnhancedCd;
-                    info.ContentLabel = "🎵 Enhanced CD (CD Extra)";
+                    info.ContentLabel = "🎵 增强型 CD（CD Extra）";
                     return;
                 }
             }
@@ -364,13 +364,13 @@ public static class DiscContentDetectionService
             if (firstTrackIsData)
             {
                 info.ContentType = DiscContentType.MixedModeCd;
-                info.ContentLabel = "🎵 Mixed Mode CD";
+                info.ContentLabel = "🎵 混合模式 CD";
             }
             else
             {
                 // Audio tracks first, then data — unusual but classify as enhanced
                 info.ContentType = DiscContentType.EnhancedCd;
-                info.ContentLabel = "🎵 Enhanced CD (CD Extra)";
+                info.ContentLabel = "🎵 增强型 CD（CD Extra）";
             }
         }
         // dataTracks > 0 && audioTracks == 0: data-only CD, needs further analysis
@@ -390,7 +390,7 @@ public static class DiscContentDetectionService
         if (sysId.Contains("PLAYSTATION"))
         {
             info.ContentType = DiscContentType.PlayStation1Game;
-            info.ContentLabel = "🎮 PlayStation 1 Game";
+            info.ContentLabel = "🎮 PlayStation 1 游戏";
             info.GamingSystem = "PlayStation 1";
             return;
         }
@@ -402,12 +402,12 @@ public static class DiscContentDetectionService
             if (HasAnyDirectory(dirs, "VIDEO", "GAME", "APP"))
             {
                 info.ContentType = DiscContentType.CdInteractiveGame;
-                info.ContentLabel = "🎮 CD-i Game";
+                info.ContentLabel = "🎮 CD-i 游戏";
             }
             else
             {
                 info.ContentType = DiscContentType.CdInteractive;
-                info.ContentLabel = "📀 CD-i Disc";
+                info.ContentLabel = "📀 CD-i 光盘";
             }
             return;
         }
@@ -417,25 +417,25 @@ public static class DiscContentDetectionService
             if (sysId.Contains("SEGASATURN"))
             {
                 info.ContentType = DiscContentType.SegaSaturnGame;
-                info.ContentLabel = "🎮 Sega Saturn Game";
+                info.ContentLabel = "🎮 Sega Saturn 游戏";
                 info.GamingSystem = "Sega Saturn";
             }
             else if (sysId.Contains("SEGAKATANA") || sysId.Contains("DREAMCAST"))
             {
                 info.ContentType = DiscContentType.SegaDreamcastGame;
-                info.ContentLabel = "🎮 Sega Dreamcast Game";
+                info.ContentLabel = "🎮 Sega Dreamcast 游戏";
                 info.GamingSystem = "Sega Dreamcast";
             }
             else if (sysId.Contains("MEGA DRIVE") || sysId.Contains("SEGADISCSYSTEM"))
             {
                 info.ContentType = DiscContentType.SegaMegaCdGame;
-                info.ContentLabel = "🎮 Sega Mega CD Game";
+                info.ContentLabel = "🎮 Sega Mega CD 游戏";
                 info.GamingSystem = "Sega Mega CD";
             }
             else
             {
                 info.ContentType = DiscContentType.SegaSaturnGame;
-                info.ContentLabel = "🎮 Sega Game";
+                info.ContentLabel = "🎮 Sega 游戏";
                 info.GamingSystem = "Sega Saturn";
             }
             return;
@@ -444,7 +444,7 @@ public static class DiscContentDetectionService
         if (sysId.Contains("CDTV"))
         {
             info.ContentType = DiscContentType.AmigaCdtvGame;
-            info.ContentLabel = "🎮 Amiga CDTV Game";
+            info.ContentLabel = "🎮 Amiga CDTV 游戏";
             info.GamingSystem = "Amiga CDTV";
             return;
         }
@@ -452,7 +452,7 @@ public static class DiscContentDetectionService
         if (sysId.Contains("AMIGA"))
         {
             info.ContentType = DiscContentType.AmigaCd32Game;
-            info.ContentLabel = "🎮 Amiga CD32 Game";
+            info.ContentLabel = "🎮 Amiga CD32 游戏";
             info.GamingSystem = "Amiga CD32";
             return;
         }
@@ -463,14 +463,14 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "VCD") || HasAnyFile(files, "INFO.VCD"))
         {
             info.ContentType = DiscContentType.VideoCd;
-            info.ContentLabel = "📀 Video CD (VCD)";
+            info.ContentLabel = "📀 视频 CD（VCD）";
             return;
         }
 
         if (HasAnyDirectory(dirs, "SVCD") || HasAnyFile(files, "INFO.SVD"))
         {
             info.ContentType = DiscContentType.SuperVideoCd;
-            info.ContentLabel = "📀 Super Video CD (SVCD)";
+            info.ContentLabel = "📀 超级视频 CD（SVCD）";
             return;
         }
 
@@ -479,7 +479,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "PHOTO_CD") || HasAnyFile(files, "INFO.PCD"))
         {
             info.ContentType = DiscContentType.PhotoCd;
-            info.ContentLabel = "📷 Photo CD";
+            info.ContentLabel = "📷 照片 CD";
             return;
         }
 
@@ -487,7 +487,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "DCIM"))
         {
             info.ContentType = DiscContentType.PhotoCd;
-            info.ContentLabel = "📷 Photo CD";
+            info.ContentLabel = "📷 照片 CD";
             return;
         }
 
@@ -496,7 +496,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "VIDEO_TS"))
         {
             info.ContentType = DiscContentType.DvdVideo;
-            info.ContentLabel = "🎬 DVD-Video (on CD)";
+            info.ContentLabel = "🎬 DVD-Video（CD 介质）";
             return;
         }
 
@@ -504,7 +504,7 @@ public static class DiscContentDetectionService
         if (info.ContentType == DiscContentType.Unknown)
         {
             info.ContentType = DiscContentType.DataCd;
-            info.ContentLabel = "💿 Data CD";
+            info.ContentLabel = "💿 数据 CD";
         }
     }
 
@@ -539,7 +539,7 @@ public static class DiscContentDetectionService
         if (info.ContentType == DiscContentType.Unknown)
         {
             info.ContentType = DiscContentType.DataDvd;
-            info.ContentLabel = "💿 Data DVD";
+            info.ContentLabel = "💿 数据 DVD";
         }
     }
 
@@ -561,7 +561,7 @@ public static class DiscContentDetectionService
                 sysId.Contains("PLAYSTATION 2"))
             {
                 info.ContentType = DiscContentType.PlayStation2Game;
-                info.ContentLabel = "🎮 PlayStation 2 Game";
+                info.ContentLabel = "🎮 PlayStation 2 游戏";
                 info.GamingSystem = "PlayStation 2";
                 return;
             }
@@ -570,14 +570,14 @@ public static class DiscContentDetectionService
             if (appId.Contains("PS3"))
             {
                 info.ContentType = DiscContentType.PlayStation3Game;
-                info.ContentLabel = "🎮 PlayStation 3 Game";
+                info.ContentLabel = "🎮 PlayStation 3 游戏";
                 info.GamingSystem = "PlayStation 3";
                 return;
             }
 
             // Default PlayStation DVD to PS2
             info.ContentType = DiscContentType.PlayStation2Game;
-            info.ContentLabel = "🎮 PlayStation 2 Game";
+            info.ContentLabel = "🎮 PlayStation 2 游戏";
             info.GamingSystem = "PlayStation 2";
             return;
         }
@@ -585,7 +585,7 @@ public static class DiscContentDetectionService
         if (sysId.Contains("PSP GAME"))
         {
             info.ContentType = DiscContentType.PspUmdGame;
-            info.ContentLabel = "🎮 PSP UMD Game";
+            info.ContentLabel = "🎮 PSP UMD 游戏";
             info.GamingSystem = "PSP (UMD)";
             return;
         }
@@ -595,13 +595,13 @@ public static class DiscContentDetectionService
             if (info.CapacityBytes > FormatHelper.DVD5Capacity)
             {
                 info.ContentType = DiscContentType.Xbox360Game;
-                info.ContentLabel = "🎮 Xbox 360 Game";
+                info.ContentLabel = "🎮 Xbox 360 游戏";
                 info.GamingSystem = "Xbox 360";
             }
             else
             {
                 info.ContentType = DiscContentType.XboxGame;
-                info.ContentLabel = "🎮 Xbox Game";
+                info.ContentLabel = "🎮 Xbox 游戏";
                 info.GamingSystem = "Xbox";
             }
             return;
@@ -611,7 +611,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "DATA", "UPDATE") && volId.Contains("WII"))
         {
             info.ContentType = DiscContentType.WiiGame;
-            info.ContentLabel = "🎮 Nintendo Wii Game";
+            info.ContentLabel = "🎮 任天堂 Wii 游戏";
             info.GamingSystem = "Wii";
             return;
         }
@@ -648,7 +648,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "DVD_RTAV"))
         {
             info.ContentType = DiscContentType.DvdVideoRecording;
-            info.ContentLabel = "🎬 DVD-VR (Video Recording)";
+            info.ContentLabel = "🎬 DVD-VR（视频录像）";
             return;
         }
 
@@ -657,7 +657,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "DCIM"))
         {
             info.ContentType = DiscContentType.PhotoDvd;
-            info.ContentLabel = "📷 Photo DVD";
+            info.ContentLabel = "📷 照片 DVD";
             return;
         }
 
@@ -665,7 +665,7 @@ public static class DiscContentDetectionService
         if (info.ContentType == DiscContentType.Unknown)
         {
             info.ContentType = DiscContentType.DataDvd;
-            info.ContentLabel = "💿 Data DVD";
+            info.ContentLabel = "💿 数据 DVD";
         }
     }
 
@@ -745,7 +745,7 @@ public static class DiscContentDetectionService
         if (info.ContentType == DiscContentType.Unknown)
         {
             info.ContentType = DiscContentType.DataBluRay;
-            info.ContentLabel = "💿 Data Blu-ray";
+            info.ContentLabel = "💿 数据蓝光";
         }
     }
 
@@ -765,7 +765,7 @@ public static class DiscContentDetectionService
             HasAnyFile(files, "PS3_DISC.SFB"))
         {
             info.ContentType = DiscContentType.PlayStation3Game;
-            info.ContentLabel = "🎮 PlayStation 3 Game";
+            info.ContentLabel = "🎮 PlayStation 3 游戏";
             info.GamingSystem = "PlayStation 3";
 
             // Try to read PS3 metadata
@@ -782,13 +782,13 @@ public static class DiscContentDetectionService
                 HasAnyDirectory(dirs, "uds"))
             {
                 info.ContentType = DiscContentType.PlayStation5Game;
-                info.ContentLabel = "🎮 PlayStation 5 Game";
+                info.ContentLabel = "🎮 PlayStation 5 游戏";
                 info.GamingSystem = "PlayStation 5";
             }
             else
             {
                 info.ContentType = DiscContentType.PlayStation4Game;
-                info.ContentLabel = "🎮 PlayStation 4 Game";
+                info.ContentLabel = "🎮 PlayStation 4 游戏";
                 info.GamingSystem = "PlayStation 4";
             }
             return;
@@ -800,19 +800,19 @@ public static class DiscContentDetectionService
             if (appId.Contains("PS5") || info.CapacityBytes > FormatHelper.BD100Capacity)
             {
                 info.ContentType = DiscContentType.PlayStation5Game;
-                info.ContentLabel = "🎮 PlayStation 5 Game";
+                info.ContentLabel = "🎮 PlayStation 5 游戏";
                 info.GamingSystem = "PlayStation 5";
             }
             else if (appId.Contains("PS4") || info.CapacityBytes > FormatHelper.BD50Capacity)
             {
                 info.ContentType = DiscContentType.PlayStation4Game;
-                info.ContentLabel = "🎮 PlayStation 4 Game";
+                info.ContentLabel = "🎮 PlayStation 4 游戏";
                 info.GamingSystem = "PlayStation 4";
             }
             else
             {
                 info.ContentType = DiscContentType.PlayStation3Game;
-                info.ContentLabel = "🎮 PlayStation 3 Game";
+                info.ContentLabel = "🎮 PlayStation 3 游戏";
                 info.GamingSystem = "PlayStation 3";
             }
             return;
@@ -824,13 +824,13 @@ public static class DiscContentDetectionService
             if (appId.Contains("SERIES") || info.CapacityBytes > FormatHelper.BD50Capacity)
             {
                 info.ContentType = DiscContentType.XboxSeriesGame;
-                info.ContentLabel = "🎮 Xbox Series X|S Game";
+                info.ContentLabel = "🎮 Xbox Series X|S 游戏";
                 info.GamingSystem = "Xbox Series X|S";
             }
             else
             {
                 info.ContentType = DiscContentType.XboxOneGame;
-                info.ContentLabel = "🎮 Xbox One Game";
+                info.ContentLabel = "🎮 Xbox One 游戏";
                 info.GamingSystem = "Xbox One";
             }
             return;
@@ -852,7 +852,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "BDAV"))
         {
             info.ContentType = DiscContentType.BluRayAudioVisual;
-            info.ContentLabel = "🎬 Blu-ray BDAV Recording";
+            info.ContentLabel = "🎬 BDAV 蓝光录像";
             return;
         }
 
@@ -861,7 +861,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "AVCHD") || HasAnyDirectory(dirs, "PRIVATE"))
         {
             info.ContentType = DiscContentType.BluRayAudioVisual;
-            info.ContentLabel = "🎬 AVCHD Recording";
+            info.ContentLabel = "🎬 AVCHD 录像";
             return;
         }
 
@@ -870,7 +870,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "DCIM"))
         {
             info.ContentType = DiscContentType.PhotoBluRay;
-            info.ContentLabel = "📷 Photo Blu-ray";
+            info.ContentLabel = "📷 照片蓝光";
             return;
         }
 
@@ -878,7 +878,7 @@ public static class DiscContentDetectionService
         if (info.ContentType == DiscContentType.Unknown)
         {
             info.ContentType = DiscContentType.DataBluRay;
-            info.ContentLabel = "💿 Data Blu-ray";
+            info.ContentLabel = "💿 数据蓝光";
         }
     }
 
@@ -905,7 +905,7 @@ public static class DiscContentDetectionService
 
         // Default to BD Movie
         info.ContentType = DiscContentType.BluRayMovie;
-        info.ContentLabel = "🎬 Blu-ray Movie";
+        info.ContentLabel = "🎬 蓝光影片";
 
         // ---- UHD Blu-ray detection ----
         // UHD BD uses MPLS version "0300" and typically has very large capacity (66/100 GB)
@@ -920,7 +920,7 @@ public static class DiscContentDetectionService
                 if (TryDetectUhdFromBdmv(drive))
                 {
                     info.ContentType = DiscContentType.UhdBluRay;
-                    info.ContentLabel = "🎬 UHD Blu-ray (4K)";
+                    info.ContentLabel = "🎬 UHD 蓝光（4K）";
                     return;
                 }
             }
@@ -929,7 +929,7 @@ public static class DiscContentDetectionService
             if (info.CapacityBytes > FormatHelper.BD50Capacity + UhdBdSizeMarginBytes)
             {
                 info.ContentType = DiscContentType.UhdBluRay;
-                info.ContentLabel = "🎬 UHD Blu-ray (4K)";
+                info.ContentLabel = "🎬 UHD 蓝光（4K）";
                 return;
             }
         }
@@ -940,7 +940,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "SSIF"))
         {
             info.ContentType = DiscContentType.BluRay3D;
-            info.ContentLabel = "🎬 Blu-ray 3D";
+            info.ContentLabel = "🎬 3D 蓝光";
             return;
         }
 
@@ -951,7 +951,7 @@ public static class DiscContentDetectionService
         {
             // BD-J with movie is still a BD Movie (BD-J provides interactivity)
             // Only classify as pure BD-J if there are no playlists/streams
-            info.ContentLabel = "🎬 Blu-ray Movie (BD-J Interactive)";
+            info.ContentLabel = "🎬 蓝光影片（BD-J 交互）";
             return;
         }
 
@@ -961,7 +961,7 @@ public static class DiscContentDetectionService
         if (HasAnyDirectory(dirs, "AUDIO_TS"))
         {
             info.ContentType = DiscContentType.BluRayAudio;
-            info.ContentLabel = "🎵 Blu-ray Audio";
+            info.ContentLabel = "🎵 蓝光音频";
             return;
         }
 
@@ -1150,7 +1150,7 @@ public static class DiscContentDetectionService
                 "Sony Computer Entertainment", "PLAYSTATION"))
             {
                 info.ContentType = DiscContentType.PlayStation1Game;
-                info.ContentLabel = "🎮 PlayStation 1 Game";
+                info.ContentLabel = "🎮 PlayStation 1 游戏";
                 info.GamingSystem = "PlayStation 1";
                 return true;
             }
@@ -1163,7 +1163,7 @@ public static class DiscContentDetectionService
                 "Sony Computer Entertainment", "PLAYSTATION"))
             {
                 info.ContentType = DiscContentType.PlayStation1Game;
-                info.ContentLabel = "🎮 PlayStation 1 Game";
+                info.ContentLabel = "🎮 PlayStation 1 游戏";
                 info.GamingSystem = "PlayStation 1";
                 return true;
             }
@@ -1224,7 +1224,7 @@ public static class DiscContentDetectionService
             if (str16.Contains("SEGA SEGASATURN", StringComparison.OrdinalIgnoreCase))
             {
                 info.ContentType = DiscContentType.SegaSaturnGame;
-                info.ContentLabel = "🎮 Sega Saturn Game";
+                info.ContentLabel = "🎮 Sega Saturn 游戏";
                 info.GamingSystem = "Sega Saturn";
                 return true;
             }
@@ -1233,7 +1233,7 @@ public static class DiscContentDetectionService
             if (str16.Contains("SEGA SEGAKATANA", StringComparison.OrdinalIgnoreCase))
             {
                 info.ContentType = DiscContentType.SegaDreamcastGame;
-                info.ContentLabel = "🎮 Sega Dreamcast Game";
+                info.ContentLabel = "🎮 Sega Dreamcast 游戏";
                 info.GamingSystem = "Sega Dreamcast";
                 return true;
             }
@@ -1245,7 +1245,7 @@ public static class DiscContentDetectionService
             if (str32.Contains("SEGA 32X", StringComparison.OrdinalIgnoreCase))
             {
                 info.ContentType = DiscContentType.SegaMegaCdGame;
-                info.ContentLabel = "🎮 Sega 32X CD Game";
+                info.ContentLabel = "🎮 Sega 32X CD 游戏";
                 info.GamingSystem = "Sega 32X CD";
                 return true;
             }
@@ -1262,7 +1262,7 @@ public static class DiscContentDetectionService
                 str32.Contains("SEGA_DISC_SYSTEM", StringComparison.OrdinalIgnoreCase))
             {
                 info.ContentType = DiscContentType.SegaMegaCdGame;
-                info.ContentLabel = "🎮 Sega Mega CD Game";
+                info.ContentLabel = "🎮 Sega Mega CD 游戏";
                 info.GamingSystem = "Sega Mega CD";
                 return true;
             }
@@ -1288,7 +1288,7 @@ public static class DiscContentDetectionService
                 if (discMagic == 0x5D1C9EA3)
                 {
                     info.ContentType = DiscContentType.WiiGame;
-                    info.ContentLabel = "🎮 Nintendo Wii Game";
+                    info.ContentLabel = "🎮 任天堂 Wii 游戏";
                     info.GamingSystem = "Wii";
                     return true;
                 }
@@ -1307,7 +1307,7 @@ public static class DiscContentDetectionService
                 if (discMagic == 0xC2339F3D)
                 {
                     info.ContentType = DiscContentType.GameCubeGame;
-                    info.ContentLabel = "🎮 Nintendo GameCube Game";
+                    info.ContentLabel = "🎮 任天堂 GameCube 游戏";
                     info.GamingSystem = "GameCube";
                     return true;
                 }
@@ -1329,7 +1329,7 @@ public static class DiscContentDetectionService
         if (magic == 0x57555030) // "WUP0"
         {
             info.ContentType = DiscContentType.WiiUGame;
-            info.ContentLabel = "🎮 Nintendo Wii U Game";
+            info.ContentLabel = "🎮 任天堂 Wii U 游戏";
             info.GamingSystem = "Wii U";
             return true;
         }
@@ -1352,7 +1352,7 @@ public static class DiscContentDetectionService
             if (header[0] == 0x01 && header[1] == 0x5A)
             {
                 info.ContentType = DiscContentType.ThreeDOGame;
-                info.ContentLabel = "🎮 3DO Game";
+                info.ContentLabel = "🎮 3DO 游戏";
                 info.GamingSystem = "3DO";
                 return true;
             }
@@ -1369,7 +1369,7 @@ public static class DiscContentDetectionService
         if (Encoding.ASCII.GetString(buf).Contains("NEO-GEO"))
         {
             info.ContentType = DiscContentType.NeoGeoCdGame;
-            info.ContentLabel = "🎮 Neo Geo CD Game";
+            info.ContentLabel = "🎮 Neo Geo CD 游戏";
             info.GamingSystem = "Neo Geo CD";
             return true;
         }
@@ -1389,7 +1389,7 @@ public static class DiscContentDetectionService
             if (str.Contains("PC Engine") || str.Contains("PCECD"))
             {
                 info.ContentType = DiscContentType.PcEngineGame;
-                info.ContentLabel = "🎮 PC Engine / TurboGrafx-CD Game";
+                info.ContentLabel = "🎮 PC Engine / TurboGrafx-CD 游戏";
                 info.GamingSystem = "PC Engine / TurboGrafx-CD";
                 return true;
             }
@@ -1412,14 +1412,14 @@ public static class DiscContentDetectionService
             if (str.Contains("CDTV"))
             {
                 info.ContentType = DiscContentType.AmigaCdtvGame;
-                info.ContentLabel = "🎮 Amiga CDTV Game";
+                info.ContentLabel = "🎮 Amiga CDTV 游戏";
                 info.GamingSystem = "Amiga CDTV";
                 return true;
             }
             if (str.Contains("AMIGABOOT") || str.Contains("AMIGA"))
             {
                 info.ContentType = DiscContentType.AmigaCd32Game;
-                info.ContentLabel = "🎮 Amiga CD32 Game";
+                info.ContentLabel = "🎮 Amiga CD32 游戏";
                 info.GamingSystem = "Amiga CD32";
                 return true;
             }
@@ -1439,7 +1439,7 @@ public static class DiscContentDetectionService
             if (str.Contains("ATRI") || str.Contains("TARA"))
             {
                 info.ContentType = DiscContentType.AtariJaguarCdGame;
-                info.ContentLabel = "🎮 Atari Jaguar CD Game";
+                info.ContentLabel = "🎮 Atari Jaguar CD 游戏";
                 info.GamingSystem = "Atari Jaguar CD";
                 return true;
             }
@@ -1473,7 +1473,7 @@ public static class DiscContentDetectionService
                             headerStr.Contains("SEGA DREAMCAST", StringComparison.OrdinalIgnoreCase))
                         {
                             info.ContentType = DiscContentType.SegaDreamcastGame;
-                            info.ContentLabel = "🎮 Sega Dreamcast Game (CDI)";
+                            info.ContentLabel = "🎮 Sega Dreamcast 游戏（CDI）";
                             info.GamingSystem = "Sega Dreamcast";
                             return;
                         }
@@ -1487,7 +1487,7 @@ public static class DiscContentDetectionService
                 stream.Length <= FormatHelper.GdRomCapacity + GdRomSizeToleranceBytes)
             {
                 info.ContentType = DiscContentType.SegaDreamcastGame;
-                info.ContentLabel = "🎮 Sega Dreamcast Game (CDI)";
+                info.ContentLabel = "🎮 Sega Dreamcast 游戏（CDI）";
                 info.GamingSystem = "Sega Dreamcast";
             }
         }
@@ -1722,53 +1722,53 @@ public static class DiscContentDetectionService
     {
         return contentType switch
         {
-            DiscContentType.Unknown => "Unknown",
-            DiscContentType.Data => "💿 Data Disc",
-            DiscContentType.AudioCd => "🎵 Audio CD",
-            DiscContentType.MixedModeCd => "🎵 Mixed Mode CD",
-            DiscContentType.EnhancedCd => "🎵 Enhanced CD (CD Extra)",
-            DiscContentType.VideoCd => "📀 Video CD (VCD)",
-            DiscContentType.SuperVideoCd => "📀 Super Video CD (SVCD)",
-            DiscContentType.PhotoCd => "📷 Photo CD",
-            DiscContentType.CdInteractive => "📀 CD-i Disc",
-            DiscContentType.DataCd => "💿 Data CD",
-            DiscContentType.PlayStation1Game => "🎮 PlayStation 1 Game",
-            DiscContentType.SegaSaturnGame => "🎮 Sega Saturn Game",
-            DiscContentType.SegaDreamcastGame => "🎮 Sega Dreamcast Game",
-            DiscContentType.SegaMegaCdGame => "🎮 Sega Mega CD Game",
-            DiscContentType.PcEngineGame => "🎮 PC Engine / TurboGrafx-CD Game",
-            DiscContentType.NeoGeoCdGame => "🎮 Neo Geo CD Game",
-            DiscContentType.AmigaCd32Game => "🎮 Amiga CD32 Game",
-            DiscContentType.AmigaCdtvGame => "🎮 Amiga CDTV Game",
-            DiscContentType.AtariJaguarCdGame => "🎮 Atari Jaguar CD Game",
-            DiscContentType.ThreeDOGame => "🎮 3DO Game",
-            DiscContentType.CdInteractiveGame => "🎮 CD-i Game",
+            DiscContentType.Unknown => "未知",
+            DiscContentType.Data => "💿 数据光盘",
+            DiscContentType.AudioCd => "🎵 音频 CD",
+            DiscContentType.MixedModeCd => "🎵 混合模式 CD",
+            DiscContentType.EnhancedCd => "🎵 增强型 CD（CD Extra）",
+            DiscContentType.VideoCd => "📀 视频 CD（VCD）",
+            DiscContentType.SuperVideoCd => "📀 超级视频 CD（SVCD）",
+            DiscContentType.PhotoCd => "📷 照片 CD",
+            DiscContentType.CdInteractive => "📀 CD-i 光盘",
+            DiscContentType.DataCd => "💿 数据 CD",
+            DiscContentType.PlayStation1Game => "🎮 PlayStation 1 游戏",
+            DiscContentType.SegaSaturnGame => "🎮 Sega Saturn 游戏",
+            DiscContentType.SegaDreamcastGame => "🎮 Sega Dreamcast 游戏",
+            DiscContentType.SegaMegaCdGame => "🎮 Sega Mega CD 游戏",
+            DiscContentType.PcEngineGame => "🎮 PC Engine / TurboGrafx-CD 游戏",
+            DiscContentType.NeoGeoCdGame => "🎮 Neo Geo CD 游戏",
+            DiscContentType.AmigaCd32Game => "🎮 Amiga CD32 游戏",
+            DiscContentType.AmigaCdtvGame => "🎮 Amiga CDTV 游戏",
+            DiscContentType.AtariJaguarCdGame => "🎮 Atari Jaguar CD 游戏",
+            DiscContentType.ThreeDOGame => "🎮 3DO 游戏",
+            DiscContentType.CdInteractiveGame => "🎮 CD-i 游戏",
             DiscContentType.DvdVideo => "🎬 DVD-Video",
             DiscContentType.DvdAudio => "🎵 DVD-Audio",
-            DiscContentType.DvdVideoRecording => "🎬 DVD-VR (Video Recording)",
-            DiscContentType.DataDvd => "💿 Data DVD",
-            DiscContentType.PhotoDvd => "📷 Photo DVD",
-            DiscContentType.PlayStation2Game => "🎮 PlayStation 2 Game",
-            DiscContentType.XboxGame => "🎮 Xbox Game",
-            DiscContentType.Xbox360Game => "🎮 Xbox 360 Game",
-            DiscContentType.WiiGame => "🎮 Nintendo Wii Game",
-            DiscContentType.GameCubeGame => "🎮 Nintendo GameCube Game",
-            DiscContentType.WiiUGame => "🎮 Nintendo Wii U Game",
-            DiscContentType.PspUmdGame => "🎮 PSP UMD Game",
-            DiscContentType.BluRayMovie => "🎬 Blu-ray Movie",
-            DiscContentType.BluRayAudio => "🎵 Blu-ray Audio",
-            DiscContentType.BluRayAudioVisual => "🎬 Blu-ray BDAV Recording",
-            DiscContentType.BluRayJava => "🎬 Blu-ray BD-J Interactive",
-            DiscContentType.BluRay3D => "🎬 Blu-ray 3D",
-            DiscContentType.UhdBluRay => "🎬 UHD Blu-ray (4K)",
-            DiscContentType.DataBluRay => "💿 Data Blu-ray",
-            DiscContentType.PhotoBluRay => "📷 Photo Blu-ray",
-            DiscContentType.PlayStation3Game => "🎮 PlayStation 3 Game",
-            DiscContentType.PlayStation4Game => "🎮 PlayStation 4 Game",
-            DiscContentType.PlayStation5Game => "🎮 PlayStation 5 Game",
-            DiscContentType.XboxOneGame => "🎮 Xbox One Game",
-            DiscContentType.XboxSeriesGame => "🎮 Xbox Series X|S Game",
-            _ => "Unknown"
+            DiscContentType.DvdVideoRecording => "🎬 DVD-VR（视频录像）",
+            DiscContentType.DataDvd => "💿 数据 DVD",
+            DiscContentType.PhotoDvd => "📷 照片 DVD",
+            DiscContentType.PlayStation2Game => "🎮 PlayStation 2 游戏",
+            DiscContentType.XboxGame => "🎮 Xbox 游戏",
+            DiscContentType.Xbox360Game => "🎮 Xbox 360 游戏",
+            DiscContentType.WiiGame => "🎮 任天堂 Wii 游戏",
+            DiscContentType.GameCubeGame => "🎮 任天堂 GameCube 游戏",
+            DiscContentType.WiiUGame => "🎮 任天堂 Wii U 游戏",
+            DiscContentType.PspUmdGame => "🎮 PSP UMD 游戏",
+            DiscContentType.BluRayMovie => "🎬 蓝光影片",
+            DiscContentType.BluRayAudio => "🎵 蓝光音频",
+            DiscContentType.BluRayAudioVisual => "🎬 BDAV 蓝光录像",
+            DiscContentType.BluRayJava => "🎬 蓝光 BD-J 交互",
+            DiscContentType.BluRay3D => "🎬 3D 蓝光",
+            DiscContentType.UhdBluRay => "🎬 UHD 蓝光（4K）",
+            DiscContentType.DataBluRay => "💿 数据蓝光",
+            DiscContentType.PhotoBluRay => "📷 照片蓝光",
+            DiscContentType.PlayStation3Game => "🎮 PlayStation 3 游戏",
+            DiscContentType.PlayStation4Game => "🎮 PlayStation 4 游戏",
+            DiscContentType.PlayStation5Game => "🎮 PlayStation 5 游戏",
+            DiscContentType.XboxOneGame => "🎮 Xbox One 游戏",
+            DiscContentType.XboxSeriesGame => "🎮 Xbox Series X|S 游戏",
+            _ => "未知"
         };
     }
 

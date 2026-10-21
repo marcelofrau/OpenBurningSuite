@@ -104,7 +104,7 @@ public static class PlaylistParser
         var ext = System.IO.Path.GetExtension(playlistPath);
         var fmt = FormatFromExtension(ext)
                   ?? throw new ArgumentException(
-                      $"Unsupported playlist extension '{ext}'.", nameof(playlistPath));
+                      $"不支持的播放列表扩展名“{ext}”。", nameof(playlistPath));
 
         var baseDir = System.IO.Path.GetDirectoryName(
             System.IO.Path.GetFullPath(playlistPath)) ?? string.Empty;
@@ -137,7 +137,7 @@ public static class PlaylistParser
         var ext = System.IO.Path.GetExtension(playlistPath);
         var fmt = FormatFromExtension(ext)
                   ?? throw new ArgumentException(
-                      $"Unsupported playlist extension '{ext}'.", nameof(playlistPath));
+                      $"不支持的播放列表扩展名“{ext}”。", nameof(playlistPath));
 
         var baseDir = System.IO.Path.GetDirectoryName(
             System.IO.Path.GetFullPath(playlistPath)) ?? string.Empty;

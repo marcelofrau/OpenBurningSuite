@@ -7,27 +7,23 @@
         <StackPanel Margin="24" Spacing="16">
 
             <!-- Header -->
-            <TextBlock Text="Advanced Utilities" Classes="PageTitle"/>
-            <TextBlock Text="Erase rewritable discs, format media, eject/load tray, and other advanced disc operations."
+            <TextBlock Text="高级工具" Classes="PageTitle"/>
+            <TextBlock Text="擦除可重写光盘、格式化介质、弹出/载入托盘以及其他高级光盘操作。"
                        Classes="PageSubtitle"/>
 
             <!-- Drive selection (shared) -->
             <Border Classes="Card">
                 <StackPanel Spacing="8">
-                    <TextBlock Text="Drive" Classes="SectionHeader"/>
+                    <TextBlock Text="光驱" Classes="SectionHeader"/>
                     <Grid ColumnDefinitions="*,Auto">
                         <ComboBox x:Name="CmbDrive"
-                                  PlaceholderText="Select optical drive..."
+                                  PlaceholderText="选择光驱…"
                                   HorizontalAlignment="Stretch"
-                                  ToolTip.Tip="Select the drive to operate on"/>
+                                  ToolTip.Tip="选择要操作的光驱"/>
                         <Button x:Name="BtnRefreshDrives" Grid.Column="1"
-                                Classes="ActionBtn"
+                                Content="🔄" Classes="ActionBtn"
                                 Margin="6,0,0,0" Click="OnRefreshDrivesClick"
-                                ToolTip.Tip="Refresh the list of available drives" MinWidth="32" MinHeight="32">
-                            <Image Width="16" Height="16"
-                                    Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-refresh-advanced-16.png"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Button>
+                                ToolTip.Tip="刷新可用光驱列表"/>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -35,28 +31,18 @@
             <!-- Eject / Load Tray -->
             <Border Classes="Card">
                 <StackPanel Spacing="8">
-                    <TextBlock Text="Eject / Load Tray" Classes="SectionHeader"/>
-                    <TextBlock Text="Open or close the disc tray on the selected drive."
+                    <TextBlock Text="弹出 / 载入托盘" Classes="SectionHeader"/>
+                    <TextBlock Text="打开或关闭所选光驱的光盘托盘。"
                                Foreground="#5A7A9A" FontSize="11"/>
                     <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
-                        <Button x:Name="BtnEject" Classes="ActionBtn"
+                        <Button x:Name="BtnEject"
+                                Content="⏏️ 弹出托盘" Classes="ActionBtn"
                                 Click="OnEjectClick"
-                                ToolTip.Tip="Open the disc tray">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-eject-2d-16.png"/>
-                                <TextBlock Text="Eject Tray" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnLoadTray" Classes="ActionBtn"
+                                ToolTip.Tip="打开光盘托盘"/>
+                        <Button x:Name="BtnLoadTray"
+                                Content="📥 载入托盘" Classes="ActionBtn"
                                 Click="OnLoadTrayClick"
-                                ToolTip.Tip="Close the disc tray">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-open-file-folder-16.png"/>
-                                <TextBlock Text="Load Tray" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="关闭光盘托盘"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -64,29 +50,19 @@
             <!-- Blank / Erase -->
             <Border Classes="Card">
                 <StackPanel Spacing="8">
-                    <TextBlock Text="Blank / Erase Rewritable Disc" Classes="SectionHeader"/>
-                    <TextBlock Text="Erase CD-RW, DVD±RW, or BD-RE media before writing."
+                    <TextBlock Text="擦除可重写光盘" Classes="SectionHeader"/>
+                    <TextBlock Text="写入前擦除 CD-RW、DVD±RW 或 BD-RE 光盘。"
                                Foreground="#5A7A9A" FontSize="11"/>
 
                     <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
-                        <Button x:Name="BtnBlankQuick" Classes="ActionBtn"
+                        <Button x:Name="BtnBlankQuick"
+                                Content="⚡️ 快速擦除" Classes="ActionBtn"
                                 Click="OnBlankQuickClick"
-                                ToolTip.Tip="Quick blank only clears TOC — fast but data may be recoverable">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-quick-blank-16.png"/>
-                                <TextBlock Text="Quick Blank" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnBlankFull" Classes="ActionBtn"
+                                ToolTip.Tip="快速擦除仅清除 TOC — 速度快但数据可能被恢复"/>
+                        <Button x:Name="BtnBlankFull"
+                                Content="🗑  完全擦除" Classes="ActionBtn"
                                 Click="OnBlankFullClick"
-                                ToolTip.Tip="Full blank overwrites entire disc — slower but more thorough">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-full-blank-16.png"/>
-                                <TextBlock Text="Full Blank" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="完全擦除会覆写整张光盘 — 速度较慢但更彻底"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -94,29 +70,19 @@
             <!-- Format Disc -->
             <Border Classes="Card">
                 <StackPanel Spacing="8">
-                    <TextBlock Text="Format Disc" Classes="SectionHeader"/>
-                    <TextBlock Text="Format DVD+RW, DVD-RAM, BD-R, BD-RE, or HD DVD-RW media. Required before first use on some media types."
+                    <TextBlock Text="格式化光盘" Classes="SectionHeader"/>
+                    <TextBlock Text="格式化 DVD+RW、DVD-RAM、BD-R、BD-RE 或 HD DVD-RW 光盘。某些介质类型首次使用前必须格式化。"
                                Foreground="#5A7A9A" FontSize="11"/>
 
                     <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
-                        <Button x:Name="BtnFormatQuick" Classes="ActionBtn"
+                        <Button x:Name="BtnFormatQuick"
+                                Content="⚡️ 快速格式化" Classes="ActionBtn"
                                 Click="OnFormatQuickClick"
-                                ToolTip.Tip="Quick format — prepares disc for use without full surface certification">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-quick-format-16.png"/>
-                                <TextBlock Text="Quick Format" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="BtnFormatFull" Classes="ActionBtn"
+                                ToolTip.Tip="快速格式化 — 使光盘可用，但不进行完整表面认证"/>
+                        <Button x:Name="BtnFormatFull"
+                                Content="📀 完全格式化" Classes="ActionBtn"
                                 Click="OnFormatFullClick"
-                                ToolTip.Tip="Full format with certification — slower but ensures disc integrity">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                        Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-full-format-16.png"/>
-                                <TextBlock Text="Full Format" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="带认证的完全格式化 — 速度较慢但可确保光盘完整性"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -125,24 +91,18 @@
             <Border Classes="Card">
                 <StackPanel Spacing="10">
                     <Grid ColumnDefinitions="*,Auto">
-                        <TextBlock Text="Progress" Classes="SectionHeader"
+                        <TextBlock Text="进度" Classes="SectionHeader"
                                    VerticalAlignment="Center"/>
                         <Button x:Name="BtnCancelOp" Grid.Column="1"
-                                Classes="DangerBtn"
+                                Content="⏹  取消" Classes="DangerBtn"
                                 IsEnabled="False" Click="OnCancelOpClick"
-                                ToolTip.Tip="Cancel the current operation">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-stop-2d-16.png"/>
-                                <TextBlock Text="Cancel" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="取消当前操作"/>
                     </Grid>
 
                     <ProgressBar x:Name="OperationProgressBar" Classes="BurnProgress" Value="0"/>
 
                     <Grid ColumnDefinitions="*,Auto,Auto">
-                        <TextBlock x:Name="TxtOperationStatus" Text="Ready."
+                        <TextBlock x:Name="TxtOperationStatus" Text="就绪。"
                                    Foreground="#5A7A9A" FontSize="11"
                                    VerticalAlignment="Center"/>
                         <TextBlock x:Name="TxtOperationETA" Grid.Column="1"
@@ -154,17 +114,11 @@
                     </Grid>
 
                     <Grid ColumnDefinitions="Auto,*">
-                        <TextBlock Text="Log" Classes="SectionHeader" VerticalAlignment="Center"/>
+                        <TextBlock Text="日志" Classes="SectionHeader" VerticalAlignment="Center"/>
                         <Button x:Name="BtnClearLog" Grid.Column="1"
-                                Classes="ActionBtn"
+                                Content="🧹 清除" Classes="ActionBtn"
                                 HorizontalAlignment="Right" Click="OnClearLogClick"
-                                ToolTip.Tip="Clear the log output">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-erase-16.png"/>
-                                <TextBlock Text="Clear" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="清除日志输出"/>
                     </Grid>
 
                     <TextBox x:Name="TxtLog" Classes="LogBox" Height="180"/>

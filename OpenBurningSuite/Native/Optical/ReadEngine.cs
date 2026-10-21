@@ -78,16 +78,16 @@ public sealed class ReadEngine
         progress.Report(new ReadProgress
         {
             PercentComplete = 0,
-            StatusMessage = "Initializing drive...",
+            StatusMessage = "正在初始化光驱…",
             LogLine = $"[Info] Opening device: {job.DevicePath}"
         });
 
         using var drive = new OpticalDrive(job.DevicePath);
 
         // Wait for drive readiness — drives need time to spin up after tray close/load
-        progress.Report(new ReadProgress { StatusMessage = "Waiting for drive to become ready..." });
+        progress.Report(new ReadProgress { StatusMessage = "正在等待光驱就绪…" });
         if (!drive.WaitForDriveReady())
-            throw new InvalidOperationException("Drive is not ready. Please insert a disc and close the tray.");
+            throw new InvalidOperationException("光驱未就绪。请插入光盘并关闭托盘。");
 
         // Lock the tray during reading to prevent accidental ejection
         drive.PreventMediumRemoval(true);
@@ -168,7 +168,7 @@ public sealed class ReadEngine
 
         progress.Report(new ReadProgress
         {
-            StatusMessage = $"Reading disc to {Path.GetFileName(job.OutputPath)}...",
+            StatusMessage = $"正在将光盘读取为 {Path.GetFileName(job.OutputPath)}…",
             TotalSectors = totalSectors,
             LogLine = $"[Info] Total sectors: {totalSectors}, sector size: {job.SectorSize}, media: {OpticalDrive.ProfileToMediaType(profile)}"
         });
@@ -313,15 +313,15 @@ public sealed class ReadEngine
         progress.Report(new ReadProgress
         {
             PercentComplete = 0,
-            StatusMessage = "Initializing drive...",
+            StatusMessage = "正在初始化光驱…",
             LogLine = $"[Info] Opening device: {job.DevicePath}"
         });
 
         using var drive = new OpticalDrive(job.DevicePath);
 
-        progress.Report(new ReadProgress { StatusMessage = "Waiting for drive to become ready..." });
+        progress.Report(new ReadProgress { StatusMessage = "正在等待光驱就绪…" });
         if (!drive.WaitForDriveReady())
-            throw new InvalidOperationException("Drive is not ready. Please insert a disc and close the tray.");
+            throw new InvalidOperationException("光驱未就绪。请插入光盘并关闭托盘。");
 
         // Lock the tray during reading to prevent accidental ejection
         drive.PreventMediumRemoval(true);
@@ -353,11 +353,11 @@ public sealed class ReadEngine
         // Read TOC to determine track layout
         var toc = drive.ReadToc();
         if (toc == null || toc.Entries.Count == 0)
-            throw new InvalidOperationException("Could not read Table of Contents.");
+            throw new InvalidOperationException("无法读取目录区（TOC）。");
 
         progress.Report(new ReadProgress
         {
-            StatusMessage = $"Reading disc ({toc.Entries.Count} track descriptors)...",
+            StatusMessage = $"正在读取光盘（{toc.Entries.Count} 个轨道描述符）…",
             LogLine = $"[Info] TOC: tracks {toc.FirstTrack}-{toc.LastTrack}"
         });
 
@@ -576,10 +576,10 @@ public sealed class ReadEngine
                         {
                             // Everything failed — throw a clear diagnostic error
                             throw new InvalidOperationException(
-                                $"Drive cannot read this disc with READ CD command. " +
-                                $"Test read at LBA {testLba} failed: {testMinimal.ErrorDescription}. " +
-                                $"This may indicate the drive does not support raw sector reads, " +
-                                $"the disc is unreadable, or the drive requires different parameters.");
+                                $"光驱无法使用 READ CD 指令读取此光盘。" +
+                                $"在 LBA {testLba} 的测试读取失败：{testMinimal.ErrorDescription}。" +
+                                $"这可能表示光驱不支持原始扇区读取，" +
+                                $"光盘无法读取，或光驱需要不同的参数。");
                         }
                     }
                 }
@@ -591,10 +591,10 @@ public sealed class ReadEngine
                     if (!testMinimal.Success)
                     {
                         throw new InvalidOperationException(
-                            $"Drive cannot read this disc with READ CD command. " +
-                            $"Test read at LBA {testLba} failed: {testMinimal.ErrorDescription}. " +
-                            $"This may indicate the drive does not support raw sector reads, " +
-                            $"the disc is unreadable, or the drive requires different parameters.");
+                            $"光驱无法使用 READ CD 指令读取此光盘。" +
+                            $"在 LBA {testLba} 的测试读取失败：{testMinimal.ErrorDescription}。" +
+                            $"这可能表示光驱不支持原始扇区读取，" +
+                            $"光盘无法读取，或光驱需要不同的参数。");
                     }
                     // Minimal read works — C2 was the issue (already disabled above)
                 }
@@ -1266,7 +1266,7 @@ public sealed class ReadEngine
                 else
                 {
                     throw new InvalidOperationException(
-                        $"Read error at LBA {currentLba}. Set error recovery to continue past bad sectors.");
+                        $"在 LBA {currentLba} 处读取错误。请设置错误恢复以跳过坏扇区继续。");
                 }
             }
 
@@ -1317,7 +1317,7 @@ public sealed class ReadEngine
                 CurrentSpeedX = speedX,
                 Elapsed = elapsed,
                 Remaining = eta,
-                StatusMessage = $"Reading: sector {currentLba}/{totalSectors} ({pct}%)",
+                StatusMessage = $"正在读取：扇区 {currentLba}/{totalSectors}（{pct}%）",
                 // Only log every ~100 reads to keep log clean
                 LogLine = currentLba % (rawSectorsPerRead * 100) < sectorsToRead
                     ? $"LBA {currentLba}: {bytesRead / 1_048_576} MB read, {speedX:F1}x"
@@ -1483,7 +1483,7 @@ public sealed class ReadEngine
             PercentComplete = 100,
             SectorsRead = totalSectors,
             TotalSectors = totalSectors,
-            StatusMessage = "Read complete.",
+            StatusMessage = "读取完成。",
             LogLine = $"[Info] Successfully read {FormatHelper.FormatBytes(bytesRead)}" +
                 (totalC2Errors > 0 ? $" — {totalC2Errors} C2 error byte(s) detected" : "") +
                 (errorSectorCount > 0 ? $", {errorSectorCount} unreadable sector(s)" : "")
@@ -1519,15 +1519,15 @@ public sealed class ReadEngine
         progress.Report(new ReadProgress
         {
             PercentComplete = 0,
-            StatusMessage = "Initializing drive...",
+            StatusMessage = "正在初始化光驱…",
             LogLine = $"[Info] Opening device: {job.DevicePath}"
         });
 
         using var drive = new OpticalDrive(job.DevicePath);
 
-        progress.Report(new ReadProgress { StatusMessage = "Waiting for drive to become ready..." });
+        progress.Report(new ReadProgress { StatusMessage = "正在等待光驱就绪…" });
         if (!drive.WaitForDriveReady())
-            throw new InvalidOperationException("Drive is not ready. Please insert a disc and close the tray.");
+            throw new InvalidOperationException("光驱未就绪。请插入光盘并关闭托盘。");
 
         // Lock the tray during reading
         drive.PreventMediumRemoval(true);
@@ -1555,11 +1555,11 @@ public sealed class ReadEngine
         // Read TOC
         var toc = drive.ReadToc();
         if (toc == null || toc.Entries.Count == 0)
-            throw new InvalidOperationException("Could not read Table of Contents.");
+            throw new InvalidOperationException("无法读取目录区（TOC）。");
 
         progress.Report(new ReadProgress
         {
-            StatusMessage = $"Reading disc to CCD/IMG/SUB ({toc.Entries.Count} TOC entries)...",
+            StatusMessage = $"正在将光盘读取为 CCD/IMG/SUB（{toc.Entries.Count} 个 TOC 条目）…",
             LogLine = $"[Info] CCD output — TOC: tracks {toc.FirstTrack}-{toc.LastTrack}"
         });
 
@@ -1711,8 +1711,8 @@ public sealed class ReadEngine
                         else
                         {
                             throw new InvalidOperationException(
-                                $"Drive cannot read this disc with READ CD command. " +
-                                $"Test read at LBA {testLba} failed: {testMinimal.ErrorDescription}.");
+                                $"光驱无法使用 READ CD 指令读取此光盘。" +
+                                $"在 LBA {testLba} 的测试读取失败：{testMinimal.ErrorDescription}。");
                         }
                     }
                 }
@@ -1990,7 +1990,7 @@ public sealed class ReadEngine
                     else
                     {
                         throw new InvalidOperationException(
-                            $"CCD read error at LBA {currentLba}. Enable error recovery to continue.");
+                            $"CCD 在 LBA {currentLba} 处读取错误。请启用错误恢复以继续。");
                     }
                 }
 
@@ -2035,7 +2035,7 @@ public sealed class ReadEngine
                     CurrentSpeedX = speedX,
                     Elapsed = elapsed,
                     Remaining = eta,
-                    StatusMessage = $"CCD read: sector {currentLba}/{totalSectors} ({pct}%)",
+                    StatusMessage = $"CCD 读取：扇区 {currentLba}/{totalSectors}（{pct}%）",
                     // Only log every ~100 reads to keep log clean
                     LogLine = currentLba % (rawSectorsPerRead * 100) < sectorsToRead
                         ? $"LBA {currentLba}: {bytesRead / 1_048_576} MB read, {speedX:F1}x"
@@ -2052,7 +2052,7 @@ public sealed class ReadEngine
         // Generate CCD control file from TOC data
         progress.Report(new ReadProgress
         {
-            StatusMessage = "Generating CCD control file...",
+            StatusMessage = "正在生成 CCD 控制文件…",
             LogLine = "[Info] Writing CCD control file."
         });
 
@@ -2063,7 +2063,7 @@ public sealed class ReadEngine
             PercentComplete = 100,
             SectorsRead = totalSectors,
             TotalSectors = totalSectors,
-            StatusMessage = "CCD read complete.",
+            StatusMessage = "CCD 读取完成。",
             LogLine = $"[Info] CCD: {FormatHelper.FormatBytes(bytesRead)} read" +
                 (readSubchannel ? " (with subchannel)" : "") +
                 (totalC2Errors > 0 ? $", {totalC2Errors} C2 error byte(s)" : "") +
@@ -2093,15 +2093,15 @@ public sealed class ReadEngine
         progress.Report(new ReadProgress
         {
             PercentComplete = 0,
-            StatusMessage = "Initializing drive...",
+            StatusMessage = "正在初始化光驱…",
             LogLine = $"[Info] Opening device: {job.DevicePath}"
         });
 
         using var drive = new OpticalDrive(job.DevicePath);
 
-        progress.Report(new ReadProgress { StatusMessage = "Waiting for drive to become ready..." });
+        progress.Report(new ReadProgress { StatusMessage = "正在等待光驱就绪…" });
         if (!drive.WaitForDriveReady())
-            throw new InvalidOperationException("Drive is not ready. Please insert a disc and close the tray.");
+            throw new InvalidOperationException("光驱未就绪。请插入光盘并关闭托盘。");
 
         // Lock the tray during reading to prevent accidental ejection
         drive.PreventMediumRemoval(true);
@@ -2124,11 +2124,11 @@ public sealed class ReadEngine
 
         var toc = drive.ReadToc();
         if (toc == null || toc.Entries.Count == 0)
-            throw new InvalidOperationException("Could not read Table of Contents.");
+            throw new InvalidOperationException("无法读取目录区（TOC）。");
 
         progress.Report(new ReadProgress
         {
-            StatusMessage = "Reading audio disc with error correction...",
+            StatusMessage = "正在带纠错地读取音频 CD…",
             LogLine = $"[Info] Audio paranoia mode: reading {job.DevicePath}"
         });
 
@@ -2266,7 +2266,7 @@ public sealed class ReadEngine
                     CurrentSpeedX = speedX,
                     Elapsed = elapsed,
                     Remaining = eta,
-                    StatusMessage = $"Reading audio: {pct}% (track {entry.TrackNumber})",
+                    StatusMessage = $"正在读取音频：{pct}%（轨道 {entry.TrackNumber}）",
                     // Only log every ~100 reads to keep log clean
                     LogLine = sectorsRead % (audioSectorsPerRead * 100) < count
                         ? $"Track {entry.TrackNumber}: sector {i}/{trackLength}"
@@ -2289,7 +2289,7 @@ public sealed class ReadEngine
             PercentComplete = 100,
             SectorsRead = sectorsRead,
             TotalSectors = totalAudioSectors,
-            StatusMessage = "Audio read complete.",
+            StatusMessage = "音频读取完成。",
             LogLine = $"[Info] Audio extraction complete: {FormatHelper.FormatBytes(dataSize)}"
         });
 
@@ -2434,7 +2434,7 @@ public sealed class ReadEngine
                         else
                         {
                             throw new InvalidOperationException(
-                                $"Read error at sector {sectorsRead + s}. Enable error recovery to continue past bad sectors.");
+                                $"扇区 {sectorsRead + s} 读取错误。请启用错误恢复以跳过坏扇区继续。");
                         }
                     }
                 }
@@ -2456,7 +2456,7 @@ public sealed class ReadEngine
                 else
                 {
                     throw new InvalidOperationException(
-                        $"Read error at sector {sectorsRead}. Enable error recovery to continue past bad sectors.");
+                        $"扇区 {sectorsRead} 读取错误。请启用错误恢复以跳过坏扇区继续。");
                 }
             }
 
@@ -2484,7 +2484,7 @@ public sealed class ReadEngine
                     CurrentSpeedX = speedX,
                     Elapsed = elapsed,
                     Remaining = eta,
-                    StatusMessage = $"Reading: {FormatHelper.FormatBytes(bytesRead)} ({pct}%)",
+                    StatusMessage = $"正在读取：{FormatHelper.FormatBytes(bytesRead)}（{pct}%）",
                     // Only log every ~3000 sectors to keep log clean
                     LogLine = sectorsRead % 3000 < count || sectorsRead >= totalSectors
                         ? $"Sector {sectorsRead}/{totalSectors}: {bytesRead / 1_048_576} MB, {speedX:F1}x"
@@ -2501,7 +2501,7 @@ public sealed class ReadEngine
             ErrorSectors = errorSectorCount,
             StatusMessage = errorSectorCount > 0
                 ? $"Read complete with {errorSectorCount} error(s)."
-                : "Read complete.",
+                : "读取完成。",
             LogLine = $"[Info] Successfully read {FormatHelper.FormatBytes(bytesRead)}" +
                 (errorSectorCount > 0 ? $" ({errorSectorCount} bad sector(s) zeroed)" : "")
         });
@@ -2518,7 +2518,7 @@ public sealed class ReadEngine
     {
         int sectorSize = job.SectorSize;
         if (sectorSize <= 0)
-            throw new ArgumentException("Sector size must be positive.", nameof(job));
+            throw new ArgumentException("扇区大小必须为正数。", nameof(job));
         int bufferSize = SectorsPerRead * sectorSize;
         var buffer = new byte[bufferSize];
         long bytesRead = 0;
@@ -2609,7 +2609,7 @@ public sealed class ReadEngine
                     CurrentSpeedX = speedX,
                     Elapsed = elapsed,
                     Remaining = eta,
-                    StatusMessage = $"Reading: {FormatHelper.FormatBytes(bytesRead)} ({pct}%)",
+                    StatusMessage = $"正在读取：{FormatHelper.FormatBytes(bytesRead)}（{pct}%）",
                     LogLine = sectorsRead % 3000 == 0
                         ? $"Sector {sectorsRead}/{totalSectors}: {bytesRead / 1_048_576} MB, {speedX:F1}x"
                         : null
@@ -2625,7 +2625,7 @@ public sealed class ReadEngine
             ErrorSectors = errorSectorCount,
             StatusMessage = errorSectorCount > 0
                 ? $"Read complete with {errorSectorCount} error(s)."
-                : "Read complete.",
+                : "读取完成。",
             LogLine = $"[Info] Successfully read {FormatHelper.FormatBytes(bytesRead)}" +
                 (errorSectorCount > 0 ? $" ({errorSectorCount} bad sector(s) zeroed)" : "")
         });
@@ -2827,7 +2827,7 @@ public sealed class ReadEngine
                         else
                         {
                             throw new InvalidOperationException(
-                                $"Read error at sector {sectorsRead + s}. Enable error recovery to continue past bad sectors.");
+                                $"扇区 {sectorsRead + s} 读取错误。请启用错误恢复以跳过坏扇区继续。");
                         }
                     }
                 }
@@ -2849,7 +2849,7 @@ public sealed class ReadEngine
                 else
                 {
                     throw new InvalidOperationException(
-                        $"Read error at sector {sectorsRead}.");
+                        $"扇区 {sectorsRead} 读取错误。");
                 }
             }
 
@@ -2896,7 +2896,7 @@ public sealed class ReadEngine
                     CurrentSpeedX = speedX,
                     Elapsed = elapsed,
                     Remaining = eta,
-                    StatusMessage = $"Reading raw sectors: {pct}%",
+                    StatusMessage = $"正在读取原始扇区：{pct}%",
                     // Only log every ~3000 sectors to keep log clean
                     LogLine = sectorsRead % 3000 < count || sectorsRead >= totalSectors
                         ? $"Sector {sectorsRead}/{totalSectors}: {bytesRead / 1_048_576} MB, {speedX:F1}x"

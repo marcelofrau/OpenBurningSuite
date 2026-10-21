@@ -51,7 +51,7 @@ public partial class AdvancedView : UserControl
                 CmbDrive.Items.Clear();
                 foreach (var d in _drives) CmbDrive.Items.Add(d.DisplayName);
                 if (_drives.Count > 0) CmbDrive.SelectedIndex = 0;
-                else CmbDrive.Items.Add("No drives found");
+                else CmbDrive.Items.Add("未找到光驱");
             });
         });
     }
@@ -199,7 +199,7 @@ public partial class AdvancedView : UserControl
         SetRunning(true);
         OperationProgressBar.Value = 0;
         TxtOperationPct.Text = "0%";
-        TxtOperationStatus.Text = quickBlank ? "Quick blanking..." : "Full blanking...";
+        TxtOperationStatus.Text = quickBlank ? "正在快速擦除…" : "正在完全擦除…";
         Log($"▶ {(quickBlank ? "Quick" : "Full")} blanking: {drive.DevicePath}");
 
         var progress = new Progress<BurnProgress>(p =>
@@ -207,9 +207,9 @@ public partial class AdvancedView : UserControl
             OperationProgressBar.Value = p.PercentComplete;
             TxtOperationPct.Text = $"{p.PercentComplete}%";
             if (p.Remaining.TotalSeconds > 0)
-                TxtOperationETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtOperationETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtOperationETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtOperationETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrWhiteSpace(p.StatusMessage))
                 TxtOperationStatus.Text = p.StatusMessage;
             if (!string.IsNullOrWhiteSpace(p.LogLine))
@@ -221,17 +221,17 @@ public partial class AdvancedView : UserControl
             await Task.Run(() => _burnService.BlankDiscAsync(drive.DevicePath, quickBlank, mediaType, progress, _cts.Token));
             OperationProgressBar.Value = 100;
             TxtOperationPct.Text = "100%";
-            TxtOperationStatus.Text = "Blank complete.";
+            TxtOperationStatus.Text = "擦除完成。";
             Log("✅ Disc blanked successfully.");
         }
         catch (OperationCanceledException)
         {
-            TxtOperationStatus.Text = "Cancelled.";
+            TxtOperationStatus.Text = "已取消。";
             Log("⏹ Blank cancelled.");
         }
         catch (Exception ex)
         {
-            TxtOperationStatus.Text = "Blank failed.";
+            TxtOperationStatus.Text = "擦除失败。";
             Log($"❌ Blank failed: {ex.Message}");
         }
         finally
@@ -285,7 +285,7 @@ public partial class AdvancedView : UserControl
         SetRunning(true);
         OperationProgressBar.Value = 0;
         TxtOperationPct.Text = "0%";
-        TxtOperationStatus.Text = quickFormat ? "Quick formatting..." : "Full formatting...";
+        TxtOperationStatus.Text = quickFormat ? "正在快速格式化…" : "正在完全格式化…";
         Log($"▶ {(quickFormat ? "Quick" : "Full")} formatting: {drive.DevicePath}");
 
         var progress = new Progress<BurnProgress>(p =>
@@ -293,9 +293,9 @@ public partial class AdvancedView : UserControl
             OperationProgressBar.Value = p.PercentComplete;
             TxtOperationPct.Text = $"{p.PercentComplete}%";
             if (p.Remaining.TotalSeconds > 0)
-                TxtOperationETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtOperationETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtOperationETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtOperationETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrWhiteSpace(p.StatusMessage))
                 TxtOperationStatus.Text = p.StatusMessage;
             if (!string.IsNullOrWhiteSpace(p.LogLine))
@@ -307,17 +307,17 @@ public partial class AdvancedView : UserControl
             await Task.Run(() => _burnService.FormatDiscAsync(drive.DevicePath, quickFormat, progress, _cts.Token));
             OperationProgressBar.Value = 100;
             TxtOperationPct.Text = "100%";
-            TxtOperationStatus.Text = "Format complete.";
+            TxtOperationStatus.Text = "格式化完成。";
             Log("✅ Disc formatted successfully.");
         }
         catch (OperationCanceledException)
         {
-            TxtOperationStatus.Text = "Cancelled.";
+            TxtOperationStatus.Text = "已取消。";
             Log("⏹ Format cancelled.");
         }
         catch (Exception ex)
         {
-            TxtOperationStatus.Text = "Format failed.";
+            TxtOperationStatus.Text = "格式化失败。";
             Log($"❌ Format failed: {ex.Message}");
         }
         finally
@@ -368,7 +368,7 @@ public partial class AdvancedView : UserControl
 
     private void LogCore(string msg)
     {
-        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n";
+        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss}] {msg}\n";
         var text = TxtLog.Text;
         if (text != null && text.Length > 30_000)
         {

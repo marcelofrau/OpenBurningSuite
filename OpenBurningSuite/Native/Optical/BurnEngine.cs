@@ -53,11 +53,11 @@ public sealed class BurnEngine
     {
         // Validate inputs
         if (string.IsNullOrWhiteSpace(job.ImagePath))
-            throw new ArgumentException("Image path must not be empty.");
+            throw new ArgumentException("镜像路径不能为空。");
         if (!File.Exists(job.ImagePath))
-            throw new FileNotFoundException($"Image file not found: {job.ImagePath}");
+            throw new FileNotFoundException($"未找到镜像文件：{job.ImagePath}");
         if (string.IsNullOrWhiteSpace(job.DevicePath))
-            throw new ArgumentException("Device path must not be empty.");
+            throw new ArgumentException("设备路径不能为空。");
 
         // Report progress immediately so the UI activates before any blocking operations.
         // Without this, the drive open + WaitForDriveReady() can delay the first progress
@@ -65,7 +65,7 @@ public sealed class BurnEngine
         progress.Report(new BurnProgress
         {
             PercentComplete = 0,
-            StatusMessage = "Initializing drive...",
+            StatusMessage = "正在初始化光驱…",
             LogLine = $"[Info] Opening device: {job.DevicePath}"
         });
 
@@ -80,9 +80,9 @@ public sealed class BurnEngine
         using var drive = new OpticalDrive(job.DevicePath);
 
         // Wait for drive readiness — drives need time to spin up after tray close/load
-        progress.Report(new BurnProgress { StatusMessage = "Waiting for drive to become ready..." });
+        progress.Report(new BurnProgress { StatusMessage = "正在等待光驱就绪…" });
         if (!drive.WaitForDriveReady())
-            throw new InvalidOperationException("Drive is not ready. Please insert a disc and close the tray.");
+            throw new InvalidOperationException("光驱未就绪。请插入光盘并关闭托盘。");
 
         // Detect media and determine sector size
         var profile = drive.GetCurrentProfile();
@@ -143,7 +143,7 @@ public sealed class BurnEngine
 
         progress.Report(new BurnProgress
         {
-            StatusMessage = $"Detected media: {mediaType}",
+            StatusMessage = $"检测到介质：{mediaType}",
             LogLine = $"[Info] Media profile: 0x{profile:X4} ({mediaType})"
         });
 
@@ -195,10 +195,10 @@ public sealed class BurnEngine
         // Check disc status
         var discInfo = drive.ReadDiscInfo();
         if (discInfo == null)
-            throw new InvalidOperationException("Could not read disc information.");
+            throw new InvalidOperationException("无法读取光盘信息。");
 
         if (discInfo.DiscStatus == 2 && !discInfo.Erasable)
-            throw new InvalidOperationException("Disc is finalized and not rewritable.");
+            throw new InvalidOperationException("光盘已封盘，无法重写。");
 
         // For DVD+RW/BD-RE/HD DVD-RW: overwritable media doesn't need blank check
         if (isOverwritable)
@@ -218,7 +218,7 @@ public sealed class BurnEngine
             {
                 progress.Report(new BurnProgress
                 {
-                    StatusMessage = "Formatting disc for first use...",
+                    StatusMessage = "正在为首次使用格式化光盘…",
                     LogLine = "[Info] Unformatted overwritable media detected — formatting with FORMAT UNIT before writing"
                 });
 
@@ -268,8 +268,8 @@ public sealed class BurnEngine
                 else
                 {
                     throw new InvalidOperationException(
-                        $"Cannot format disc for writing: {formatResult.ErrorDescription}. " +
-                        "The disc may need to be formatted manually before burning.");
+                        $"无法为写入格式化光盘：{formatResult.ErrorDescription}。" +
+                        "刻录前可能需要手动格式化光盘。");
                 }
             }
         }
@@ -554,12 +554,8 @@ public sealed class BurnEngine
             }
         }
 
-        // Perform OPC (Optimal Power Calibration) — not supported on overwritable media.
-        // OPC runs even in simulation mode so the drive calibrates laser power and
-        // strategy for the specific media. The Simu bit on WRITE commands then uses
-        // the calibrated laser at reduced power. Without OPC, the laser may not fire
-        // at all during simulation, defeating the purpose.
-        if (!isOverwritable)
+        // Perform OPC (Optimal Power Calibration) — not supported on overwritable media
+        if (!job.SimulateOnly && !isOverwritable)
         {
             drive.PerformOpc();
             progress.Report(new BurnProgress
@@ -702,7 +698,7 @@ public sealed class BurnEngine
                     catch { /* drive may be unresponsive */ }
 
                     throw new InvalidOperationException(
-                        $"Write failed at LBA {pregapLba} (pregap): {result.ErrorDescription}");
+                        $"在 LBA {pregapLba}（预间隙）处写入失败：{result.ErrorDescription}");
                 }
 
                 pregapLba += (uint)toWrite;
@@ -725,7 +721,7 @@ public sealed class BurnEngine
         {
             if (job.ImageStartOffset >= imageStream.Length)
                 throw new InvalidOperationException(
-                    $"Image start offset ({job.ImageStartOffset}) exceeds file size ({imageStream.Length}).");
+                    $"镜像起始偏移（{job.ImageStartOffset}）超出文件大小（{imageStream.Length}）。");
             imageStream.Seek(job.ImageStartOffset, SeekOrigin.Begin);
         }
 
@@ -733,7 +729,7 @@ public sealed class BurnEngine
         var sectorCountLong = (totalBytes + sectorSize - 1) / sectorSize;
         if (sectorCountLong > uint.MaxValue)
             throw new InvalidOperationException(
-                $"Image size ({FormatHelper.FormatBytes(totalBytes)}) exceeds maximum addressable sector count.");
+                $"镜像大小（{FormatHelper.FormatBytes(totalBytes)}）超出可寻址扇区数上限。");
         var totalSectors = (uint)sectorCountLong;
 
         // Validate image size against media capacity
@@ -770,8 +766,8 @@ public sealed class BurnEngine
                     if (totalBytes > overburnLimitBytes)
                     {
                         throw new InvalidOperationException(
-                            $"Image size ({FormatHelper.FormatBytes(totalBytes)}) exceeds overburn limit " +
-                            $"({FormatHelper.FormatBytes(overburnLimitBytes)}). Reduce image size or increase overburn limit.");
+                            $"镜像大小（{FormatHelper.FormatBytes(totalBytes)}）超出超刻上限" +
+                            $"（{FormatHelper.FormatBytes(overburnLimitBytes)}）。请减小镜像大小或提高超刻上限。");
                     }
 
                     progress.Report(new BurnProgress
@@ -800,7 +796,7 @@ public sealed class BurnEngine
 
         progress.Report(new BurnProgress
         {
-            StatusMessage = $"Burning {FormatHelper.FormatBytes(totalBytes)}...",
+            StatusMessage = $"正在刻录 {FormatHelper.FormatBytes(totalBytes)}…",
             TotalBytes = totalBytes,
             TotalSectors = totalSectors,
             CurrentLba = startLba,
@@ -870,17 +866,6 @@ public sealed class BurnEngine
         var buffer = new byte[SectorsPerWrite * sectorSize];
         int writeCount = 0;
 
-        // Pre-compute realistic write speed for simulation timing.
-        // Uses the user-selected speed when available, or sensible defaults.
-        var simulationSpeedBps = job.SimulateOnly
-            ? writeSpeedKBs > 0 && writeSpeedKBs != 0xFFFF
-                ? writeSpeedKBs * 1024L
-                : isBd ? (long)(4 * FormatHelper.BdBaseSpeedKBs * 1024)
-                : isHdDvd ? (long)(4 * FormatHelper.HdDvdBaseSpeedKBs * 1024)
-                : isDvdOrBd ? (long)(8 * FormatHelper.DvdBaseSpeedKBs * 1024)
-                : (long)(24 * FormatHelper.CdBaseSpeedKBs * 1024)
-            : 0;
-
         while (fileBytesRead < totalBytes)
         {
             // Check cancellation explicitly before each iteration to produce a single,
@@ -915,8 +900,8 @@ public sealed class BurnEngine
                 var padded = ((bytesRead + sectorSize - 1) / sectorSize) * sectorSize;
                 if (padded > buffer.Length)
                     throw new InvalidOperationException(
-                        $"Padded sector size ({padded}) exceeds write buffer ({buffer.Length}). " +
-                        $"This indicates a sector size mismatch.");
+                        $"填充后的扇区大小（{padded}）超出写入缓冲区（{buffer.Length}）。" +
+                        $"这表明扇区大小不匹配。");
                 Array.Clear(buffer, bytesRead, padded - bytesRead);
                 bytesRead = padded;
             }
@@ -933,62 +918,51 @@ public sealed class BurnEngine
                 // Use WRITE(10) for CD media (standard 16-bit transfer length)
                 var result = WriteSectorsWithRetry(drive, currentLba, buffer,
                     sectorSize, sectorsToWrite, bytesRead, useDvdBdMode: isDvdOrBd);
-            if (!result.Success)
-            {
-                // Log detailed diagnostics before throwing — REQUEST SENSE and
-                // MECHANISM STATUS help diagnose the root cause (bad media, failing
-                // laser, USB bridge issues, etc.) matching ImgBurn/cdrecord behavior.
-                try
+                if (!result.Success)
                 {
-                    var (sk, a, aq) = drive.RequestSense();
-                    if (sk != 0x00)
+                    // Log detailed diagnostics before throwing — REQUEST SENSE and
+                    // MECHANISM STATUS help diagnose the root cause (bad media, failing
+                    // laser, USB bridge issues, etc.) matching ImgBurn/cdrecord behavior.
+                    try
                     {
-                        var senseDesc = new ScsiResult
+                        var (sk, a, aq) = drive.RequestSense();
+                        if (sk != 0x00)
                         {
-                            Status = 0x02,
-                            SenseData = BuildFixedSenseData(sk, a, aq)
-                        }.ErrorDescription;
-                        progress.Report(new BurnProgress
-                        {
-                            LogLine = $"[Error] Drive sense after write failure: {senseDesc}"
-                        });
+                            var senseDesc = new ScsiResult
+                            {
+                                Status = 0x02,
+                                SenseData = BuildFixedSenseData(sk, a, aq)
+                            }.ErrorDescription;
+                            progress.Report(new BurnProgress
+                            {
+                                LogLine = $"[Error] Drive sense after write failure: {senseDesc}"
+                            });
+                        }
                     }
-                }
-                catch { /* drive may be unresponsive */ }
+                    catch { /* drive may be unresponsive */ }
 
-                try
-                {
-                    var mechStatus = drive.GetMechanismStatus();
-                    if (mechStatus != null)
+                    try
                     {
-                        var stateDesc = mechStatus.MechanismState switch
+                        var mechStatus = drive.GetMechanismStatus();
+                        if (mechStatus != null)
                         {
-                            0 => "Idle", 1 => "Playing", 2 => "Scanning",
-                            3 => "Host Active", _ => $"Unknown({mechStatus.MechanismState})"
-                        };
-                        progress.Report(new BurnProgress
-                        {
-                            LogLine = $"[Error] Drive mechanism: State={stateDesc}, " +
-                                      $"Fault={mechStatus.Fault}, DoorOpen={mechStatus.DoorOpen}"
-                        });
+                            var stateDesc = mechStatus.MechanismState switch
+                            {
+                                0 => "Idle", 1 => "Playing", 2 => "Scanning",
+                                3 => "Host Active", _ => $"Unknown({mechStatus.MechanismState})"
+                            };
+                            progress.Report(new BurnProgress
+                            {
+                                LogLine = $"[Error] Drive mechanism: State={stateDesc}, " +
+                                          $"Fault={mechStatus.Fault}, DoorOpen={mechStatus.DoorOpen}"
+                            });
+                        }
                     }
+                    catch { /* drive may be unresponsive */ }
+
+                    throw new InvalidOperationException(
+                        $"在 LBA {currentLba} 处写入失败：{result.ErrorDescription}");
                 }
-                catch { /* drive may be unresponsive */ }
-
-                throw new InvalidOperationException(
-                    $"Write failed at LBA {currentLba}: {result.ErrorDescription}");
-            }
-        }
-
-            // In simulation mode, add a realistic delay based on the selected write
-            // speed so progress timing mirrors a real burn. This tests buffer management
-            // and data pipeline throughput without wasting media. The delay is capped at
-            // 100ms per chunk to keep the UI responsive.
-            if (simulationSpeedBps > 0)
-            {
-                var delayMs = (int)(bytesRead * 1000 / simulationSpeedBps);
-                if (delayMs > 0)
-                    await Task.Delay(Math.Min(delayMs, 100), ct);
             }
 
             currentLba += (uint)sectorsToWrite;
@@ -1038,7 +1012,7 @@ public sealed class BurnEngine
                 CurrentSpeedX = speedX,
                 Elapsed = elapsed,
                 Remaining = eta,
-                StatusMessage = $"Writing: {FormatHelper.FormatBytes(fileBytesRead)} of " +
+                StatusMessage = $"正在写入：{FormatHelper.FormatBytes(fileBytesRead)} / " +
                                $"{FormatHelper.FormatBytes(totalBytes)} ({pct}%)",
                 // Only log every 256 writes (~8 MB) to avoid flooding the log textbox
                 LogLine = writeCount % 256 == 0
@@ -1052,7 +1026,7 @@ public sealed class BurnEngine
         {
             progress.Report(new BurnProgress
             {
-                StatusMessage = "Flushing write cache...",
+                StatusMessage = "正在刷新写入缓存…",
                 LogLine = "[Info] Synchronizing cache..."
             });
             var syncOk = drive.SynchronizeCache();
@@ -1159,7 +1133,7 @@ public sealed class BurnEngine
                 // Single session: finalize disc
                 progress.Report(new BurnProgress
                 {
-                    StatusMessage = "Finalizing disc...",
+                    StatusMessage = "正在封盘…",
                     LogLine = "[Info] Closing session and finalizing disc"
                 });
 
@@ -1393,7 +1367,7 @@ public sealed class BurnEngine
         {
             progress.Report(new BurnProgress
             {
-                StatusMessage = "Verifying burn...",
+                StatusMessage = "正在校验刻录结果…",
                 LogLine = "[Info] Starting post-burn verification"
             });
 
@@ -1421,7 +1395,7 @@ public sealed class BurnEngine
         {
             progress.Report(new BurnProgress
             {
-                StatusMessage = "Ejecting disc...",
+                StatusMessage = "正在弹出光盘…",
                 LogLine = "[Info] Ejecting disc after burn"
             });
 
@@ -1523,7 +1497,7 @@ public sealed class BurnEngine
             PercentComplete = 100,
             BytesWritten = totalBytes,
             TotalBytes = totalBytes,
-            StatusMessage = job.SimulateOnly ? "Simulation complete." : "Burn complete.",
+            StatusMessage = job.SimulateOnly ? "模拟刻录完成。" : "刻录完成。",
             LogLine = job.SimulateOnly
                 ? "[Info] Simulation completed successfully"
                 : $"[Info] Successfully burned {FormatHelper.FormatBytes(totalBytes)}"
@@ -1556,7 +1530,7 @@ public sealed class BurnEngine
         progress.Report(new BurnProgress
         {
             PercentComplete = 0,
-            StatusMessage = "Initializing drive...",
+            StatusMessage = "正在初始化光驱…",
             LogLine = $"[Info] Opening device: {devicePath}"
         });
 
@@ -1564,9 +1538,9 @@ public sealed class BurnEngine
 
         // Wait for drive to become ready — drives need time to spin up after tray
         // close/load. A single TestUnitReady check fails if media was just inserted.
-        progress.Report(new BurnProgress { StatusMessage = "Waiting for drive to become ready..." });
+        progress.Report(new BurnProgress { StatusMessage = "正在等待光驱就绪…" });
         if (!drive.WaitForDriveReady())
-            throw new InvalidOperationException("Drive is not ready. Please ensure a disc is inserted and the tray is closed.");
+            throw new InvalidOperationException("光驱未就绪。请确认已插入光盘且托盘已关闭。");
 
         // Detect media profile first to determine whether FORMAT UNIT or BLANK is needed.
         // This must happen before the Erasable check because BD-R (write-once) needs FORMAT
@@ -1588,12 +1562,12 @@ public sealed class BurnEngine
                 // only CD-RW (0x000A) and DVD-RW Sequential (0x0014) support BLANK.
                 if (profile is not (0x000A or 0x0014))
                     throw new InvalidOperationException(
-                        "Could not read disc information and media profile (0x" + profile.ToString("X4") +
-                        ") is not a known erasable type. Please check the disc.");
+                        "无法读取光盘信息和介质配置文件（0x" + profile.ToString("X4") +
+                        "）不是已知的可擦除类型。请检查光盘。");
             }
             else if (!discInfo.Erasable)
             {
-                throw new InvalidOperationException("Disc is not rewritable/erasable.");
+                throw new InvalidOperationException("光盘不可重写/擦除。");
             }
         }
 
@@ -1607,7 +1581,7 @@ public sealed class BurnEngine
         var opName = needsFormatUnit ? "format" : "blank";
         progress.Report(new BurnProgress
         {
-            StatusMessage = $"{(needsFormatUnit ? "Formatting" : "Blanking")} disc ({(quickBlank ? "quick" : "full")})...",
+            StatusMessage = $"{(needsFormatUnit ? "正在格式化" : "正在擦除")}光盘（{(quickBlank ? "快速" : "完全")}）…",
             LogLine = $"[Info] Starting {(quickBlank ? "quick" : "full")} {opName} on {devicePath} (profile 0x{profile:X4})"
         });
 
@@ -1659,7 +1633,7 @@ public sealed class BurnEngine
         }
 
         if (!result.Success)
-            throw new InvalidOperationException($"Blank/format failed: {result.ErrorDescription}");
+            throw new InvalidOperationException($"擦除/格式化失败：{result.ErrorDescription}");
 
         // Wait for the operation to complete (it runs in the background with IMM=1)
         await WaitForDriveReadyAsync(drive, progress, ct);
@@ -1669,7 +1643,7 @@ public sealed class BurnEngine
         progress.Report(new BurnProgress
         {
             PercentComplete = 100,
-            StatusMessage = "Blank/format complete.",
+            StatusMessage = "擦除/格式化完成。",
             LogLine = "[Info] Disc is now blank and ready for writing."
         });
         }
@@ -1848,7 +1822,7 @@ public sealed class BurnEngine
             {
                 progress.Report(new BurnProgress
                 {
-                    StatusMessage = $"{statusPrefix}... ({elapsed.TotalSeconds:F0}s)",
+                    StatusMessage = $"{statusPrefix}…（{elapsed.TotalSeconds:F0} 秒）",
                     // Add a log line every ~30 seconds to avoid flooding the log
                     LogLine = pollCount % logEveryNPolls == 0
                         ? $"[Info] {statusPrefix}... ({elapsed.TotalSeconds:F0}s elapsed)"
@@ -1958,13 +1932,13 @@ public sealed class BurnEngine
     /// </summary>
     private static ScsiResult WriteSectorsWithRetry(
         OpticalDrive drive, uint lba, byte[] data, int sectorSize, int sectorCount,
-        int dataLength, bool useDvdBdMode, bool simulate = false)
+        int dataLength, bool useDvdBdMode)
     {
         ScsiResult? result = null;
 
         for (int retry = 0; retry <= WriteRetryMax; retry++)
         {
-            result = drive.WriteSectors(lba, data, sectorSize, sectorCount, dataLength, useDvdBdMode, simulate);
+            result = drive.WriteSectors(lba, data, sectorSize, sectorCount, dataLength, useDvdBdMode);
             if (result.Success)
                 return result;
 
@@ -2090,9 +2064,9 @@ public sealed class BurnEngine
         if (leadOutLba > 449_999)
         {
             throw new InvalidOperationException(
-                $"Disc content exceeds maximum MSF address (99:59:74). " +
-                $"Lead-out at LBA {leadOutLba} ({leadOutLba / 75 / 60} minutes). " +
-                $"Reduce content size or use TAO mode instead of SAO.");
+                $"光盘内容超出最大 MSF 地址（99:59:74）。" +
+                $"导出区位于 LBA {leadOutLba}（{leadOutLba / 75 / 60} 分钟）。" +
+                $"请减小内容大小，或使用 TAO 模式代替 SAO。");
         }
         var loMin = leadOutLba / 75 / 60;
         var loSec = (leadOutLba / 75) % 60;
@@ -2415,8 +2389,8 @@ public sealed class BurnEngine
             if (loMin > 99)
             {
                 throw new InvalidOperationException(
-                    $"Disc content exceeds maximum MSF address (99:59:74). " +
-                    $"Lead-out at {loMin}:{loSec:D2}:{loFrm:D2}. Reduce content size.");
+                    $"光盘内容超出最大 MSF 地址（99:59:74）。" +
+                    $"导出区位于 {loMin}:{loSec:D2}:{loFrm:D2}。请减小内容大小。");
             }
 
             var leadOut = new byte[8];
@@ -2675,7 +2649,7 @@ public sealed class BurnEngine
                 progress.Report(new BurnProgress
                 {
                     PercentComplete = Math.Min(pct, 99),
-                    StatusMessage = $"Verifying: {bytesVerified / 1_048_576} MB...",
+                    StatusMessage = $"正在校验：{bytesVerified / 1_048_576} MB…",
                     LogLine = $"[Info] Verify: {bytesVerified / 1_048_576} MB verified"
                 });
             }

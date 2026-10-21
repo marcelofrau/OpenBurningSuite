@@ -10,94 +10,34 @@
                 BorderBrush="#1E3450" BorderThickness="0,0,1,0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="10,16,10,16" Spacing="2">
-                    <TextBlock Text="SETTINGS"
+                    <TextBlock Text="⚙️ 设置"
                                Foreground="#5A7A9A" FontSize="10"
                                FontWeight="Bold" Margin="8,0,0,10"/>
 
-                    <Button x:Name="TocGeneral" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGeneral">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-home-3d-16.png"/>
-                            <TextBlock Text="General" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocBurnDefaults" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionBurnDefaults">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Burn Defaults" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocReadDefaults" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionReadDefaults">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Read / Copy Defaults" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocVerification" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionVerification">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
-                            <TextBlock Text="Verification" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocFileSystem" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionFileSystem">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="File System Defaults" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocAudioCd" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAudioCd">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                            <TextBlock Text="Audio CD Defaults" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocIoPerf" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionIoPerf">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-flash-2d-16.png"/>
-                            <TextBlock Text="I/O &amp; Performance" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocPostActions" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPostActions">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-bell-2d-16.png"/>
-                            <TextBlock Text="Post-Operation Actions" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocLogging" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionLogging">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-file-2d-16.png"/>
-                            <TextBlock Text="Logging &amp; Diagnostics" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocPaths" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPaths">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Paths &amp; Locations" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocAdvanced" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAdvanced">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Advanced &amp; Safety" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
-                    <Button x:Name="TocGaming" Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGaming">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
-                            <TextBlock Text="Gaming Disc Defaults" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </Button>
+                    <Button x:Name="TocGeneral" Content="🏠  常规"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGeneral"/>
+                    <Button x:Name="TocBurnDefaults" Content="🔥  刻录默认值"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionBurnDefaults"/>
+                    <Button x:Name="TocReadDefaults" Content="💿  读取 / 复制默认值"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionReadDefaults"/>
+                    <Button x:Name="TocVerification" Content="✅  校验"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionVerification"/>
+                    <Button x:Name="TocFileSystem" Content="📂  文件系统默认值"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionFileSystem"/>
+                    <Button x:Name="TocAudioCd" Content="🎵  音频 CD 默认值"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAudioCd"/>
+                    <Button x:Name="TocIoPerf" Content="⚡️  I/O 与性能"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionIoPerf"/>
+                    <Button x:Name="TocPostActions" Content="🔔  操作后动作"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPostActions"/>
+                    <Button x:Name="TocLogging" Content="📋  日志与诊断"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionLogging"/>
+                    <Button x:Name="TocPaths" Content="📁  路径与位置"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionPaths"/>
+                    <Button x:Name="TocAdvanced" Content="🔧  高级与安全"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionAdvanced"/>
+                    <Button x:Name="TocGaming" Content="🎮  游戏光盘默认值"
+                            Classes="NavBtn" Click="OnCategoryClick" Tag="SectionGaming"/>
                 </StackPanel>
             </ScrollViewer>
         </Border>
@@ -108,9 +48,9 @@
 
                 <!-- Page header -->
                 <StackPanel Spacing="4">
-                    <TextBlock Text="Application Settings &amp; Preferences"
+                    <TextBlock Text="⚙️  应用设置与首选项"
                                FontSize="20" FontWeight="SemiBold" Foreground="#E8F0FE"/>
-                    <TextBlock Text="Configure default behavior, performance, paths, and preferences for all operations."
+                    <TextBlock Text="配置所有操作的默认行为、性能、路径和首选项。"
                                FontSize="12" Foreground="#5A7A9A" TextWrapping="Wrap"/>
                 </StackPanel>
 
@@ -121,35 +61,17 @@
                             <TextBlock x:Name="TxtSettingsStatus" Text="" Foreground="#5A7A9A" FontSize="11"/>
                         </StackPanel>
                         <Button x:Name="BtnSaveSettings" Grid.Column="1"
-                                Classes="PrimaryBtn"
+                                Content="💾  保存设置" Classes="PrimaryBtn"
                                 Click="OnSaveClick"
-                                ToolTip.Tip="Save all settings to disk">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-save-16.png"/>
-                                <TextBlock Text="Save Settings" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="将所有设置保存到磁盘"/>
                         <Button x:Name="BtnResetDefaults" Grid.Column="2"
-                                Classes="ActionBtn"
+                                Content="↩  恢复默认值" Classes="ActionBtn"
                                 Margin="8,0,0,0" Click="OnResetClick"
-                                ToolTip.Tip="Reset all settings to factory defaults">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-restore-2d-16.png"/>
-                                <TextBlock Text="Reset to Defaults" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="将所有设置恢复为出厂默认值"/>
                         <Button x:Name="BtnOpenSettingsFile" Grid.Column="3"
-                                Classes="ActionBtn"
+                                Content="📄  打开设置文件" Classes="ActionBtn"
                                 Margin="8,0,0,0" Click="OnOpenSettingsFileClick"
-                                ToolTip.Tip="Open the settings JSON file in the system editor">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Image Width="16" Height="16"
-                                       Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-file-2d-16.png"/>
-                                <TextBlock Text="Open Settings File" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Button>
+                                ToolTip.Tip="在系统编辑器中打开设置 JSON 文件"/>
                     </Grid>
                 </Border>
 
@@ -159,45 +81,44 @@
                 <Border x:Name="SectionGeneral" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-home-3d-16.png"/>
-                            <TextBlock Text="General" Classes="SectionHeader"/>
+                            <TextBlock Text="🏠" FontSize="16"/>
+                            <TextBlock Text="常规" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="General application behavior and user interface preferences."
+                        <TextBlock Text="常规应用行为和用户界面首选项。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <CheckBox x:Name="ChkConfirmBeforeBurn"
-                                  Content="Show confirmation dialog before starting burn operations"
+                                  Content="开始刻录操作前显示确认对话框"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Display a confirmation prompt before writing to disc"/>
+                                  ToolTip.Tip="写入光盘前显示确认提示"/>
                         <CheckBox x:Name="ChkConfirmBeforeErase"
-                                  Content="Show confirmation dialog before erasing/blanking a disc"
+                                  Content="擦除光盘前显示确认对话框"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Display a confirmation prompt before erasing rewritable media"/>
+                                  ToolTip.Tip="擦除可重写介质前显示确认提示"/>
                         <CheckBox x:Name="ChkMinimizeToTray"
-                                  Content="Minimize to system tray instead of taskbar"
+                                  Content="最小化到系统托盘而不是任务栏"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="When minimized, place the app icon in the system tray"/>
+                                  ToolTip.Tip="最小化时将应用图标放入系统托盘"/>
                         <CheckBox x:Name="ChkPreventSleep"
-                                  Content="Prevent system sleep/standby during burn operations"
+                                  Content="刻录操作期间阻止系统睡眠/待机"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Keep the system awake while writing to prevent failed burns"/>
+                                  ToolTip.Tip="写入时保持系统唤醒以避免刻录失败"/>
                         <CheckBox x:Name="ChkPreventScreensaver"
-                                  Content="Prevent screensaver during burn operations"
+                                  Content="刻录操作期间阻止屏幕保护程序"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Disable screensaver activation while burning a disc"/>
+                                  ToolTip.Tip="刻录光盘时禁止启动屏幕保护程序"/>
                         <CheckBox x:Name="ChkCheckForUpdates"
-                                  Content="Automatically check for updates at startup"
+                                  Content="启动时自动检查更新"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Check for new versions when the application starts"/>
+                                  ToolTip.Tip="应用启动时检查新版本"/>
                         <CheckBox x:Name="ChkRememberWindowPos"
-                                  Content="Remember and restore window position on startup"
+                                  Content="启动时记住并恢复窗口位置"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Save the current window size and position for next launch"/>
+                                  ToolTip.Tip="保存当前窗口大小和位置以供下次启动使用"/>
                         <CheckBox x:Name="ChkShowTooltips"
-                                  Content="Show tooltips on UI controls"
+                                  Content="在界面控件上显示工具提示"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Display helpful tooltips when hovering over controls"/>
+                                  ToolTip.Tip="鼠标悬停在控件上时显示提示"/>
                     </StackPanel>
                 </Border>
 
@@ -207,60 +128,59 @@
                 <Border x:Name="SectionBurnDefaults" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Default Burn / Write Settings" Classes="SectionHeader"/>
+                            <TextBlock Text="🔥" FontSize="16"/>
+                            <TextBlock Text="默认刻录 / 写入设置" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Default settings applied when creating a new burn job. Can be overridden per-job."
+                        <TextBlock Text="创建新刻录任务时应用的默认设置，可按任务覆盖。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto" Margin="0,4,0,0">
-                            <TextBlock Text="Write Speed:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="写入速度：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <ComboBox x:Name="CmbDefaultWriteSpeed" Grid.Column="1"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Default write speed for burning operations"/>
+                                      ToolTip.Tip="刻录操作的默认写入速度"/>
 
-                            <TextBlock Grid.Row="1" Text="Write Mode:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="1" Text="写入模式：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbDefaultWriteMode" Grid.Row="1" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="Default write mode (TAO, SAO/DAO)"/>
+                                      ToolTip.Tip="默认写入模式（TAO、SAO/DAO）"/>
 
-                            <TextBlock Grid.Row="2" Text="Multi-Session:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="2" Text="多区段：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbDefaultMultiSession" Grid.Row="2" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="Default multi-session mode"/>
+                                      ToolTip.Tip="默认多区段模式"/>
                         </Grid>
 
                         <CheckBox x:Name="ChkDefaultBUP"
-                                  Content="Enable buffer underrun protection"
+                                  Content="启用缓存欠载保护"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Prevents buffer underruns that can ruin a disc"/>
+                                  ToolTip.Tip="防止可能导致光盘报废的缓存欠载"/>
                         <CheckBox x:Name="ChkDefaultVerifyAfterBurn"
-                                  Content="Verify data after burning"
+                                  Content="刻录后校验数据"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Automatically verify written data matches the source"/>
+                                  ToolTip.Tip="自动校验写入的数据与源数据一致"/>
                         <CheckBox x:Name="ChkDefaultEjectAfterBurn"
-                                  Content="Eject disc after burn completes"
+                                  Content="刻录完成后弹出光盘"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Automatically eject the disc tray when burning finishes"/>
+                                  ToolTip.Tip="刻录结束时自动弹出光盘托盘"/>
                         <CheckBox x:Name="ChkDefaultCloseDisc"
-                                  Content="Close/finalize disc after writing"
+                                  Content="写入后关闭/封盘"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Finalize the disc so it can be read in standard drives"/>
+                                  ToolTip.Tip="封盘以便光盘可在标准光驱中读取"/>
                         <CheckBox x:Name="ChkDefaultOverburn"
-                                  Content="Enable overburning (write beyond rated capacity)"
+                                  Content="启用超刻（写入超过标称容量）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Allow writing more data than the disc's official capacity (risky)"/>
+                                  ToolTip.Tip="允许写入超过光盘标称容量的数据（有风险）"/>
                         <CheckBox x:Name="ChkDefaultSimulate"
-                                  Content="Simulate burn before writing (test mode)"
+                                  Content="写入前模拟刻录（测试模式）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Perform a simulated burn to test without actually writing"/>
+                                  ToolTip.Tip="执行模拟刻录进行测试，而不实际写入"/>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="Default Copies:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="默认份数：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <NumericUpDown x:Name="NudDefaultCopies" Minimum="1" Maximum="99"
                                            Value="1" Width="100"
-                                           ToolTip.Tip="Number of copies to burn by default"/>
+                                           ToolTip.Tip="默认刻录的份数"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -271,55 +191,54 @@
                 <Border x:Name="SectionReadDefaults" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-cd-3d-16.png"/>
-                            <TextBlock Text="Default Read / Copy Settings" Classes="SectionHeader"/>
+                            <TextBlock Text="💿" FontSize="16"/>
+                            <TextBlock Text="默认读取 / 复制设置" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Default settings for disc reading and copying operations."
+                        <TextBlock Text="光盘读取和复制操作的默认设置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" Margin="0,4,0,0">
-                            <TextBlock Text="Read Speed:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="读取速度：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <ComboBox x:Name="CmbDefaultReadSpeed" Grid.Column="1"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Default read speed for copy operations"/>
+                                      ToolTip.Tip="复制操作的默认读取速度"/>
 
-                            <TextBlock Grid.Row="1" Text="Output Format:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="1" Text="输出格式：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbDefaultOutputFormat" Grid.Row="1" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="Default image format when copying a disc"/>
+                                      ToolTip.Tip="复制光盘时的默认镜像格式"/>
 
-                            <TextBlock Grid.Row="2" Text="Error Recovery:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="2" Text="错误恢复：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbDefaultErrorRecovery" Grid.Row="2" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="How to handle read errors"/>
+                                      ToolTip.Tip="如何处理读取错误"/>
 
-                            <TextBlock Grid.Row="3" Text="Subchannel Mode:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="3" Text="子通道模式：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbDefaultSubchannel" Grid.Row="3" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="Subchannel extraction mode for special disc formats"/>
+                                      ToolTip.Tip="特殊光盘格式的子通道提取模式"/>
 
-                            <TextBlock Grid.Row="4" Text="Sector Size:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="4" Text="扇区大小：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbDefaultSectorSize" Grid.Row="4" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="Sector size — 2048 for data, 2352 for raw/audio"/>
+                                      ToolTip.Tip="扇区大小 — 数据为 2048，原始/音频为 2352"/>
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="Read Retry Count:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="读取重试次数：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <NumericUpDown x:Name="NudDefaultReadRetries" Minimum="0" Maximum="100"
                                            Value="3" Width="100"
-                                           ToolTip.Tip="Number of retries when a sector read fails"/>
+                                           ToolTip.Tip="扇区读取失败时的重试次数"/>
                         </StackPanel>
 
                         <CheckBox x:Name="ChkDefaultAudioParanoia"
-                                  Content="Enable audio paranoia mode (better accuracy, slower)"
+                                  Content="启用音频精确抓取模式（更准确，但较慢）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Use paranoia-level error correction when ripping audio CDs"/>
+                                  ToolTip.Tip="抓取音频 CD 时使用精确级纠错"/>
                         <CheckBox x:Name="ChkDefaultJitterCorrection"
-                                  Content="Enable read jitter correction"
+                                  Content="启用读取抖动校正"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Correct jitter errors during audio extraction"/>
+                                  ToolTip.Tip="在音频提取过程中校正抖动错误"/>
                     </StackPanel>
                 </Border>
 
@@ -329,24 +248,23 @@
                 <Border x:Name="SectionVerification" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/fluentui-check-mark-button-16.png"/>
-                            <TextBlock Text="Verification Settings" Classes="SectionHeader"/>
+                            <TextBlock Text="✅" FontSize="16"/>
+                            <TextBlock Text="校验设置" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Configure default checksum algorithm and automatic verification behavior."
+                        <TextBlock Text="配置默认校验和算法和自动校验行为。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <Grid ColumnDefinitions="180,*" Margin="0,4,0,0">
-                            <TextBlock Text="Checksum Algorithm:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="校验和算法：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <ComboBox x:Name="CmbDefaultChecksum" Grid.Column="1"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Default hash algorithm for disc verification"/>
+                                      ToolTip.Tip="光盘校验的默认哈希算法"/>
                         </Grid>
 
                         <CheckBox x:Name="ChkAutoVerifyAfterRead"
-                                  Content="Automatically verify disc after read/copy operations"
+                                  Content="读取/复制操作后自动校验光盘"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Run a verification pass after copying a disc to an image"/>
+                                  ToolTip.Tip="将光盘复制为镜像后执行一次校验"/>
                     </StackPanel>
                 </Border>
 
@@ -356,41 +274,40 @@
                 <Border x:Name="SectionFileSystem" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="File System Defaults" Classes="SectionHeader"/>
+                            <TextBlock Text="📂" FontSize="16"/>
+                            <TextBlock Text="文件系统默认值" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Default file system settings for building data discs and images."
+                        <TextBlock Text="构建数据光盘和镜像的默认文件系统设置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto" Margin="0,4,0,0">
-                            <TextBlock Text="File System:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="文件系统：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <ComboBox x:Name="CmbDefaultFileSystem" Grid.Column="1"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Default file system for new data disc projects"/>
+                                      ToolTip.Tip="新数据光盘项目的默认文件系统"/>
 
-                            <TextBlock Grid.Row="1" Text="UDF Revision:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="1" Text="UDF 版本：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbDefaultUdfRevision" Grid.Row="1" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="Default UDF revision level when using UDF file system"/>
+                                      ToolTip.Tip="使用 UDF 文件系统时的默认 UDF 版本"/>
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,4,0,0">
-                            <TextBlock Text="Default Volume Label:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="默认卷标：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <TextBox x:Name="TxtDefaultVolumeLabel"
-                                     Width="300" Watermark="e.g. MY_DISC"
+                                     Width="300" Watermark="例如 MY_DISC"
                                      Background="#152030" Foreground="#E8F0FE"
-                                     ToolTip.Tip="Default volume label for new disc projects"/>
+                                     ToolTip.Tip="新光盘项目的默认卷标"/>
                         </StackPanel>
 
                         <CheckBox x:Name="ChkAllowLongFileNames"
-                                  Content="Allow long file names (Joliet extensions)"
+                                  Content="允许长文件名（Joliet 扩展）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Allow file names longer than the ISO 9660 8.3 limit"/>
+                                  ToolTip.Tip="允许文件名超过 ISO 9660 的 8.3 限制"/>
                         <CheckBox x:Name="ChkAllowDeepDirs"
-                                  Content="Allow deep directory nesting (beyond 8 levels)"
+                                  Content="允许深层目录嵌套（超过 8 层）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Allow directory structures deeper than the ISO 9660 limit"/>
+                                  ToolTip.Tip="允许目录结构超过 ISO 9660 限制"/>
                     </StackPanel>
                 </Border>
 
@@ -400,32 +317,31 @@
                 <Border x:Name="SectionAudioCd" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-music-3d-16.png"/>
-                            <TextBlock Text="Audio CD Defaults" Classes="SectionHeader"/>
+                            <TextBlock Text="🎵" FontSize="16"/>
+                            <TextBlock Text="音频 CD 默认值" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Default settings for audio CD creation and burning."
+                        <TextBlock Text="创建和刻录音频 CD 的默认设置。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="Track Gap (seconds):" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="音轨间隔（秒）：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <NumericUpDown x:Name="NudAudioTrackGap" Minimum="0" Maximum="10"
                                            Value="2" Width="100"
-                                           ToolTip.Tip="Silence gap between audio tracks in seconds"/>
+                                           ToolTip.Tip="音轨之间的静音间隔（秒）"/>
                         </StackPanel>
 
                         <CheckBox x:Name="ChkAudioNormalization"
-                                  Content="Normalize audio track volume levels"
+                                  Content="标准化音轨音量"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Equalize volume levels across all tracks"/>
+                                  ToolTip.Tip="使所有音轨的音量一致"/>
                         <CheckBox x:Name="ChkCdText"
-                                  Content="Enable CD-TEXT (embed track/album titles)"
+                                  Content="启用 CD-TEXT 文本（嵌入音轨/专辑标题）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Write CD-TEXT data with artist and title information"/>
+                                  ToolTip.Tip="写入包含艺术家和标题信息的 CD-TEXT 数据"/>
                         <CheckBox x:Name="ChkGaplessPlayback"
-                                  Content="Gapless playback (no silence between tracks)"
+                                  Content="无缝播放（音轨之间无静音）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Remove gaps between tracks for seamless playback"/>
+                                  ToolTip.Tip="移除音轨之间的间隔以实现无缝播放"/>
                     </StackPanel>
                 </Border>
 
@@ -435,43 +351,42 @@
                 <Border x:Name="SectionIoPerf" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-flash-2d-16.png"/>
-                            <TextBlock Text="I/O &amp; Performance" Classes="SectionHeader"/>
+                            <TextBlock Text="⚡&#xFE0F;" FontSize="16"/>
+                            <TextBlock Text="I/O 与性能" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Low-level I/O and SCSI performance tuning. Changing these may affect burn stability."
+                        <TextBlock Text="底层 I/O 和 SCSI 性能调优。更改这些设置可能影响刻录稳定性。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <Grid ColumnDefinitions="220,*" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,4,0,0">
-                            <TextBlock Text="I/O Buffer Size (KB):" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="I/O 缓冲区大小（KB）：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <NumericUpDown x:Name="NudIoBufferSize" Grid.Column="1"
                                            Minimum="16" Maximum="4096" Value="64" Width="120"
-                                           ToolTip.Tip="Buffer size in kilobytes for read/write operations"/>
+                                           ToolTip.Tip="读写操作的缓冲区大小（KB）"/>
 
-                            <TextBlock Grid.Row="1" Text="Transfer Length (KB):" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="1" Text="传输长度（KB）：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <NumericUpDown x:Name="NudTransferLength" Grid.Row="1" Grid.Column="1"
                                            Minimum="16" Maximum="256" Value="64" Width="120" Margin="0,8,0,0"
-                                           ToolTip.Tip="Number of kilobytes per SCSI I/O command"/>
+                                           ToolTip.Tip="每条 SCSI I/O 指令传输的 KB 数"/>
 
-                            <TextBlock Grid.Row="2" Text="SCSI Write Retries:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="2" Text="SCSI 写入重试：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <NumericUpDown x:Name="NudScsiWriteRetries" Grid.Row="2" Grid.Column="1"
                                            Minimum="0" Maximum="100" Value="20" Width="120" Margin="0,8,0,0"
-                                           ToolTip.Tip="Number of write retries for transient SCSI errors"/>
+                                           ToolTip.Tip="暂时性 SCSI 错误的写入重试次数"/>
 
-                            <TextBlock Grid.Row="3" Text="SCSI Read Retries:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="3" Text="SCSI 读取重试：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <NumericUpDown x:Name="NudScsiReadRetries" Grid.Row="3" Grid.Column="1"
                                            Minimum="0" Maximum="100" Value="20" Width="120" Margin="0,8,0,0"
-                                           ToolTip.Tip="Number of read retries for transient SCSI errors"/>
+                                           ToolTip.Tip="暂时性 SCSI 错误的读取重试次数"/>
                         </Grid>
 
                         <CheckBox x:Name="ChkDirectIo"
-                                  Content="Enable direct (unbuffered) I/O"
+                                  Content="启用直接（无缓冲）I/O"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Bypass OS cache for potentially faster I/O on some systems"/>
+                                  ToolTip.Tip="绕过操作系统缓存，在某些系统上可能更快"/>
                         <CheckBox x:Name="ChkExclusiveDrive"
-                                  Content="Exclusive drive access (prevent other apps from interfering)"
+                                  Content="独占光驱访问（防止其他程序干扰）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Lock the drive exclusively during operations to prevent conflicts"/>
+                                  ToolTip.Tip="操作期间独占锁定光驱以避免冲突"/>
                     </StackPanel>
                 </Border>
 
@@ -481,42 +396,41 @@
                 <Border x:Name="SectionPostActions" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-bell-2d-16.png"/>
-                            <TextBlock Text="Post-Operation Actions" Classes="SectionHeader"/>
+                            <TextBlock Text="🔔" FontSize="16"/>
+                            <TextBlock Text="操作后动作" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Configure what happens after burn, read, or erase operations complete."
+                        <TextBlock Text="配置刻录、读取或擦除操作完成后的行为。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <Grid ColumnDefinitions="220,*" RowDefinitions="Auto,Auto,Auto" Margin="0,4,0,0">
-                            <TextBlock Text="After Successful Burn:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="刻录成功后：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <ComboBox x:Name="CmbPostBurnAction" Grid.Column="1"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Action to perform after a burn completes successfully"/>
+                                      ToolTip.Tip="刻录成功完成后执行的动作"/>
 
-                            <TextBlock Grid.Row="1" Text="After Successful Read:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="1" Text="读取成功后：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbPostReadAction" Grid.Row="1" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="Action to perform after a disc copy completes successfully"/>
+                                      ToolTip.Tip="光盘复制成功完成后执行的动作"/>
 
-                            <TextBlock Grid.Row="2" Text="After Successful Erase:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="2" Text="擦除成功后：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <ComboBox x:Name="CmbPostEraseAction" Grid.Row="2" Grid.Column="1"
                                       HorizontalAlignment="Stretch" Margin="0,8,0,0"
-                                      ToolTip.Tip="Action to perform after a disc erase completes"/>
+                                      ToolTip.Tip="光盘擦除完成后执行的动作"/>
                         </Grid>
 
                         <CheckBox x:Name="ChkSoundOnComplete"
-                                  Content="Play notification sound when operations complete"
+                                  Content="操作完成时播放提示音"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Play an audible sound when an operation finishes"/>
+                                  ToolTip.Tip="操作结束时播放声音提示"/>
                         <CheckBox x:Name="ChkSoundOnError"
-                                  Content="Play notification sound on errors"
+                                  Content="出错时播放提示音"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Play an audible sound when an error occurs"/>
+                                  ToolTip.Tip="发生错误时播放声音提示"/>
                         <CheckBox x:Name="ChkNotificationOnComplete"
-                                  Content="Show desktop notification when operations complete"
+                                  Content="操作完成时显示桌面通知"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Display a system notification when an operation finishes"/>
+                                  ToolTip.Tip="操作结束时显示系统通知"/>
                     </StackPanel>
                 </Border>
 
@@ -526,39 +440,38 @@
                 <Border x:Name="SectionLogging" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-file-2d-16.png"/>
-                            <TextBlock Text="Logging &amp; Diagnostics" Classes="SectionHeader"/>
+                            <TextBlock Text="📋" FontSize="16"/>
+                            <TextBlock Text="日志与诊断" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Configure operation logging, verbosity, and log file management."
+                        <TextBlock Text="配置操作日志、详细程度和日志文件管理。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <CheckBox x:Name="ChkEnableLogging"
-                                  Content="Enable operation logging to file"
+                                  Content="启用操作日志写入文件"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Write detailed operation logs to the log directory"/>
+                                  ToolTip.Tip="将详细操作日志写入日志目录"/>
 
                         <Grid ColumnDefinitions="220,*" RowDefinitions="Auto,Auto,Auto" Margin="0,4,0,0">
-                            <TextBlock Text="Log Level:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="日志级别：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <ComboBox x:Name="CmbLogLevel" Grid.Column="1"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Amount of detail to include in log files"/>
+                                      ToolTip.Tip="日志文件中包含的详细程度"/>
 
-                            <TextBlock Grid.Row="1" Text="Max Log File Size (MB):" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="1" Text="日志文件大小上限（MB）：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <NumericUpDown x:Name="NudMaxLogSize" Grid.Row="1" Grid.Column="1"
                                            Minimum="1" Maximum="500" Value="10" Width="120" Margin="0,8,0,0"
-                                           ToolTip.Tip="Maximum size of a single log file before rotation"/>
+                                           ToolTip.Tip="单个日志文件轮转前的最大大小"/>
 
-                            <TextBlock Grid.Row="2" Text="Log Files to Keep:" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                            <TextBlock Grid.Row="2" Text="保留日志文件数：" Classes="FieldLabel" VerticalAlignment="Center" Margin="0,8,0,0"/>
                             <NumericUpDown x:Name="NudLogRetention" Grid.Row="2" Grid.Column="1"
                                            Minimum="1" Maximum="50" Value="5" Width="120" Margin="0,8,0,0"
-                                           ToolTip.Tip="Number of old log files to retain"/>
+                                           ToolTip.Tip="保留的旧日志文件数量"/>
                         </Grid>
 
                         <CheckBox x:Name="ChkLogScsiCommands"
-                                  Content="Include SCSI/MMC command details in log (verbose)"
+                                  Content="在日志中包含 SCSI/MMC 指令详情（详细）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Log raw SCSI commands and responses for debugging"/>
+                                  ToolTip.Tip="记录原始 SCSI 指令和响应以便调试"/>
                     </StackPanel>
                 </Border>
 
@@ -568,72 +481,53 @@
                 <Border x:Name="SectionPaths" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-folder-16.png"/>
-                            <TextBlock Text="Paths &amp; Locations" Classes="SectionHeader"/>
+                            <TextBlock Text="📁" FontSize="16"/>
+                            <TextBlock Text="路径与位置" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Configure default directories for image output, temporary files, and logs."
+                        <TextBlock Text="配置镜像输出、临时文件和日志的默认目录。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <StackPanel Spacing="8">
-                            <TextBlock Text="Default Image Output Directory:" Classes="FieldLabel"/>
+                            <TextBlock Text="默认镜像输出目录：" Classes="FieldLabel"/>
                             <Grid ColumnDefinitions="*,Auto">
                                 <TextBox x:Name="TxtDefaultImageDir"
-                                         Watermark="Leave empty for system default..."
+                                         Watermark="留空则使用系统默认值…"
                                          Background="#152030" Foreground="#E8F0FE"
-                                         ToolTip.Tip="Default directory for saved disc images"/>
+                                         ToolTip.Tip="保存光盘镜像的默认目录"/>
                                 <Button x:Name="BtnBrowseImageDir" Grid.Column="1"
-                                        Content="Browse…" Classes="ActionBtn"
+                                        Content="浏览…" Classes="ActionBtn"
                                         Margin="6,0,0,0" Click="OnBrowseImageDirClick"
-                                        ToolTip.Tip="Browse for a directory"/>
-                            </Grid>
-                        </StackPanel>
- 
-                        <StackPanel Spacing="8">
-                            <TextBlock Text="Temporary File Directory:" Classes="FieldLabel"/>
-                            <Grid ColumnDefinitions="*,Auto">
-                                <TextBox x:Name="TxtTempDir"
-                                         Watermark="Leave empty for system default..."
-                                         Background="#152030" Foreground="#E8F0FE"
-                                         ToolTip.Tip="Directory for temporary build files"/>
-                                <Button x:Name="BtnBrowseTempDir" Grid.Column="1"
-                                        Content="Browse…" Classes="ActionBtn"
-                                        Margin="6,0,0,0" Click="OnBrowseTempDirClick"
-                                        ToolTip.Tip="Browse for a directory"/>
-                            </Grid>
-                        </StackPanel>
- 
-                        <StackPanel Spacing="8">
-                            <TextBlock Text="Log File Directory:" Classes="FieldLabel"/>
-                            <Grid ColumnDefinitions="*,Auto">
-                                <TextBox x:Name="TxtLogDir"
-                                         Watermark="Leave empty for app data default..."
-                                         Background="#152030" Foreground="#E8F0FE"
-                                         ToolTip.Tip="Custom directory for log files"/>
-                                <Button x:Name="BtnBrowseLogDir" Grid.Column="1"
-                                        Content="Browse…" Classes="ActionBtn"
-                                        Margin="6,0,0,0" Click="OnBrowseLogDirClick"
-                                        ToolTip.Tip="Browse for a directory"/>
+                                        ToolTip.Tip="浏览并选择目录"/>
                             </Grid>
                         </StackPanel>
 
                         <StackPanel Spacing="8">
-                            <TextBlock Text="Path to chdman executable:" Classes="FieldLabel"/>
-                                                    <Grid ColumnDefinitions="*,Auto,Auto">
-                                <TextBox x:Name="TxtChdmanPath"
-                                         Watermark="Optional — leave empty to auto-detect"
+                            <TextBlock Text="临时文件目录：" Classes="FieldLabel"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBox x:Name="TxtTempDir"
+                                         Watermark="留空则使用系统默认值…"
                                          Background="#152030" Foreground="#E8F0FE"
-                                         ToolTip.Tip="Full path to chdman executable (overrides detection)"/>
-                                <Button x:Name="BtnBrowseChdman" Grid.Column="1"
-                                        Content="Browse…" Classes="ActionBtn"
-                                        Margin="6,0,0,0" Click="OnBrowseChdmanClick"
-                                        ToolTip.Tip="Browse for the chdman executable"/>
-                                                        <Button x:Name="BtnTestChdman" Grid.Column="2"
-                                                                Content="Test chdman" Classes="ActionBtn"
-                                                                Margin="6,0,0,0" Click="OnTestChdmanClick"
-                                                                ToolTip.Tip="Run chdman --version to verify detection"/>
-                                                    </Grid>
-                                                </StackPanel>
+                                         ToolTip.Tip="存放构建临时文件的目录"/>
+                                <Button x:Name="BtnBrowseTempDir" Grid.Column="1"
+                                        Content="浏览…" Classes="ActionBtn"
+                                        Margin="6,0,0,0" Click="OnBrowseTempDirClick"
+                                        ToolTip.Tip="浏览并选择目录"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="日志文件目录：" Classes="FieldLabel"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <TextBox x:Name="TxtLogDir"
+                                         Watermark="留空则使用应用数据默认目录…"
+                                         Background="#152030" Foreground="#E8F0FE"
+                                         ToolTip.Tip="自定义日志文件目录"/>
+                                <Button x:Name="BtnBrowseLogDir" Grid.Column="1"
+                                        Content="浏览…" Classes="ActionBtn"
+                                        Margin="6,0,0,0" Click="OnBrowseLogDirClick"
+                                        ToolTip.Tip="浏览并选择目录"/>
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
@@ -643,39 +537,38 @@
                 <Border x:Name="SectionAdvanced" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-settings-2d-16.png"/>
-                            <TextBlock Text="Advanced &amp; Safety" Classes="SectionHeader"/>
+                            <TextBlock Text="🔧" FontSize="16"/>
+                            <TextBlock Text="高级与安全" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Advanced options for experienced users. Incorrect settings may cause burn failures."
+                        <TextBlock Text="面向高级用户的高级选项。错误的设置可能导致刻录失败。"
                                    Foreground="#FF8C00" FontSize="11"/>
 
                         <CheckBox x:Name="ChkExpertMode"
-                                  Content="Enable expert mode (show additional low-level options)"
+                                  Content="启用专家模式（显示更多底层选项）"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Show advanced options in burn, read, and build views"/>
+                                  ToolTip.Tip="在刻录、读取和构建视图中显示高级选项"/>
                         <CheckBox x:Name="ChkAutoDetectSpeed"
-                                  Content="Automatically detect and suggest optimal write speed"
+                                  Content="自动检测并建议最佳写入速度"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Analyze media quality and suggest the best write speed"/>
+                                  ToolTip.Tip="分析介质质量并建议最佳写入速度"/>
                         <CheckBox x:Name="ChkMediaCompat"
-                                  Content="Perform media compatibility check before burning"
+                                  Content="刻录前执行介质兼容性检查"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Verify the media is compatible with the selected operation"/>
+                                  ToolTip.Tip="确认介质与所选操作兼容"/>
                         <CheckBox x:Name="ChkAutoDetectCaps"
-                                  Content="Automatically detect drive firmware capabilities"
+                                  Content="自动检测光驱固件能力"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Query drive firmware for supported features"/>
+                                  ToolTip.Tip="查询光驱固件支持的功能"/>
                         <CheckBox x:Name="ChkAllowSameSourceTarget"
-                                  Content="Allow same drive as source and target (not recommended)"
+                                  Content="允许源和目标使用同一光驱（不推荐）"
                                   Foreground="#FF8C00"
-                                  ToolTip.Tip="WARNING: Using the same drive for source and target can cause data loss"/>
+                                  ToolTip.Tip="警告：源和目标使用同一光驱可能导致数据丢失"/>
 
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock Text="Default Layer Break Position:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="默认换层位置：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <NumericUpDown x:Name="NudLayerBreak" Minimum="0" Maximum="4000000"
                                            Value="0" Width="140"
-                                           ToolTip.Tip="Layer break LBA for dual-layer media (0 = automatic)"/>
+                                           ToolTip.Tip="双层介质的换层 LBA（0 = 自动）"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -686,28 +579,27 @@
                 <Border x:Name="SectionGaming" Classes="Card">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Image Width="16" Height="16"
-                                   Source="avares://OpenBurningSuite/Assets/Icons/16/icons8-game-controller-16.png"/>
-                            <TextBlock Text="Gaming Disc Defaults" Classes="SectionHeader"/>
+                            <TextBlock Text="🎮" FontSize="16"/>
+                            <TextBlock Text="游戏光盘默认值" Classes="SectionHeader"/>
                         </StackPanel>
-                        <TextBlock Text="Default patching and preset behavior for gaming disc operations."
+                        <TextBlock Text="游戏光盘操作的默认补丁和预设行为。"
                                    Foreground="#5A7A9A" FontSize="11"/>
 
                         <Grid ColumnDefinitions="220,*" Margin="0,4,0,0">
-                            <TextBlock Text="Default Gaming Preset:" Classes="FieldLabel" VerticalAlignment="Center"/>
+                            <TextBlock Text="默认游戏机预设：" Classes="FieldLabel" VerticalAlignment="Center"/>
                             <ComboBox x:Name="CmbDefaultGamingPreset" Grid.Column="1"
                                       HorizontalAlignment="Stretch"
-                                      ToolTip.Tip="Default gaming system preset for game disc wizard"/>
+                                      ToolTip.Tip="游戏光盘向导的默认游戏机预设"/>
                         </Grid>
 
                         <CheckBox x:Name="ChkAutoEsrPatch"
-                                  Content="Automatically apply ESR patch for PS2 DVD images"
+                                  Content="自动为 PS2 DVD 镜像应用 ESR 补丁"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Auto-apply ESR patching for PS2 DVD compatibility"/>
+                                  ToolTip.Tip="自动应用 ESR 补丁以兼容 PS2 DVD"/>
                         <CheckBox x:Name="ChkAutoRegionFree"
-                                  Content="Automatically apply region-free patching"
+                                  Content="自动应用全区补丁"
                                   Foreground="#E8F0FE"
-                                  ToolTip.Tip="Remove region restrictions from game discs automatically"/>
+                                  ToolTip.Tip="自动移除游戏光盘的区域限制"/>
                     </StackPanel>
                 </Border>
 

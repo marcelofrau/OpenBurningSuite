@@ -48,7 +48,7 @@ public static class AudioReaderFactory
     public static WaveStream CreateReader(string filePath)
     {
         if (!File.Exists(filePath))
-            throw new FileNotFoundException($"Audio file not found: {filePath}", filePath);
+            throw new FileNotFoundException($"未找到音频文件：{filePath}", filePath);
 
         var ext = Path.GetExtension(filePath).ToLowerInvariant();
 
@@ -65,8 +65,8 @@ public static class AudioReaderFactory
             ".opus" => ConvertWithFfmpeg(filePath, "Opus"),
             _ => TryFallbackReaders(filePath)
                  ?? throw new InvalidOperationException(
-                     $"Unsupported audio format: '{ext}'. " +
-                     $"Supported formats: {string.Join(", ", SupportedExtensions)}.")
+                     $"不支持的音频格式：“{ext}”。" +
+                     $"支持的格式：{string.Join("、", SupportedExtensions)}。")
         };
     }
 
@@ -160,9 +160,9 @@ public static class AudioReaderFactory
         if (ffmpegPath == null)
         {
             throw new InvalidOperationException(
-                $"{formatName} audio format requires ffmpeg for decoding on this platform. " +
-                "Please install ffmpeg and ensure it is available in your system PATH, " +
-                "or convert the file to WAV or MP3 first.");
+                $"{formatName} 音频格式在此平台上需要 ffmpeg 解码。" +
+                "请安装 ffmpeg 并确保其位于系统 PATH 中，" +
+                "或先将文件转换为 WAV 或 MP3。");
         }
 
         var tempDir = Path.Combine(Path.GetTempPath(), "OpenBurningSuite");
@@ -194,7 +194,7 @@ public static class AudioReaderFactory
 
             using var process = Process.Start(psi);
             if (process == null)
-                throw new InvalidOperationException("Failed to start ffmpeg process.");
+                throw new InvalidOperationException("无法启动 ffmpeg 进程。");
 
             // Read stderr to prevent deadlock (ffmpeg writes progress to stderr)
             var stderr = process.StandardError.ReadToEnd();
@@ -204,7 +204,7 @@ public static class AudioReaderFactory
             {
                 try { process.Kill(entireProcessTree: true); } catch { }
                 throw new InvalidOperationException(
-                    "ffmpeg conversion timed out (120 seconds). The audio file may be corrupt or very large.");
+                    "ffmpeg 转换超时（120 秒）。音频文件可能已损坏或过大。");
             }
 
             if (process.ExitCode != 0)
@@ -212,16 +212,16 @@ public static class AudioReaderFactory
                 // Clean up partial output
                 TryDeleteFile(tempWav);
                 throw new InvalidOperationException(
-                    $"ffmpeg failed to convert '{Path.GetFileName(filePath)}' (exit code {process.ExitCode}). " +
-                    $"Error: {TruncateMessage(stderr, 300)}");
+                    $"ffmpeg 转换“{Path.GetFileName(filePath)}”失败（退出码 {process.ExitCode}）。" +
+                    $"错误：{TruncateMessage(stderr, 300)}");
             }
 
             if (!File.Exists(tempWav) || new FileInfo(tempWav).Length == 0)
             {
                 TryDeleteFile(tempWav);
                 throw new InvalidOperationException(
-                    $"ffmpeg produced no output for '{Path.GetFileName(filePath)}'. " +
-                    "The file may be corrupt or in an unsupported variant.");
+                    $"ffmpeg 未对“{Path.GetFileName(filePath)}”产生输出。" +
+                    "该文件可能已损坏或属于不支持的变体。");
             }
 
             // Return a wrapper that deletes the temp file on dispose
@@ -236,7 +236,7 @@ public static class AudioReaderFactory
         {
             TryDeleteFile(tempWav);
             throw new InvalidOperationException(
-                $"Failed to convert '{Path.GetFileName(filePath)}' via ffmpeg: {ex.Message}", ex);
+                $"通过 ffmpeg 转换“{Path.GetFileName(filePath)}”失败：{ex.Message}", ex);
         }
     }
 

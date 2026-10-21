@@ -27,29 +27,29 @@ public partial class BuildView : UserControl
 
     private static readonly Dictionary<string, string> GamingDescriptions = new()
     {
-        ["PlayStation 1"]             = "PS1: ISO 9660 disc with SYSTEM.CNF at root, PSX.EXE or custom executable. Sector size 2352.",
-        ["PlayStation 2"]             = "PS2: UDF 1.02 + ISO 9660 bridge. SYSTEM.CNF at root pointing to SLUS_XXXXX.XX.",
-        ["PlayStation 3"]             = "PS3: Blu-ray (BD-25/BD-50). Encrypted with AACS+BD+. Standard tools cannot decrypt.",
-        ["PlayStation 4/5"]           = "PS4/5: Blu-ray encrypted discs. For preservation reference only.",
-        ["PSP (UMD)"]                 = "PSP: Universal Media Disc (UMD). ISO 9660, up to 1.8 GB dual-layer. Dump via PSP homebrew.",
-        ["Sega Mega CD"]              = "Mega CD: Mixed-mode audio+data. Data track first, then audio tracks. Requires Sega header.",
-        ["Sega Saturn"]               = "Saturn: Mode 1 data first track, then audio. IP.BIN boot header required. Raw 2352-byte sectors.",
-        ["Sega Dreamcast"]            = "Dreamcast: GD-ROM (~1.2 GB usable). Boot sector at track 03, 1ST_READ.BIN at root.",
-        ["PC Engine / TurboGrafx-CD"] = "PC Engine: Mixed-mode. Data track followed by audio tracks. Boot IPL sector required.",
-        ["3DO"]                       = "3DO: Standard ISO 9660 with custom volume label and directory structure.",
-        ["Neo Geo CD"]                = "Neo Geo CD: ISO 9660 with SPR/Z80/FIX files in root.",
-        ["Xbox"]                      = "Xbox: DVD-5/DVD-9 with security sector (SS) region. Requires compatible drive.",
-        ["Xbox 360"]                  = "Xbox 360: Dual-layer DVD with security sectors. Requires Kreon-compatible drive.",
-        ["Xbox One/Series"]           = "Xbox One/Series: Blu-ray encrypted discs (50 GB). For preservation reference only.",
-        ["GameCube"]                  = "GameCube: Nintendo miniDVD (1.46 GB). Requires compatible drive or Wii with GC mode.",
-        ["Wii"]                       = "Wii: Wii optical disc. Use Wii with Homebrew or compatible drive.",
-        ["Wii U"]                     = "Wii U: Proprietary 25 GB optical disc. Requires compatible drive for raw dumping.",
-        ["Atari Jaguar CD"]           = "Jaguar CD: Mixed-mode CD. Boot track is audio.",
-        ["Amiga CD32"]                = "Amiga CD32: Mixed-mode CD with AMIGABOOT boot block. ISO 9660 data track.",
-        ["Amiga CDTV"]                = "Amiga CDTV: Mixed-mode CD with CDTV-compatible boot block. ISO 9660 data track.",
-        ["CD-i (Philips)"]            = "CD-i: Philips CD-Interactive disc (Green Book). ISO 9660 with CD-i application directory.",
-        ["VCD"]                       = "VCD: Video CD per IEC 62107 (White Book). MPEG-1 video at 352×240/288, 1150 kbps. CD-ROM XA Mode 2 sectors.",
-        ["SVCD"]                      = "SVCD: Super Video CD per IEC 62107. MPEG-2 video at 480×480/576, up to 2600 kbps. CD-ROM XA Mode 2 sectors.",
+        ["PlayStation 1"]             = "PS1：根目录含 SYSTEM.CNF、PSX.EXE 或自定义可执行文件的 ISO 9660 光盘。扇区大小 2352。",
+        ["PlayStation 2"]             = "PS2：UDF 1.02 + ISO 9660 桥接。根目录的 SYSTEM.CNF 指向 SLUS_XXXXX.XX。",
+        ["PlayStation 3"]             = "PS3：蓝光（BD-25/BD-50），采用 AACS+BD+ 加密。标准工具无法解密。",
+        ["PlayStation 4/5"]           = "PS4/5：蓝光加密光盘。仅供存档参考。",
+        ["PSP (UMD)"]                 = "PSP：通用媒体光盘（UMD）。ISO 9660，双层最大 1.8 GB。可通过 PSP homebrew 导出。",
+        ["Sega Mega CD"]              = "Mega CD：音频+数据混合模式。数据轨道在前，随后是音轨。需要 Sega 引导头。",
+        ["Sega Saturn"]               = "Saturn：第一轨为 Mode 1 数据，随后为音频。需要 IP.BIN 引导头。使用 2352 字节原始扇区。",
+        ["Sega Dreamcast"]            = "Dreamcast：GD-ROM（可用约 1.2 GB）。引导扇区位于轨道 03，根目录含 1ST_READ.BIN。",
+        ["PC Engine / TurboGrafx-CD"] = "PC Engine：混合模式。数据轨道后接音轨。需要 IPL 引导扇区。",
+        ["3DO"]                       = "3DO：标准 ISO 9660，使用自定义卷标和目录结构。",
+        ["Neo Geo CD"]                = "Neo Geo CD：ISO 9660，根目录含 SPR/Z80/FIX 文件。",
+        ["Xbox"]                      = "Xbox：DVD-5/DVD-9，含安全扇区（SS）区域。需要兼容光驱。",
+        ["Xbox 360"]                  = "Xbox 360：带安全扇区的双层 DVD。需要兼容 Kreon 的光驱。",
+        ["Xbox One/Series"]           = "Xbox One/Series：蓝光加密光盘（50 GB）。仅供存档参考。",
+        ["GameCube"]                  = "GameCube：任天堂 miniDVD（1.46 GB）。需要兼容光驱或支持 GC 模式的 Wii。",
+        ["Wii"]                       = "Wii：Wii 光盘。请使用装有 Homebrew 的 Wii 或兼容光驱。",
+        ["Wii U"]                     = "Wii U：专有 25 GB 光盘。需要兼容光驱才能原始转储。",
+        ["Atari Jaguar CD"]           = "Jaguar CD：混合模式 CD，引导轨道为音频。",
+        ["Amiga CD32"]                = "Amiga CD32：带 AMIGABOOT 引导块的混合模式 CD，ISO 9660 数据轨道。",
+        ["Amiga CDTV"]                = "Amiga CDTV：带 CDTV 兼容引导块的混合模式 CD，ISO 9660 数据轨道。",
+        ["CD-i (Philips)"]            = "CD-i：飞利浦 CD-Interactive 光盘（绿皮书）。ISO 9660，含 CD-i 应用程序目录。",
+        ["VCD"]                       = "VCD：符合 IEC 62107（白皮书）的视频 CD。MPEG-1 视频 352×240/288，1150 kbps。CD-ROM XA Mode 2 扇区。",
+        ["SVCD"]                      = "SVCD：符合 IEC 62107 的超级视频 CD。MPEG-2 视频 480×480/576，最高 2600 kbps。CD-ROM XA Mode 2 扇区。",
     };
 
     public BuildView()
@@ -129,7 +129,7 @@ public partial class BuildView : UserControl
     {
         var selected = CmbDiscType.SelectedItem?.ToString() ?? "CD";
         var cap = FormatHelper.GetCapacity(selected);
-        TxtCapacity.Text = $"{FormatHelper.FormatBytes(cap)} ({selected})";
+        TxtCapacity.Text = $"{FormatHelper.FormatBytes(cap)}（{selected}）";
 
         // Show VCD/SVCD/gaming description if applicable, otherwise clear it
         if (GamingDescriptions.TryGetValue(selected, out var desc))
@@ -211,7 +211,7 @@ public partial class BuildView : UserControl
         var topLevel = TopLevel.GetTopLevel(this);
         if (topLevel == null) return;
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(
-            new FolderPickerOpenOptions { Title = "Select Source Folder", AllowMultiple = false });
+            new FolderPickerOpenOptions { Title = "选择源文件夹", AllowMultiple = false });
         if (folders.Count > 0)
             TxtSourceFolder.Text = folders[0].Path.LocalPath;
     }
@@ -222,7 +222,7 @@ public partial class BuildView : UserControl
         if (topLevel == null) return;
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save Image As",
+            Title = "镜像另存为",
             DefaultExtension = "iso",
             SuggestedFileName = "disc_image.iso"
         });
@@ -235,7 +235,7 @@ public partial class BuildView : UserControl
         if (topLevel == null) return;
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select Boot Image",
+            Title = "选择启动镜像",
             AllowMultiple = false
         });
         if (files.Count > 0) TxtBootImage.Text = files[0].Path.LocalPath;
@@ -247,7 +247,7 @@ public partial class BuildView : UserControl
         if (topLevel == null) return;
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select EFI Boot Image",
+            Title = "选择 EFI 启动镜像",
             AllowMultiple = false
         });
         if (files.Count > 0) TxtEfiBootImage.Text = files[0].Path.LocalPath;
@@ -259,7 +259,7 @@ public partial class BuildView : UserControl
         if (topLevel == null) return;
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add Audio Track(s)",
+            Title = "添加音轨",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -356,7 +356,7 @@ public partial class BuildView : UserControl
         // Reset progress UI for a fresh operation
         BuildProgressBar.Value = 0;
         TxtBuildPct.Text = "0%";
-        TxtBuildStatus.Text = "Starting...";
+        TxtBuildStatus.Text = "正在开始…";
         TxtBuildETA.Text = string.Empty;
 
         Log($"▶ Building image: {job.OutputImagePath}");
@@ -368,9 +368,9 @@ public partial class BuildView : UserControl
             if (!string.IsNullOrWhiteSpace(p.StatusMessage))
                 TxtBuildStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtBuildETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtBuildETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtBuildETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtBuildETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrWhiteSpace(p.LogLine))
                 Log(p.LogLine);
         });
@@ -380,17 +380,17 @@ public partial class BuildView : UserControl
             await Task.Run(() => _buildService.BuildImageAsync(job, progress, _cts.Token));
             BuildProgressBar.Value = 100;
             TxtBuildPct.Text = "100%";
-            TxtBuildStatus.Text = "Build complete.";
+            TxtBuildStatus.Text = "构建完成。";
             Log($"✅ Image built: {job.OutputImagePath}");
         }
         catch (OperationCanceledException)
         {
-            TxtBuildStatus.Text = "Cancelled.";
+            TxtBuildStatus.Text = "已取消。";
             Log("⏹ Build cancelled.");
         }
         catch (Exception ex)
         {
-            TxtBuildStatus.Text = "Failed.";
+            TxtBuildStatus.Text = "失败。";
             Log($"❌ Build failed: {ex.Message}");
         }
         finally
@@ -490,7 +490,7 @@ public partial class BuildView : UserControl
     {
         var total = TimeSpan.Zero;
         foreach (var t in _audioTracks) total += t.Duration;
-        TxtTotalTime.Text = $"Total time: {(int)total.TotalMinutes:D2}:{total.Seconds:D2}";
+        TxtTotalTime.Text = $"总用时：{(int)total.TotalMinutes:D2}:{total.Seconds:D2}";
     }
 
     private void SetRunning(bool running)
@@ -513,7 +513,7 @@ public partial class BuildView : UserControl
 
     private void LogCore(string msg)
     {
-        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n";
+        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss}] {msg}\n";
         var text = TxtLog.Text;
         if (text != null && text.Length > 30_000)
         {

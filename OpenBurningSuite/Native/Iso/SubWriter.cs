@@ -301,7 +301,7 @@ public static class SubWriter
     public static void WriteSector(string subFilePath, long sectorIndex, byte[] subchannelData)
     {
         if (subchannelData.Length != SubSectorSize)
-            throw new ArgumentException($"Expected {SubSectorSize} bytes, got {subchannelData.Length}.");
+            throw new ArgumentException($"应为 {SubSectorSize} 字节，实际为 {subchannelData.Length} 字节。");
 
         using var stream = new FileStream(subFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
         long offset = sectorIndex * SubSectorSize;

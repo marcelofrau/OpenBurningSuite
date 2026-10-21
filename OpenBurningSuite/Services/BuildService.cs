@@ -33,55 +33,55 @@ public class BuildService
         {
             // DVD-Video authoring: validate title sets have video files
             if (job.DvdAuthoring.TitleSets.Count == 0)
-                throw new ArgumentException("At least one title set is required for DVD-Video authoring.");
+                throw new ArgumentException("DVD-Video 制作至少需要一个标题集。");
             foreach (var ts in job.DvdAuthoring.TitleSets)
                 foreach (var title in ts.Titles)
                 {
                     if (string.IsNullOrWhiteSpace(title.VideoPath))
-                        throw new ArgumentException("Video path must not be empty for DVD titles.");
+                        throw new ArgumentException("DVD 标题的视频路径不能为空。");
                     if (!job.DvdAuthoring.TranscodeVideo && !File.Exists(title.VideoPath))
-                        throw new FileNotFoundException($"Video file not found: {title.VideoPath}");
+                        throw new FileNotFoundException($"未找到视频文件：{title.VideoPath}");
                 }
         }
         else if (job.BluRayAuthoring != null)
         {
             // Blu-ray authoring: validate playlists have play items
             if (job.BluRayAuthoring.Playlists.Count == 0)
-                throw new ArgumentException("At least one playlist is required for Blu-ray authoring.");
+                throw new ArgumentException("蓝光制作至少需要一个播放列表。");
             foreach (var pl in job.BluRayAuthoring.Playlists)
                 foreach (var item in pl.PlayItems)
                 {
                     if (string.IsNullOrWhiteSpace(item.VideoPath))
-                        throw new ArgumentException("Video path must not be empty for Blu-ray play items.");
+                        throw new ArgumentException("蓝光播放项的视频路径不能为空。");
                     if (!job.BluRayAuthoring.TranscodeVideo && !File.Exists(item.VideoPath))
-                        throw new FileNotFoundException($"Video file not found: {item.VideoPath}");
+                        throw new FileNotFoundException($"未找到视频文件：{item.VideoPath}");
                 }
         }
         else if (job.BdavAuthoring != null)
         {
             // BDAV authoring: validate playlists have play items
             if (job.BdavAuthoring.Playlists.Count == 0)
-                throw new ArgumentException("At least one playlist is required for BDAV authoring.");
+                throw new ArgumentException("BDAV 制作至少需要一个播放列表。");
             foreach (var pl in job.BdavAuthoring.Playlists)
                 foreach (var item in pl.PlayItems)
                 {
                     if (string.IsNullOrWhiteSpace(item.VideoPath))
-                        throw new ArgumentException("Video path must not be empty for BDAV play items.");
+                        throw new ArgumentException("BDAV 播放项的视频路径不能为空。");
                     if (!job.BdavAuthoring.TranscodeVideo && !File.Exists(item.VideoPath))
-                        throw new FileNotFoundException($"Video file not found: {item.VideoPath}");
+                        throw new FileNotFoundException($"未找到视频文件：{item.VideoPath}");
                 }
         }
         else if (FormatHelper.IsVcdOrSvcd(job.DiscType))
         {
             // VCD/SVCD uses VideoFiles instead of SourceFolder
             if (job.VideoFiles.Count == 0)
-                throw new ArgumentException($"At least one MPEG video file is required for {job.DiscType} builds.");
+                throw new ArgumentException($"{job.DiscType} 构建至少需要一个 MPEG 视频文件。");
             foreach (var videoFile in job.VideoFiles)
             {
                 if (string.IsNullOrWhiteSpace(videoFile))
-                    throw new ArgumentException("Video file path must not be empty.");
+                    throw new ArgumentException("视频文件路径不能为空。");
                 if (!File.Exists(videoFile))
-                    throw new FileNotFoundException($"Video file not found: {videoFile}");
+                    throw new FileNotFoundException($"未找到视频文件：{videoFile}");
             }
         }
         else if (job.AudioTracks.Count > 0)
@@ -89,21 +89,21 @@ public class BuildService
             foreach (var track in job.AudioTracks)
             {
                 if (string.IsNullOrWhiteSpace(track.FilePath))
-                    throw new ArgumentException("Audio track file path must not be empty.");
+                    throw new ArgumentException("音轨文件路径不能为空。");
                 if (!File.Exists(track.FilePath))
-                    throw new FileNotFoundException($"Audio track file not found: {track.FilePath}");
+                    throw new FileNotFoundException($"未找到音轨文件：{track.FilePath}");
             }
         }
         else
         {
             if (string.IsNullOrWhiteSpace(job.SourceFolder))
-                throw new ArgumentException("Source folder must not be empty for data disc builds.");
+                throw new ArgumentException("数据光盘构建的源文件夹不能为空。");
             if (!Directory.Exists(job.SourceFolder))
-                throw new DirectoryNotFoundException($"Source folder not found: {job.SourceFolder}");
+                throw new DirectoryNotFoundException($"未找到源文件夹：{job.SourceFolder}");
         }
 
         if (string.IsNullOrWhiteSpace(job.OutputImagePath))
-            throw new ArgumentException("Output image path must not be empty.");
+            throw new ArgumentException("输出镜像路径不能为空。");
 
         job.Status = BuildStatus.Running;
         job.StartedAt = DateTime.Now;
@@ -168,7 +168,7 @@ public class BuildService
         progress.Report(new BuildProgress
         {
             PercentComplete = 1,
-            StatusMessage = "Starting DVD-Video authoring...",
+            StatusMessage = "正在开始 DVD-Video 制作…",
             LogLine = $"[Info] DVD-Video authoring: {dvdJob.TitleSets.Count} title set(s), {dvdJob.VideoStandard}"
         });
 
@@ -185,7 +185,7 @@ public class BuildService
             progress.Report(new BuildProgress
             {
                 PercentComplete = 80,
-                StatusMessage = "Creating DVD ISO image...",
+                StatusMessage = "正在创建 DVD ISO 镜像…",
                 LogLine = "[Info] Building ISO 9660 + UDF image from VIDEO_TS"
             });
 
@@ -207,7 +207,7 @@ public class BuildService
             progress.Report(new BuildProgress
             {
                 PercentComplete = 100,
-                StatusMessage = "DVD-Video image complete.",
+                StatusMessage = "DVD-Video 镜像完成。",
                 LogLine = $"[Info] DVD-Video ISO written: {job.OutputImagePath}"
             });
         }
@@ -241,7 +241,7 @@ public class BuildService
         progress.Report(new BuildProgress
         {
             PercentComplete = 1,
-            StatusMessage = "Starting Blu-ray authoring...",
+            StatusMessage = "正在开始蓝光制作…",
             LogLine = $"[Info] Blu-ray authoring: {bdJob.Playlists.Count} playlist(s), {bdJob.VideoFormat} {bdJob.VideoCodec}"
         });
 
@@ -257,7 +257,7 @@ public class BuildService
             progress.Report(new BuildProgress
             {
                 PercentComplete = 80,
-                StatusMessage = "Creating Blu-ray ISO image...",
+                StatusMessage = "正在创建蓝光 ISO 镜像…",
                 LogLine = "[Info] Building UDF 2.50 image from BDMV structure"
             });
 
@@ -278,7 +278,7 @@ public class BuildService
             progress.Report(new BuildProgress
             {
                 PercentComplete = 100,
-                StatusMessage = "Blu-ray disc image complete.",
+                StatusMessage = "蓝光光盘镜像完成。",
                 LogLine = $"[Info] Blu-ray ISO written: {job.OutputImagePath}"
             });
         }
@@ -312,7 +312,7 @@ public class BuildService
         progress.Report(new BuildProgress
         {
             PercentComplete = 1,
-            StatusMessage = $"Starting {formatDesc} authoring...",
+            StatusMessage = $"正在开始 {formatDesc} 制作…",
             LogLine = $"[Info] {formatDesc} authoring: {bdavJob.Playlists.Count} playlist(s), {bdavJob.VideoFormat} {bdavJob.VideoCodec}"
         });
 
@@ -328,7 +328,7 @@ public class BuildService
             progress.Report(new BuildProgress
             {
                 PercentComplete = 80,
-                StatusMessage = $"Creating {formatDesc} ISO image...",
+                StatusMessage = $"正在创建 {formatDesc} ISO 镜像…",
                 LogLine = $"[Info] Building UDF 2.50 image from {formatDesc} structure"
             });
 
@@ -349,7 +349,7 @@ public class BuildService
             progress.Report(new BuildProgress
             {
                 PercentComplete = 100,
-                StatusMessage = $"{formatDesc} disc image complete.",
+                StatusMessage = $"{formatDesc} 光盘镜像完成。",
                 LogLine = $"[Info] {formatDesc} ISO written: {job.OutputImagePath}"
             });
         }
@@ -379,7 +379,7 @@ public class BuildService
         progress.Report(new BuildProgress
         {
             PercentComplete = 1,
-            StatusMessage = $"Building {job.DiscType} ISO (XDVDFS)...",
+            StatusMessage = $"正在构建 {job.DiscType} ISO 镜像（XDVDFS）…",
             LogLine = $"[Info] Creating XDVDFS image from: {job.SourceFolder}"
         });
 
@@ -388,12 +388,12 @@ public class BuildService
         var error = await Task.Run(() => XisoService.Create(job.SourceFolder, job.OutputImagePath), ct);
 
         if (!string.IsNullOrEmpty(error))
-            throw new InvalidOperationException($"Xbox ISO creation failed: {error}");
+            throw new InvalidOperationException($"Xbox ISO 创建失败：{error}");
 
         progress.Report(new BuildProgress
         {
             PercentComplete = 100,
-            StatusMessage = "Xbox ISO build complete.",
+            StatusMessage = "Xbox ISO 镜像构建完成。",
             LogLine = $"[Info] XDVDFS image created: {job.OutputImagePath}"
         });
     }

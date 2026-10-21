@@ -269,7 +269,7 @@ public static class SubParser
     public static byte[] DeinterleaveToSequential(byte[] interleaved)
     {
         if (interleaved.Length != SubSectorSize)
-            throw new ArgumentException($"Expected {SubSectorSize} bytes, got {interleaved.Length}.");
+            throw new ArgumentException($"应为 {SubSectorSize} 字节，实际为 {interleaved.Length} 字节。");
 
         var sequential = new byte[SubSectorSize];
 
@@ -293,7 +293,7 @@ public static class SubParser
     public static byte[] InterleaveFromSequential(byte[] sequential)
     {
         if (sequential.Length != SubSectorSize)
-            throw new ArgumentException($"Expected {SubSectorSize} bytes, got {sequential.Length}.");
+            throw new ArgumentException($"应为 {SubSectorSize} 字节，实际为 {sequential.Length} 字节。");
 
         var interleaved = new byte[SubSectorSize];
 

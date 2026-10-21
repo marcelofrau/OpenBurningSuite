@@ -61,28 +61,28 @@ public partial class BlankWizardView : UserControl
         var idx = CmbBlankDrive.SelectedIndex;
         if (idx < 0 || idx >= _drives.Count) return;
         var drive = _drives[idx];
-        TxtBlankDriveInfo.Text = $"📀 {drive.DriveModel} ({drive.DriveType})";
+        TxtBlankDriveInfo.Text = $"📀 {drive.DriveModel}（{drive.DriveType}）";
 
         if (drive.CurrentMedia != null)
         {
-            TxtBlankMediaInfo.Text = $"Media: {drive.CurrentMedia.MediaType} — " +
+            TxtBlankMediaInfo.Text = $"介质：{drive.CurrentMedia.MediaType} — " +
                                      $"State: {drive.CurrentMedia.DiscState} — " +
                                      $"Capacity: {drive.CurrentMedia.CapacityFormatted}";
 
             // Show warnings for non-erasable media
             var mediaType = drive.CurrentMedia.MediaType?.ToUpperInvariant() ?? "";
             if (mediaType.Contains("CD-R") && !mediaType.Contains("CD-RW"))
-                TxtBlankWarning.Text = "⚠ CD-R is write-once media — it cannot be erased.";
+                TxtBlankWarning.Text = "⚠ CD-R 是一次性写入介质 — 无法擦除。";
             else if (mediaType.Contains("DVD-R") && !mediaType.Contains("DVD-RW") && !mediaType.Contains("DVD-RAM"))
-                TxtBlankWarning.Text = "⚠ DVD-R is write-once media — it cannot be erased.";
+                TxtBlankWarning.Text = "⚠ DVD-R 是一次性写入介质 — 无法擦除。";
             else if (mediaType.Contains("BD-R") && !mediaType.Contains("BD-RE"))
-                TxtBlankWarning.Text = "ℹ BD-R is write-once but can be formatted for initial use.";
+                TxtBlankWarning.Text = "ℹ BD-R 是一次性写入介质，但可以格式化以供首次使用。";
             else
                 TxtBlankWarning.Text = "";
         }
         else
         {
-            TxtBlankMediaInfo.Text = "No media detected — insert a rewritable disc and click Refresh";
+            TxtBlankMediaInfo.Text = "未检测到光盘 — 请插入可重写光盘并点击“刷新”";
             TxtBlankWarning.Text = "";
         }
     }
@@ -98,37 +98,15 @@ public partial class BlankWizardView : UserControl
         PnlBlankStep3.IsVisible = step == 3;
         BtnBlankBack.IsVisible = step > 1 && step < 3;
         BtnBlankCancel.IsVisible = step == 3;
-        BtnBlankNext.Content = step == 2 ? "Start Erase →" : "Next →";
+        BtnBlankNext.Content = step == 2 ? "开始擦除 →" : "下一步 →";
         BtnBlankNext.IsVisible = step < 3;
 
-        SetStepIndicator(BlankStepInd1, BlankStepLbl1, step >= 1, step == 1);
-        SetStepIndicator(BlankStepInd2, BlankStepLbl2, step >= 2, step == 2);
-        SetStepIndicator(BlankStepInd3, BlankStepLbl3, step >= 3, step == 3);
-    }
-
-    private static void SetStepIndicator(Border indicator, TextBlock label, bool reached, bool current)
-    {
-        indicator.Background = current
-            ? Avalonia.Media.Brush.Parse("#1E90FF")
-            : reached
-                ? Avalonia.Media.Brush.Parse("#2A5A8A")
-                : Avalonia.Media.Brush.Parse("#1E3450");
-
-        var textChild = indicator.Child as TextBlock;
-        if (textChild != null)
-            textChild.Foreground = reached
-                ? Avalonia.Media.Brush.Parse("#FFFFFF")
-                : Avalonia.Media.Brush.Parse("#5A7A9A");
-
-        label.Foreground = current
-            ? Avalonia.Media.Brush.Parse("#E8F0FE")
-            : reached
-                ? Avalonia.Media.Brush.Parse("#E8F0FE")
-                : Avalonia.Media.Brush.Parse("#5A7A9A");
-
-        label.FontWeight = current
-            ? Avalonia.Media.FontWeight.SemiBold
-            : Avalonia.Media.FontWeight.Normal;
+        TxtBlankStep1Ind.Foreground = new Avalonia.Media.SolidColorBrush(
+            step >= 1 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
+        TxtBlankStep2Ind.Foreground = new Avalonia.Media.SolidColorBrush(
+            step >= 2 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
+        TxtBlankStep3Ind.Foreground = new Avalonia.Media.SolidColorBrush(
+            step >= 3 ? Avalonia.Media.Color.Parse("#5BC0FF") : Avalonia.Media.Color.Parse("#5A7A9A"));
     }
 
     private void OnBlankBackClick(object? sender, RoutedEventArgs e)
@@ -189,7 +167,7 @@ public partial class BlankWizardView : UserControl
         TxtBlankExecLog.Text = string.Empty;
 
         AppendLog($"[Info] Starting {modeStr} erase on {drive.DisplayName}...");
-        TxtBlankExecStatus.Text = $"Erasing ({modeStr})...";
+        TxtBlankExecStatus.Text = $"正在擦除（{modeStr}）…";
 
         var progress = new Progress<BurnProgress>(p =>
         {
@@ -200,9 +178,9 @@ public partial class BlankWizardView : UserControl
                 TxtBlankExecPercent.Text = $"{p.PercentComplete}%";
             }
             if (p.Remaining.TotalSeconds > 0)
-                TxtBlankExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtBlankExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtBlankExecETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtBlankExecETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrEmpty(p.StatusMessage))
                 TxtBlankExecStatus.Text = p.StatusMessage;
             if (!string.IsNullOrEmpty(p.LogLine))
@@ -215,7 +193,7 @@ public partial class BlankWizardView : UserControl
                 drive.DevicePath, quickBlank, drive.CurrentMedia?.MediaType, progress, ct));
 
             AppendLog("✅ Erase complete! Disc is now blank.");
-            TxtBlankExecStatus.Text = "Erase complete! 🎉";
+            TxtBlankExecStatus.Text = "擦除完成！🎉";
             PrgBlankExec.IsIndeterminate = false;
             PrgBlankExec.Value = 100;
             TxtBlankExecPercent.Text = "100%";
@@ -223,12 +201,12 @@ public partial class BlankWizardView : UserControl
         catch (OperationCanceledException)
         {
             AppendLog("⏹ Erase cancelled.");
-            TxtBlankExecStatus.Text = "Cancelled.";
+            TxtBlankExecStatus.Text = "已取消。";
         }
         catch (Exception ex)
         {
             AppendLog($"❌ Erase failed: {ex.Message}");
-            TxtBlankExecStatus.Text = "Erase failed.";
+            TxtBlankExecStatus.Text = "擦除失败。";
         }
         finally
         {
@@ -256,7 +234,7 @@ public partial class BlankWizardView : UserControl
     private void AppendLogCore(string message)
     {
         var existing = TxtBlankExecLog.Text ?? string.Empty;
-        TxtBlankExecLog.Text = existing + $"[{DateTime.Now:HH:mm:ss.fff}] {message}\n";
+        TxtBlankExecLog.Text = existing + $"[{DateTime.Now:HH:mm:ss}] {message}\n";
         var text = TxtBlankExecLog.Text;
         if (text != null && text.Length > 30_000)
         {

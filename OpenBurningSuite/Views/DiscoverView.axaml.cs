@@ -27,12 +27,12 @@ public partial class DiscoverView : UserControl
         // Show platform-specific hint text for the "no drives" panel
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            TxtNoDrivesHint.Text = "On macOS, the drive may take a few seconds to appear after connection.";
+            TxtNoDrivesHint.Text = "在 macOS 上，连接后光驱可能需要几秒钟才会出现。";
             TxtNoDrivesHint.IsVisible = true;
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
-            TxtNoDrivesHint.Text = "On Linux, ensure you have read/write access to /dev/sr* devices.";
+            TxtNoDrivesHint.Text = "在 Linux 上，请确保对 /dev/sr* 设备具有读写权限。";
             TxtNoDrivesHint.IsVisible = true;
         }
 
@@ -302,16 +302,16 @@ public partial class DiscoverView : UserControl
             return;
         }
 
-        TxtMediaType.Text   = string.IsNullOrWhiteSpace(m.MediaType) ? "Unknown" : m.MediaType;
-        TxtDiscState.Text   = string.IsNullOrWhiteSpace(m.DiscState) ? "Unknown" : m.DiscState;
-        TxtVolumeLabel.Text = string.IsNullOrWhiteSpace(m.VolumeLabel) ? "(none)" : m.VolumeLabel;
-        TxtCapacity.Text    = m.CapacityBytes > 0 ? m.CapacityFormatted : "Unknown";
+        TxtMediaType.Text   = string.IsNullOrWhiteSpace(m.MediaType) ? "未知" : m.MediaType;
+        TxtDiscState.Text   = string.IsNullOrWhiteSpace(m.DiscState) ? "未知" : m.DiscState;
+        TxtVolumeLabel.Text = string.IsNullOrWhiteSpace(m.VolumeLabel) ? "（无）" : m.VolumeLabel;
+        TxtCapacity.Text    = m.CapacityBytes > 0 ? m.CapacityFormatted : "未知";
         TxtUsedFree.Text    = m.CapacityBytes > 0
             ? $"{m.UsedFormatted} / {m.FreeFormatted}"
-            : "Unknown";
-        TxtFileSystem.Text  = string.IsNullOrWhiteSpace(m.FileSystem) ? "Unknown" : m.FileSystem;
+            : "未知";
+        TxtFileSystem.Text  = string.IsNullOrWhiteSpace(m.FileSystem) ? "未知" : m.FileSystem;
         TxtSessions.Text    = m.Sessions > 0 ? m.Sessions.ToString() : "1";
-        TxtTracks.Text      = m.Tracks > 0 ? m.Tracks.ToString() : "Unknown";
+        TxtTracks.Text      = m.Tracks > 0 ? m.Tracks.ToString() : "未知";
 
         Log($"✅ Media probed: {m.MediaType} — {m.VolumeLabel}");
     }
@@ -397,11 +397,11 @@ public partial class DiscoverView : UserControl
 
         TxtWriteSpeeds.Text = drive.SupportedWriteSpeeds.Count > 0
             ? string.Join(", ", drive.SupportedWriteSpeeds)
-            : "Unknown";
+            : "未知";
 
         TxtReadSpeeds.Text = drive.SupportedReadSpeeds.Count > 0
             ? string.Join(", ", drive.SupportedReadSpeeds)
-            : "Unknown";
+            : "未知";
 
         // Populate firmware/hardware info
         PopulateFirmwareInfo(drive);
@@ -484,10 +484,10 @@ public partial class DiscoverView : UserControl
                     {
                         Dispatcher.UIThread.Post(() =>
                         {
-                            TxtContentType.Text = "No media";
+                            TxtContentType.Text = "无光盘";
                             TxtMediaId.Text = "—";
                             TxtLayerInfo.Text = "—";
-                            TxtTrackListing.Text = "No media in drive";
+                            TxtTrackListing.Text = "光驱中无光盘";
                         });
                         return;
                     }
@@ -611,7 +611,7 @@ public partial class DiscoverView : UserControl
                         if (discContentInfo.HasCssProtection)
                             detailParts.Add("🔒 CSS protected");
                         if (discContentInfo.IsEncrypted)
-                            detailParts.Add("🔒 Encrypted");
+                            detailParts.Add("🔒 已加密");
                         if (discContentInfo.DvdRegionMask != 0)
                             detailParts.Add($"Region: {discContentInfo.DvdRegionMask:X2}");
                         if (discContentInfo.AudioTrackCount > 0 && discContentInfo.DataTrackCount > 0)
@@ -636,7 +636,7 @@ public partial class DiscoverView : UserControl
                 {
                     Dispatcher.UIThread.Post(() =>
                     {
-                        TxtContentType.Text = "Error";
+                        TxtContentType.Text = "错误";
                         Log($"❌ Content analysis failed: {ex.Message}");
                     });
                 }
@@ -664,7 +664,7 @@ public partial class DiscoverView : UserControl
     private void LogCore(string message)
     {
         var existing = TxtLog.Text ?? string.Empty;
-        TxtLog.Text = existing + $"[{DateTime.Now:HH:mm:ss.fff}] {message}\n";
+        TxtLog.Text = existing + $"[{DateTime.Now:HH:mm:ss}] {message}\n";
         var text = TxtLog.Text ?? string.Empty;
         if (text.Length > 30_000)
         {

@@ -87,7 +87,7 @@ public partial class VerifyView : UserControl
                 CmbDrive.Items.Clear();
                 foreach (var d in _drives) CmbDrive.Items.Add(d.DisplayName);
                 if (_drives.Count > 0) CmbDrive.SelectedIndex = 0;
-                else CmbDrive.Items.Add("No drives found");
+                else CmbDrive.Items.Add("未找到光驱");
             });
         });
     }
@@ -329,13 +329,13 @@ public partial class VerifyView : UserControl
         if (topLevel == null) return;
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select Disc Image",
+            Title = "选择光盘镜像",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
                 new FilePickerFileType("Disc Images")
                 {
-                    Patterns = new[] { "*.iso", "*.bin", "*.img", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.cue", "*.toc", "*.obse", "*.chd" }
+                    Patterns = new[] { "*.iso", "*.bin", "*.img", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.cue", "*.toc", "*.obse" }
                 },
                 new FilePickerFileType("All Files") { Patterns = new[] { "*.*" } }
             }
@@ -377,7 +377,7 @@ public partial class VerifyView : UserControl
         ClearResults();
 
         // Reset progress UI and disc visualization for a fresh operation
-        TxtVerifyStatus.Text = "Starting...";
+        TxtVerifyStatus.Text = "正在开始…";
         TxtETA.Text = string.Empty;
         DiscVizBorder.IsVisible = false;
         DiscViz.IsActive = false;
@@ -403,9 +403,9 @@ public partial class VerifyView : UserControl
             if (!string.IsNullOrWhiteSpace(p.StatusMessage))
                 TxtVerifyStatus.Text = p.StatusMessage;
             if (p.Remaining.TotalSeconds > 0)
-                TxtETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (p.TotalSectors > 0)
             {
                 TxtTotalSectors.Text = p.TotalSectors.ToString("N0");
@@ -443,17 +443,17 @@ public partial class VerifyView : UserControl
                 TxtTotalSectors.Text = result.TotalSectors.ToString("N0");
                 TxtGoodSectors.Text  = result.GoodSectors.ToString("N0");
                 TxtBadSectors.Text   = result.BadSectors.ToString("N0");
-                TxtChecksum.Text     = $"{result.ChecksumType}: {result.ActualChecksum}";
+                TxtChecksum.Text     = $"{result.ChecksumType}：{result.ActualChecksum}";
 
                 if (result.Passed)
                 {
-                    TxtVerifyResult.Text = "✅  PASSED";
+                    TxtVerifyResult.Text = "✅  通过";
                     TxtVerifyResult.Foreground = new SolidColorBrush(Avalonia.Media.Color.Parse("#4CAF50"));
-                    TxtVerifyStatus.Text = "Verification passed.";
+                    TxtVerifyStatus.Text = "校验通过。";
                 }
                 else
                 {
-                    TxtVerifyResult.Text = "❌  FAILED";
+                    TxtVerifyResult.Text = "❌  失败";
                     TxtVerifyResult.Foreground = new SolidColorBrush(Avalonia.Media.Color.Parse("#F38BA8"));
                     TxtVerifyStatus.Text = result.ErrorSummary;
                 }
@@ -471,7 +471,7 @@ public partial class VerifyView : UserControl
         }
         catch (OperationCanceledException)
         {
-            TxtVerifyStatus.Text = "Cancelled.";
+            TxtVerifyStatus.Text = "已取消。";
             Log("⏹ Verification cancelled.");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -479,7 +479,7 @@ public partial class VerifyView : UserControl
         }
         catch (Exception ex)
         {
-            TxtVerifyStatus.Text = "Failed.";
+            TxtVerifyStatus.Text = "失败。";
             Log($"❌ Verification failed: {ex.Message}");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -573,7 +573,7 @@ public partial class VerifyView : UserControl
 
     private void LogCore(string msg)
     {
-        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n";
+        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss}] {msg}\n";
         var text = TxtLog.Text;
         if (text != null && text.Length > 30_000)
         {

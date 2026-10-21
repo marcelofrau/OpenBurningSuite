@@ -133,7 +133,7 @@ public class Xbox360StealthService
 
         if (!File.Exists(imagePath))
         {
-            result.Errors.Add("ISO file not found.");
+            result.Errors.Add("未找到 ISO 文件。");
             return result;
         }
 
@@ -218,13 +218,13 @@ public class Xbox360StealthService
     /// <returns>Null on success, or an error message.</returns>
     public static string? PatchDmi(string imagePath, byte[] dmiData)
     {
-        if (!File.Exists(imagePath)) return "ISO file not found.";
-        if (dmiData == null || dmiData.Length != DmiSize) return "DMI data must be exactly 2048 bytes.";
+        if (!File.Exists(imagePath)) return "未找到 ISO 文件。";
+        if (dmiData == null || dmiData.Length != DmiSize) return "DMI 数据必须正好为 2048 字节。";
 
         try
         {
             using var stream = new FileStream(imagePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            if (stream.Length < DmiOffset + DmiSize) return "ISO too small to contain DMI sector.";
+            if (stream.Length < DmiOffset + DmiSize) return "ISO 太小，不包含 DMI 扇区。";
             stream.Seek(DmiOffset, SeekOrigin.Begin);
             stream.Write(dmiData, 0, DmiSize);
             return null;
@@ -237,13 +237,13 @@ public class Xbox360StealthService
     /// </summary>
     public static string? PatchPfi(string imagePath, byte[] pfiData)
     {
-        if (!File.Exists(imagePath)) return "ISO file not found.";
-        if (pfiData == null || pfiData.Length != PfiSize) return "PFI data must be exactly 2048 bytes.";
+        if (!File.Exists(imagePath)) return "未找到 ISO 文件。";
+        if (pfiData == null || pfiData.Length != PfiSize) return "PFI 数据必须正好为 2048 字节。";
 
         try
         {
             using var stream = new FileStream(imagePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            if (stream.Length < PfiOffset + PfiSize) return "ISO too small to contain PFI sector.";
+            if (stream.Length < PfiOffset + PfiSize) return "ISO 太小，不包含 PFI 扇区。";
             stream.Seek(PfiOffset, SeekOrigin.Begin);
             stream.Write(pfiData, 0, PfiSize);
             return null;
@@ -256,13 +256,13 @@ public class Xbox360StealthService
     /// </summary>
     public static string? PatchSs(string imagePath, byte[] ssData)
     {
-        if (!File.Exists(imagePath)) return "ISO file not found.";
-        if (ssData == null || ssData.Length < SsSize) return "SS data must be at least 2048 bytes.";
+        if (!File.Exists(imagePath)) return "未找到 ISO 文件。";
+        if (ssData == null || ssData.Length < SsSize) return "SS 数据至少需要 2048 字节。";
 
         try
         {
             using var stream = new FileStream(imagePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-            if (stream.Length < SsOffset + SsSize) return "ISO too small to contain SS sector.";
+            if (stream.Length < SsOffset + SsSize) return "ISO 太小，不包含 SS 扇区。";
             stream.Seek(SsOffset, SeekOrigin.Begin);
             stream.Write(ssData, 0, Math.Min(ssData.Length, SsSize));
             return null;
@@ -277,8 +277,8 @@ public class Xbox360StealthService
     /// <returns>Null on success, or an error message.</returns>
     public static string? PatchStealthFiles(string imagePath, string stealthDir)
     {
-        if (!File.Exists(imagePath)) return "ISO file not found.";
-        if (!Directory.Exists(stealthDir)) return "Stealth files directory not found.";
+        if (!File.Exists(imagePath)) return "未找到 ISO 文件。";
+        if (!Directory.Exists(stealthDir)) return "未找到 stealth 文件目录。";
 
         var errors = new List<string>();
 
@@ -324,7 +324,7 @@ public class Xbox360StealthService
     /// </summary>
     public static string? ExtractStealthFiles(string imagePath, string outputDir)
     {
-        if (!File.Exists(imagePath)) return "ISO file not found.";
+        if (!File.Exists(imagePath)) return "未找到 ISO 文件。";
 
         try
         {

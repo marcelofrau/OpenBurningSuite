@@ -15,7 +15,7 @@ public static class ScsiTransportFactory
     public static IScsiTransport Create(string devicePath)
     {
         if (string.IsNullOrWhiteSpace(devicePath))
-            throw new ArgumentException("Device path must not be empty.", nameof(devicePath));
+            throw new ArgumentException("设备路径不能为空。", nameof(devicePath));
 
         IScsiTransport transport;
 
@@ -27,7 +27,7 @@ public static class ScsiTransportFactory
             transport = new MacOsScsiTransport();
         else
             throw new PlatformNotSupportedException(
-                "SCSI passthrough is not supported on this platform.");
+                "此平台不支持 SCSI 直通。");
 
         try
         {
@@ -51,6 +51,6 @@ public static class ScsiTransportFactory
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             return new MacOsScsiTransport();
         throw new PlatformNotSupportedException(
-            "SCSI passthrough is not supported on this platform.");
+            "此平台不支持 SCSI 直通。");
     }
 }

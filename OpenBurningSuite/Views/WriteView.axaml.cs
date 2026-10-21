@@ -152,20 +152,10 @@ public partial class WriteView : UserControl
                 {
                     _drives = t.IsCompletedSuccessfully ? t.Result : new List<DiscDrive>();
                 }
-                var writableOnly = _drives.Where(d => d.CanWrite).ToList();
-                var filteredOut = _drives.Count - writableOnly.Count;
-                if (filteredOut > 0)
-                    Log($"[Info] {filteredOut} drive(s) filtered out (read-only or virtual).");
-                _drives = writableOnly;
-
                 CmbDrive.Items.Clear();
                 foreach (var d in _drives) CmbDrive.Items.Add(d.DisplayName);
                 if (_drives.Count > 0) CmbDrive.SelectedIndex = 0;
-                else
-                {
-                    CmbDrive.Items.Add("No writable drives found");
-                    Log("⚠ No writable optical drives detected. Virtual drives are not supported for burning.");
-                }
+                else CmbDrive.Items.Add("未找到光驱");
             });
         });
     }
@@ -225,11 +215,11 @@ public partial class WriteView : UserControl
             ChkClose.IsEnabled = false;
 
             ToolTip.SetTip(CmbMultiSession, isDao
-                ? "Multi-session is not available in DAO (Disc At Once) mode — the entire disc is finalized"
-                : "Multi-session is not available in RAW write mode");
+                ? "DAO（Disc At Once）模式下不支持多区段 — 整张光盘会被封盘"
+                : "RAW 写入模式下不支持多区段");
             ToolTip.SetTip(ChkClose, isDao
-                ? "DAO mode always finalizes the disc"
-                : "RAW write mode always finalizes the disc");
+                ? "DAO 模式始终会封盘"
+                : "RAW 写入模式始终会封盘");
         }
         else if (isSao)
         {
@@ -239,8 +229,8 @@ public partial class WriteView : UserControl
             CmbMultiSession.IsEnabled = true;
             ChkClose.IsEnabled = true;
 
-            ToolTip.SetTip(CmbMultiSession, "SAO mode supports multi-session — choose 'Start' to leave disc appendable");
-            ToolTip.SetTip(ChkClose, "Finalize the disc after this session (prevents adding more sessions)");
+            ToolTip.SetTip(CmbMultiSession, "SAO 模式支持多区段 — 选择“开始”可使光盘保持可追加");
+            ToolTip.SetTip(ChkClose, "本次区段后封盘（防止再添加区段）");
         }
         else
         {
@@ -248,8 +238,8 @@ public partial class WriteView : UserControl
             CmbMultiSession.IsEnabled = true;
             ChkClose.IsEnabled = true;
 
-            ToolTip.SetTip(CmbMultiSession, "Single session closes the disc; multi-session allows adding more data later");
-            ToolTip.SetTip(ChkClose, "Finalize the disc (required for playback in standalone players)");
+            ToolTip.SetTip(CmbMultiSession, "单区段会关闭光盘；多区段允许日后追加更多数据");
+            ToolTip.SetTip(ChkClose, "封盘（独立播放机播放所必需）");
         }
     }
 
@@ -270,12 +260,12 @@ public partial class WriteView : UserControl
         {
             CmbMultiSession.SelectedIndex = 0;
             CmbMultiSession.IsEnabled = false;
-            ToolTip.SetTip(CmbMultiSession, $"Multi-session is not supported on {mediaType} — overwritable media uses direct overwrite");
+            ToolTip.SetTip(CmbMultiSession, $"{mediaType} 不支持多区段 — 可覆写介质使用直接覆写");
 
             // Close/Finalize is not applicable to overwritable media
             ChkClose.IsChecked = false;
             ChkClose.IsEnabled = false;
-            ToolTip.SetTip(ChkClose, $"Close/Finalize is not applicable to {mediaType} — overwritable media doesn't need finalization");
+            ToolTip.SetTip(ChkClose, $"{mediaType} 不适用关闭/封盘 — 可覆写介质无需封盘");
         }
         else
         {
@@ -303,13 +293,13 @@ public partial class WriteView : UserControl
         if (topLevel == null) return;
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select Disc Image",
+            Title = "选择光盘镜像",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
                 new FilePickerFileType("Disc Images")
                 {
-                    Patterns = new[] { "*.iso", "*.bin", "*.cue", "*.toc", "*.img", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.ccd", "*.obse", "*.chd" }
+                    Patterns = new[] { "*.iso", "*.bin", "*.cue", "*.toc", "*.img", "*.nrg", "*.mdf", "*.mds", "*.cdi", "*.ccd", "*.obse" }
                 },
                 new FilePickerFileType("All Files") { Patterns = new[] { "*.*" } }
             }
@@ -327,7 +317,7 @@ public partial class WriteView : UserControl
         if (topLevel == null) return;
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select SBI File",
+            Title = "选择 SBI 文件",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
@@ -352,7 +342,7 @@ public partial class WriteView : UserControl
         if (topLevel == null) return;
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select Source Folder",
+            Title = "选择源文件夹",
             AllowMultiple = false
         });
         if (folders.Count > 0)
@@ -368,7 +358,7 @@ public partial class WriteView : UserControl
         if (topLevel == null) return;
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Add Files to Disc",
+            Title = "向光盘添加文件",
             AllowMultiple = true,
             FileTypeFilter = new[]
             {
@@ -385,7 +375,7 @@ public partial class WriteView : UserControl
         if (topLevel == null) return;
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Add Folder to Disc",
+            Title = "向光盘添加文件夹",
             AllowMultiple = true
         });
         foreach (var f in folders)
@@ -525,7 +515,7 @@ public partial class WriteView : UserControl
             var parts = new List<string>();
             if (fileCount > 0) parts.Add($"{fileCount} file(s)");
             if (folderCount > 0) parts.Add($"{folderCount} folder(s)");
-            TxtOtfInfo.Text = $"📊 {string.Join(", ", parts)} — Total: {FormatHelper.FormatBytes(totalSize)}";
+            TxtOtfInfo.Text = $"📊 {string.Join("、", parts)} — 总计：{FormatHelper.FormatBytes(totalSize)}";
         }
         else
         {
@@ -753,7 +743,7 @@ public partial class WriteView : UserControl
         // Reset progress UI for a fresh operation
         BurnProgressBar.Value = 0;
         TxtBurnPct.Text = "0%";
-        TxtBurnStatus.Text = "Starting...";
+        TxtBurnStatus.Text = "正在开始…";
         TxtCurrentSpeed.Text = string.Empty;
         TxtETA.Text = string.Empty;
         DiscVizBorder.IsVisible = false;
@@ -796,9 +786,9 @@ public partial class WriteView : UserControl
             if (p.CurrentSpeedX > 0)
                 TxtCurrentSpeed.Text = $"{p.CurrentSpeedX:F1}x";
             if (p.Remaining.TotalSeconds > 0)
-                TxtETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)} | ETA: {FormatHelper.FormatTimeSpan(p.Remaining)}";
+                TxtETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)} | 剩余：{FormatHelper.FormatTimeSpan(p.Remaining)}";
             else if (p.Elapsed.TotalSeconds > 0)
-                TxtETA.Text = $"Elapsed: {FormatHelper.FormatTimeSpan(p.Elapsed)}";
+                TxtETA.Text = $"已用：{FormatHelper.FormatTimeSpan(p.Elapsed)}";
             if (!string.IsNullOrWhiteSpace(p.LogLine))
                 Log(p.LogLine);
 
@@ -822,7 +812,7 @@ public partial class WriteView : UserControl
             await Task.Run(() => _burnService.BurnAsync(job, progress, _cts.Token));
             BurnProgressBar.Value = 100;
             TxtBurnPct.Text = "100%";
-            TxtBurnStatus.Text = isOnTheFly ? "Build & burn complete! 🎉" : "Burn complete! 🎉";
+            TxtBurnStatus.Text = isOnTheFly ? "构建并刻录完成！🎉" : "刻录完成！🎉";
             Log($"✅ {(isOnTheFly ? "Build & burn" : "Burn")} complete: {drive.DevicePath}");
 
             // Mark disc visualization as completed
@@ -847,7 +837,7 @@ public partial class WriteView : UserControl
         }
         catch (OperationCanceledException)
         {
-            TxtBurnStatus.Text = "Cancelled.";
+            TxtBurnStatus.Text = "已取消。";
             Log("⏹ Burn cancelled.");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
@@ -855,18 +845,11 @@ public partial class WriteView : UserControl
         }
         catch (Exception ex)
         {
-            TxtBurnStatus.Text = isOnTheFly ? "Build & burn failed." : "Burn failed.";
+            TxtBurnStatus.Text = isOnTheFly ? "构建并刻录失败。" : "刻录失败。";
             Log($"❌ {(isOnTheFly ? "Build & burn" : "Burn")} failed: {ex.Message}");
             DiscViz.IsActive = false;
             DiscViz.IsCompleted = false;
             DiscViz.UpdateVisualization();
-            // Show modal dialog with error details so the user understands what happened
-            try
-            {
-                var dlgMsg = ex.ToString();
-                _ = ShowModalMessageAsync(isOnTheFly ? "Build & Burn Failed" : "Burn Failed", dlgMsg);
-            }
-            catch { /* best effort */ }
         }
         finally
         {
@@ -964,36 +947,6 @@ public partial class WriteView : UserControl
         RdoBuildOnTheFly.IsEnabled = !running;
     }
 
-    private async System.Threading.Tasks.Task ShowModalMessageAsync(string title, string message)
-    {
-        var topLevel = TopLevel.GetTopLevel(this) as Window;
-        var dialog = new Window
-        {
-            Title = title,
-            Width = 700,
-            Height = 420,
-            CanResize = true,
-            WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            Content = new ScrollViewer
-            {
-                Content = new TextBox
-                {
-                    Text = message,
-                    AcceptsReturn = true,
-                    IsReadOnly = true,
-                    TextWrapping = Avalonia.Media.TextWrapping.Wrap
-                }
-            }
-        };
-
-        try
-        {
-            if (topLevel != null)
-                await dialog.ShowDialog<object?>(topLevel);
-        }
-        catch { /* ignore dialog failures */ }
-    }
-
     private void OnImageDragOver(object? sender, DragEventArgs e) =>
         e.DragEffects = e.DataTransfer.TryGetFiles() is { } files && files.Any()
             ? DragDropEffects.Copy : DragDropEffects.None;
@@ -1036,7 +989,7 @@ public partial class WriteView : UserControl
             {
                 long originalSize = DiscEncryptionService.GetOriginalSize(path);
                 var origMb = originalSize > 0 ? originalSize / (1024.0 * 1024.0) : 0;
-                TxtImageInfo.Text = $"🔒 {info.Name} — Encrypted ({info.Length / (1024.0 * 1024.0):F1} MB, original: {origMb:F1} MB)";
+                TxtImageInfo.Text = $"🔒 {info.Name} — 已加密（{info.Length / (1024.0 * 1024.0):F1} MB，原始大小：{origMb:F1} MB）";
                 PnlWritePs3Decrypt.IsVisible = false;
                 return;
             }
@@ -1053,10 +1006,10 @@ public partial class WriteView : UserControl
                 {
                     PnlWritePs3Decrypt.IsVisible = true;
                     TxtWritePs3Info.Text = bdInfo.IsEncrypted
-                        ? $"🔒 PS3 game ISO detected (encrypted). Title: {bdInfo.Title ?? "Unknown"}" +
+                        ? $"🔒 检测到 PS3 游戏 ISO 镜像（已加密）。标题：{bdInfo.Title ?? "未知"}" +
                           (!string.IsNullOrEmpty(bdInfo.TitleId) ? $" [{bdInfo.TitleId}]" : "") +
-                          "\nProvide an IRD file or disc key to decrypt before burning."
-                        : $"🔓 PS3 game ISO detected (already decrypted). Title: {bdInfo.Title ?? "Unknown"}" +
+                          "\n请提供 IRD 文件或光盘密钥以便在刻录前解密。"
+                        : $"🔓 检测到 PS3 游戏 ISO 镜像（已解密）。标题：{bdInfo.Title ?? "未知"}" +
                           (!string.IsNullOrEmpty(bdInfo.TitleId) ? $" [{bdInfo.TitleId}]" : "");
                 }
                 else
@@ -1088,17 +1041,17 @@ public partial class WriteView : UserControl
                 {
                     var sizeMb = totalBinSize / (1024.0 * 1024.0);
                     var trackInfo = binFiles.Count > 1 ? $", {binFiles.Count} tracks" : "";
-                    TxtImageInfo.Text = $"📄 {info.Name} — {sizeMb:F1} MB ({totalBinSize:N0} bytes{trackInfo})";
+                    TxtImageInfo.Text = $"📄 {info.Name} — {sizeMb:F1} MB（{totalBinSize:N0} 字节{trackInfo}）";
                 }
                 else
                 {
-                    TxtImageInfo.Text = $"📄 {info.Name} — ⚠ No BIN files found for CUE sheet";
+                    TxtImageInfo.Text = $"📄 {info.Name} — ⚠ 未找到 CUE 索引文件对应的 BIN 文件";
                 }
             }
             else
             {
                 var sizeMb = info.Length / (1024.0 * 1024.0);
-                TxtImageInfo.Text = $"📄 {info.Name} — {sizeMb:F1} MB ({info.Length:N0} bytes)";
+                TxtImageInfo.Text = $"📄 {info.Name} — {sizeMb:F1} MB（{info.Length:N0} 字节）";
             }
 
             // Detect content type and apply write presets
@@ -1198,7 +1151,7 @@ public partial class WriteView : UserControl
 
     private void LogCore(string msg)
     {
-        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss.fff}] {msg}\n";
+        TxtLog.Text += $"[{DateTime.Now:HH:mm:ss}] {msg}\n";
         var text = TxtLog.Text;
         if (text != null && text.Length > 30_000)
         {
@@ -1237,7 +1190,7 @@ public partial class WriteView : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = isDkey ? "Select .dkey File" : "Select IRD File",
+            Title = isDkey ? "选择 .dkey 文件" : "选择 IRD 文件",
             AllowMultiple = false,
             FileTypeFilter = new[]
             {
@@ -1258,12 +1211,12 @@ public partial class WriteView : UserControl
         byte[]? key = GetWritePs3DiscKey();
         if (key != null && key.Length == 16)
         {
-            TxtWritePs3KeyStatus.Text = "✅ Valid disc key loaded.";
+            TxtWritePs3KeyStatus.Text = "✅ 已加载有效的光盘密钥。";
             TxtWritePs3KeyStatus.Foreground = Avalonia.Media.Brush.Parse("#4CAF50");
         }
         else
         {
-            TxtWritePs3KeyStatus.Text = "❌ Invalid or missing disc key.";
+            TxtWritePs3KeyStatus.Text = "❌ 光盘密钥无效或缺失。";
             TxtWritePs3KeyStatus.Foreground = Avalonia.Media.Brush.Parse("#FF6B6B");
         }
     }

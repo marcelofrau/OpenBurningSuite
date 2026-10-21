@@ -19,30 +19,12 @@ public sealed class DiscInfoData
     public byte LastTrackInLastSessionLsb { get; init; }
     public byte DiscType { get; init; }
 
-    // Extended fields from ReadDiscInformationEx
-    public uint FreeSectors { get; init; }
-    public uint NextWritableAddress { get; init; }
-    public byte NumberOfSessionsMsb { get; init; }
-    public byte NumberOfTracksMsb { get; init; }
-
-    public ushort NumberOfSessions =>
-        (ushort)((NumberOfSessionsMsb << 8) | NumberOfSessionsLsb);
-
     public string DiscStatusString => DiscStatus switch
     {
         0 => "Empty",
-        1 => "Incomplete",
+        1 => "Appendable",
         2 => "Closed",
         _ => "Other"
-    };
-
-    public string LastSessionStateString => LastSessionState switch
-    {
-        0 => "Empty",
-        1 => "Incomplete",
-        2 => "Damaged",
-        3 => "Finalized",
-        _ => "Unknown"
     };
 }
 

@@ -141,7 +141,7 @@ public static class DiscEncryptionService
             // Encrypt the data
             progress?.Report(new EncryptionProgress
             {
-                StatusMessage = "Encrypting disc image...",
+                StatusMessage = "正在加密光盘镜像…",
                 TotalBytes = inputSize
             });
 
@@ -167,7 +167,7 @@ public static class DiscEncryptionService
                 PercentComplete = 100,
                 BytesProcessed = inputSize,
                 TotalBytes = inputSize,
-                StatusMessage = "Encryption complete."
+                StatusMessage = "加密完成。"
             });
 
             return null; // Success
@@ -222,7 +222,7 @@ public static class DiscEncryptionService
                 FileShare.Read, BufferSize, false);
 
             if (inputStream.Length < HeaderSize)
-                return "File is too small to be a valid OBS encrypted image.";
+                return "文件太小，不是有效的 OBS 加密镜像。";
 
             // Read and validate header
             var (salt, iv, storedHmac, originalSize, iterExp, error) = ReadHeader(inputStream);
@@ -239,7 +239,7 @@ public static class DiscEncryptionService
             // Verify HMAC
             progress?.Report(new EncryptionProgress
             {
-                StatusMessage = "Verifying integrity...",
+                StatusMessage = "正在校验完整性…",
                 TotalBytes = originalSize
             });
 
@@ -247,12 +247,12 @@ public static class DiscEncryptionService
             byte[] computedHmac = ComputeHmac(inputStream, hmacKey);
 
             if (!CryptographicOperations.FixedTimeEquals(storedHmac, computedHmac))
-                return "Decryption failed: incorrect password or corrupted file (HMAC mismatch).";
+                return "解密失败：密码错误或文件已损坏（HMAC 不匹配）。";
 
             // Decrypt the data
             progress?.Report(new EncryptionProgress
             {
-                StatusMessage = "Decrypting disc image...",
+                StatusMessage = "正在解密光盘镜像…",
                 TotalBytes = originalSize
             });
 
@@ -276,7 +276,7 @@ public static class DiscEncryptionService
                 PercentComplete = 100,
                 BytesProcessed = originalSize,
                 TotalBytes = originalSize,
-                StatusMessage = "Decryption complete."
+                StatusMessage = "解密完成。"
             });
 
             return null; // Success
@@ -289,7 +289,7 @@ public static class DiscEncryptionService
         catch (CryptographicException)
         {
             CleanupFile(outputPath);
-            return "Decryption failed: incorrect password or corrupted file.";
+            return "解密失败：密码错误或文件已损坏。";
         }
         catch (Exception ex)
         {
@@ -352,13 +352,13 @@ public static class DiscEncryptionService
         try
         {
             if (!File.Exists(filePath))
-                return "File not found.";
+                return "未找到文件。";
 
             using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read,
                 FileShare.Read, BufferSize, false);
 
             if (stream.Length < HeaderSize)
-                return "File too small for OBS encrypted format.";
+                return "文件太小，不符合 OBS 加密格式。";
 
             var (salt, _, storedHmac, _, iterExp, error) = ReadHeader(stream);
             if (error != null) return error;
@@ -371,7 +371,7 @@ public static class DiscEncryptionService
             byte[] computedHmac = ComputeHmac(stream, hmacKey);
 
             if (!CryptographicOperations.FixedTimeEquals(storedHmac, computedHmac))
-                return "Integrity check failed: incorrect password or file is corrupted.";
+                return "完整性校验失败：密码错误或文件已损坏。";
 
             return null; // Valid
         }
@@ -533,7 +533,7 @@ public static class DiscEncryptionService
                     PercentComplete = pct,
                     BytesProcessed = bytesProcessed,
                     TotalBytes = totalBytes,
-                    StatusMessage = pct < 100 ? $"Processing: {pct}%..." : "Finalizing..."
+                    StatusMessage = pct < 100 ? $"正在处理：{pct}%…" : "正在完成…"
                 });
             }
         }
@@ -546,11 +546,11 @@ public static class DiscEncryptionService
     private static void ValidateInputs(string inputPath, string password)
     {
         if (string.IsNullOrWhiteSpace(inputPath))
-            throw new ArgumentException("Input file path is required.", nameof(inputPath));
+            throw new ArgumentException("需要输入文件路径。", nameof(inputPath));
         if (!File.Exists(inputPath))
-            throw new FileNotFoundException($"Input file not found: {inputPath}");
+            throw new FileNotFoundException($"未找到输入文件：{inputPath}");
         if (string.IsNullOrEmpty(password))
-            throw new ArgumentException("Password is required.", nameof(password));
+            throw new ArgumentException("需要密码。", nameof(password));
     }
 
     private static void CleanupFile(string? path)

@@ -259,7 +259,7 @@ public static class RockRidgeExtensions
     public static int WritePadding(byte[] buffer, int offset, int totalLength)
     {
         if (totalLength < 4)
-            throw new ArgumentOutOfRangeException(nameof(totalLength), "PD entry length must be at least 4.");
+            throw new ArgumentOutOfRangeException(nameof(totalLength), "PD 条目长度至少为 4。");
 
         buffer[offset]     = (byte)'P';
         buffer[offset + 1] = (byte)'D';

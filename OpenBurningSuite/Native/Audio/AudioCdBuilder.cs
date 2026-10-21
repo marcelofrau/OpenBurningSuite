@@ -88,7 +88,7 @@ public static class AudioCdBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 2,
-            StatusMessage = "Analyzing audio tracks...",
+            StatusMessage = "正在分析音轨…",
             LogLine = "[Info] Starting Red Book audio CD image build"
         });
 
@@ -116,7 +116,7 @@ public static class AudioCdBuilder
             if (audioFrames <= 0)
             {
                 throw new InvalidOperationException(
-                    $"Audio track {i + 1} ('{Path.GetFileName(track.FilePath)}') has no audio data or is corrupt.");
+                    $"音轨 {i + 1}（“{Path.GetFileName(track.FilePath)}”）没有音频数据或已损坏。");
             }
 
             var info = new TrackLayoutInfo
@@ -151,7 +151,7 @@ public static class AudioCdBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 10,
-            StatusMessage = $"Writing {totalSectors} sectors ({FormatMsf(totalSectors)})...",
+            StatusMessage = $"正在写入 {totalSectors} 个扇区（{FormatMsf(totalSectors)}）…",
             LogLine = $"[Info] Total disc: {totalSectors} sectors = {totalSectors * SectorSize:N0} bytes"
         });
 
@@ -183,7 +183,7 @@ public static class AudioCdBuilder
         progress.Report(new BuildProgress
         {
             PercentComplete = 100,
-            StatusMessage = "Audio CD image build complete.",
+            StatusMessage = "音频 CD 镜像构建完成。",
             LogLine = $"[Info] Output: {cuePath} + {binPath} ({totalSectors * SectorSize:N0} bytes)"
         });
 
@@ -194,38 +194,38 @@ public static class AudioCdBuilder
     private static void ValidateJob(BuildJob job)
     {
         if (job.AudioTracks.Count == 0)
-            throw new InvalidOperationException("No audio tracks specified for Audio CD build.");
+            throw new InvalidOperationException("音频 CD 构建未指定任何音轨。");
 
         if (job.AudioTracks.Count > MaxTracks)
             throw new InvalidOperationException(
-                $"Audio CD supports a maximum of {MaxTracks} tracks, but {job.AudioTracks.Count} were specified.");
+                $"音频 CD 最多支持 {MaxTracks} 条音轨，但指定了 {job.AudioTracks.Count} 条。");
 
         foreach (var track in job.AudioTracks)
         {
             if (string.IsNullOrWhiteSpace(track.FilePath))
-                throw new ArgumentException("Audio track file path must not be empty.");
+                throw new ArgumentException("音轨文件路径不能为空。");
             if (!File.Exists(track.FilePath))
-                throw new FileNotFoundException($"Audio file not found: {track.FilePath}");
+                throw new FileNotFoundException($"未找到音频文件：{track.FilePath}");
 
             // Validate ISRC format if provided: 5 alphanumeric + 7 digits = 12 chars
             if (!string.IsNullOrEmpty(track.Isrc))
             {
                 if (track.Isrc.Length != 12)
                     throw new ArgumentException(
-                        $"ISRC code must be exactly 12 characters, got {track.Isrc.Length}: '{track.Isrc}'");
+                        $"ISRC 代码必须正好为 12 个字符，实际为 {track.Isrc.Length} 个：“{track.Isrc}”");
                 // First 5 characters must be alphanumeric (country + registrant)
                 for (int v = 0; v < 5; v++)
                 {
                     if (!char.IsLetterOrDigit(track.Isrc[v]))
                         throw new ArgumentException(
-                            $"ISRC characters 1-5 must be alphanumeric, found '{track.Isrc[v]}' at position {v + 1}");
+                            $"ISRC 第 1-5 位必须为字母或数字，位置 {v + 1} 处为“{track.Isrc[v]}”");
                 }
                 // Last 7 characters must be digits (year + serial)
                 for (int v = 5; v < 12; v++)
                 {
                     if (!char.IsDigit(track.Isrc[v]))
                         throw new ArgumentException(
-                            $"ISRC characters 6-12 must be digits, found '{track.Isrc[v]}' at position {v + 1}");
+                            $"ISRC 第 6-12 位必须为数字，位置 {v + 1} 处为“{track.Isrc[v]}”");
                 }
             }
         }
@@ -235,12 +235,12 @@ public static class AudioCdBuilder
         {
             if (job.MediaCatalogNumber.Length != 13)
                 throw new ArgumentException(
-                    $"Media Catalog Number (MCN/UPC) must be exactly 13 digits, got {job.MediaCatalogNumber.Length}");
+                    $"介质目录编号（MCN/UPC）必须正好为 13 位数字，实际为 {job.MediaCatalogNumber.Length} 位");
             foreach (char c in job.MediaCatalogNumber)
             {
                 if (!char.IsDigit(c))
                     throw new ArgumentException(
-                        $"Media Catalog Number must contain only digits, found '{c}'");
+                        $"介质目录编号只能包含数字，发现“{c}”");
             }
         }
     }
@@ -264,8 +264,8 @@ public static class AudioCdBuilder
             var totalMsf = FormatMsf(totalSectors);
             var maxMsf = FormatMsf(maxSectors);
             throw new InvalidOperationException(
-                $"Audio CD content ({totalMsf}, {totalSectors} sectors) exceeds " +
-                $"{discType ?? "CD"} capacity ({maxMsf}, {maxSectors} sectors).");
+                $"音频 CD 内容（{totalMsf}，{totalSectors} 个扇区）超出 " +
+                $"{discType ?? "CD"} 的容量（{maxMsf}，{maxSectors} 个扇区）。");
         }
     }
 
@@ -334,7 +334,7 @@ public static class AudioCdBuilder
                         PercentComplete = pct,
                         BytesProcessed = sectorsWritten * SectorSize,
                         TotalBytes = totalSectors * SectorSize,
-                        StatusMessage = $"Writing track {t + 1}/{tracks.Count} pre-gap..."
+                        StatusMessage = $"正在写入第 {t + 1}/{tracks.Count} 条音轨的前间隙…"
                     });
                 }
             }
@@ -428,7 +428,7 @@ public static class AudioCdBuilder
                             BytesProcessed = sectorsWritten * SectorSize,
                             TotalBytes = totalSectors * SectorSize,
                             CurrentFile = Path.GetFileName(trackInfo.Track.FilePath),
-                            StatusMessage = $"Writing track {trackNum}/{totalTracks}..."
+                            StatusMessage = $"正在写入第 {trackNum}/{totalTracks} 条音轨…"
                         });
                     }
                 }

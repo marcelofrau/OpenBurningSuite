@@ -895,7 +895,7 @@ public sealed class OpticalDrive : IDisposable
     /// remains the standard for CD burning where sector counts per command are small.
     /// </param>
     public ScsiResult WriteSectors(uint lba, byte[] data, int sectorSize, int sectorCount,
-        int dataLength = -1, bool useDvdBdMode = false, bool simulate = false)
+        int dataLength = -1, bool useDvdBdMode = false)
     {
         if (useDvdBdMode)
         {
@@ -903,14 +903,14 @@ public sealed class OpticalDrive : IDisposable
             // Only validate non-negative — the uint cast of a positive int is always in range.
             if (sectorCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(sectorCount),
-                    $"Sector count must be non-negative, got {sectorCount}.");
+                    $"扇区数不能为负数，实际为 {sectorCount}。");
         }
         else
         {
             // WRITE(10) CDB only supports up to 65,535 sectors per command (16-bit field)
             if (sectorCount < 0 || sectorCount > ushort.MaxValue)
                 throw new ArgumentOutOfRangeException(nameof(sectorCount),
-                    $"Sector count must be between 0 and {ushort.MaxValue}, got {sectorCount}.");
+                    $"扇区数必须在 0 到 {ushort.MaxValue} 之间，实际为 {sectorCount}。");
         }
 
         var len = dataLength >= 0 ? dataLength : data.Length;
@@ -931,15 +931,6 @@ public sealed class OpticalDrive : IDisposable
         var cdb = useDvdBdMode
             ? MmcCommands.BuildWrite12(lba, (uint)sectorCount)
             : MmcCommands.BuildWrite10(lba, (ushort)sectorCount);
-
-        // Set the Simu bit (byte 1, bit 1) when simulating — the drive performs all
-        // mechanical operations (spindle, tracking, laser calibration) but with the
-        // laser at a non-recording power level. No data is actually written to the
-        // disc, but the drive validates the entire burn pipeline (timing, wobble,
-        // ATIP/LPP detection, OPC, buffer management) as if a real burn were in
-        // progress. This is how Nero/ImgBurn simulation works at the SCSI level.
-        if (simulate)
-            cdb[1] |= 0x02;
 
         var cmd = new ScsiCommand(cdb, ScsiDataDirection.Out, writeData)
         {
@@ -3147,89 +3138,6 @@ public sealed class OpticalDrive : IDisposable
     }
 
     /// <summary>
-    /// Reads the manufacturer ID string from the disc using READ DISC STRUCTURE.
-    /// For DVD media, uses format 0x04 (Manufacturer Information).
-    /// For BD media, uses format 0x06 (Media Identifier).
-    /// Returns the manufacturer ID string, or null on failure.
-    /// </summary>
-    public string? ReadManufacturerId(byte formatCode)
-    {
-        try
-        {
-            var (result, data) = ReadDiscStructure(0, 0, formatCode, 2052);
-            if (!result.Success || result.DataTransferred < 8)
-                return null;
-
-            var dataLen = (data[0] << 8) | data[1];
-            if (dataLen < 4) return null;
-
-            int stringLen = Math.Min(dataLen, result.DataTransferred - 4);
-            stringLen = Math.Min(stringLen, data.Length - 4);
-            stringLen = Math.Min(stringLen, 32);
-            if (stringLen <= 0) return null;
-
-            return System.Text.Encoding.ASCII.GetString(data, 4, stringLen).TrimEnd('\0', ' ');
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    /// <summary>
-    /// Reads disc information with extended allocation (65534 bytes).
-    /// Returns more detailed information including disc type identification
-    /// and additional status fields compared to ReadDiscInfo().
-    /// </summary>
-    public DiscInfoData? ReadDiscInformationEx()
-    {
-        var cmd = new ScsiCommand(
-            MmcCommands.BuildReadDiscInfo(65534),
-            ScsiDataDirection.In, 65534);
-        var result = _transport.Execute(cmd);
-        if (!result.Success || result.DataTransferred < 12)
-            return null;
-
-        var data = cmd.DataBuffer;
-        var freeSectors = 0u;
-        var nextWritable = 0u;
-        byte sessionsMsb = 0;
-        byte tracksMsb = 0;
-
-        int dt = result.DataTransferred;
-
-        // NWA (offset 12) and Free Sectors (offset 16) — DVD/BD/HD-DVD
-        if (dt >= 20)
-        {
-            nextWritable = MmcCommands.ReadBE32(data, 12);
-            freeSectors = MmcCommands.ReadBE32(data, 16);
-        }
-
-        // MSB extensions (offset 33–35) — only present on large allocations
-        if (dt >= 36)
-        {
-            sessionsMsb = data[33];
-            tracksMsb = data[34];
-        }
-
-        return new DiscInfoData
-        {
-            DiscStatus = (byte)(data[2] & 0x03),
-            LastSessionState = (byte)((data[2] >> 2) & 0x03),
-            Erasable = (data[2] & 0x10) != 0,
-            NumberOfFirstTrack = data[3],
-            NumberOfSessionsLsb = data[4],
-            FirstTrackInLastSessionLsb = data[5],
-            LastTrackInLastSessionLsb = data[6],
-            DiscType = data[8],
-            FreeSectors = freeSectors,
-            NextWritableAddress = nextWritable,
-            NumberOfSessionsMsb = sessionsMsb,
-            NumberOfTracksMsb = tracksMsb,
-        };
-    }
-
-    /// <summary>
     /// Sends OPC table data to the drive for optimized laser power calibration.
     /// The OPC table contains speed/power pairs that the drive uses to optimize
     /// write quality for the specific media inserted. This is typically used for
@@ -4126,7 +4034,7 @@ public sealed class OpticalDrive : IDisposable
     public ScsiResult FormatUnit(byte[] formatData, bool cmpLst = false)
     {
         if (formatData == null || formatData.Length < 12)
-            throw new ArgumentException("Format data must be at least 12 bytes.", nameof(formatData));
+            throw new ArgumentException("格式化数据至少需要 12 字节。", nameof(formatData));
 
         PrepareForDestructiveOperation();
         TestUnitReady();

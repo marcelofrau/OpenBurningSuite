@@ -6,14 +6,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PublishReadyToRun>true</PublishReadyToRun>
     <AssemblyName>OpenBurningSuite</AssemblyName>
     <RootNamespace>OpenBurningSuite</RootNamespace>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <Title>Open Burning Suite</Title>
     <RepositoryUrl>https://github.com/SvenGDK/OpenBurningSuite</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.1.0</Version>
+    <Version>1.0.0</Version>
     <Authors>SvenGDK</Authors>
     <Company>SvenGDK</Company>
     <Product>Open Burning Suite</Product>
@@ -25,13 +24,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="icon.png" />
-    <None Remove="Assets\Icons\**\*.png" />
-    <None Remove="Assets\splash-bg.png" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="icon.png" />
-    <AvaloniaResource Include="Assets\Icons\**\*.png" />
-    <AvaloniaResource Include="Assets\splash-bg.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />

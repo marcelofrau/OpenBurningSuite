@@ -160,11 +160,11 @@ public class XisoService
     public static string? Extract(string imagePath, string outputDir)
     {
         if (!File.Exists(imagePath))
-            return "XISO file not found.";
+            return "未找到 XISO 文件。";
 
         var vd = ReadVolumeDescriptor(imagePath);
         if (vd == null)
-            return "Not a valid XISO image.";
+            return "不是有效的 XISO 镜像。";
 
         try
         {
@@ -222,13 +222,13 @@ public class XisoService
     public static string? Create(string sourceDir, string outputPath)
     {
         if (!Directory.Exists(sourceDir))
-            return "Source directory not found.";
+            return "未找到源目录。";
 
         try
         {
             var allEntries = CollectEntries(sourceDir, "");
             if (allEntries.Count == 0)
-                return "Source directory contains no files or subdirectories.";
+                return "源目录不包含任何文件或子目录。";
 
             using var stream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
 
@@ -342,7 +342,7 @@ public class XisoService
 
         if (!File.Exists(imagePath))
         {
-            messages.Add("XISO file not found.");
+            messages.Add("未找到 XISO 文件。");
             return messages;
         }
 
