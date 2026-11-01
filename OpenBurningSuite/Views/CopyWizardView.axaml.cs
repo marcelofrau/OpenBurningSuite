@@ -129,7 +129,7 @@ public partial class CopyWizardView : UserControl
             {
                 try
                 {
-                    using var optDrive = new Native.Optical.OpticalDrive(devicePath);
+                    using var optDrive = new Native.Optical.OpticalDrive(devicePath, readOnlyProbe: true);
                     return DiscContentDetectionService.DetectFromDrive(optDrive);
                 }
                 catch { return new DiscContentInfo(); }

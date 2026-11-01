@@ -41,6 +41,36 @@ public static class ScsiTransportFactory
         }
     }
 
+    /// <summary>
+    /// Creates and opens a transport in read-only probe mode. On macOS this opens
+    /// the MMC device interface WITHOUT Disk Arbitration unmount/claim and WITHOUT
+    /// exclusive access — only the read-only MMC commands MMCDeviceInterface
+    /// exposes are available. On Linux/Windows there is no such distinction, so
+    /// this is identical to <see cref="Create"/>.
+    /// </summary>
+    public static IScsiTransport CreateReadOnly(string devicePath)
+    {
+        if (string.IsNullOrWhiteSpace(devicePath))
+            throw new ArgumentException("Device path must not be empty.", nameof(devicePath));
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            var transport = new MacOsScsiTransport();
+            try
+            {
+                transport.OpenReadOnly(devicePath);
+                return transport;
+            }
+            catch
+            {
+                transport.Dispose();
+                throw;
+            }
+        }
+
+        return Create(devicePath);
+    }
+
     /// <summary>Creates a transport without opening it.</summary>
     public static IScsiTransport CreateUnopened()
     {

@@ -74,7 +74,7 @@ public partial class DiscoverView : UserControl
             {
                 try
                 {
-                    using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath);
+                    using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath, readOnlyProbe: true);
 
                     // Clear any stale cached media info before probing.
                     // After a burn or other operation, the drive may have UNIT ATTENTION
@@ -436,7 +436,7 @@ public partial class DiscoverView : UserControl
                 {
                     try
                     {
-                        using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath);
+                        using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath, readOnlyProbe: true);
                         var (vendor, product, revision) = optDrive.Inquiry();
                         var serial = optDrive.InquirySerialNumber();
                         Dispatcher.UIThread.Post(() =>
@@ -479,7 +479,7 @@ public partial class DiscoverView : UserControl
             {
                 try
                 {
-                    using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath);
+                    using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath, readOnlyProbe: true);
                     if (!optDrive.WaitForDriveReady(maxWaitMs: 10_000))
                     {
                         Dispatcher.UIThread.Post(() =>

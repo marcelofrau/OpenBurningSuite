@@ -219,7 +219,7 @@ public partial class ReadView : UserControl
         {
             try
             {
-                using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath);
+                using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath, readOnlyProbe: true);
                 return DiscContentDetectionService.DetectFromDrive(optDrive);
             }
             catch (Exception ex)
