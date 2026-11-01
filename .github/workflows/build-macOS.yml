@@ -15,7 +15,6 @@ env:
   DOTNET_VERSION: '8.0.x'
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_NOLOGO: true
-  APP_VERSION: '1.1.0'
 
 jobs:
   build-macos:
@@ -42,13 +41,23 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: ${{ runner.os }}-nuget-
 
+      - name: Resolve app version
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            APP_VERSION="${GITHUB_REF_NAME#v}"
+          else
+            APP_VERSION="$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' OpenBurningSuite/OpenBurningSuite.csproj | head -1)"
+          fi
+          echo "APP_VERSION=$APP_VERSION" >> "$GITHUB_ENV"
+
       - name: Publish
-        run: dotnet publish OpenBurningSuite -c Release -r osx-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -p:UseAppHost=true -o publish
+        run: dotnet publish OpenBurningSuite -c Release -r osx-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -p:UseAppHost=true -p:Version=$APP_VERSION -o publish
 
       - name: Create ZIP (Portable)
         run: |
           cd publish
-          zip -9 -r ../OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}.zip .
+          zip -9 -r ../OpenBurningSuite-v$APP_VERSION-osx-${{ matrix.arch }}.zip .
 
       - name: Generate macOS icon
         run: |
@@ -79,7 +88,7 @@ jobs:
           cp AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 
           # Info.plist with TCC usage descriptions for DiskArbitration and removable media access.
-          cat > "$APP/Contents/Info.plist" << 'PLIST'
+          cat > "$APP/Contents/Info.plist" << PLIST
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
@@ -93,9 +102,9 @@ jobs:
             <key>CFBundleInfoDictionaryVersion</key>
             <string>6.0</string>
             <key>CFBundleVersion</key>
-            <string>${{ env.APP_VERSION }}</string>
+            <string>$APP_VERSION</string>
             <key>CFBundleShortVersionString</key>
-            <string>${{ env.APP_VERSION }}</string>
+            <string>$APP_VERSION</string>
             <key>CFBundleExecutable</key>
             <string>OpenBurningSuite</string>
             <key>CFBundleIconFile</key>
@@ -126,9 +135,9 @@ jobs:
           pkgbuild \
             --root pkg-root \
             --identifier com.svengdk.openburningsuite \
-            --version ${{ env.APP_VERSION }} \
+            --version $APP_VERSION \
             --install-location / \
-            OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}-Installer.pkg
+            OpenBurningSuite-v$APP_VERSION-osx-${{ matrix.arch }}-Installer.pkg
 
       - name: Create DMG
         run: |
@@ -139,27 +148,27 @@ jobs:
           hdiutil create -volname "Open Burning Suite" \
             -srcfolder dmg-stage \
             -ov -format UDBZ \
-            OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}.dmg
+            OpenBurningSuite-v$APP_VERSION-osx-${{ matrix.arch }}.dmg
 
       - name: Upload ZIP (Portable)
         uses: actions/upload-artifact@v5
         with:
           name: osx-${{ matrix.arch }}-zip
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}.zip
+          path: OpenBurningSuite-v*-osx-${{ matrix.arch }}.zip
           if-no-files-found: error
 
       - name: Upload PKG Installer
         uses: actions/upload-artifact@v5
         with:
           name: osx-${{ matrix.arch }}-pkg
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}-Installer.pkg
+          path: OpenBurningSuite-v*-osx-${{ matrix.arch }}-Installer.pkg
           if-no-files-found: error
 
       - name: Upload DMG
         uses: actions/upload-artifact@v5
         with:
           name: osx-${{ matrix.arch }}-dmg
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}.dmg
+          path: OpenBurningSuite-v*-osx-${{ matrix.arch }}.dmg
           if-no-files-found: error
 
       - name: Upload .app Bundle
@@ -175,9 +184,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}.zip
-            OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}-Installer.pkg
-            OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}.dmg
+            OpenBurningSuite-v*-osx-${{ matrix.arch }}.zip
+            OpenBurningSuite-v*-osx-${{ matrix.arch }}-Installer.pkg
+            OpenBurningSuite-v*-osx-${{ matrix.arch }}.dmg
 
       - name: VirusTotal Scan
         if: startsWith(github.ref, 'refs/tags/v')
@@ -186,9 +195,9 @@ jobs:
         with:
           vt_api_key: ${{ secrets.VT_API_KEY }}
           file_globs: |
-            OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}.zip
-            OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}-Installer.pkg
-            OpenBurningSuite-v${{ env.APP_VERSION }}-osx-${{ matrix.arch }}.dmg
+            OpenBurningSuite-v*-osx-${{ matrix.arch }}.zip
+            OpenBurningSuite-v*-osx-${{ matrix.arch }}-Installer.pkg
+            OpenBurningSuite-v*-osx-${{ matrix.arch }}.dmg
           sha256: true
           update_release: true
           release_id: ${{ steps.create_release.outputs.id }}

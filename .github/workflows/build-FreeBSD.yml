@@ -15,7 +15,6 @@ env:
   DOTNET_VERSION: '8.0.x'
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_NOLOGO: true
-  APP_VERSION: '1.0.0'
 
 jobs:
   build-freebsd:
@@ -42,6 +41,15 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: ${{ runner.os }}-nuget-
 
+      - name: Resolve app version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            APP_VERSION="${GITHUB_REF_NAME#v}"
+          else
+            APP_VERSION="$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' OpenBurningSuite/OpenBurningSuite.csproj | head -1)"
+          fi
+          echo "APP_VERSION=$APP_VERSION" >> "$GITHUB_ENV"
+
       - name: Patch Program.cs for X11
         run: |
           sed -i 's/\.UsePlatformDetect()/.UseX11()/' OpenBurningSuite/Program.cs
@@ -49,7 +57,7 @@ jobs:
           grep -n 'UseX11\|UsePlatformDetect' OpenBurningSuite/Program.cs
 
       - name: Publish
-        run: dotnet publish OpenBurningSuite -c Release -r linux-${{ matrix.arch }} --self-contained -o publish
+        run: dotnet publish OpenBurningSuite -c Release -r linux-${{ matrix.arch }} --self-contained -p:Version=$APP_VERSION -o publish
 
       - name: Install build tools
         run: |
@@ -64,7 +72,7 @@ jobs:
       - name: Create ZIP (Portable)
         run: |
           cd publish
-          zip -9 -r ../freebsd-${{ matrix.arch }}.zip .
+          zip -9 -r ../OpenBurningSuite-v$APP_VERSION-freebsd-${{ matrix.arch }}.zip .
 
       - name: Create PKG installer
         run: |
@@ -105,11 +113,11 @@ jobs:
           # Create +MANIFEST for FreeBSD pkg
           cat > "${PKG_DIR}/+MANIFEST" << EOF
           name: openburningsuite
-          version: "${{ env.APP_VERSION }}"
+          version: "$APP_VERSION"
           origin: sysutils/openburningsuite
           comment: "Cross-platform optical disc burning and reading suite"
           maintainer: "SvenGDK"
-          www: "https://github.com/SvenGDK/OpenBurningSuite"
+          www: "https://github.com/marcelofrau/OpenBurningSuite"
           prefix: "${PREFIX}"
           desc: "Open Burning Suite is a cross-platform optical disc burning and reading suite."
           categories: ["sysutils"]
@@ -152,11 +160,11 @@ jobs:
           # Create the UCL manifest
           cat > /tmp/pkg-manifest.ucl << EOF
           name = "openburningsuite";
-          version = "${{ env.APP_VERSION }}";
+          version = "$APP_VERSION";
           origin = "sysutils/openburningsuite";
           comment = "Cross-platform optical disc burning and reading suite";
           maintainer = "SvenGDK";
-          www = "https://github.com/SvenGDK/OpenBurningSuite";
+          www = "https://github.com/marcelofrau/OpenBurningSuite";
           prefix = "${PREFIX}";
           desc = "Open Burning Suite is a cross-platform optical disc burning and reading suite.";
           licenselogic = "single";
@@ -174,19 +182,19 @@ jobs:
           cd pkg-build
           TAR_CONTENTS="+COMPACT_MANIFEST +MANIFEST +POST_INSTALL usr"
           [ -d etc ] && TAR_CONTENTS="$TAR_CONTENTS etc"
-          tar cf - $TAR_CONTENTS | xz -9e > ../freebsd-${{ matrix.arch }}-Installer.pkg
+          tar cf - $TAR_CONTENTS | xz -9e > ../OpenBurningSuite-v$APP_VERSION-freebsd-${{ matrix.arch }}-Installer.pkg
           cd ..
 
       - name: Upload ZIP (Portable)
         uses: actions/upload-artifact@v5
         with:
           name: freebsd-${{ matrix.arch }}-zip
-          path: freebsd-${{ matrix.arch }}.zip
+          path: OpenBurningSuite-v*-freebsd-${{ matrix.arch }}.zip
           if-no-files-found: error
 
       - name: Upload PKG Installer
         uses: actions/upload-artifact@v5
         with:
           name: freebsd-${{ matrix.arch }}-pkg
-          path: freebsd-${{ matrix.arch }}-Installer.pkg
+          path: OpenBurningSuite-v*-freebsd-${{ matrix.arch }}-Installer.pkg
           if-no-files-found: error

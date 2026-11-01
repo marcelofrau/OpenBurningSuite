@@ -23,7 +23,7 @@ brew install ffmpeg
 
 ## Downloading a Release
 
-Download the release that matches your Mac from the [Releases](https://github.com/SvenGDK/OpenBurningSuite/releases) page.
+Download the release that matches your Mac from the [Releases](https://github.com/marcelofrau/OpenBurningSuite/releases) page.
 
 ### Portable ZIPs
 

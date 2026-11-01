@@ -11,7 +11,7 @@
     <RootNamespace>OpenBurningSuite</RootNamespace>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <Title>Open Burning Suite</Title>
-    <RepositoryUrl>https://github.com/SvenGDK/OpenBurningSuite</RepositoryUrl>
+    <RepositoryUrl>https://github.com/marcelofrau/OpenBurningSuite</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>1.1.0</Version>
     <Authors>SvenGDK</Authors>
@@ -19,7 +19,7 @@
     <Product>Open Burning Suite</Product>
     <Description>A cross-platform CD / DVD / HD DVD / Blu-ray burning desktop utility.</Description>
     <Copyright>Copyright © SvenGDK 2026</Copyright>
-    <PackageProjectUrl>https://github.com/SvenGDK/OpenBurningSuite</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/marcelofrau/OpenBurningSuite</PackageProjectUrl>
     <PackageTags>cd, dvd, blu-ray, burning, ripping, cross-platform</PackageTags>
     <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
   </PropertyGroup>

@@ -15,7 +15,6 @@ env:
   DOTNET_VERSION: '8.0.x'
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_NOLOGO: true
-  APP_VERSION: '1.1.0'
 
 jobs:
   build-linux:
@@ -59,8 +58,17 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: ${{ runner.os }}-nuget-
 
+      - name: Resolve app version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            APP_VERSION="${GITHUB_REF_NAME#v}"
+          else
+            APP_VERSION="$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' OpenBurningSuite/OpenBurningSuite.csproj | head -1)"
+          fi
+          echo "APP_VERSION=$APP_VERSION" >> "$GITHUB_ENV"
+
       - name: Publish
-        run: dotnet publish OpenBurningSuite -c Release -r linux-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -o publish
+        run: dotnet publish OpenBurningSuite -c Release -r linux-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -p:Version=$APP_VERSION -o publish
 
       - name: Install build tools
         run: |
@@ -75,7 +83,7 @@ jobs:
       - name: Create ZIP (Portable)
         run: |
           cd publish
-          zip -9 -r ../OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.zip .
+          zip -9 -r ../OpenBurningSuite-v$APP_VERSION-linux-${{ matrix.arch }}.zip .
 
       - name: Create DEB Installer
         run: |
@@ -88,10 +96,10 @@ jobs:
 
           cat > deb/DEBIAN/control << 'EOF'
           Package: openburningsuite
-          Version: ${{ env.APP_VERSION }}
+          Version: $APP_VERSION
           Architecture: ${{ matrix.deb_arch }}
           Maintainer: SvenGDK
-          Homepage: https://github.com/SvenGDK/OpenBurningSuite
+          Homepage: https://github.com/marcelofrau/OpenBurningSuite
           Depends: libc6, libstdc++6, libgcc-s1, zlib1g, libssl3, libx11-6, libfontconfig1, libice6, libsm6
           Description: Open Burning Suite
            Cross-platform optical disc burning and reading suite.
@@ -150,7 +158,7 @@ jobs:
           Categories=Utility;DiscBurning;
           DESKTOP
 
-          dpkg-deb --root-owner-group -Zxz -z9 --build deb OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}-Installer.deb
+          dpkg-deb --root-owner-group -Zxz -z9 --build deb OpenBurningSuite-v$APP_VERSION-linux-${{ matrix.arch }}-Installer.deb
 
       - name: Create RPM Package
         run: |
@@ -198,11 +206,11 @@ jobs:
 
           cat > rpmbuild/SPECS/openburningsuite.spec << 'SPEC'
           Name:           openburningsuite
-          Version:        ${{ env.APP_VERSION }}
+          Version:        $APP_VERSION
           Release:        1
           Summary:        Open Burning Suite
           License:        BSD-2-Clause
-          URL:            https://github.com/SvenGDK/OpenBurningSuite
+          URL:            https://github.com/marcelofrau/OpenBurningSuite
           AutoReqProv:    no
           Requires:       glibc, libstdc++, zlib, openssl-libs, fontconfig, libX11, libICE, libSM
 
@@ -242,7 +250,7 @@ jobs:
 
           rpmbuild --define "_topdir $(pwd)/rpmbuild" --target ${RPM_ARCH} -bb rpmbuild/SPECS/openburningsuite.spec
 
-          cp rpmbuild/RPMS/${RPM_ARCH}/*.rpm OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.rpm
+          cp rpmbuild/RPMS/${RPM_ARCH}/*.rpm OpenBurningSuite-v$APP_VERSION-linux-${{ matrix.arch }}.rpm
 
       - name: Create APK Package (Alpine Linux)
         run: |
@@ -310,9 +318,9 @@ jobs:
 
           cat > .PKGINFO << EOF
           pkgname = openburningsuite
-          pkgver = ${{ env.APP_VERSION }}-r0
+          pkgver = $APP_VERSION-r0
           pkgdesc = Cross-platform optical disc burning and reading suite
-          url = https://github.com/SvenGDK/OpenBurningSuite
+          url = https://github.com/marcelofrau/OpenBurningSuite
           builddate = $(date +%s)
           packager = SvenGDK
           size = ${INSTALLED_SIZE}
@@ -324,7 +332,7 @@ jobs:
 
           tar -czf control.tar.gz .PKGINFO .post-install
           (cd apk-data && tar -czf ../data.tar.gz .)
-          cat control.tar.gz data.tar.gz > OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.apk
+          cat control.tar.gz data.tar.gz > OpenBurningSuite-v$APP_VERSION-linux-${{ matrix.arch }}.apk
 
       - name: Create Pacman Package (Arch Linux)
         run: |
@@ -405,9 +413,9 @@ jobs:
 
           cat > pacman-pkg/.PKGINFO << EOF
           pkgname = openburningsuite
-          pkgver = ${{ env.APP_VERSION }}-1
+          pkgver = $APP_VERSION-1
           pkgdesc = Cross-platform optical disc burning and reading suite
-          url = https://github.com/SvenGDK/OpenBurningSuite
+          url = https://github.com/marcelofrau/OpenBurningSuite
           builddate = $(date +%s)
           packager = SvenGDK
           size = ${INSTALLED_SIZE}
@@ -424,7 +432,7 @@ jobs:
           LANG=C bsdtar -czf .MTREE --format=mtree \
             --options='!all,use-set,type,uid,gid,mode,time,size,md5,sha256,link' \
             .PKGINFO usr etc
-          LANG=C bsdtar -cf - .PKGINFO .MTREE usr etc | zstd -c -T0 --ultra -20 > ../OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.pkg.tar.zst
+          LANG=C bsdtar -cf - .PKGINFO .MTREE usr etc | zstd -c -T0 --ultra -20 > ../OpenBurningSuite-v$APP_VERSION-linux-${{ matrix.arch }}.pkg.tar.zst
           cd ..
 
       - name: Create AppImage
@@ -465,7 +473,7 @@ jobs:
           APPRUN
           chmod +x AppDir/AppRun
 
-          ARCH=${{ matrix.appimage_arch }} ./appimagetool --appimage-extract-and-run --comp zstd AppDir OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.AppImage
+          ARCH=${{ matrix.appimage_arch }} ./appimagetool --appimage-extract-and-run --comp zstd AppDir OpenBurningSuite-v$APP_VERSION-linux-${{ matrix.arch }}.AppImage
 
       - name: Create Snap
         run: |
@@ -478,7 +486,7 @@ jobs:
 
           cat > snap-dir/meta/snap.yaml << 'EOF'
           name: openburningsuite
-          version: '${{ env.APP_VERSION }}'
+          version: '$APP_VERSION'
           summary: Open Burning Suite
           description: |
             Cross-platform optical disc burning and reading suite.
@@ -526,7 +534,7 @@ jobs:
           DESKTOP
           cp snap-dir/usr/share/applications/openburningsuite.desktop snap-dir/meta/gui/
 
-          snap pack snap-dir --filename=OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.snap --compression=xz
+          snap pack snap-dir --filename=OpenBurningSuite-v$APP_VERSION-linux-${{ matrix.arch }}.snap --compression=xz
 
       - name: Create Flatpak
         run: |
@@ -551,22 +559,22 @@ jobs:
           LAUNCHER
           chmod +x flatpak-build/files/bin/openburningsuite
 
-          cat > flatpak-build/files/share/applications/io.github.svengdk.OpenBurningSuite.desktop << 'DESKTOP'
+          cat > flatpak-build/files/share/applications/io.github.marcelofrau.OpenBurningSuite.desktop << 'DESKTOP'
           [Desktop Entry]
           Name=Open Burning Suite
           Comment=Cross-platform optical disc burning and reading suite
           Exec=openburningsuite
-          Icon=io.github.svengdk.OpenBurningSuite
+          Icon=io.github.marcelofrau.OpenBurningSuite
           Terminal=false
           Type=Application
           Categories=Utility;DiscBurning;
           DESKTOP
-          cp flatpak-build/files/share/applications/io.github.svengdk.OpenBurningSuite.desktop flatpak-build/export/share/applications/
+          cp flatpak-build/files/share/applications/io.github.marcelofrau.OpenBurningSuite.desktop flatpak-build/export/share/applications/
 
-          cat > flatpak-build/files/share/metainfo/io.github.svengdk.OpenBurningSuite.metainfo.xml << 'METAINFO'
+          cat > flatpak-build/files/share/metainfo/io.github.marcelofrau.OpenBurningSuite.metainfo.xml << 'METAINFO'
           <?xml version="1.0" encoding="UTF-8"?>
           <component type="desktop-application">
-            <id>io.github.svengdk.OpenBurningSuite</id>
+            <id>io.github.marcelofrau.OpenBurningSuite</id>
             <name>Open Burning Suite</name>
             <summary>Cross-platform optical disc burning and reading suite</summary>
             <metadata_license>CC0-1.0</metadata_license>
@@ -574,24 +582,24 @@ jobs:
             <description>
               <p>Open Burning Suite is a cross-platform optical disc burning and reading suite.</p>
             </description>
-            <url type="homepage">https://github.com/SvenGDK/OpenBurningSuite</url>
-            <launchable type="desktop-id">io.github.svengdk.OpenBurningSuite.desktop</launchable>
+            <url type="homepage">https://github.com/marcelofrau/OpenBurningSuite</url>
+            <launchable type="desktop-id">io.github.marcelofrau.OpenBurningSuite.desktop</launchable>
             <provides>
               <binary>openburningsuite</binary>
             </provides>
           </component>
           METAINFO
-          cp flatpak-build/files/share/metainfo/io.github.svengdk.OpenBurningSuite.metainfo.xml flatpak-build/export/share/metainfo/
+          cp flatpak-build/files/share/metainfo/io.github.marcelofrau.OpenBurningSuite.metainfo.xml flatpak-build/export/share/metainfo/
 
-          cp icon-512.png flatpak-build/files/share/icons/hicolor/512x512/apps/io.github.svengdk.OpenBurningSuite.png
-          cp icon-512.png flatpak-build/export/share/icons/hicolor/512x512/apps/io.github.svengdk.OpenBurningSuite.png
+          cp icon-512.png flatpak-build/files/share/icons/hicolor/512x512/apps/io.github.marcelofrau.OpenBurningSuite.png
+          cp icon-512.png flatpak-build/export/share/icons/hicolor/512x512/apps/io.github.marcelofrau.OpenBurningSuite.png
 
-          mkdir -p flatpak-build/files/share/licenses/io.github.svengdk.OpenBurningSuite
-          cp LICENSE flatpak-build/files/share/licenses/io.github.svengdk.OpenBurningSuite/LICENSE
+          mkdir -p flatpak-build/files/share/licenses/io.github.marcelofrau.OpenBurningSuite
+          cp LICENSE flatpak-build/files/share/licenses/io.github.marcelofrau.OpenBurningSuite/LICENSE
 
           cat > flatpak-build/metadata << 'EOF'
           [Application]
-          name=io.github.svengdk.OpenBurningSuite
+          name=io.github.marcelofrau.OpenBurningSuite
           runtime=org.freedesktop.Platform/${{ matrix.flatpak_arch }}/24.08
           sdk=org.freedesktop.Sdk/${{ matrix.flatpak_arch }}/24.08
           command=openburningsuite
@@ -607,62 +615,62 @@ jobs:
           EOF
 
           flatpak build-export flatpak-repo flatpak-build
-          flatpak build-bundle --arch=${{ matrix.flatpak_arch }} flatpak-repo OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.flatpak io.github.svengdk.OpenBurningSuite
+          flatpak build-bundle --arch=${{ matrix.flatpak_arch }} flatpak-repo OpenBurningSuite-v$APP_VERSION-linux-${{ matrix.arch }}.flatpak io.github.marcelofrau.OpenBurningSuite
 
       - name: Upload ZIP (Portable)
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-zip
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.zip
+          path: OpenBurningSuite-v*-linux-${{ matrix.arch }}.zip
           if-no-files-found: error
 
       - name: Upload DEB Installer
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-deb
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}-Installer.deb
+          path: OpenBurningSuite-v*-linux-${{ matrix.arch }}-Installer.deb
           if-no-files-found: error
 
       - name: Upload RPM Package
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-rpm
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.rpm
+          path: OpenBurningSuite-v*-linux-${{ matrix.arch }}.rpm
           if-no-files-found: error
 
       - name: Upload APK Package (Alpine Linux)
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-apk
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.apk
+          path: OpenBurningSuite-v*-linux-${{ matrix.arch }}.apk
           if-no-files-found: error
 
       - name: Upload Pacman Package (Arch Linux)
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-pacman
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.pkg.tar.zst
+          path: OpenBurningSuite-v*-linux-${{ matrix.arch }}.pkg.tar.zst
           if-no-files-found: error
 
       - name: Upload AppImage
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-appimage
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.AppImage
+          path: OpenBurningSuite-v*-linux-${{ matrix.arch }}.AppImage
           if-no-files-found: error
 
       - name: Upload Snap
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-snap
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.snap
+          path: OpenBurningSuite-v*-linux-${{ matrix.arch }}.snap
           if-no-files-found: error
 
       - name: Upload Flatpak
         uses: actions/upload-artifact@v5
         with:
           name: linux-${{ matrix.arch }}-flatpak
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.flatpak
+          path: OpenBurningSuite-v*-linux-${{ matrix.arch }}.flatpak
           if-no-files-found: error
 
       - name: Upload to Release
@@ -671,14 +679,14 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.zip
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}-Installer.deb
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.rpm
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.apk
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.pkg.tar.zst
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.AppImage
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.snap
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.flatpak
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.zip
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}-Installer.deb
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.rpm
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.apk
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.pkg.tar.zst
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.AppImage
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.snap
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.flatpak
 
       - name: VirusTotal Scan
         if: startsWith(github.ref, 'refs/tags/v')
@@ -687,9 +695,9 @@ jobs:
         with:
           vt_api_key: ${{ secrets.VT_API_KEY }}
           file_globs: |
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.zip
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}-Installer.deb
-            OpenBurningSuite-v${{ env.APP_VERSION }}-linux-${{ matrix.arch }}.AppImage
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.zip
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}-Installer.deb
+            OpenBurningSuite-v*-linux-${{ matrix.arch }}.AppImage
           sha256: true
           update_release: true
           release_id: ${{ steps.create_release.outputs.id }}
