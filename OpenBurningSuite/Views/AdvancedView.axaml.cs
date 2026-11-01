@@ -170,7 +170,7 @@ public partial class AdvancedView : UserControl
         {
             try
             {
-                using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath);
+                using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath, readOnlyProbe: true);
                 if (!optDrive.WaitForDriveReady())
                     return (string?)null;
                 var profile = optDrive.GetCurrentProfile();
@@ -257,7 +257,7 @@ public partial class AdvancedView : UserControl
         {
             try
             {
-                using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath);
+                using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath, readOnlyProbe: true);
                 if (!optDrive.WaitForDriveReady())
                     return (string?)null;
                 var profile = optDrive.GetCurrentProfile();

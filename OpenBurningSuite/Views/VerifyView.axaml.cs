@@ -117,7 +117,7 @@ public partial class VerifyView : UserControl
             {
                 try
                 {
-                    using var optDrive = new OpenBurningSuite.Native.Optical.OpticalDrive(devicePath);
+                    using var optDrive = new OpenBurningSuite.Native.Optical.OpticalDrive(devicePath, readOnlyProbe: true);
                     return DiscContentDetectionService.DetectFromDrive(optDrive);
                 }
                 catch { return new DiscContentInfo(); }

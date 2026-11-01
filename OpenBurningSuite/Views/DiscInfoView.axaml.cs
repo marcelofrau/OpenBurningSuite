@@ -201,7 +201,7 @@ public partial class DiscInfoView : UserControl
             {
                 try
                 {
-                    using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath);
+                    using var optDrive = new Native.Optical.OpticalDrive(drive.DevicePath, readOnlyProbe: true);
 
                     optDrive.TestUnitReady();
                     optDrive.TestUnitReady();
