@@ -27,6 +27,7 @@ public sealed class MacOsScsiTransport : IScsiTransport
     private IntPtr _pluginInterface = IntPtr.Zero;
     private IntPtr _mmcDeviceInterface = IntPtr.Zero;
     private IntPtr _scsiTaskDeviceInterface = IntPtr.Zero;
+    private bool _readOnlyProbe;
     private bool _hasExclusiveAccess;
     private bool _hasCallbackDispatcher;
     private bool _disposed;
@@ -43,7 +44,9 @@ public sealed class MacOsScsiTransport : IScsiTransport
     private IntPtr _daRunLoop = IntPtr.Zero;
     private IntPtr _daRunLoopMode = IntPtr.Zero;
 
-    public bool IsOpen => _scsiTaskDeviceInterface != IntPtr.Zero && _hasExclusiveAccess;
+    public bool IsOpen => _readOnlyProbe
+        ? _mmcDeviceInterface != IntPtr.Zero
+        : _scsiTaskDeviceInterface != IntPtr.Zero && _hasExclusiveAccess;
 
     // -----------------------------------------------------------------------
     // IOKit constants
@@ -316,9 +319,16 @@ public sealed class MacOsScsiTransport : IScsiTransport
 
     // Apple's Boolean type is 'unsigned char' (1 byte), unlike Win32 BOOL (4 bytes).
     // Use MarshalAs(UnmanagedType.U1) to match Apple's ABI exactly.
-    [DllImport("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation")]
+    [DllImport("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation", EntryPoint = "CFNumberGetValue")]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool CFNumberGetValue(IntPtr number, int theType, out int value);
+
+    // kCFNumberSInt64Type — used for IOMedia "Size" (bytes, can exceed Int32)
+    private const int kCFNumberSInt64Type = 4;
+
+    [DllImport("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation", EntryPoint = "CFNumberGetValue")]
+    [return: MarshalAs(UnmanagedType.U1)]
+    private static extern bool CFNumberGetValueInt64(IntPtr number, int theType, out long value);
 
     [DllImport("/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation")]
     private static extern int CFStringGetLength(IntPtr theString);
@@ -406,6 +416,14 @@ public sealed class MacOsScsiTransport : IScsiTransport
     [DllImport("/System/Library/Frameworks/DiskArbitration.framework/DiskArbitration")]
     private static extern void DADiskUnclaim(IntPtr disk);
 
+    /// <summary>
+    /// Returns a snapshot of the disk's description as a CFDictionary.
+    /// The returned dictionary has +1 retain count — caller must CFRelease.
+    /// Per DiskArbitration/DADisk.h: CFDictionaryRef DADiskCopyDescription(DADiskRef disk);
+    /// </summary>
+    [DllImport("/System/Library/Frameworks/DiskArbitration.framework/DiskArbitration")]
+    private static extern IntPtr DADiskCopyDescription(IntPtr disk);
+
     // Disk Arbitration unmount options
     private const uint kDADiskUnmountOptionDefault = 0x00000000;
     private const uint kDADiskUnmountOptionForce = 0x00080000;
@@ -492,8 +510,22 @@ public sealed class MacOsScsiTransport : IScsiTransport
     // Slot 18: GetPerformanceV2 (added in macOS 10.2)
     // Slot 19: SetCDSpeed (added in macOS 10.3)
     // Slot 20: ReadFormatCapacities (added in macOS 10.3)
+    // Slot 21: ReadDiscStructure (MMC-5)
+    // Slot 22: ReadDiscInformationV2 (MMC-5)
+    // Slot 23: ReadTrackInformationV2 (Mt. Fuji 5)
+    // Slot 24: SetStreaming (added in macOS 10.6)
 
+    private const int VtableOffset_MMC_Inquiry = 5;
+    private const int VtableOffset_MMC_TestUnitReady = 6;
+    private const int VtableOffset_MMC_GetConfiguration = 8;
+    private const int VtableOffset_MMC_ModeSense10 = 9;
+    private const int VtableOffset_MMC_ReadTableOfContents = 13;
     private const int VtableOffset_MMC_GetSCSITaskDeviceInterface = 17;
+    private const int VtableOffset_MMC_GetPerformanceV2 = 18;
+    private const int VtableOffset_MMC_ReadFormatCapacities = 20;
+    private const int VtableOffset_MMC_ReadDiscStructure = 21;
+    private const int VtableOffset_MMC_ReadDiscInformationV2 = 22;
+    private const int VtableOffset_MMC_ReadTrackInformationV2 = 23;
 
     // -----------------------------------------------------------------------
     // SCSITaskDeviceInterface vtable offsets (CFPlugIn COM-style interface)
@@ -629,7 +661,74 @@ public sealed class MacOsScsiTransport : IScsiTransport
 
         // Close any previous connection
         ReleaseResources();
+        _readOnlyProbe = false;
 
+        var service = ResolveService(devicePath);
+        try
+        {
+            // Unmount and claim the disk via Disk Arbitration if we have a BSD name.
+            // On macOS, the disc may be auto-mounted. ObtainExclusiveAccess will fail
+            // unless the volume is first unmounted. Use the Disk Arbitration framework
+            // to unmount and claim the disk exclusively before attempting IOKit access.
+            // Skip DA operations for IORegistry paths — no media means nothing to unmount.
+            if (!string.IsNullOrEmpty(_bsdName))
+            {
+                TryClaimDiskExclusive(_bsdName);
+                // Fallback: also try diskutil unmount in case DA claim wasn't fully effective
+                TryUnmountDisc(_bsdName);
+            }
+
+            // Create plug-in interface for the service.
+            // Per Apple's SCSITaskLib.h, optical drives (MMC devices) require the
+            // kIOMMCDeviceUserClientTypeID. The generic kIOSCSITaskDeviceUserClientTypeID
+            // is only for SCSI devices without an in-kernel driver; optical drives always
+            // have the IOSCSIPeripheralDeviceType05 in-kernel driver, so the MMC user
+            // client must be used. Fall back to the generic SCSI task user client if
+            // the MMC user client fails (e.g., for non-optical SCSI devices).
+            CreatePluginAndObtainAccess(service, devicePath);
+        }
+        finally
+        {
+            IOObjectRelease(service);
+        }
+    }
+
+    /// <summary>
+    /// Opens the device in read-only probe mode: creates the IOKit plug-in and
+    /// MMC device interface, but performs NO Disk Arbitration unmount/claim and
+    /// NO exclusive access. Only the read-only MMC commands exposed by
+    /// MMCDeviceInterface are available in this mode; everything else fails in
+    /// <see cref="Execute"/>. Used by drive discovery, which must not
+    /// force-unmount mounted media from Finder.
+    /// </summary>
+    public void OpenReadOnly(string devicePath)
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(MacOsScsiTransport));
+
+        // Close any previous connection
+        ReleaseResources();
+        _readOnlyProbe = true;
+
+        var service = ResolveService(devicePath);
+        try
+        {
+            CreateMmcPluginOnly(service, devicePath);
+        }
+        finally
+        {
+            IOObjectRelease(service);
+        }
+    }
+
+    /// <summary>
+    /// Resolves a device path ("/dev/diskN" BSD path or "IOService:" registry
+    /// path) to a retained IOService suitable for IOCreatePlugInInterfaceForService.
+    /// Sets <see cref="_bsdName"/> when a BSD name is available.
+    /// The caller owns the returned service and must IOObjectRelease it.
+    /// </summary>
+    private uint ResolveService(string devicePath)
+    {
         // Determine if the path is an IORegistry path (used for drives without media)
         // or a BSD device path (used for drives with media).
         // IORegistry paths start with "IOService:" and look like:
@@ -710,32 +809,91 @@ public sealed class MacOsScsiTransport : IScsiTransport
             }
         }
 
-        try
+        return service;
+    }
+
+    /// <summary>
+    /// Creates the IOKit plug-in and MMC device interface without exclusive
+    /// access, for read-only probe mode. Tries the block storage service child
+    /// (media present) first, then the IOSCSIPeripheralDeviceType05 service,
+    /// always with kIOMMCDeviceUserClientTypeID. Does NOT call
+    /// GetSCSITaskDeviceInterface or ObtainExclusiveAccess — the resulting
+    /// transport can only issue the read-only MMC commands the
+    /// MMCDeviceInterface itself exposes.
+    /// </summary>
+    private unsafe void CreateMmcPluginOnly(uint service, string devicePath)
+    {
+        var interfaceType = GetCFPlugInInterfaceCFUUID();
+
+        uint blockStorageService = FindBlockStorageServiceChild(service);
+
+        var servicesToTry = new List<(uint svc, string name)>();
+        if (blockStorageService != 0)
+            servicesToTry.Add((blockStorageService, "BlockStorageService"));
+        servicesToTry.Add((service, "IOSCSIPeripheralDeviceType05"));
+
+        int kr = 0;
+        string lastError = "";
+
+        foreach (var (svc, svcName) in servicesToTry)
         {
-            // Unmount and claim the disk via Disk Arbitration if we have a BSD name.
-            // On macOS, the disc may be auto-mounted. ObtainExclusiveAccess will fail
-            // unless the volume is first unmounted. Use the Disk Arbitration framework
-            // to unmount and claim the disk exclusively before attempting IOKit access.
-            // Skip DA operations for IORegistry paths — no media means nothing to unmount.
-            if (!string.IsNullOrEmpty(_bsdName))
+            var pluginType = GetMMCDeviceUserClientCFUUID();
+            kr = IOCreatePlugInInterfaceForService(
+                svc, pluginType, interfaceType,
+                out _pluginInterface, out _);
+
+            if (kr != kIOReturnSuccess || _pluginInterface == IntPtr.Zero)
             {
-                TryClaimDiskExclusive(_bsdName);
-                // Fallback: also try diskutil unmount in case DA claim wasn't fully effective
-                TryUnmountDisc(_bsdName);
+                lastError = $"IOCreatePlugInInterfaceForService with kIOMMCDeviceUserClientTypeID failed: 0x{kr:X8} (service={svcName})";
+                System.Diagnostics.Debug.WriteLine(
+                    $"[MacOsScsiTransport] {lastError}");
+                _pluginInterface = IntPtr.Zero;
+                continue;
             }
 
-            // Create plug-in interface for the service.
-            // Per Apple's SCSITaskLib.h, optical drives (MMC devices) require the
-            // kIOMMCDeviceUserClientTypeID. The generic kIOSCSITaskDeviceUserClientTypeID
-            // is only for SCSI devices without an in-kernel driver; optical drives always
-            // have the IOSCSIPeripheralDeviceType05 in-kernel driver, so the MMC user
-            // client must be used. Fall back to the generic SCSI task user client if
-            // the MMC user client fails (e.g., for non-optical SCSI devices).
-            CreatePluginAndObtainAccess(service, devicePath);
+            // CRITICAL: Apple's REFIID is 'typedef CFUUIDBytes REFIID' — the 16-byte
+            // UUID struct is passed BY VALUE (in registers x1+x2 on ARM64), NOT by
+            // pointer. See the detailed comment in CreatePluginAndObtainAccess.
+            var mmcIid = kIOMMCDeviceInterfaceID;
+            var queryFnPtr = (delegate* unmanaged[Cdecl]<IntPtr, CFUUIDBytes, IntPtr*, int>)
+                GetVtableSlot(_pluginInterface, 1);
+            IntPtr mmcOut = IntPtr.Zero;
+            var hresult = queryFnPtr(_pluginInterface, mmcIid, &mmcOut);
+
+            if (hresult == 0 && mmcOut != IntPtr.Zero)
+            {
+                _mmcDeviceInterface = mmcOut;
+                System.Diagnostics.Debug.WriteLine(
+                    $"[MacOsScsiTransport] MMC user client created via {svcName} (read-only probe)");
+                break;
+            }
+
+            lastError = $"QueryInterface for kIOMMCDeviceInterfaceID failed: 0x{hresult:X8} (service={svcName})";
+            System.Diagnostics.Debug.WriteLine(
+                $"[MacOsScsiTransport] {lastError}");
+
+            // Release plugin interface on failure — try the next service
+            try
+            {
+                var relFnPtr = (delegate* unmanaged[Cdecl]<IntPtr, int>)
+                    GetVtableSlot(_pluginInterface, 3);
+                relFnPtr(_pluginInterface);
+            }
+            catch { }
+            _pluginInterface = IntPtr.Zero;
         }
-        finally
+
+        // Release the block storage service reference (if we obtained one)
+        if (blockStorageService != 0 && blockStorageService != service)
         {
-            IOObjectRelease(service);
+            IOObjectRelease(blockStorageService);
+        }
+
+        if (_mmcDeviceInterface == IntPtr.Zero)
+        {
+            throw new InvalidOperationException(
+                $"Could not open MMC device interface for '{devicePath}' in read-only " +
+                $"probe mode: {lastError}. The drive may have been disconnected.");
         }
     }
 
@@ -1108,6 +1266,15 @@ public sealed class MacOsScsiTransport : IScsiTransport
     /// </summary>
     public bool PrepareForWrite()
     {
+        if (_readOnlyProbe)
+        {
+            // A read-only probe handle has no exclusive access and must never be
+            // upgraded silently — the caller would issue write commands that all fail.
+            System.Diagnostics.Debug.WriteLine(
+                "[MacOsScsiTransport] PrepareForWrite called on a read-only probe transport");
+            return false;
+        }
+
         if (string.IsNullOrEmpty(_bsdName))
             return true;
 
@@ -1359,6 +1526,11 @@ public sealed class MacOsScsiTransport : IScsiTransport
         if (!IsOpen)
             throw new InvalidOperationException("SCSI transport is not open.");
 
+        // Read-only probe handles go through the MMCDeviceInterface, which has no
+        // SCSITaskDeviceInterface and supports only a fixed set of MMC commands.
+        if (_readOnlyProbe)
+            return ExecuteReadOnlyProbe(command);
+
         // Validate the SCSI task device interface is still accessible.
         // On macOS, if the IOKit user client was torn down (e.g., due to
         // StartStopUnit invalidating the device state), the vtable pointer
@@ -1581,6 +1753,189 @@ public sealed class MacOsScsiTransport : IScsiTransport
         }
     }
 
+    /// <summary>
+    /// Executes a command in read-only probe mode via the MMCDeviceInterface.
+    /// Per Apple's SCSITaskLib.h, the interface exposes a fixed set of read-only
+    /// MMC commands that work WITHOUT exclusive access and without unmounting
+    /// the media — ideal for drive discovery. Anything else fails with a
+    /// transport-error result (Status=0xFF) rather than throwing, matching how
+    /// OpticalDrive callers already handle hardware failures.
+    /// </summary>
+    private unsafe ScsiResult ExecuteReadOnlyProbe(ScsiCommand command)
+    {
+        var cdb = command.Cdb;
+        var opcode = cdb[0];
+        byte CdbByte(int i) => i < cdb.Length ? cdb[i] : (byte)0;
+        ushort CdbBE16(int i) => (ushort)((CdbByte(i) << 8) | CdbByte(i + 1));
+        uint CdbBE32(int i) =>
+            ((uint)CdbByte(i) << 24) | ((uint)CdbByte(i + 1) << 16) |
+            ((uint)CdbByte(i + 2) << 8) | CdbByte(i + 3);
+
+        var dataLen = command.DataBuffer.Length;
+        var dataBuffer = dataLen > 0 ? Marshal.AllocHGlobal(dataLen) : IntPtr.Zero;
+        // SCSI_Sense_Data is 18 bytes (SCSICmds_REQUEST_SENSE_Defs.h); allocate the
+        // same 252-byte buffer used by the SCSITask path — larger is always fine.
+        const int SenseBufferSize = 252;
+        var senseBuffer = Marshal.AllocHGlobal(SenseBufferSize);
+        uint taskStatus = 0;
+        int transferred = 0;
+        int kr;
+
+        try
+        {
+            for (int i = 0; i < SenseBufferSize; i++)
+                Marshal.WriteByte(senseBuffer, i, 0);
+
+            switch (opcode)
+            {
+                case 0x00: // TEST UNIT READY
+                {
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_TestUnitReady);
+                    kr = fn(_mmcDeviceInterface, &taskStatus, senseBuffer);
+                    break;
+                }
+                case 0x12: // INQUIRY — allocation length in CDB byte 4
+                {
+                    var bsz = (uint)Math.Min(CdbByte(4), dataLen);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, IntPtr, uint, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_Inquiry);
+                    kr = fn(_mmcDeviceInterface, dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = (int)bsz;
+                    break;
+                }
+                case 0x23: // READ FORMAT CAPACITIES — alloc len BE16 at CDB 7-8
+                {
+                    var bsz = (ushort)Math.Min(CdbBE16(7), dataLen);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, IntPtr, ushort, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_ReadFormatCapacities);
+                    kr = fn(_mmcDeviceInterface, dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = bsz;
+                    break;
+                }
+                case 0x43: // READ TOC — MSF=byte1 bit1, FORMAT=byte2 bits3:0, TRACK=byte6, len BE16 at 7-8
+                {
+                    var bsz = (ushort)Math.Min(CdbBE16(7), dataLen);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, byte, byte, byte, IntPtr, ushort, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_ReadTableOfContents);
+                    kr = fn(_mmcDeviceInterface,
+                        (byte)((CdbByte(1) >> 1) & 0x01), (byte)(CdbByte(2) & 0x0F), CdbByte(6),
+                        dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = bsz;
+                    break;
+                }
+                case 0x46: // GET CONFIGURATION — RT=byte1 bits1:0, STARTING_FEATURE BE16 at 2-3, len BE16 at 7-8
+                {
+                    var bsz = (ushort)Math.Min(CdbBE16(7), dataLen);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, byte, ushort, IntPtr, ushort, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_GetConfiguration);
+                    kr = fn(_mmcDeviceInterface,
+                        (byte)(CdbByte(1) & 0x03), CdbBE16(2),
+                        dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = bsz;
+                    break;
+                }
+                case 0x51: // READ DISC INFORMATION — DATA_TYPE=byte1 bits2:0, len BE16 at 7-8
+                {
+                    var bsz = (ushort)Math.Min(CdbBE16(7), dataLen);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, byte, IntPtr, ushort, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_ReadDiscInformationV2);
+                    kr = fn(_mmcDeviceInterface,
+                        (byte)(CdbByte(1) & 0x07),
+                        dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = bsz;
+                    break;
+                }
+                case 0x52: // READ TRACK INFORMATION — OPEN=byte1 bit2, ADDR_TYPE=byte1 bits1:0, LBA BE32 at 2-5, len BE16 at 7-8
+                {
+                    var bsz = (ushort)Math.Min(CdbBE16(7), dataLen);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, byte, byte, uint, IntPtr, ushort, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_ReadTrackInformationV2);
+                    kr = fn(_mmcDeviceInterface,
+                        (byte)((CdbByte(1) >> 2) & 0x01), (byte)(CdbByte(1) & 0x03), CdbBE32(2),
+                        dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = bsz;
+                    break;
+                }
+                case 0x5A: // MODE SENSE(10) — LLBAA=byte1 bit4, DBD=byte1 bit3, PC=byte2 bits7:6, PAGE_CODE=byte2 bits5:0, len BE16 at 7-8
+                {
+                    var bsz = (ushort)Math.Min(CdbBE16(7), dataLen);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, byte, byte, byte, byte, IntPtr, ushort, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_ModeSense10);
+                    kr = fn(_mmcDeviceInterface,
+                        (byte)((CdbByte(1) >> 4) & 0x01), (byte)((CdbByte(1) >> 3) & 0x01),
+                        (byte)(CdbByte(2) >> 6), (byte)(CdbByte(2) & 0x3F),
+                        dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = bsz;
+                    break;
+                }
+                case 0xAC: // GET PERFORMANCE — DATA_TYPE=byte1 bits4:0, STARTING_LBA BE32 at 2-5,
+                           // MAX_DESCRIPTORS BE16 at 8-9, TYPE=byte10; no alloc len → use buffer size
+                {
+                    var bsz = (ushort)Math.Min(dataLen, ushort.MaxValue);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, byte, uint, ushort, byte, IntPtr, ushort, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_GetPerformanceV2);
+                    kr = fn(_mmcDeviceInterface,
+                        (byte)(CdbByte(1) & 0x1F), CdbBE32(2), CdbBE16(8), CdbByte(10),
+                        dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = bsz;
+                    break;
+                }
+                case 0xAD: // READ DISC STRUCTURE — MEDIA_TYPE=byte1 bits3:0, ADDRESS BE32 at 2-5,
+                           // LAYER=byte6, FORMAT=byte7, len BE16 at 8-9 (no AGID param in header)
+                {
+                    var bsz = (ushort)Math.Min(CdbBE16(8), dataLen);
+                    var fn = (delegate* unmanaged[Cdecl]<IntPtr, byte, uint, byte, byte, IntPtr, ushort, uint*, IntPtr, int>)
+                        GetVtableSlot(_mmcDeviceInterface, VtableOffset_MMC_ReadDiscStructure);
+                    kr = fn(_mmcDeviceInterface,
+                        (byte)(CdbByte(1) & 0x0F), CdbBE32(2), CdbByte(6), CdbByte(7),
+                        dataBuffer, bsz, &taskStatus, senseBuffer);
+                    transferred = bsz;
+                    break;
+                }
+                default:
+                    // READ CAPACITY (0x25), READ(10)/(12), PREVENT/ALLOW, all write
+                    // commands, etc. require exclusive access — not available to a probe.
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[MacOsScsiTransport] command 0x{opcode:X2} not available in " +
+                        "read-only probe mode (requires exclusive access)");
+                    return FailResult();
+            }
+
+            if (kr != kIOReturnSuccess)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"[MacOsScsiTransport] MMC probe command 0x{opcode:X2} failed: 0x{kr:X8}");
+                return new ScsiResult
+                {
+                    Status = 0xFF,
+                    SenseData = CopySenseData(senseBuffer, SenseBufferSize),
+                    DataTransferred = 0
+                };
+            }
+
+            var senseData = CopySenseData(senseBuffer, SenseBufferSize);
+
+            if (dataBuffer != IntPtr.Zero && command.Direction == ScsiDataDirection.In &&
+                taskStatus == kSCSITaskStatus_GOOD && transferred > 0)
+            {
+                Marshal.Copy(dataBuffer, command.DataBuffer, 0, Math.Min(transferred, dataLen));
+            }
+
+            return new ScsiResult
+            {
+                Status = (byte)taskStatus,
+                SenseData = senseData,
+                DataTransferred = taskStatus == kSCSITaskStatus_GOOD ? transferred : 0
+            };
+        }
+        finally
+        {
+            if (dataBuffer != IntPtr.Zero) Marshal.FreeHGlobal(dataBuffer);
+            Marshal.FreeHGlobal(senseBuffer);
+        }
+    }
+
     public void Dispose()
     {
         if (_disposed) return;
@@ -1721,8 +2076,11 @@ public sealed class MacOsScsiTransport : IScsiTransport
             _pluginInterface = IntPtr.Zero;
         }
 
-        // Release Disk Arbitration resources after IOKit resources
+        // Release Disk Arbitration resources after IOKit resources.
+        // No-op in read-only probe mode — DA handles are never created there.
         ReleaseDiskArbitration();
+
+        _readOnlyProbe = false;
     }
 
     /// <summary>
@@ -2175,6 +2533,167 @@ public sealed class MacOsScsiTransport : IScsiTransport
         finally
         {
             CFRelease(key);
+        }
+    }
+
+    /// <summary>
+    /// Reads an IORegistry 64-bit integer property from the specified entry or its
+    /// ancestors/descendants, depending on the search options.
+    /// Returns null if the property is not found or is not a number.
+    /// </summary>
+    private static long? ReadRegistryInt64Property(uint entry, string propertyName, uint searchOptions)
+    {
+        var key = CFStringCreateWithCString(kCFAllocatorDefault, propertyName, kCFStringEncodingUTF8);
+        if (key == IntPtr.Zero) return null;
+        try
+        {
+            IntPtr valueRef;
+            if (searchOptions == 0)
+                valueRef = IORegistryEntryCreateCFProperty(entry, key, kCFAllocatorDefault, 0);
+            else
+                valueRef = IORegistryEntrySearchCFProperty(entry, "IOService", key, kCFAllocatorDefault, searchOptions);
+            if (valueRef == IntPtr.Zero) return null;
+            try
+            {
+                if (CFNumberGetValueInt64(valueRef, kCFNumberSInt64Type, out var intValue))
+                    return intValue;
+                return null;
+            }
+            finally
+            {
+                CFRelease(valueRef);
+            }
+        }
+        finally
+        {
+            CFRelease(key);
+        }
+    }
+
+    /// <summary>
+    /// Reads media capacity from the IOMedia registry entry matching a BSD name,
+    /// WITHOUT sending any SCSI commands. The whole-disk IOMedia carries a
+    /// "Size" (bytes) and "Preferred Block Size" property, populated by the
+    /// kernel's storage drivers during media attach. Used by read-only probe
+    /// discovery where READ CAPACITY is unavailable.
+    /// </summary>
+    /// <returns>(SizeBytes, BlockSize) or null if no IOMedia matches.</returns>
+    internal static (long SizeBytes, int BlockSize)? ReadWholeMediaInfo(string bsdName)
+    {
+        if (string.IsNullOrEmpty(bsdName)) return null;
+
+        var matching = IOBSDNameMatching(kIOMasterPortDefault, 0, bsdName);
+        if (matching == IntPtr.Zero) return null;
+
+        var kr = IOServiceGetMatchingServices(kIOMasterPortDefault, matching, out var iterator);
+        if (kr != kIOReturnSuccess) return null;
+
+        try
+        {
+            uint service;
+            while ((service = IOIteratorNext(iterator)) != 0)
+            {
+                try
+                {
+                    if (!IOObjectConformsTo(service, "IOMedia")) continue;
+
+                    var size = ReadRegistryInt64Property(service, "Size", 0);
+                    if (size == null) continue;
+
+                    var block = ReadRegistryInt64Property(service, "Preferred Block Size", 0);
+                    return (size.Value, block is > 0 and <= int.MaxValue ? (int)block.Value : 2048);
+                }
+                finally
+                {
+                    IOObjectRelease(service);
+                }
+            }
+        }
+        finally
+        {
+            IOObjectRelease(iterator);
+        }
+
+        return null;
+    }
+
+    // Cached Disk Arbitration description key CFStringRefs, resolved via dlsym
+    // (they are global CFStringRef constants in DiskArbitration.framework).
+    private static IntPtr? _daVolumeNameKey;
+    private static IntPtr? _daVolumeKindKey;
+
+    private static IntPtr ResolveDADescriptionKey(string symbolName)
+    {
+        try
+        {
+            var symbolPtr = dlsym(RTLD_DEFAULT, symbolName);
+            return symbolPtr != IntPtr.Zero ? Marshal.ReadIntPtr(symbolPtr) : IntPtr.Zero;
+        }
+        catch
+        {
+            return IntPtr.Zero;
+        }
+    }
+
+    /// <summary>
+    /// Reads the mounted volume's name and filesystem kind for a BSD disk name
+    /// via the Disk Arbitration framework — no SCSI commands, no unmounting.
+    /// Checks the whole disk (diskN) and its partitions (diskNs0..diskNs3),
+    /// stopping at the first entry that reports volume info. When the disc is
+    /// not mounted, DA has no volume description and both values are null.
+    /// </summary>
+    /// <returns>(VolumeName, VolumeKind) — kind is the raw DA kind, e.g. "cd9660", "udf".</returns>
+    internal static (string? VolumeName, string? VolumeKind) ReadMountedVolumeInfo(string bsdName)
+    {
+        if (string.IsNullOrEmpty(bsdName)) return (null, null);
+
+        var session = DASessionCreate(kCFAllocatorDefault);
+        if (session == IntPtr.Zero) return (null, null);
+
+        try
+        {
+            var nameKey = _daVolumeNameKey ??= ResolveDADescriptionKey("kDADiskDescriptionVolumeNameKey");
+            var kindKey = _daVolumeKindKey ??= ResolveDADescriptionKey("kDADiskDescriptionVolumeKindKey");
+
+            for (int i = -1; i <= 3; i++)
+            {
+                var name = i < 0 ? bsdName : $"{bsdName}s{i}";
+                var disk = DADiskCreateFromBSDName(kCFAllocatorDefault, session, name);
+                if (disk == IntPtr.Zero) continue;
+
+                try
+                {
+                    var desc = DADiskCopyDescription(disk);
+                    if (desc == IntPtr.Zero) continue;
+
+                    try
+                    {
+                        var nameValue = nameKey != IntPtr.Zero
+                            ? ReadCFString(CFDictionaryGetValue(desc, nameKey))
+                            : null;
+                        var kindValue = kindKey != IntPtr.Zero
+                            ? ReadCFString(CFDictionaryGetValue(desc, kindKey))
+                            : null;
+
+                        if (!string.IsNullOrEmpty(nameValue) || !string.IsNullOrEmpty(kindValue))
+                            return (nameValue, kindValue);
+                    }
+                    finally
+                    {
+                        CFRelease(desc);
+                    }
+                }
+                finally
+                {
+                    CFRelease(disk);
+                }
+            }
+
+            return (null, null);
+        }
+        finally
+        {
+            CFRelease(session);
         }
     }
 

@@ -78,7 +78,10 @@ public static partial class NativeDeviceDiscovery
                     var bsdPath = $"/dev/{bsdName}";
                     try
                     {
-                        using var optDrive = new OpticalDrive(bsdPath);
+                        // Read-only probe: never unmounts the disc or takes
+                        // exclusive access — discovery must not disturb the
+                        // user's mounted volume in Finder.
+                        using var optDrive = new OpticalDrive(bsdPath, readOnlyProbe: true);
 
                         // Probe drive capabilities via GET CONFIGURATION feature list
                         ProbeCapabilities(optDrive, drive);
@@ -114,12 +117,13 @@ public static partial class NativeDeviceDiscovery
 
                                 var discInfo = optDrive.ReadDiscInfo();
 
-                                // Get media capacity via READ CAPACITY
-                                var macCapacity = optDrive.ReadCapacity();
-                                if (macCapacity.HasValue && drive.CurrentMedia != null)
+                                // Get media capacity from the IOMedia registry entry —
+                                // READ CAPACITY requires exclusive access and is not
+                                // available in probe mode.
+                                var mediaInfo = MacOsScsiTransport.ReadWholeMediaInfo(bsdName);
+                                if (mediaInfo.HasValue && drive.CurrentMedia != null)
                                 {
-                                    drive.CurrentMedia.CapacityBytes =
-                                        ((long)macCapacity.Value.LastLba + 1) * macCapacity.Value.BlockLength;
+                                    drive.CurrentMedia.CapacityBytes = mediaInfo.Value.SizeBytes;
                                 }
 
                                 if (discInfo != null && drive.CurrentMedia != null)
@@ -135,8 +139,8 @@ public static partial class NativeDeviceDiscovery
                                         var trackInfo = optDrive.ReadTrackInfo((uint)lastTrack);
                                         if (trackInfo != null)
                                         {
-                                            int blockLen = (macCapacity.HasValue && macCapacity.Value.BlockLength > 0)
-                                                ? (int)macCapacity.Value.BlockLength : 2048;
+                                            int blockLen = (mediaInfo.HasValue && mediaInfo.Value.BlockSize > 0)
+                                                ? mediaInfo.Value.BlockSize : 2048;
                                             var usedSectors = trackInfo.TrackStartAddress + trackInfo.TrackSize;
                                             drive.CurrentMedia.UsedBytes = (long)usedSectors * blockLen;
 
@@ -148,54 +152,17 @@ public static partial class NativeDeviceDiscovery
                                     }
                                 }
 
-                                // Read volume label via SCSI READ(10) for sector 16 (ISO PVD)
+                                // Read the mounted volume's label/filesystem via Disk
+                                // Arbitration — READ(10) requires exclusive access and is
+                                // unavailable in probe mode. Unmounted discs have no DA
+                                // volume info, so the label simply stays empty for them.
                                 if (drive.CurrentMedia != null)
                                 {
-                                    try
-                                    {
-                                        var (pvdResult, pvdData) = optDrive.ReadSectors(16, 1, 2048);
-                                        if (pvdResult.Success && pvdResult.DataTransferred >= 2048 &&
-                                            pvdData[0] == 0x01 && pvdData[1] == (byte)'C' && pvdData[2] == (byte)'D' &&
-                                            pvdData[3] == (byte)'0' && pvdData[4] == (byte)'0' && pvdData[5] == (byte)'1')
-                                        {
-                                            var label = System.Text.Encoding.ASCII.GetString(pvdData, 40, 32).Trim();
-                                            if (!string.IsNullOrWhiteSpace(label))
-                                            {
-                                                drive.CurrentMedia.VolumeLabel = label;
-                                                drive.CurrentMedia.FileSystem = "ISO 9660";
-                                            }
-                                        }
-
-                                        // Try UDF PVD at sector 256
-                                        if (string.IsNullOrWhiteSpace(drive.CurrentMedia.VolumeLabel))
-                                        {
-                                            var (udfResult, udfData) = optDrive.ReadSectors(UdfPvdSector, 1, 2048);
-                                            if (udfResult.Success && udfResult.DataTransferred >= 2048)
-                                            {
-                                                var tagId = (ushort)(udfData[0] | (udfData[1] << 8));
-                                                if (tagId == 0x0001)
-                                                {
-                                                    int identLen = udfData[24 + 31];
-                                                    if (identLen > 0 && identLen <= 31)
-                                                    {
-                                                        string udfLabel;
-                                                        if (udfData[24] == 0x10 && identLen >= 2)
-                                                            udfLabel = System.Text.Encoding.BigEndianUnicode
-                                                                .GetString(udfData, 25, identLen - 1).Trim('\0', ' ');
-                                                        else
-                                                            udfLabel = System.Text.Encoding.UTF8
-                                                                .GetString(udfData, 25, identLen - 1).Trim('\0', ' ');
-                                                        if (!string.IsNullOrWhiteSpace(udfLabel))
-                                                        {
-                                                            drive.CurrentMedia.VolumeLabel = udfLabel;
-                                                            drive.CurrentMedia.FileSystem = "UDF";
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    catch { /* volume label probe failed — not critical */ }
+                                    var vol = MacOsScsiTransport.ReadMountedVolumeInfo(bsdName);
+                                    if (!string.IsNullOrEmpty(vol.VolumeName))
+                                        drive.CurrentMedia.VolumeLabel = vol.VolumeName;
+                                    if (!string.IsNullOrEmpty(vol.VolumeKind))
+                                        drive.CurrentMedia.FileSystem = MapDaVolumeKind(vol.VolumeKind);
                                 }
                             }
                             else
@@ -229,7 +196,7 @@ public static partial class NativeDeviceDiscovery
                     {
                         try
                         {
-                            using var optDrive = new OpticalDrive(ioRegPath);
+                            using var optDrive = new OpticalDrive(ioRegPath, readOnlyProbe: true);
 
                             // INQUIRY works without media — get drive model if not
                             // already populated from IOKit registry properties.
@@ -319,7 +286,7 @@ public static partial class NativeDeviceDiscovery
 
                     try
                     {
-                        using var optDrive = new OpticalDrive(devPath);
+                        using var optDrive = new OpticalDrive(devPath, readOnlyProbe: true);
 
                         var (vendor, product, revision) = optDrive.Inquiry();
                         if (vendor == "Unknown") continue;
@@ -357,4 +324,18 @@ public static partial class NativeDeviceDiscovery
 
         return drives;
     }
+
+    /// <summary>
+    /// Maps a Disk Arbitration volume kind (kDADiskDescriptionVolumeKindKey)
+    /// to the display name used for DiscMedia.FileSystem.
+    /// </summary>
+    private static string MapDaVolumeKind(string kind) => kind switch
+    {
+        "cd9660" => "ISO 9660",
+        "udf" => "UDF",
+        "hfs" => "HFS+",
+        "apfs" => "APFS",
+        "msdos" => "FAT",
+        _ => kind
+    };
 }

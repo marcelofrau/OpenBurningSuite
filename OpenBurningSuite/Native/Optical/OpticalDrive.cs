@@ -24,6 +24,20 @@ public sealed class OpticalDrive : IDisposable
     }
 
     /// <summary>
+    /// Creates an OpticalDrive, optionally in read-only probe mode.
+    /// Probe mode (macOS only) never unmounts media or takes exclusive access;
+    /// only read-only MMC commands are available and anything else fails —
+    /// intended for non-destructive drive discovery.
+    /// </summary>
+    public OpticalDrive(string devicePath, bool readOnlyProbe)
+    {
+        DevicePath = devicePath;
+        _transport = readOnlyProbe
+            ? ScsiTransportFactory.CreateReadOnly(devicePath)
+            : ScsiTransportFactory.Create(devicePath);
+    }
+
+    /// <summary>
     /// Creates an OpticalDrive with an externally-provided SCSI transport.
     /// Used for testing with mock transports and for advanced scenarios where
     /// the caller manages the transport lifecycle.
