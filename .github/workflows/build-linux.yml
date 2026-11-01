@@ -94,7 +94,7 @@ jobs:
           mkdir -p deb/usr/share/icons/hicolor/512x512/apps
           mkdir -p deb/etc/udev/rules.d
 
-          cat > deb/DEBIAN/control << 'EOF'
+          cat > deb/DEBIAN/control << EOF
           Package: openburningsuite
           Version: $APP_VERSION
           Architecture: ${{ matrix.deb_arch }}
@@ -204,7 +204,7 @@ jobs:
 
           mkdir -p rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
-          cat > rpmbuild/SPECS/openburningsuite.spec << 'SPEC'
+          cat > rpmbuild/SPECS/openburningsuite.spec << SPEC
           Name:           openburningsuite
           Version:        $APP_VERSION
           Release:        1
@@ -484,7 +484,7 @@ jobs:
           mkdir -p snap-dir/usr/share/icons/hicolor/512x512/apps
           mkdir -p snap-dir/usr/share/licenses/openburningsuite
 
-          cat > snap-dir/meta/snap.yaml << 'EOF'
+          cat > snap-dir/meta/snap.yaml << EOF
           name: openburningsuite
           version: '$APP_VERSION'
           summary: Open Burning Suite
