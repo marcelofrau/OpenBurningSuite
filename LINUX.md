@@ -70,7 +70,7 @@ sudo zypper install ffmpeg
 
 ## Downloading a Release
 
-Download the release that matches your architecture from the [Releases](https://github.com/SvenGDK/OpenBurningSuite/releases) page.
+Download the release that matches your architecture from the [Releases](https://github.com/marcelofrau/OpenBurningSuite/releases) page.
 
 ### Portable ZIPs
 

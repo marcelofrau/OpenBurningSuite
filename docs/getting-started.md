@@ -91,7 +91,7 @@ If chdman is not installed, the application will show a clear error message when
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/SvenGDK/OpenBurningSuite.git
+git clone https://github.com/marcelofrau/OpenBurningSuite.git
 cd OpenBurningSuite
 ```
 

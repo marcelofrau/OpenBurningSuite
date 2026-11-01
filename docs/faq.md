@@ -31,7 +31,7 @@ Unlike most disc burning applications that rely on external command-line tools (
 
 ### Is Open Burning Suite free?
 
-Yes! Open Burning Suite is free and open-source, released under the [BSD 2-Clause License](https://github.com/SvenGDK/OpenBurningSuite/blob/main/LICENSE).
+Yes! Open Burning Suite is free and open-source, released under the [BSD 2-Clause License](https://github.com/marcelofrau/OpenBurningSuite/blob/main/LICENSE).
 
 ---
 
@@ -248,4 +248,4 @@ Common causes:
 
 ---
 
-**Have a question not covered here?** [Open an issue](https://github.com/SvenGDK/OpenBurningSuite/issues/new) on GitHub.
+**Have a question not covered here?** [Open an issue](https://github.com/marcelofrau/OpenBurningSuite/issues/new) on GitHub.

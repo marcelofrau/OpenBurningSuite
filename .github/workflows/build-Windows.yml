@@ -15,7 +15,6 @@ env:
   DOTNET_VERSION: '8.0.x'
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_NOLOGO: true
-  APP_VERSION: '1.1.0'
 
 jobs:
   build-windows:
@@ -49,11 +48,21 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: ${{ runner.os }}-nuget-
 
+      - name: Resolve app version
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            APP_VERSION="${GITHUB_REF_NAME#v}"
+          else
+            APP_VERSION="$(sed -n 's:.*<Version>\(.*\)</Version>.*:\1:p' OpenBurningSuite/OpenBurningSuite.csproj | head -1)"
+          fi
+          echo "APP_VERSION=$APP_VERSION" >> "$GITHUB_ENV"
+
       - name: Publish
-        run: dotnet publish OpenBurningSuite -c Release -r win-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -o publish
+        run: dotnet publish OpenBurningSuite -c Release -r win-${{ matrix.arch }} -p:PublishReadyToRun=true --self-contained -p:Version=$env:APP_VERSION -o publish
 
       - name: Create ZIP (Portable)
-        run: 7z a -tzip -mx=9 OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}.zip .\publish\*
+        run: 7z a -tzip -mx=9 OpenBurningSuite-v$env:APP_VERSION-win-${{ matrix.arch }}.zip .\publish\*
 
       - name: Install Inno Setup
         run: |
@@ -66,14 +75,14 @@ jobs:
           $iss = @"
           [Setup]
           AppName=Open Burning Suite
-          AppVersion=${{ env.APP_VERSION }}
+          AppVersion=$env:APP_VERSION
           AppPublisher=SvenGDK
-          AppPublisherURL=https://github.com/SvenGDK/OpenBurningSuite
+          AppPublisherURL=https://github.com/marcelofrau/OpenBurningSuite
           DefaultDirName={autopf}\OpenBurningSuite
           DefaultGroupName=Open Burning Suite
           UninstallDisplayIcon={app}\OpenBurningSuite.exe
           OutputDir=installer
-          OutputBaseFilename=OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}-Installer
+          OutputBaseFilename=OpenBurningSuite-v$env:APP_VERSION-win-${{ matrix.arch }}-Installer
           Compression=lzma2/ultra64
           SolidCompression=yes
           WizardStyle=modern
@@ -103,14 +112,14 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: win-${{ matrix.arch }}-zip
-          path: OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}.zip
+          path: OpenBurningSuite-v*-win-${{ matrix.arch }}.zip
           if-no-files-found: error
 
       - name: Upload Installer
         uses: actions/upload-artifact@v5
         with:
           name: win-${{ matrix.arch }}-installer
-          path: installer/OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}-Installer.exe
+          path: installer/OpenBurningSuite-v*-win-${{ matrix.arch }}-Installer.exe
           if-no-files-found: error
 
       - name: Upload to Release
@@ -119,8 +128,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}.zip
-            installer/OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}-Installer.exe
+            OpenBurningSuite-v*-win-${{ matrix.arch }}.zip
+            installer/OpenBurningSuite-v*-win-${{ matrix.arch }}-Installer.exe
 
       - name: VirusTotal Scan
         if: startsWith(github.ref, 'refs/tags/v')
@@ -129,8 +138,8 @@ jobs:
         with:
           vt_api_key: ${{ secrets.VT_API_KEY }}
           file_globs: |
-            OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}.zip
-            installer/OpenBurningSuite-v${{ env.APP_VERSION }}-win-${{ matrix.arch }}-Installer.exe
+            OpenBurningSuite-v*-win-${{ matrix.arch }}.zip
+            installer/OpenBurningSuite-v*-win-${{ matrix.arch }}-Installer.exe
           sha256: true
           update_release: true
           release_id: ${{ steps.create_release.outputs.id }}
