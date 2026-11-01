@@ -47,7 +47,7 @@ public sealed class DriveWatcherService : IDisposable
         }
 
         // Timer-based safety net (catches anything the native notifier misses)
-        _fallbackTimer = new Timer(OnFallbackTimer, null, 1000, 1000);
+        _fallbackTimer = new Timer(OnFallbackTimer, null, 1000, Timeout.Infinite);
     }
 
     public void Stop()
@@ -101,6 +101,8 @@ public sealed class DriveWatcherService : IDisposable
 
     private void OnFallbackTimer(object? state)
     {
+        if (_disposed) return;
+
         try
         {
             var newDrives = _discovery.DiscoverDrives();
@@ -117,6 +119,17 @@ public sealed class DriveWatcherService : IDisposable
             DrivesUpdated?.Invoke(newDrives);
         }
         catch { }
+        finally
+        {
+            if (!_disposed)
+            {
+                try
+                {
+                    _fallbackTimer?.Change(1000, Timeout.Infinite);
+                }
+                catch (ObjectDisposedException) { }
+            }
+        }
     }
 
     private static bool HaveDrivesChanged(List<DiscDrive> oldDrives, List<DiscDrive> newDrives)
