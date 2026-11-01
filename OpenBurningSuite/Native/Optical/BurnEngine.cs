@@ -980,10 +980,10 @@ public sealed class BurnEngine
             }
         }
 
-            // In simulation mode, add a realistic delay based on the selected write
-            // speed so progress timing mirrors a real burn. This tests buffer management
-            // and data pipeline throughput without wasting media. The delay is capped at
-            // 100ms per chunk to keep the UI responsive.
+            // In simulation mode no WRITE commands are issued to the drive at all;
+            // the delay below only paces progress reporting to mimic the selected
+            // write speed, so no drive-side write pipeline is exercised. The delay
+            // is capped at 100ms per chunk to keep the UI responsive.
             if (simulationSpeedBps > 0)
             {
                 var delayMs = (int)(bytesRead * 1000 / simulationSpeedBps);
@@ -1958,13 +1958,13 @@ public sealed class BurnEngine
     /// </summary>
     private static ScsiResult WriteSectorsWithRetry(
         OpticalDrive drive, uint lba, byte[] data, int sectorSize, int sectorCount,
-        int dataLength, bool useDvdBdMode, bool simulate = false)
+        int dataLength, bool useDvdBdMode)
     {
         ScsiResult? result = null;
 
         for (int retry = 0; retry <= WriteRetryMax; retry++)
         {
-            result = drive.WriteSectors(lba, data, sectorSize, sectorCount, dataLength, useDvdBdMode, simulate);
+            result = drive.WriteSectors(lba, data, sectorSize, sectorCount, dataLength, useDvdBdMode);
             if (result.Success)
                 return result;
 
