@@ -395,44 +395,41 @@ public static class AudioCdBuilder
             var sectorBuffer = new byte[SectorSize];
             long audioFramesWritten = 0;
 
-            await Task.Run(() =>
+            while (audioFramesWritten < trackInfo.AudioFrames)
             {
-                while (audioFramesWritten < trackInfo.AudioFrames)
+                ct.ThrowIfCancellationRequested();
+
+                // Read exactly one sector worth of audio
+                int totalRead = 0;
+                while (totalRead < SectorSize)
                 {
-                    ct.ThrowIfCancellationRequested();
-
-                    // Read exactly one sector worth of audio
-                    int totalRead = 0;
-                    while (totalRead < SectorSize)
+                    int read = finalProvider.Read(sectorBuffer, totalRead, SectorSize - totalRead);
+                    if (read == 0)
                     {
-                        int read = finalProvider.Read(sectorBuffer, totalRead, SectorSize - totalRead);
-                        if (read == 0)
-                        {
-                            // End of audio - pad remainder with silence
-                            Array.Clear(sectorBuffer, totalRead, SectorSize - totalRead);
-                            break;
-                        }
-                        totalRead += read;
+                        // End of audio - pad remainder with silence
+                        Array.Clear(sectorBuffer, totalRead, SectorSize - totalRead);
+                        break;
                     }
-
-                    output.Write(sectorBuffer, 0, SectorSize);
-                    sectorsWritten++;
-                    audioFramesWritten++;
-
-                    if (sectorsWritten % 2000 == 0)
-                    {
-                        int pct = (int)(10 + sectorsWritten * 85 / totalSectors);
-                        progress.Report(new BuildProgress
-                        {
-                            PercentComplete = Math.Min(pct, 95),
-                            BytesProcessed = sectorsWritten * SectorSize,
-                            TotalBytes = totalSectors * SectorSize,
-                            CurrentFile = Path.GetFileName(trackInfo.Track.FilePath),
-                            StatusMessage = $"Writing track {trackNum}/{totalTracks}..."
-                        });
-                    }
+                    totalRead += read;
                 }
-            }, ct);
+
+                await output.WriteAsync(sectorBuffer.AsMemory(0, SectorSize), ct);
+                sectorsWritten++;
+                audioFramesWritten++;
+
+                if (sectorsWritten % 2000 == 0)
+                {
+                    int pct = (int)(10 + sectorsWritten * 85 / totalSectors);
+                    progress.Report(new BuildProgress
+                    {
+                        PercentComplete = Math.Min(pct, 95),
+                        BytesProcessed = sectorsWritten * SectorSize,
+                        TotalBytes = totalSectors * SectorSize,
+                        CurrentFile = Path.GetFileName(trackInfo.Track.FilePath),
+                        StatusMessage = $"Writing track {trackNum}/{totalTracks}..."
+                    });
+                }
+            }
 
             return sectorsWritten;
         }
