@@ -783,12 +783,14 @@ public sealed class BurnEngine
                 }
                 else
                 {
-                    progress.Report(new BurnProgress
-                    {
-                        LogLine = $"[Warning] Image size ({FormatHelper.FormatBytes(totalBytes)}) exceeds " +
-                                  $"available media capacity ({FormatHelper.FormatBytes(availableBytes)}). " +
-                                  "The burn may fail. Enable overburn to proceed past capacity limits."
-                    });
+                    // Fail before touching the disc: without overburn the write is
+                    // guaranteed to die mid-burn at the end of media (INVALID ADDRESS
+                    // FOR WRITE), needlessly ruining an otherwise usable blank.
+                    throw new InvalidOperationException(
+                        $"Image size ({FormatHelper.FormatBytes(totalBytes)}) exceeds " +
+                        $"available media capacity ({FormatHelper.FormatBytes(availableBytes)}). " +
+                        "Reduce the image size, use higher-capacity media, or enable " +
+                        "overburn if the media supports it.");
                 }
             }
         }
